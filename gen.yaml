@@ -1,0 +1,10 @@
+configVersion: 1.0.0
+generation:
+  telemetryEnabled: false
+  sdkClassName: SDK
+  sdkFlattening: false
+  singleTagPerOp: false
+terraform:
+  version: 0.0.1
+  author: epilot
+  packageName: epilotautomation
