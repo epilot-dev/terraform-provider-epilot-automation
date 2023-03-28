@@ -1,4 +1,12 @@
-# epilotautomation
+<div align="center">
+    <picture>
+        <source srcset="https://user-images.githubusercontent.com/68016351/221740028-fbe0a2da-c781-4641-ac18-0bb1d19d49e3.svg" media="(prefers-color-scheme: dark)" width="500">
+        <img src="https://user-images.githubusercontent.com/68016351/221764522-4c54cadc-7697-49cf-a4f2-2838a8b30796.png" width="500">
+    </picture>
+   <p>Epilot is the digital foundation for sales, service, network and implementation processes in the context of the energy transition..</p>
+   <a href="https://docs.epilot.io/api/access-token"><img src="https://img.shields.io/static/v1?label=Docs&message=API Ref&color=000000&style=for-the-badge" /></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" /></a>
+</div>
 
 <!-- Start SDK Installation -->
 ## Notice of Alpha Status
