@@ -7,11 +7,6 @@ import (
 	"net/http"
 )
 
-type StartExecutionRequest struct {
-	// Execution parameters
-	Request *shared.StartExecutionRequestInput `request:"mediaType=application/json"`
-}
-
 type StartExecutionResponse struct {
 	// The created execution
 	AutomationExecution *shared.AutomationExecution

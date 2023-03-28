@@ -7,13 +7,9 @@ import (
 	"net/http"
 )
 
-type DeleteFlowPathParams struct {
+type DeleteFlowRequest struct {
 	// Automation Workflow ID
 	FlowID string `pathParam:"style=simple,explode=false,name=flow_id"`
-}
-
-type DeleteFlowRequest struct {
-	PathParams DeleteFlowPathParams
 }
 
 type DeleteFlowResponse struct {

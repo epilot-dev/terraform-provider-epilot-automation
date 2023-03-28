@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-type SearchFlowsQueryParams struct {
+type SearchFlowsRequest struct {
 	// Pagination: starting for results
 	From *int64 `queryParam:"style=form,explode=true,name=from"`
 	// Entity Schema
@@ -16,10 +16,6 @@ type SearchFlowsQueryParams struct {
 	Size *int64 `queryParam:"style=form,explode=true,name=size"`
 	// Trigger source identifier
 	TriggerSourceID *string `queryParam:"style=form,explode=true,name=trigger_source_id"`
-}
-
-type SearchFlowsRequest struct {
-	QueryParams SearchFlowsQueryParams
 }
 
 type SearchFlowsResponse struct {

@@ -1338,14 +1338,11 @@ func (r *FlowResource) Create(ctx context.Context, req resource.CreateRequest, r
 		return
 	}
 
+	automationFlowInput := data.ToSDKType()
 	flowID := data.ID.ValueString()
-	pathParams := operations.PutFlowPathParams{
-		FlowID: flowID,
-	}
-	request1 := data.ToSDKType()
 	request := operations.PutFlowRequest{
-		PathParams: pathParams,
-		Request:    request1,
+		AutomationFlowInput: automationFlowInput,
+		FlowID:              flowID,
 	}
 	res, err := r.client.Flows.PutFlow(ctx, request)
 	if err != nil {
@@ -1389,11 +1386,8 @@ func (r *FlowResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 	}
 
 	flowID := data.ID.ValueString()
-	pathParams := operations.GetFlowPathParams{
-		FlowID: flowID,
-	}
 	request := operations.GetFlowRequest{
-		PathParams: pathParams,
+		FlowID: flowID,
 	}
 	res, err := r.client.Flows.GetFlow(ctx, request)
 	if err != nil {
@@ -1436,14 +1430,11 @@ func (r *FlowResource) Update(ctx context.Context, req resource.UpdateRequest, r
 		return
 	}
 
+	automationFlowInput := data.ToSDKType()
 	flowID := data.ID.ValueString()
-	pathParams := operations.PutFlowPathParams{
-		FlowID: flowID,
-	}
-	request1 := data.ToSDKType()
 	request := operations.PutFlowRequest{
-		PathParams: pathParams,
-		Request:    request1,
+		AutomationFlowInput: automationFlowInput,
+		FlowID:              flowID,
 	}
 	res, err := r.client.Flows.PutFlow(ctx, request)
 	if err != nil {
@@ -1487,11 +1478,8 @@ func (r *FlowResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 	}
 
 	flowID := data.ID.ValueString()
-	pathParams := operations.DeleteFlowPathParams{
-		FlowID: flowID,
-	}
 	request := operations.DeleteFlowRequest{
-		PathParams: pathParams,
+		FlowID: flowID,
 	}
 	res, err := r.client.Flows.DeleteFlow(ctx, request)
 	if err != nil {
@@ -1504,10 +1492,6 @@ func (r *FlowResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 	}
 	if res.StatusCode != 200 {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
-		return
-	}
-	if res.AutomationFlow == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
 

@@ -7,16 +7,12 @@ import (
 	"net/http"
 )
 
-type GetExecutionsQueryParams struct {
+type GetExecutionsRequest struct {
 	EntityID *string `queryParam:"style=form,explode=true,name=entity_id"`
 	// Pagination: starting for results
 	From *int64 `queryParam:"style=form,explode=true,name=from"`
 	// Pagination: max number of results to return
 	Size *int64 `queryParam:"style=form,explode=true,name=size"`
-}
-
-type GetExecutionsRequest struct {
-	QueryParams GetExecutionsQueryParams
 }
 
 type GetExecutionsResponse struct {

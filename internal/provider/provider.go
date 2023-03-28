@@ -25,8 +25,8 @@ type EpilotautomationProvider struct {
 
 // EpilotautomationProviderModel describes the provider data model.
 type EpilotautomationProviderModel struct {
-	ServerURL     types.String `tfsdk:"server_url"`
-	Authorization types.String `tfsdk:"authorization"`
+	ServerURL  types.String `tfsdk:"server_url"`
+	EpilotAuth types.String `tfsdk:"epilot_auth"`
 }
 
 func (p *EpilotautomationProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -41,7 +41,7 @@ func (p *EpilotautomationProvider) Schema(ctx context.Context, req provider.Sche
 				MarkdownDescription: "Server URL (defaults to https://automation.sls.epilot.io)",
 				Optional:            true,
 			},
-			"authorization": schema.StringAttribute{
+			"epilot_auth": schema.StringAttribute{
 				Optional:  true,
 				Sensitive: true,
 			},
@@ -64,10 +64,7 @@ func (p *EpilotautomationProvider) Configure(ctx context.Context, req provider.C
 		ServerURL = "https://automation.sls.epilot.io"
 	}
 
-	authorization := data.Authorization.ValueString()
-	epilotAuth := shared.SchemeEpilotAuth{
-		Authorization: authorization,
-	}
+	epilotAuth := data.EpilotAuth.ValueString()
 	security := shared.Security{
 		EpilotAuth: epilotAuth,
 	}

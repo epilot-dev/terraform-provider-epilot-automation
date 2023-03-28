@@ -7,12 +7,8 @@ import (
 	"net/http"
 )
 
-type GetExecutionPathParams struct {
-	ExecutionID string `pathParam:"style=simple,explode=false,name=execution_id"`
-}
-
 type GetExecutionRequest struct {
-	PathParams GetExecutionPathParams
+	ExecutionID string `pathParam:"style=simple,explode=false,name=execution_id"`
 }
 
 type GetExecutionResponse struct {

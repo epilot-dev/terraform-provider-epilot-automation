@@ -7,17 +7,13 @@ import (
 	"net/http"
 )
 
-type RetriggerActionPathParams struct {
+type RetriggerActionRequest struct {
+	// Retry request details.
+	RetryReq *shared.RetryReq `request:"mediaType=application/json"`
 	// Id of Action to retry.
 	ActionID string `pathParam:"style=simple,explode=false,name=action_id"`
 	// Execution Id
 	ExecutionID string `pathParam:"style=simple,explode=false,name=execution_id"`
-}
-
-type RetriggerActionRequest struct {
-	PathParams RetriggerActionPathParams
-	// Retry request details.
-	Request *shared.RetryReq `request:"mediaType=application/json"`
 }
 
 type RetriggerActionResponse struct {

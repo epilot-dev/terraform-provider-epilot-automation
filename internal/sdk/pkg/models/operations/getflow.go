@@ -7,13 +7,9 @@ import (
 	"net/http"
 )
 
-type GetFlowPathParams struct {
+type GetFlowRequest struct {
 	// Automation Workflow ID
 	FlowID string `pathParam:"style=simple,explode=false,name=flow_id"`
-}
-
-type GetFlowRequest struct {
-	PathParams GetFlowPathParams
 }
 
 type GetFlowResponse struct {

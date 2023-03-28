@@ -7,12 +7,8 @@ import (
 	"net/http"
 )
 
-type CancelExecutionPathParams struct {
-	ExecutionID string `pathParam:"style=simple,explode=false,name=execution_id"`
-}
-
 type CancelExecutionRequest struct {
-	PathParams CancelExecutionPathParams
+	ExecutionID string `pathParam:"style=simple,explode=false,name=execution_id"`
 }
 
 type CancelExecutionResponse struct {

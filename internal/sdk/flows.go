@@ -35,7 +35,7 @@ func newFlows(defaultClient, securityClient HTTPClient, serverURL, language, sdk
 
 // CreateFlow - createFlow
 // Create new automation flow
-func (s *flows) CreateFlow(ctx context.Context, request operations.CreateFlowRequest) (*operations.CreateFlowResponse, error) {
+func (s *flows) CreateFlow(ctx context.Context, request shared.AutomationFlowInput) (*operations.CreateFlowResponse, error) {
 	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/automation/flows"
 
@@ -89,7 +89,7 @@ func (s *flows) CreateFlow(ctx context.Context, request operations.CreateFlowReq
 // Update automation flow by id
 func (s *flows) DeleteFlow(ctx context.Context, request operations.DeleteFlowRequest) (*operations.DeleteFlowResponse, error) {
 	baseURL := s.serverURL
-	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/flows/{flow_id}", request.PathParams, nil)
+	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/flows/{flow_id}", request, nil)
 
 	req, err := http.NewRequestWithContext(ctx, "DELETE", url, nil)
 	if err != nil {
@@ -134,7 +134,7 @@ func (s *flows) DeleteFlow(ctx context.Context, request operations.DeleteFlowReq
 // List available automation flows
 func (s *flows) GetFlow(ctx context.Context, request operations.GetFlowRequest) (*operations.GetFlowResponse, error) {
 	baseURL := s.serverURL
-	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/flows/{flow_id}", request.PathParams, nil)
+	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/flows/{flow_id}", request, nil)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
@@ -179,9 +179,9 @@ func (s *flows) GetFlow(ctx context.Context, request operations.GetFlowRequest) 
 // Update automation flow by id
 func (s *flows) PutFlow(ctx context.Context, request operations.PutFlowRequest) (*operations.PutFlowResponse, error) {
 	baseURL := s.serverURL
-	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/flows/{flow_id}", request.PathParams, nil)
+	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/flows/{flow_id}", request, nil)
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "AutomationFlowInput", "json")
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -238,7 +238,7 @@ func (s *flows) SearchFlows(ctx context.Context, request operations.SearchFlowsR
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	if err := utils.PopulateQueryParams(ctx, req, request.QueryParams, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 

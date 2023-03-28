@@ -7,15 +7,11 @@ import (
 	"net/http"
 )
 
-type PutFlowPathParams struct {
+type PutFlowRequest struct {
+	// Automation flow to create
+	AutomationFlowInput *shared.AutomationFlowInput `request:"mediaType=application/json"`
 	// Automation Workflow ID
 	FlowID string `pathParam:"style=simple,explode=false,name=flow_id"`
-}
-
-type PutFlowRequest struct {
-	PathParams PutFlowPathParams
-	// Automation flow to create
-	Request *shared.AutomationFlowInput `request:"mediaType=application/json"`
 }
 
 type PutFlowResponse struct {

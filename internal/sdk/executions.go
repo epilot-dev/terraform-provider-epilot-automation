@@ -37,7 +37,7 @@ func newExecutions(defaultClient, securityClient HTTPClient, serverURL, language
 // Cancel automation execution
 func (s *executions) CancelExecution(ctx context.Context, request operations.CancelExecutionRequest) (*operations.CancelExecutionResponse, error) {
 	baseURL := s.serverURL
-	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/executions/{execution_id}", request.PathParams, nil)
+	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/executions/{execution_id}", request, nil)
 
 	req, err := http.NewRequestWithContext(ctx, "DELETE", url, nil)
 	if err != nil {
@@ -82,7 +82,7 @@ func (s *executions) CancelExecution(ctx context.Context, request operations.Can
 // Get automation execution
 func (s *executions) GetExecution(ctx context.Context, request operations.GetExecutionRequest) (*operations.GetExecutionResponse, error) {
 	baseURL := s.serverURL
-	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/executions/{execution_id}", request.PathParams, nil)
+	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/executions/{execution_id}", request, nil)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
@@ -134,7 +134,7 @@ func (s *executions) GetExecutions(ctx context.Context, request operations.GetEx
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	if err := utils.PopulateQueryParams(ctx, req, request.QueryParams, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -176,9 +176,9 @@ func (s *executions) GetExecutions(ctx context.Context, request operations.GetEx
 // Retry a specific automation execution action which failed / is stuck.
 func (s *executions) RetriggerAction(ctx context.Context, request operations.RetriggerActionRequest) (*operations.RetriggerActionResponse, error) {
 	baseURL := s.serverURL
-	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/executions/{execution_id}/{action_id}/retrigger", request.PathParams, nil)
+	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/executions/{execution_id}/{action_id}/retrigger", request, nil)
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "RetryReq", "json")
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -217,7 +217,7 @@ func (s *executions) RetriggerAction(ctx context.Context, request operations.Ret
 
 // StartExecution - startExecution
 // Start new automation execution
-func (s *executions) StartExecution(ctx context.Context, request operations.StartExecutionRequest) (*operations.StartExecutionResponse, error) {
+func (s *executions) StartExecution(ctx context.Context, request shared.StartExecutionRequestInput) (*operations.StartExecutionResponse, error) {
 	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/automation/executions"
 

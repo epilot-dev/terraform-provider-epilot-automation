@@ -7,11 +7,6 @@ import (
 	"net/http"
 )
 
-type CreateFlowRequest struct {
-	// Automation flow to create
-	Request *shared.AutomationFlowInput `request:"mediaType=application/json"`
-}
-
 type CreateFlowResponse struct {
 	// The created automation flow
 	AutomationFlow *shared.AutomationFlow

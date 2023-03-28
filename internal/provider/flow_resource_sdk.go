@@ -443,7 +443,7 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 					} else {
 						assignSteps1.StepName = types.StringNull()
 					}
-					// Not Implemented assignStepsItem.UserIds, {"Name":"","EnumValues":[],"BaseName":"","Extensions":{},"Example":null,"Discriminator":null,"AssociatedTypes":[],"RefType":"","Input":false,"ItemType":{"BaseName":"","Truncated":false,"Format":"","Scope":"","Type":"number","AssociatedTypes":[],"RefType":"","Discriminator":null,"Name":"","EnumValues":[],"Comments":null,"Input":false,"Extensions":{"Symbol":"UserIds"},"Example":null,"ItemType":null,"Output":false,"Fields":[]},"Comments":null,"Output":false,"Format":"","Type":"array","Fields":[],"Scope":"","Truncated":false}, true, , , assignSteps1.UserIds
+					// Not Implemented assignStepsItem.UserIds, {"ItemType":{"BaseName":"","RefType":"","Comments":null,"Extensions":{"Symbol":"UserIds"},"AssociatedTypes":[],"Scope":"","Example":null,"Type":"number","Fields":[],"Input":false,"Output":false,"Format":"","Discriminator":null,"Name":"","ItemType":null,"EnumValues":[],"Truncated":false},"EnumValues":[],"Comments":null,"Input":false,"Fields":[],"AssociatedTypes":[],"Scope":"","Type":"array","BaseName":"","Output":false,"Format":"","Discriminator":null,"Name":"","RefType":"","Truncated":false,"Extensions":{},"Example":null}, true, , , assignSteps1.UserIds
 					actions1.TriggerWorkflowActionConfig.Config.AssignSteps = append(actions1.TriggerWorkflowActionConfig.Config.AssignSteps, assignSteps1)
 				}
 				actions1.TriggerWorkflowActionConfig.Config.Assignees = nil
@@ -481,7 +481,7 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 							}
 						}
 						if conditionsItem.Value.ArrayOfNumber != nil {
-							// Not Implemented conditionsItem.Value.ArrayOfNumber, {"RefType":"","Format":"","Fields":[],"Example":null,"ItemType":{"Name":"","Comments":null,"Extensions":{"Symbol":"UserIds"},"Format":"","Truncated":false,"Type":"number","Fields":[],"AssociatedTypes":[],"BaseName":"","ItemType":null,"EnumValues":[],"Example":null,"Discriminator":null,"Scope":"","RefType":"","Input":false,"Output":false},"Type":"array","AssociatedTypes":[],"Comments":null,"Input":false,"Output":false,"Extensions":{},"Discriminator":null,"Name":"arrayOfNumber","Scope":"","BaseName":"","Truncated":false,"EnumValues":[]}, false, , , conditions1.Value.ArrayOfNumber
+							// Not Implemented conditionsItem.Value.ArrayOfNumber, {"BaseName":"","RefType":"","Truncated":false,"Input":false,"Name":"arrayOfNumber","Type":"array","Comments":null,"Output":false,"Example":null,"Discriminator":null,"EnumValues":[],"Scope":"","Extensions":{},"ItemType":{"Name":"","AssociatedTypes":[],"EnumValues":[],"ItemType":null,"Fields":[],"Scope":"","Input":false,"Format":"","Type":"number","BaseName":"","RefType":"","Comments":null,"Output":false,"Discriminator":null,"Truncated":false,"Extensions":{"Symbol":"UserIds"},"Example":null},"AssociatedTypes":[],"Fields":[],"Format":""}, false, , , conditions1.Value.ArrayOfNumber
 						}
 					}
 					actions1.TriggerWorkflowActionConfig.Config.Conditions = append(actions1.TriggerWorkflowActionConfig.Config.Conditions, conditions1)
@@ -996,7 +996,7 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 				}
 			}
 			if triggerConditionsItem.Value.ArrayOfNumber != nil {
-				// Not Implemented triggerConditionsItem.Value.ArrayOfNumber, {"Discriminator":null,"Name":"arrayOfNumber","Fields":[],"Output":false,"Example":null,"Scope":"","Comments":null,"Type":"array","ItemType":{"ItemType":null,"Fields":[],"Input":false,"Extensions":{"Symbol":"UserIds"},"Name":"","AssociatedTypes":[],"Scope":"","Output":false,"Example":null,"Format":"","Type":"number","RefType":"","Truncated":false,"Discriminator":null,"EnumValues":[],"BaseName":"","Comments":null},"AssociatedTypes":[],"EnumValues":[],"BaseName":"","RefType":"","Input":false,"Format":"","Truncated":false,"Extensions":{}}, false, , , triggerConditions1.Value.ArrayOfNumber
+				// Not Implemented triggerConditionsItem.Value.ArrayOfNumber, {"Scope":"","Truncated":false,"Input":false,"Output":false,"Extensions":{},"Example":null,"Format":"","Type":"array","ItemType":{"EnumValues":[],"RefType":"","Truncated":false,"Input":false,"Format":"","Extensions":{"Symbol":"UserIds"},"Example":null,"ItemType":null,"Fields":[],"BaseName":"","Comments":null,"Output":false,"Name":"","Type":"number","Scope":"","AssociatedTypes":[],"Discriminator":null},"Fields":[],"AssociatedTypes":[],"RefType":"","Comments":null,"EnumValues":[],"Discriminator":null,"Name":"arrayOfNumber","BaseName":""}, false, , , triggerConditions1.Value.ArrayOfNumber
 			}
 		}
 		r.TriggerConditions = append(r.TriggerConditions, triggerConditions1)
