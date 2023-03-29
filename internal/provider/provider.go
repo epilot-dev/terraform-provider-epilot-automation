@@ -4,8 +4,8 @@ package provider
 
 import (
 	"context"
-	"epilotautomation/internal/sdk"
-	"epilotautomation/internal/sdk/pkg/models/shared"
+	"epilot-automation/internal/sdk"
+	"epilot-automation/internal/sdk/pkg/models/shared"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
@@ -14,27 +14,27 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-var _ provider.Provider = &EpilotautomationProvider{}
+var _ provider.Provider = &EpilotAutomationProvider{}
 
-type EpilotautomationProvider struct {
+type EpilotAutomationProvider struct {
 	// version is set to the provider version on release, "dev" when the
 	// provider is built and ran locally, and "test" when running acceptance
 	// testing.
 	version string
 }
 
-// EpilotautomationProviderModel describes the provider data model.
-type EpilotautomationProviderModel struct {
+// EpilotAutomationProviderModel describes the provider data model.
+type EpilotAutomationProviderModel struct {
 	ServerURL  types.String `tfsdk:"server_url"`
 	EpilotAuth types.String `tfsdk:"epilot_auth"`
 }
 
-func (p *EpilotautomationProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
-	resp.TypeName = "epilotautomation"
+func (p *EpilotAutomationProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
+	resp.TypeName = "epilot-automation"
 	resp.Version = p.version
 }
 
-func (p *EpilotautomationProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
+func (p *EpilotAutomationProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"server_url": schema.StringAttribute{
@@ -49,8 +49,8 @@ func (p *EpilotautomationProvider) Schema(ctx context.Context, req provider.Sche
 	}
 }
 
-func (p *EpilotautomationProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
-	var data EpilotautomationProviderModel
+func (p *EpilotAutomationProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
+	var data EpilotAutomationProviderModel
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 
@@ -79,19 +79,19 @@ func (p *EpilotautomationProvider) Configure(ctx context.Context, req provider.C
 	resp.ResourceData = client
 }
 
-func (p *EpilotautomationProvider) Resources(ctx context.Context) []func() resource.Resource {
+func (p *EpilotAutomationProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		NewFlowResource,
 	}
 }
 
-func (p *EpilotautomationProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
+func (p *EpilotAutomationProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{}
 }
 
 func New(version string) func() provider.Provider {
 	return func() provider.Provider {
-		return &EpilotautomationProvider{
+		return &EpilotAutomationProvider{
 			version: version,
 		}
 	}

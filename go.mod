@@ -1,4 +1,4 @@
-module epilotautomation
+module epilot-automation
 
 go 1.18
 

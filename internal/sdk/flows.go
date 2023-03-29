@@ -4,9 +4,9 @@ package sdk
 
 import (
 	"context"
-	"epilotautomation/internal/sdk/pkg/models/operations"
-	"epilotautomation/internal/sdk/pkg/models/shared"
-	"epilotautomation/internal/sdk/pkg/utils"
+	"epilot-automation/internal/sdk/pkg/models/operations"
+	"epilot-automation/internal/sdk/pkg/models/shared"
+	"epilot-automation/internal/sdk/pkg/utils"
 	"fmt"
 	"net/http"
 	"strings"
@@ -60,7 +60,6 @@ func (s *flows) CreateFlow(ctx context.Context, request shared.AutomationFlowInp
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -105,7 +104,6 @@ func (s *flows) DeleteFlow(ctx context.Context, request operations.DeleteFlowReq
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -150,7 +148,6 @@ func (s *flows) GetFlow(ctx context.Context, request operations.GetFlowRequest) 
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -202,7 +199,6 @@ func (s *flows) PutFlow(ctx context.Context, request operations.PutFlowRequest) 
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -251,7 +247,6 @@ func (s *flows) SearchFlows(ctx context.Context, request operations.SearchFlowsR
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
-	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 

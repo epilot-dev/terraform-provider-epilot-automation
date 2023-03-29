@@ -4,11 +4,11 @@ package provider
 
 import (
 	"context"
-	"epilotautomation/internal/sdk"
-	"epilotautomation/internal/sdk/pkg/models/operations"
+	"epilot-automation/internal/sdk"
+	"epilot-automation/internal/sdk/pkg/models/operations"
 	"fmt"
 
-	"epilotautomation/internal/validators"
+	"epilot-automation/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
