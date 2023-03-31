@@ -53,6 +53,7 @@ func (s *executions) CancelExecution(ctx context.Context, request operations.Can
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
+	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -97,6 +98,7 @@ func (s *executions) GetExecution(ctx context.Context, request operations.GetExe
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
+	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -145,6 +147,7 @@ func (s *executions) GetExecutions(ctx context.Context, request operations.GetEx
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
+	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -196,6 +199,7 @@ func (s *executions) RetriggerAction(ctx context.Context, request operations.Ret
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
+	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
@@ -238,6 +242,7 @@ func (s *executions) StartExecution(ctx context.Context, request shared.StartExe
 	if httpRes == nil {
 		return nil, fmt.Errorf("error sending request: no response")
 	}
+	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
