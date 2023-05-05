@@ -2,39 +2,14 @@
 
 package shared
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
-type TriggerWebhookActionConfigTypeEnum string
-
-const (
-	TriggerWebhookActionConfigTypeEnumTriggerWebhook TriggerWebhookActionConfigTypeEnum = "trigger-webhook"
-)
-
-func (e *TriggerWebhookActionConfigTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
-		return err
-	}
-	switch s {
-	case "trigger-webhook":
-		*e = TriggerWebhookActionConfigTypeEnum(s)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for TriggerWebhookActionConfigTypeEnum: %s", s)
-	}
-}
-
 type TriggerWebhookActionConfig struct {
 	// Whether to stop execution in a failed state if this action fails
 	AllowFailure *bool                 `json:"allow_failure,omitempty"`
 	Config       *TriggerWebhookConfig `json:"config,omitempty"`
 	// Flag indicating whether the action was created automatically or manually
-	CreatedAutomatically *bool                               `json:"created_automatically,omitempty"`
-	FlowActionID         *string                             `json:"flow_action_id,omitempty"`
-	ID                   *string                             `json:"id,omitempty"`
-	Name                 *string                             `json:"name,omitempty"`
-	Type                 *TriggerWebhookActionConfigTypeEnum `json:"type,omitempty"`
+	CreatedAutomatically *bool       `json:"created_automatically,omitempty"`
+	FlowActionID         *string     `json:"flow_action_id,omitempty"`
+	ID                   *string     `json:"id,omitempty"`
+	Name                 *string     `json:"name,omitempty"`
+	Type                 interface{} `json:"type,omitempty"`
 }

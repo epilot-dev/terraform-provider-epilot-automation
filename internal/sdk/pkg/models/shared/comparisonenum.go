@@ -16,12 +16,16 @@ const (
 	ComparisonEnumIsEmpty  ComparisonEnum = "is_empty"
 )
 
+func (e ComparisonEnum) ToPointer() *ComparisonEnum {
+	return &e
+}
+
 func (e *ComparisonEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "equals":
 		fallthrough
 	case "any_of":
@@ -29,9 +33,9 @@ func (e *ComparisonEnum) UnmarshalJSON(data []byte) error {
 	case "not_empty":
 		fallthrough
 	case "is_empty":
-		*e = ComparisonEnum(s)
+		*e = ComparisonEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ComparisonEnum: %s", s)
+		return fmt.Errorf("invalid value for ComparisonEnum: %v", v)
 	}
 }

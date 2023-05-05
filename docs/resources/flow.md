@@ -239,7 +239,7 @@ Optional:
 - `flow_action_id` (String)
 - `id` (String)
 - `name` (String)
-- `type` (String)
+- `type` (String) Parsed as JSON.
 
 <a id="nestedatt--actions--cart_checkout_action_config--config"></a>
 ### Nested Schema for `actions.cart_checkout_action_config.config`
@@ -324,7 +324,28 @@ Optional:
 Optional:
 
 - `any` (String) Parsed as JSON.
-- `map_of_any` (Map of String)
+- `operation_object_node` (Attributes) Mapping operation nodes are either primitive values or operation node objects (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--target--operation_object_node))
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--target--operation_object_node"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute_v2.target.operation_object_node`
+
+Optional:
+
+- `additional_properties` (Map of String)
+- `append` (List of String)
+- `copy` (String)
+- `set` (String) Parsed as JSON.
+- `uniq` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--target--operation_object_node--uniq))
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--target--operation_object_node--uniq"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute_v2.target.operation_object_node.uniq`
+
+Optional:
+
+- `array_of_str` (List of String)
+- `boolean` (Boolean)
+
+
 
 
 
@@ -384,7 +405,7 @@ Optional:
 - `flow_action_id` (String)
 - `id` (String)
 - `name` (String)
-- `type` (String)
+- `type` (String) Parsed as JSON.
 
 <a id="nestedatt--actions--create_document_action_config--config"></a>
 ### Nested Schema for `actions.create_document_action_config.config`
@@ -407,7 +428,7 @@ Optional:
 - `flow_action_id` (String)
 - `id` (String)
 - `name` (String)
-- `type` (String)
+- `type` (String) Parsed as JSON.
 
 <a id="nestedatt--actions--map_entity_action_config--config"></a>
 ### Nested Schema for `actions.map_entity_action_config.config`
@@ -495,7 +516,28 @@ Optional:
 Optional:
 
 - `any` (String) Parsed as JSON.
-- `map_of_any` (Map of String)
+- `operation_object_node` (Attributes) Mapping operation nodes are either primitive values or operation node objects (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--target--operation_object_node))
+
+<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--target--operation_object_node"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute_v2.target.operation_object_node`
+
+Optional:
+
+- `additional_properties` (Map of String)
+- `append` (List of String)
+- `copy` (String)
+- `set` (String) Parsed as JSON.
+- `uniq` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--target--operation_object_node--uniq))
+
+<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--target--operation_object_node--uniq"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute_v2.target.operation_object_node.uniq`
+
+Optional:
+
+- `array_of_str` (List of String)
+- `boolean` (Boolean)
+
+
 
 
 
@@ -555,7 +597,7 @@ Optional:
 - `flow_action_id` (String)
 - `id` (String)
 - `name` (String)
-- `type` (String)
+- `type` (String) Parsed as JSON.
 
 <a id="nestedatt--actions--send_email_action_config--config"></a>
 ### Nested Schema for `actions.send_email_action_config.config`
@@ -601,7 +643,7 @@ Optional:
 - `flow_action_id` (String)
 - `id` (String)
 - `name` (String)
-- `type` (String)
+- `type` (String) Parsed as JSON.
 
 <a id="nestedatt--actions--trigger_webhook_action_config--config"></a>
 ### Nested Schema for `actions.trigger_webhook_action_config.config`
@@ -624,7 +666,7 @@ Optional:
 - `flow_action_id` (String)
 - `id` (String)
 - `name` (String)
-- `type` (String)
+- `type` (String) Parsed as JSON.
 
 <a id="nestedatt--actions--trigger_workflow_action_config--config"></a>
 ### Nested Schema for `actions.trigger_workflow_action_config.config`

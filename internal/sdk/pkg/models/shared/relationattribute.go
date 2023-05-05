@@ -15,21 +15,25 @@ const (
 	RelationAttributeModeEnumSet     RelationAttributeModeEnum = "set"
 )
 
+func (e RelationAttributeModeEnum) ToPointer() *RelationAttributeModeEnum {
+	return &e
+}
+
 func (e *RelationAttributeModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "append":
 		fallthrough
 	case "prepend":
 		fallthrough
 	case "set":
-		*e = RelationAttributeModeEnum(s)
+		*e = RelationAttributeModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RelationAttributeModeEnum: %s", s)
+		return fmt.Errorf("invalid value for RelationAttributeModeEnum: %v", v)
 	}
 }
 

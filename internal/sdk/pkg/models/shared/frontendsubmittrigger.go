@@ -17,17 +17,21 @@ const (
 	FrontendSubmitTriggerTypeEnumFrontendSubmission FrontendSubmitTriggerTypeEnum = "frontend_submission"
 )
 
+func (e FrontendSubmitTriggerTypeEnum) ToPointer() *FrontendSubmitTriggerTypeEnum {
+	return &e
+}
+
 func (e *FrontendSubmitTriggerTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "frontend_submission":
-		*e = FrontendSubmitTriggerTypeEnum(s)
+		*e = FrontendSubmitTriggerTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for FrontendSubmitTriggerTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for FrontendSubmitTriggerTypeEnum: %v", v)
 	}
 }
 

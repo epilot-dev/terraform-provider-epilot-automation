@@ -13,17 +13,21 @@ const (
 	ReceivedEmailTriggerConfigurationMessageTypeEnumReceived ReceivedEmailTriggerConfigurationMessageTypeEnum = "RECEIVED"
 )
 
+func (e ReceivedEmailTriggerConfigurationMessageTypeEnum) ToPointer() *ReceivedEmailTriggerConfigurationMessageTypeEnum {
+	return &e
+}
+
 func (e *ReceivedEmailTriggerConfigurationMessageTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "RECEIVED":
-		*e = ReceivedEmailTriggerConfigurationMessageTypeEnum(s)
+		*e = ReceivedEmailTriggerConfigurationMessageTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ReceivedEmailTriggerConfigurationMessageTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for ReceivedEmailTriggerConfigurationMessageTypeEnum: %v", v)
 	}
 }
 
@@ -37,17 +41,21 @@ const (
 	ReceivedEmailTriggerTypeEnumReceivedEmail ReceivedEmailTriggerTypeEnum = "received_email"
 )
 
+func (e ReceivedEmailTriggerTypeEnum) ToPointer() *ReceivedEmailTriggerTypeEnum {
+	return &e
+}
+
 func (e *ReceivedEmailTriggerTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "received_email":
-		*e = ReceivedEmailTriggerTypeEnum(s)
+		*e = ReceivedEmailTriggerTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ReceivedEmailTriggerTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for ReceivedEmailTriggerTypeEnum: %v", v)
 	}
 }
 

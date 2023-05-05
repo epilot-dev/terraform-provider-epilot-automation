@@ -15,18 +15,22 @@ const (
 	RetryStrategyEnumRetryAndStop   RetryStrategyEnum = "RETRY_AND_STOP"
 )
 
+func (e RetryStrategyEnum) ToPointer() *RetryStrategyEnum {
+	return &e
+}
+
 func (e *RetryStrategyEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "RETRY_AND_RESUME":
 		fallthrough
 	case "RETRY_AND_STOP":
-		*e = RetryStrategyEnum(s)
+		*e = RetryStrategyEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RetryStrategyEnum: %s", s)
+		return fmt.Errorf("invalid value for RetryStrategyEnum: %v", v)
 	}
 }

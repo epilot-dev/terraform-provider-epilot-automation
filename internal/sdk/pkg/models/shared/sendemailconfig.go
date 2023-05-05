@@ -24,12 +24,16 @@ const (
 	SendEmailConfigAttachmentsSourceFilterDocumentTypeEnumUnknown      SendEmailConfigAttachmentsSourceFilterDocumentTypeEnum = "unknown"
 )
 
+func (e SendEmailConfigAttachmentsSourceFilterDocumentTypeEnum) ToPointer() *SendEmailConfigAttachmentsSourceFilterDocumentTypeEnum {
+	return &e
+}
+
 func (e *SendEmailConfigAttachmentsSourceFilterDocumentTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "document":
 		fallthrough
 	case "text":
@@ -51,10 +55,10 @@ func (e *SendEmailConfigAttachmentsSourceFilterDocumentTypeEnum) UnmarshalJSON(d
 	case "application":
 		fallthrough
 	case "unknown":
-		*e = SendEmailConfigAttachmentsSourceFilterDocumentTypeEnum(s)
+		*e = SendEmailConfigAttachmentsSourceFilterDocumentTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SendEmailConfigAttachmentsSourceFilterDocumentTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SendEmailConfigAttachmentsSourceFilterDocumentTypeEnum: %v", v)
 	}
 }
 
@@ -88,19 +92,23 @@ const (
 	SendEmailConfigLanguageCodeEnumEn SendEmailConfigLanguageCodeEnum = "en"
 )
 
+func (e SendEmailConfigLanguageCodeEnum) ToPointer() *SendEmailConfigLanguageCodeEnum {
+	return &e
+}
+
 func (e *SendEmailConfigLanguageCodeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "de":
 		fallthrough
 	case "en":
-		*e = SendEmailConfigLanguageCodeEnum(s)
+		*e = SendEmailConfigLanguageCodeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SendEmailConfigLanguageCodeEnum: %s", s)
+		return fmt.Errorf("invalid value for SendEmailConfigLanguageCodeEnum: %v", v)
 	}
 }
 

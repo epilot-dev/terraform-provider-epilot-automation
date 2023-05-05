@@ -1,9 +1,9 @@
-.PHONY: all
-all: docs
+.PHONY: all docs
+all: docs speakeasy
 
 speakeasy:
 	speakeasy generate sdk --lang terraform -o . -s automation.yaml
 
-docs: speakeasy
+docs:
 	go generate ./...
 

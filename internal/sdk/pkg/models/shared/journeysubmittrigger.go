@@ -17,17 +17,21 @@ const (
 	JourneySubmitTriggerTypeEnumJourneySubmission JourneySubmitTriggerTypeEnum = "journey_submission"
 )
 
+func (e JourneySubmitTriggerTypeEnum) ToPointer() *JourneySubmitTriggerTypeEnum {
+	return &e
+}
+
 func (e *JourneySubmitTriggerTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "journey_submission":
-		*e = JourneySubmitTriggerTypeEnum(s)
+		*e = JourneySubmitTriggerTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for JourneySubmitTriggerTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for JourneySubmitTriggerTypeEnum: %v", v)
 	}
 }
 

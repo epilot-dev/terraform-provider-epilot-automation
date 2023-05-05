@@ -2,39 +2,14 @@
 
 package shared
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
-type AutomationActionExecutionStateTypeEnum3 string
-
-const (
-	AutomationActionExecutionStateTypeEnum3CreateDocument AutomationActionExecutionStateTypeEnum3 = "create-document"
-)
-
-func (e *AutomationActionExecutionStateTypeEnum3) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
-		return err
-	}
-	switch s {
-	case "create-document":
-		*e = AutomationActionExecutionStateTypeEnum3(s)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AutomationActionExecutionStateTypeEnum3: %s", s)
-	}
-}
-
 type AutomationActionExecutionState3 struct {
 	Config          *CreateDocumentConfig  `json:"config,omitempty"`
 	ErrorOutput     *ErrorOutput           `json:"error_output,omitempty"`
 	ExecutionStatus *ExecutionStatusEnum   `json:"execution_status,omitempty"`
 	Outputs         map[string]interface{} `json:"outputs,omitempty"`
 	// different behaviors for retrying failed execution actions.
-	RetryStrategy *RetryStrategyEnum                       `json:"retry_strategy,omitempty"`
-	StartedAt     *string                                  `json:"started_at,omitempty"`
-	Type          *AutomationActionExecutionStateTypeEnum3 `json:"type,omitempty"`
-	UpdatedAt     *string                                  `json:"updated_at,omitempty"`
+	RetryStrategy *RetryStrategyEnum `json:"retry_strategy,omitempty"`
+	StartedAt     *string            `json:"started_at,omitempty"`
+	Type          interface{}        `json:"type,omitempty"`
+	UpdatedAt     *string            `json:"updated_at,omitempty"`
 }

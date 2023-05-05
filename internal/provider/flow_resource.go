@@ -9,6 +9,7 @@ import (
 	"fmt"
 
 	"epilot-automation/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -98,13 +99,58 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 															"operation": schema.SingleNestedAttribute{
 																Required: true,
 																Attributes: map[string]schema.Attribute{
-																	"map_of_any": schema.MapAttribute{
-																		Computed:    true,
-																		Optional:    true,
-																		ElementType: types.StringType,
-																		Validators: []validator.Map{
-																			mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+																	"operation_object_node": schema.SingleNestedAttribute{
+																		Computed: true,
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"append": schema.ListAttribute{
+																				Computed:    true,
+																				Optional:    true,
+																				ElementType: types.StringType,
+																				Validators: []validator.List{
+																					listvalidator.ValueStringsAre(validators.IsValidJSON()),
+																				},
+																			},
+																			"copy": schema.StringAttribute{
+																				Computed: true,
+																				Optional: true,
+																			},
+																			"set": schema.StringAttribute{
+																				Computed: true,
+																				Optional: true,
+																				Validators: []validator.String{
+																					validators.IsValidJSON(),
+																				},
+																				Description: `Parsed as JSON.`,
+																			},
+																			"uniq": schema.SingleNestedAttribute{
+																				Computed: true,
+																				Optional: true,
+																				Attributes: map[string]schema.Attribute{
+																					"boolean": schema.BoolAttribute{
+																						Computed: true,
+																						Optional: true,
+																					},
+																					"array_of_str": schema.ListAttribute{
+																						Computed:    true,
+																						Optional:    true,
+																						ElementType: types.StringType,
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																			"additional_properties": schema.MapAttribute{
+																				Computed:    true,
+																				Optional:    true,
+																				ElementType: types.StringType,
+																				Validators: []validator.Map{
+																					mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+																				},
+																			},
 																		},
+																		Description: `Mapping operation nodes are either primitive values or operation node objects`,
 																	},
 																	"any": schema.StringAttribute{
 																		Computed: true,
@@ -340,10 +386,9 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
-										stringvalidator.OneOf(
-											"map-entity",
-										),
+										validators.IsValidJSON(),
 									},
+									Description: `Parsed as JSON.`,
 								},
 							},
 						},
@@ -463,10 +508,9 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
-										stringvalidator.OneOf(
-											"trigger-workflow",
-										),
+										validators.IsValidJSON(),
 									},
+									Description: `Parsed as JSON.`,
 								},
 							},
 						},
@@ -513,10 +557,9 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
-										stringvalidator.OneOf(
-											"trigger-webhook",
-										),
+										validators.IsValidJSON(),
 									},
+									Description: `Parsed as JSON.`,
 								},
 							},
 						},
@@ -562,10 +605,9 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
-										stringvalidator.OneOf(
-											"create-document",
-										),
+										validators.IsValidJSON(),
 									},
+									Description: `Parsed as JSON.`,
 								},
 							},
 						},
@@ -676,10 +718,9 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
-										stringvalidator.OneOf(
-											"send-email",
-										),
+										validators.IsValidJSON(),
 									},
+									Description: `Parsed as JSON.`,
 								},
 							},
 						},
@@ -716,13 +757,58 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 															"operation": schema.SingleNestedAttribute{
 																Required: true,
 																Attributes: map[string]schema.Attribute{
-																	"map_of_any": schema.MapAttribute{
-																		Computed:    true,
-																		Optional:    true,
-																		ElementType: types.StringType,
-																		Validators: []validator.Map{
-																			mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+																	"operation_object_node": schema.SingleNestedAttribute{
+																		Computed: true,
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"append": schema.ListAttribute{
+																				Computed:    true,
+																				Optional:    true,
+																				ElementType: types.StringType,
+																				Validators: []validator.List{
+																					listvalidator.ValueStringsAre(validators.IsValidJSON()),
+																				},
+																			},
+																			"copy": schema.StringAttribute{
+																				Computed: true,
+																				Optional: true,
+																			},
+																			"set": schema.StringAttribute{
+																				Computed: true,
+																				Optional: true,
+																				Validators: []validator.String{
+																					validators.IsValidJSON(),
+																				},
+																				Description: `Parsed as JSON.`,
+																			},
+																			"uniq": schema.SingleNestedAttribute{
+																				Computed: true,
+																				Optional: true,
+																				Attributes: map[string]schema.Attribute{
+																					"boolean": schema.BoolAttribute{
+																						Computed: true,
+																						Optional: true,
+																					},
+																					"array_of_str": schema.ListAttribute{
+																						Computed:    true,
+																						Optional:    true,
+																						ElementType: types.StringType,
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																			"additional_properties": schema.MapAttribute{
+																				Computed:    true,
+																				Optional:    true,
+																				ElementType: types.StringType,
+																				Validators: []validator.Map{
+																					mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+																				},
+																			},
 																		},
+																		Description: `Mapping operation nodes are either primitive values or operation node objects`,
 																	},
 																	"any": schema.StringAttribute{
 																		Computed: true,
@@ -959,10 +1045,9 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
-										stringvalidator.OneOf(
-											"cart-checkout",
-										),
+										validators.IsValidJSON(),
 									},
+									Description: `Parsed as JSON.`,
 								},
 							},
 							Description: `Creates an order entity with prices from journey`,
@@ -1414,18 +1499,7 @@ func (r *FlowResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 
 func (r *FlowResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *FlowResourceModel
-	var item types.Object
-
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
-		UnhandledNullAsEmpty:    true,
-		UnhandledUnknownAsEmpty: true,
-	})...)
-
+	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}

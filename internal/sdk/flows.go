@@ -89,7 +89,10 @@ func (s *flows) CreateFlow(ctx context.Context, request shared.AutomationFlowInp
 // Update automation flow by id
 func (s *flows) DeleteFlow(ctx context.Context, request operations.DeleteFlowRequest) (*operations.DeleteFlowResponse, error) {
 	baseURL := s.serverURL
-	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/flows/{flow_id}", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/v1/automation/flows/{flow_id}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
 
 	req, err := http.NewRequestWithContext(ctx, "DELETE", url, nil)
 	if err != nil {
@@ -134,7 +137,10 @@ func (s *flows) DeleteFlow(ctx context.Context, request operations.DeleteFlowReq
 // List available automation flows
 func (s *flows) GetFlow(ctx context.Context, request operations.GetFlowRequest) (*operations.GetFlowResponse, error) {
 	baseURL := s.serverURL
-	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/flows/{flow_id}", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/v1/automation/flows/{flow_id}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
@@ -179,7 +185,10 @@ func (s *flows) GetFlow(ctx context.Context, request operations.GetFlowRequest) 
 // Update automation flow by id
 func (s *flows) PutFlow(ctx context.Context, request operations.PutFlowRequest) (*operations.PutFlowResponse, error) {
 	baseURL := s.serverURL
-	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/flows/{flow_id}", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/v1/automation/flows/{flow_id}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "AutomationFlowInput", "json")
 	if err != nil {

@@ -269,11 +269,50 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 					var mappingAttributes1 MapEntityConfigMappingAttributes
 					if mappingAttributesItem.MappingAttributeV2 != nil {
 						mappingAttributes1.MappingAttributeV2 = &MappingAttributeV2{}
-						if mappingAttributesItem.MappingAttributeV2.Operation.MapOfAny != nil {
-							mappingAttributes1.MappingAttributeV2.Operation.MapOfAny = make(map[string]types.String)
-							for key, value := range mappingAttributesItem.MappingAttributeV2.Operation.MapOfAny {
-								result, _ := json.Marshal(value)
-								mappingAttributes1.MappingAttributeV2.Operation.MapOfAny[key] = types.StringValue(string(result))
+						if mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode != nil {
+							mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode = &OperationObjectNode{}
+							mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Append = nil
+							for _, appendItem := range mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Append {
+								var append1 types.String
+								append1Result, _ := json.Marshal(appendItem)
+								append1 = types.StringValue(string(append1Result))
+								mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Append = append(mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Append, append1)
+							}
+							if mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Copy != nil {
+								mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Copy = types.StringValue(*mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Copy)
+							} else {
+								mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Copy = types.StringNull()
+							}
+							if mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Set == nil {
+								mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Set = types.StringNull()
+							} else {
+								setResult, _ := json.Marshal(mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Set)
+								mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Set = types.StringValue(string(setResult))
+							}
+							if mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq == nil {
+								mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Uniq = nil
+							} else {
+								mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Uniq = &OperationObjectNodeUniq{}
+								if mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean != nil {
+									if mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean != nil {
+										mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean = types.BoolValue(*mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean)
+									} else {
+										mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean = types.BoolNull()
+									}
+								}
+								if mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq.ArrayOfStr != nil {
+									mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.ArrayOfStr = nil
+									for _, v := range mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq.ArrayOfStr {
+										mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.ArrayOfStr = append(mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.ArrayOfStr, types.StringValue(v))
+									}
+								}
+							}
+							if mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties == nil && len(mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties) > 0 {
+								mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties = make(map[string]types.String)
+								for key, value := range mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties {
+									result, _ := json.Marshal(value)
+									mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties[key] = types.StringValue(string(result))
+								}
 							}
 						}
 						if mappingAttributesItem.MappingAttributeV2.Operation.Any != nil {
@@ -335,10 +374,12 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 				for _, relationAttributesItem := range actionsItem.MapEntityActionConfig.Config.RelationAttributes {
 					var relationAttributes1 RelationAttribute
 					relationAttributes1.Mode = types.StringValue(string(relationAttributesItem.Mode))
-					relationAttributes1.RelatedTo = make(map[string]types.String)
-					for key1, value2 := range relationAttributesItem.RelatedTo {
-						result1, _ := json.Marshal(value2)
-						relationAttributes1.RelatedTo[key1] = types.StringValue(string(result1))
+					if relationAttributes1.RelatedTo == nil && len(relationAttributesItem.RelatedTo) > 0 {
+						relationAttributes1.RelatedTo = make(map[string]types.String)
+						for key1, value2 := range relationAttributesItem.RelatedTo {
+							result1, _ := json.Marshal(value2)
+							relationAttributes1.RelatedTo[key1] = types.StringValue(string(result1))
+						}
 					}
 					if relationAttributesItem.SourceFilter == nil {
 						relationAttributes1.SourceFilter = nil
@@ -413,10 +454,11 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 			} else {
 				actions1.MapEntityActionConfig.Name = types.StringNull()
 			}
-			if actionsItem.MapEntityActionConfig.Type != nil {
-				actions1.MapEntityActionConfig.Type = types.StringValue(string(*actionsItem.MapEntityActionConfig.Type))
-			} else {
+			if actionsItem.MapEntityActionConfig.Type == nil {
 				actions1.MapEntityActionConfig.Type = types.StringNull()
+			} else {
+				typeResult, _ := json.Marshal(actionsItem.MapEntityActionConfig.Type)
+				actions1.MapEntityActionConfig.Type = types.StringValue(string(typeResult))
 			}
 		}
 		if actionsItem.TriggerWorkflowActionConfig != nil {
@@ -443,7 +485,7 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 					} else {
 						assignSteps1.StepName = types.StringNull()
 					}
-					// Not Implemented assignStepsItem.UserIds, {"AssociatedTypes":[],"EnumValues":[],"Comments":null,"Extensions":{},"Example":null,"Type":"array","Scope":"","RefType":"","Input":false,"Output":false,"ItemType":{"RefType":"","Comments":null,"Format":"","Fields":[],"Example":null,"Type":"number","ItemType":null,"AssociatedTypes":[],"EnumValues":[],"BaseName":"","Truncated":false,"Input":false,"Output":false,"Name":"","Scope":"","Extensions":{"Symbol":"UserIds"},"Discriminator":null},"Fields":[],"Truncated":false,"Format":"","Name":"","BaseName":"","Discriminator":null}, true, , , assignSteps1.UserIds
+					// Not Implemented assignStepsItem.UserIds, {"RefType":"","Output":false,"AdditionalProperties":null,"Discriminator":null,"Fields":[],"Scope":"","BaseName":"","AssociatedTypes":[],"Extensions":{},"Example":null,"ItemType":{"ItemType":null,"AssociatedTypes":[],"Scope":"","Output":false,"Extensions":{"Symbol":"UserIds"},"BaseName":"","RefType":"","Input":false,"AdditionalProperties":null,"Discriminator":null,"Name":"","Fields":[],"Enum":null,"Truncated":false,"Type":"number","Comments":null,"Example":null,"Format":""},"Type":"array","Enum":null,"Truncated":false,"Comments":null,"Input":false,"Format":"","Name":""}, true, , , assignSteps1.UserIds
 					actions1.TriggerWorkflowActionConfig.Config.AssignSteps = append(actions1.TriggerWorkflowActionConfig.Config.AssignSteps, assignSteps1)
 				}
 				actions1.TriggerWorkflowActionConfig.Config.Assignees = nil
@@ -481,7 +523,7 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 							}
 						}
 						if conditionsItem.Value.ArrayOfNumber != nil {
-							// Not Implemented conditionsItem.Value.ArrayOfNumber, {"BaseName":"","Truncated":false,"Comments":null,"Format":"","Type":"array","ItemType":{"Example":null,"Discriminator":null,"ItemType":null,"AssociatedTypes":[],"Truncated":false,"Comments":null,"Scope":"","BaseName":"","Input":false,"Output":false,"Format":"","Name":"","Fields":[],"EnumValues":[],"Extensions":{"Symbol":"UserIds"},"Type":"number","RefType":""},"Fields":[],"AssociatedTypes":[],"Name":"arrayOfNumber","Scope":"","RefType":"","Input":false,"EnumValues":[],"Discriminator":null,"Output":false,"Extensions":{},"Example":null}, false, , , conditions1.Value.ArrayOfNumber
+							// Not Implemented conditionsItem.Value.ArrayOfNumber, {"Truncated":false,"Comments":null,"AdditionalProperties":null,"Type":"array","ItemType":{"Extensions":{"Symbol":"UserIds"},"Format":"","AssociatedTypes":[],"ItemType":null,"Scope":"","Truncated":false,"Input":false,"Type":"number","Example":null,"AdditionalProperties":null,"Discriminator":null,"RefType":"","Fields":[],"Enum":null,"BaseName":"","Comments":null,"Output":false,"Name":""},"Enum":null,"BaseName":"","Name":"arrayOfNumber","AssociatedTypes":[],"Discriminator":null,"Output":false,"Extensions":{},"Example":null,"Format":"","Fields":[],"Scope":"","RefType":"","Input":false}, false, , , conditions1.Value.ArrayOfNumber
 						}
 					}
 					actions1.TriggerWorkflowActionConfig.Config.Conditions = append(actions1.TriggerWorkflowActionConfig.Config.Conditions, conditions1)
@@ -512,10 +554,11 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 			} else {
 				actions1.TriggerWorkflowActionConfig.Name = types.StringNull()
 			}
-			if actionsItem.TriggerWorkflowActionConfig.Type != nil {
-				actions1.TriggerWorkflowActionConfig.Type = types.StringValue(string(*actionsItem.TriggerWorkflowActionConfig.Type))
-			} else {
+			if actionsItem.TriggerWorkflowActionConfig.Type == nil {
 				actions1.TriggerWorkflowActionConfig.Type = types.StringNull()
+			} else {
+				typeResult1, _ := json.Marshal(actionsItem.TriggerWorkflowActionConfig.Type)
+				actions1.TriggerWorkflowActionConfig.Type = types.StringValue(string(typeResult1))
 			}
 		}
 		if actionsItem.TriggerWebhookActionConfig != nil {
@@ -559,10 +602,11 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 			} else {
 				actions1.TriggerWebhookActionConfig.Name = types.StringNull()
 			}
-			if actionsItem.TriggerWebhookActionConfig.Type != nil {
-				actions1.TriggerWebhookActionConfig.Type = types.StringValue(string(*actionsItem.TriggerWebhookActionConfig.Type))
-			} else {
+			if actionsItem.TriggerWebhookActionConfig.Type == nil {
 				actions1.TriggerWebhookActionConfig.Type = types.StringNull()
+			} else {
+				typeResult2, _ := json.Marshal(actionsItem.TriggerWebhookActionConfig.Type)
+				actions1.TriggerWebhookActionConfig.Type = types.StringValue(string(typeResult2))
 			}
 		}
 		if actionsItem.CreateDocumentActionConfig != nil {
@@ -607,10 +651,11 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 			} else {
 				actions1.CreateDocumentActionConfig.Name = types.StringNull()
 			}
-			if actionsItem.CreateDocumentActionConfig.Type != nil {
-				actions1.CreateDocumentActionConfig.Type = types.StringValue(string(*actionsItem.CreateDocumentActionConfig.Type))
-			} else {
+			if actionsItem.CreateDocumentActionConfig.Type == nil {
 				actions1.CreateDocumentActionConfig.Type = types.StringNull()
+			} else {
+				typeResult3, _ := json.Marshal(actionsItem.CreateDocumentActionConfig.Type)
+				actions1.CreateDocumentActionConfig.Type = types.StringValue(string(typeResult3))
 			}
 		}
 		if actionsItem.SendEmailActionConfig != nil {
@@ -700,10 +745,11 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 			} else {
 				actions1.SendEmailActionConfig.Name = types.StringNull()
 			}
-			if actionsItem.SendEmailActionConfig.Type != nil {
-				actions1.SendEmailActionConfig.Type = types.StringValue(string(*actionsItem.SendEmailActionConfig.Type))
-			} else {
+			if actionsItem.SendEmailActionConfig.Type == nil {
 				actions1.SendEmailActionConfig.Type = types.StringNull()
+			} else {
+				typeResult4, _ := json.Marshal(actionsItem.SendEmailActionConfig.Type)
+				actions1.SendEmailActionConfig.Type = types.StringValue(string(typeResult4))
 			}
 		}
 		if actionsItem.CartCheckoutActionConfig != nil {
@@ -731,11 +777,50 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 					var mappingAttributes3 CartCheckoutConfigMappingAttributes
 					if mappingAttributesItem1.MappingAttributeV2 != nil {
 						mappingAttributes3.MappingAttributeV2 = &MappingAttributeV21{}
-						if mappingAttributesItem1.MappingAttributeV2.Operation.MapOfAny != nil {
-							mappingAttributes3.MappingAttributeV2.Operation.MapOfAny = make(map[string]types.String)
-							for key2, value4 := range mappingAttributesItem1.MappingAttributeV2.Operation.MapOfAny {
-								result2, _ := json.Marshal(value4)
-								mappingAttributes3.MappingAttributeV2.Operation.MapOfAny[key2] = types.StringValue(string(result2))
+						if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode != nil {
+							mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode = &OperationObjectNode1{}
+							mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Append = nil
+							for _, appendItem1 := range mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Append {
+								var append3 types.String
+								append3Result, _ := json.Marshal(appendItem1)
+								append3 = types.StringValue(string(append3Result))
+								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Append = append(mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Append, append3)
+							}
+							if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Copy != nil {
+								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Copy = types.StringValue(*mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Copy)
+							} else {
+								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Copy = types.StringNull()
+							}
+							if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Set == nil {
+								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Set = types.StringNull()
+							} else {
+								setResult1, _ := json.Marshal(mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Set)
+								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Set = types.StringValue(string(setResult1))
+							}
+							if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq == nil {
+								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq = nil
+							} else {
+								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq = &OperationObjectNodeUniq1{}
+								if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean != nil {
+									if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean != nil {
+										mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean = types.BoolValue(*mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean)
+									} else {
+										mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean = types.BoolNull()
+									}
+								}
+								if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.ArrayOfStr != nil {
+									mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq.ArrayOfStr = nil
+									for _, v := range mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.ArrayOfStr {
+										mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq.ArrayOfStr = append(mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq.ArrayOfStr, types.StringValue(v))
+									}
+								}
+							}
+							if mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties == nil && len(mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties) > 0 {
+								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties = make(map[string]types.String)
+								for key2, value4 := range mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties {
+									result2, _ := json.Marshal(value4)
+									mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties[key2] = types.StringValue(string(result2))
+								}
 							}
 						}
 						if mappingAttributesItem1.MappingAttributeV2.Operation.Any != nil {
@@ -797,10 +882,12 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 				for _, relationAttributesItem1 := range actionsItem.CartCheckoutActionConfig.Config.RelationAttributes {
 					var relationAttributes3 RelationAttribute
 					relationAttributes3.Mode = types.StringValue(string(relationAttributesItem1.Mode))
-					relationAttributes3.RelatedTo = make(map[string]types.String)
-					for key3, value6 := range relationAttributesItem1.RelatedTo {
-						result3, _ := json.Marshal(value6)
-						relationAttributes3.RelatedTo[key3] = types.StringValue(string(result3))
+					if relationAttributes3.RelatedTo == nil && len(relationAttributesItem1.RelatedTo) > 0 {
+						relationAttributes3.RelatedTo = make(map[string]types.String)
+						for key3, value6 := range relationAttributesItem1.RelatedTo {
+							result3, _ := json.Marshal(value6)
+							relationAttributes3.RelatedTo[key3] = types.StringValue(string(result3))
+						}
 					}
 					if relationAttributesItem1.SourceFilter == nil {
 						relationAttributes3.SourceFilter = nil
@@ -879,10 +966,11 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 			} else {
 				actions1.CartCheckoutActionConfig.Name = types.StringNull()
 			}
-			if actionsItem.CartCheckoutActionConfig.Type != nil {
-				actions1.CartCheckoutActionConfig.Type = types.StringValue(string(*actionsItem.CartCheckoutActionConfig.Type))
-			} else {
+			if actionsItem.CartCheckoutActionConfig.Type == nil {
 				actions1.CartCheckoutActionConfig.Type = types.StringNull()
+			} else {
+				typeResult5, _ := json.Marshal(actionsItem.CartCheckoutActionConfig.Type)
+				actions1.CartCheckoutActionConfig.Type = types.StringValue(string(typeResult5))
 			}
 		}
 		if actionsItem.AutomationActionConfig != nil {
@@ -892,10 +980,12 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 			} else {
 				actions1.AutomationActionConfig.AllowFailure = types.BoolNull()
 			}
-			actions1.AutomationActionConfig.Config = make(map[string]types.String)
-			for key4, value7 := range actionsItem.AutomationActionConfig.Config {
-				result4, _ := json.Marshal(value7)
-				actions1.AutomationActionConfig.Config[key4] = types.StringValue(string(result4))
+			if actions1.AutomationActionConfig.Config == nil && len(actionsItem.AutomationActionConfig.Config) > 0 {
+				actions1.AutomationActionConfig.Config = make(map[string]types.String)
+				for key4, value7 := range actionsItem.AutomationActionConfig.Config {
+					result4, _ := json.Marshal(value7)
+					actions1.AutomationActionConfig.Config[key4] = types.StringValue(string(result4))
+				}
 			}
 			if actionsItem.AutomationActionConfig.CreatedAutomatically != nil {
 				actions1.AutomationActionConfig.CreatedAutomatically = types.BoolValue(*actionsItem.AutomationActionConfig.CreatedAutomatically)
@@ -996,7 +1086,7 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 				}
 			}
 			if triggerConditionsItem.Value.ArrayOfNumber != nil {
-				// Not Implemented triggerConditionsItem.Value.ArrayOfNumber, {"Name":"arrayOfNumber","Fields":[],"AssociatedTypes":[],"Comments":null,"Input":false,"Output":false,"Format":"","ItemType":{"Fields":[],"RefType":"","Truncated":false,"Input":false,"Output":false,"Extensions":{"Symbol":"UserIds"},"Name":"","Type":"number","EnumValues":[],"BaseName":"","Format":"","AssociatedTypes":[],"Comments":null,"Example":null,"Discriminator":null,"ItemType":null,"Scope":""},"EnumValues":[],"Scope":"","BaseName":"","Extensions":{},"Example":null,"Discriminator":null,"Truncated":false,"Type":"array","RefType":""}, false, , , triggerConditions1.Value.ArrayOfNumber
+				// Not Implemented triggerConditionsItem.Value.ArrayOfNumber, {"ItemType":{"ItemType":null,"RefType":"","Comments":null,"AdditionalProperties":null,"Name":"","AssociatedTypes":[],"Enum":null,"Input":false,"Example":null,"Discriminator":null,"Fields":[],"Extensions":{"Symbol":"UserIds"},"Type":"number","BaseName":"","Truncated":false,"Output":false,"Format":"","Scope":""},"AssociatedTypes":[],"Enum":null,"Output":false,"Discriminator":null,"Type":"array","Scope":"","RefType":"","Truncated":false,"Extensions":{},"Fields":[],"BaseName":"","AdditionalProperties":null,"Name":"arrayOfNumber","Comments":null,"Input":false,"Example":null,"Format":""}, false, , , triggerConditions1.Value.ArrayOfNumber
 			}
 		}
 		r.TriggerConditions = append(r.TriggerConditions, triggerConditions1)

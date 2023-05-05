@@ -11,23 +11,23 @@ import (
 type OperationNodeType string
 
 const (
-	OperationNodeTypeMapOfAny OperationNodeType = "mapOfAny"
-	OperationNodeTypeAny      OperationNodeType = "any"
+	OperationNodeTypeOperationObjectNode OperationNodeType = "OperationObjectNode"
+	OperationNodeTypeAny                 OperationNodeType = "any"
 )
 
 type OperationNode struct {
-	MapOfAny map[string]interface{}
-	Any      interface{}
+	OperationObjectNode *OperationObjectNode
+	Any                 interface{}
 
 	Type OperationNodeType
 }
 
-func CreateOperationNodeMapOfAny(mapOfAny map[string]interface{}) OperationNode {
-	typ := OperationNodeTypeMapOfAny
+func CreateOperationNodeOperationObjectNode(operationObjectNode OperationObjectNode) OperationNode {
+	typ := OperationNodeTypeOperationObjectNode
 
 	return OperationNode{
-		MapOfAny: mapOfAny,
-		Type:     typ,
+		OperationObjectNode: &operationObjectNode,
+		Type:                typ,
 	}
 }
 
@@ -43,12 +43,12 @@ func CreateOperationNodeAny(any interface{}) OperationNode {
 func (u *OperationNode) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	mapOfAny := map[string]interface{}{}
+	operationObjectNode := new(OperationObjectNode)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&mapOfAny); err == nil {
-		u.MapOfAny = mapOfAny
-		u.Type = OperationNodeTypeMapOfAny
+	if err := d.Decode(&operationObjectNode); err == nil {
+		u.OperationObjectNode = operationObjectNode
+		u.Type = OperationNodeTypeOperationObjectNode
 		return nil
 	}
 
@@ -65,8 +65,8 @@ func (u *OperationNode) UnmarshalJSON(data []byte) error {
 }
 
 func (u OperationNode) MarshalJSON() ([]byte, error) {
-	if u.MapOfAny != nil {
-		return json.Marshal(u.MapOfAny)
+	if u.OperationObjectNode != nil {
+		return json.Marshal(u.OperationObjectNode)
 	}
 
 	if u.Any != nil {

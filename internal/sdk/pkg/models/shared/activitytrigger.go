@@ -16,12 +16,16 @@ const (
 	ActivityTriggerConfigurationTypesEnumSyncActivity       ActivityTriggerConfigurationTypesEnum = "SyncActivity"
 )
 
+func (e ActivityTriggerConfigurationTypesEnum) ToPointer() *ActivityTriggerConfigurationTypesEnum {
+	return &e
+}
+
 func (e *ActivityTriggerConfigurationTypesEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "CreateMeterReading":
 		fallthrough
 	case "UpdateMeterReading":
@@ -29,10 +33,10 @@ func (e *ActivityTriggerConfigurationTypesEnum) UnmarshalJSON(data []byte) error
 	case "MessageActivity":
 		fallthrough
 	case "SyncActivity":
-		*e = ActivityTriggerConfigurationTypesEnum(s)
+		*e = ActivityTriggerConfigurationTypesEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ActivityTriggerConfigurationTypesEnum: %s", s)
+		return fmt.Errorf("invalid value for ActivityTriggerConfigurationTypesEnum: %v", v)
 	}
 }
 
@@ -47,17 +51,21 @@ const (
 	ActivityTriggerTypeEnumActivity ActivityTriggerTypeEnum = "activity"
 )
 
+func (e ActivityTriggerTypeEnum) ToPointer() *ActivityTriggerTypeEnum {
+	return &e
+}
+
 func (e *ActivityTriggerTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "activity":
-		*e = ActivityTriggerTypeEnum(s)
+		*e = ActivityTriggerTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ActivityTriggerTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for ActivityTriggerTypeEnum: %v", v)
 	}
 }
 

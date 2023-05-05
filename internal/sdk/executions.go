@@ -37,7 +37,10 @@ func newExecutions(defaultClient, securityClient HTTPClient, serverURL, language
 // Cancel automation execution
 func (s *executions) CancelExecution(ctx context.Context, request operations.CancelExecutionRequest) (*operations.CancelExecutionResponse, error) {
 	baseURL := s.serverURL
-	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/executions/{execution_id}", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/v1/automation/executions/{execution_id}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
 
 	req, err := http.NewRequestWithContext(ctx, "DELETE", url, nil)
 	if err != nil {
@@ -82,7 +85,10 @@ func (s *executions) CancelExecution(ctx context.Context, request operations.Can
 // Get automation execution
 func (s *executions) GetExecution(ctx context.Context, request operations.GetExecutionRequest) (*operations.GetExecutionResponse, error) {
 	baseURL := s.serverURL
-	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/executions/{execution_id}", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/v1/automation/executions/{execution_id}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
@@ -176,7 +182,10 @@ func (s *executions) GetExecutions(ctx context.Context, request operations.GetEx
 // Retry a specific automation execution action which failed / is stuck.
 func (s *executions) RetriggerAction(ctx context.Context, request operations.RetriggerActionRequest) (*operations.RetriggerActionResponse, error) {
 	baseURL := s.serverURL
-	url := utils.GenerateURL(ctx, baseURL, "/v1/automation/executions/{execution_id}/{action_id}/retrigger", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/v1/automation/executions/{execution_id}/{action_id}/retrigger", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "RetryReq", "json")
 	if err != nil {

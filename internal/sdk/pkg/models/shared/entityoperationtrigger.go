@@ -15,21 +15,25 @@ const (
 	EntityOperationTriggerConfigurationOperationsEnumDeleteEntity EntityOperationTriggerConfigurationOperationsEnum = "deleteEntity"
 )
 
+func (e EntityOperationTriggerConfigurationOperationsEnum) ToPointer() *EntityOperationTriggerConfigurationOperationsEnum {
+	return &e
+}
+
 func (e *EntityOperationTriggerConfigurationOperationsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "createEntity":
 		fallthrough
 	case "updateEntity":
 		fallthrough
 	case "deleteEntity":
-		*e = EntityOperationTriggerConfigurationOperationsEnum(s)
+		*e = EntityOperationTriggerConfigurationOperationsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for EntityOperationTriggerConfigurationOperationsEnum: %s", s)
+		return fmt.Errorf("invalid value for EntityOperationTriggerConfigurationOperationsEnum: %v", v)
 	}
 }
 
@@ -46,17 +50,21 @@ const (
 	EntityOperationTriggerTypeEnumEntityOperation EntityOperationTriggerTypeEnum = "entity_operation"
 )
 
+func (e EntityOperationTriggerTypeEnum) ToPointer() *EntityOperationTriggerTypeEnum {
+	return &e
+}
+
 func (e *EntityOperationTriggerTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "entity_operation":
-		*e = EntityOperationTriggerTypeEnum(s)
+		*e = EntityOperationTriggerTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for EntityOperationTriggerTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for EntityOperationTriggerTypeEnum: %v", v)
 	}
 }
 

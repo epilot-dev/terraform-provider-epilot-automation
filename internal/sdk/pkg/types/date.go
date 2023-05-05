@@ -36,3 +36,11 @@ func (d *Date) UnmarshalJSON(data []byte) error {
 func (d Date) String() string {
 	return d.Time.Format("2006-01-02")
 }
+
+func NewDate(dateString string) (Date, error) {
+	var d Date
+	var err error
+
+	d.Time, err = time.Parse("2006-01-02", dateString)
+	return d, err
+}

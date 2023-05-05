@@ -16,20 +16,24 @@ const (
 	MappingAttributeModeEnumSetValue       MappingAttributeModeEnum = "set_value"
 )
 
+func (e MappingAttributeModeEnum) ToPointer() *MappingAttributeModeEnum {
+	return &e
+}
+
 func (e *MappingAttributeModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "copy_if_exists":
 		fallthrough
 	case "append_if_exists":
 		fallthrough
 	case "set_value":
-		*e = MappingAttributeModeEnum(s)
+		*e = MappingAttributeModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for MappingAttributeModeEnum: %s", s)
+		return fmt.Errorf("invalid value for MappingAttributeModeEnum: %v", v)
 	}
 }
