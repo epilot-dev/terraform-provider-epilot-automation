@@ -386,9 +386,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
-										validators.IsValidJSON(),
+										stringvalidator.OneOf(
+											"map-entity",
+										),
 									},
-									Description: `Parsed as JSON.`,
 								},
 							},
 						},
@@ -508,9 +509,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
-										validators.IsValidJSON(),
+										stringvalidator.OneOf(
+											"trigger-workflow",
+										),
 									},
-									Description: `Parsed as JSON.`,
 								},
 							},
 						},
@@ -557,9 +559,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
-										validators.IsValidJSON(),
+										stringvalidator.OneOf(
+											"trigger-webhook",
+										),
 									},
-									Description: `Parsed as JSON.`,
 								},
 							},
 						},
@@ -605,9 +608,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
-										validators.IsValidJSON(),
+										stringvalidator.OneOf(
+											"create-document",
+										),
 									},
-									Description: `Parsed as JSON.`,
 								},
 							},
 						},
@@ -718,9 +722,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
-										validators.IsValidJSON(),
+										stringvalidator.OneOf(
+											"send-email",
+										),
 									},
-									Description: `Parsed as JSON.`,
 								},
 							},
 						},
@@ -1045,9 +1050,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
-										validators.IsValidJSON(),
+										stringvalidator.OneOf(
+											"cart-checkout",
+										),
 									},
-									Description: `Parsed as JSON.`,
 								},
 							},
 							Description: `Creates an order entity with prices from journey`,

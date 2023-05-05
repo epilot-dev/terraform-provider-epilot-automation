@@ -2,14 +2,43 @@
 
 package shared
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type TriggerWorkflowActionConfigTypeEnum string
+
+const (
+	TriggerWorkflowActionConfigTypeEnumTriggerWorkflow TriggerWorkflowActionConfigTypeEnum = "trigger-workflow"
+)
+
+func (e TriggerWorkflowActionConfigTypeEnum) ToPointer() *TriggerWorkflowActionConfigTypeEnum {
+	return &e
+}
+
+func (e *TriggerWorkflowActionConfigTypeEnum) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "trigger-workflow":
+		*e = TriggerWorkflowActionConfigTypeEnum(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for TriggerWorkflowActionConfigTypeEnum: %v", v)
+	}
+}
+
 type TriggerWorkflowActionConfig struct {
 	// Whether to stop execution in a failed state if this action fails
 	AllowFailure *bool                  `json:"allow_failure,omitempty"`
 	Config       *TriggerWorkflowConfig `json:"config,omitempty"`
 	// Flag indicating whether the action was created automatically or manually
-	CreatedAutomatically *bool       `json:"created_automatically,omitempty"`
-	FlowActionID         *string     `json:"flow_action_id,omitempty"`
-	ID                   *string     `json:"id,omitempty"`
-	Name                 *string     `json:"name,omitempty"`
-	Type                 interface{} `json:"type,omitempty"`
+	CreatedAutomatically *bool                                `json:"created_automatically,omitempty"`
+	FlowActionID         *string                              `json:"flow_action_id,omitempty"`
+	ID                   *string                              `json:"id,omitempty"`
+	Name                 *string                              `json:"name,omitempty"`
+	Type                 *TriggerWorkflowActionConfigTypeEnum `json:"type,omitempty"`
 }

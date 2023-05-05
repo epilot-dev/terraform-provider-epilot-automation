@@ -2,14 +2,43 @@
 
 package shared
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type CreateDocumentActionConfigTypeEnum string
+
+const (
+	CreateDocumentActionConfigTypeEnumCreateDocument CreateDocumentActionConfigTypeEnum = "create-document"
+)
+
+func (e CreateDocumentActionConfigTypeEnum) ToPointer() *CreateDocumentActionConfigTypeEnum {
+	return &e
+}
+
+func (e *CreateDocumentActionConfigTypeEnum) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "create-document":
+		*e = CreateDocumentActionConfigTypeEnum(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CreateDocumentActionConfigTypeEnum: %v", v)
+	}
+}
+
 type CreateDocumentActionConfig struct {
 	// Whether to stop execution in a failed state if this action fails
 	AllowFailure *bool                 `json:"allow_failure,omitempty"`
 	Config       *CreateDocumentConfig `json:"config,omitempty"`
 	// Flag indicating whether the action was created automatically or manually
-	CreatedAutomatically *bool       `json:"created_automatically,omitempty"`
-	FlowActionID         *string     `json:"flow_action_id,omitempty"`
-	ID                   *string     `json:"id,omitempty"`
-	Name                 *string     `json:"name,omitempty"`
-	Type                 interface{} `json:"type,omitempty"`
+	CreatedAutomatically *bool                               `json:"created_automatically,omitempty"`
+	FlowActionID         *string                             `json:"flow_action_id,omitempty"`
+	ID                   *string                             `json:"id,omitempty"`
+	Name                 *string                             `json:"name,omitempty"`
+	Type                 *CreateDocumentActionConfigTypeEnum `json:"type,omitempty"`
 }

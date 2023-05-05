@@ -454,11 +454,10 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 			} else {
 				actions1.MapEntityActionConfig.Name = types.StringNull()
 			}
-			if actionsItem.MapEntityActionConfig.Type == nil {
-				actions1.MapEntityActionConfig.Type = types.StringNull()
+			if actionsItem.MapEntityActionConfig.Type != nil {
+				actions1.MapEntityActionConfig.Type = types.StringValue(string(*actionsItem.MapEntityActionConfig.Type))
 			} else {
-				typeResult, _ := json.Marshal(actionsItem.MapEntityActionConfig.Type)
-				actions1.MapEntityActionConfig.Type = types.StringValue(string(typeResult))
+				actions1.MapEntityActionConfig.Type = types.StringNull()
 			}
 		}
 		if actionsItem.TriggerWorkflowActionConfig != nil {
@@ -485,7 +484,7 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 					} else {
 						assignSteps1.StepName = types.StringNull()
 					}
-					// Not Implemented assignStepsItem.UserIds, {"RefType":"","Output":false,"AdditionalProperties":null,"Discriminator":null,"Fields":[],"Scope":"","BaseName":"","AssociatedTypes":[],"Extensions":{},"Example":null,"ItemType":{"ItemType":null,"AssociatedTypes":[],"Scope":"","Output":false,"Extensions":{"Symbol":"UserIds"},"BaseName":"","RefType":"","Input":false,"AdditionalProperties":null,"Discriminator":null,"Name":"","Fields":[],"Enum":null,"Truncated":false,"Type":"number","Comments":null,"Example":null,"Format":""},"Type":"array","Enum":null,"Truncated":false,"Comments":null,"Input":false,"Format":"","Name":""}, true, , , assignSteps1.UserIds
+					// Not Implemented assignStepsItem.UserIds, {"Type":"array","Fields":[],"Enum":null,"Discriminator":null,"Extensions":{},"Name":"","Scope":"","BaseName":"","Output":false,"ItemType":{"Discriminator":null,"AssociatedTypes":[],"BaseName":"","Truncated":false,"Comments":null,"Input":false,"Extensions":{"Symbol":"UserIds"},"Example":null,"Name":"","ItemType":null,"Scope":"","RefType":"","Output":false,"Type":"number","Fields":[],"AdditionalProperties":null,"Enum":null,"Format":""},"AssociatedTypes":[],"Example":null,"Format":"","AdditionalProperties":null,"RefType":"","Truncated":false,"Comments":null,"Input":false}, true, , , assignSteps1.UserIds
 					actions1.TriggerWorkflowActionConfig.Config.AssignSteps = append(actions1.TriggerWorkflowActionConfig.Config.AssignSteps, assignSteps1)
 				}
 				actions1.TriggerWorkflowActionConfig.Config.Assignees = nil
@@ -523,7 +522,7 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 							}
 						}
 						if conditionsItem.Value.ArrayOfNumber != nil {
-							// Not Implemented conditionsItem.Value.ArrayOfNumber, {"Truncated":false,"Comments":null,"AdditionalProperties":null,"Type":"array","ItemType":{"Extensions":{"Symbol":"UserIds"},"Format":"","AssociatedTypes":[],"ItemType":null,"Scope":"","Truncated":false,"Input":false,"Type":"number","Example":null,"AdditionalProperties":null,"Discriminator":null,"RefType":"","Fields":[],"Enum":null,"BaseName":"","Comments":null,"Output":false,"Name":""},"Enum":null,"BaseName":"","Name":"arrayOfNumber","AssociatedTypes":[],"Discriminator":null,"Output":false,"Extensions":{},"Example":null,"Format":"","Fields":[],"Scope":"","RefType":"","Input":false}, false, , , conditions1.Value.ArrayOfNumber
+							// Not Implemented conditionsItem.Value.ArrayOfNumber, {"Type":"array","Enum":null,"Output":false,"Example":null,"Discriminator":null,"Name":"arrayOfNumber","AssociatedTypes":[],"BaseName":"","RefType":"","Truncated":false,"Format":"","AdditionalProperties":null,"Scope":"","Comments":null,"Input":false,"Extensions":{},"ItemType":{"BaseName":"","Truncated":false,"Type":"number","ItemType":null,"Fields":[],"Enum":null,"RefType":"","Comments":null,"Example":null,"Discriminator":null,"Name":"","Input":false,"Scope":"","Output":false,"Extensions":{"Symbol":"UserIds"},"Format":"","AdditionalProperties":null,"AssociatedTypes":[]},"Fields":[]}, false, , , conditions1.Value.ArrayOfNumber
 						}
 					}
 					actions1.TriggerWorkflowActionConfig.Config.Conditions = append(actions1.TriggerWorkflowActionConfig.Config.Conditions, conditions1)
@@ -554,11 +553,10 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 			} else {
 				actions1.TriggerWorkflowActionConfig.Name = types.StringNull()
 			}
-			if actionsItem.TriggerWorkflowActionConfig.Type == nil {
-				actions1.TriggerWorkflowActionConfig.Type = types.StringNull()
+			if actionsItem.TriggerWorkflowActionConfig.Type != nil {
+				actions1.TriggerWorkflowActionConfig.Type = types.StringValue(string(*actionsItem.TriggerWorkflowActionConfig.Type))
 			} else {
-				typeResult1, _ := json.Marshal(actionsItem.TriggerWorkflowActionConfig.Type)
-				actions1.TriggerWorkflowActionConfig.Type = types.StringValue(string(typeResult1))
+				actions1.TriggerWorkflowActionConfig.Type = types.StringNull()
 			}
 		}
 		if actionsItem.TriggerWebhookActionConfig != nil {
@@ -602,11 +600,10 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 			} else {
 				actions1.TriggerWebhookActionConfig.Name = types.StringNull()
 			}
-			if actionsItem.TriggerWebhookActionConfig.Type == nil {
-				actions1.TriggerWebhookActionConfig.Type = types.StringNull()
+			if actionsItem.TriggerWebhookActionConfig.Type != nil {
+				actions1.TriggerWebhookActionConfig.Type = types.StringValue(string(*actionsItem.TriggerWebhookActionConfig.Type))
 			} else {
-				typeResult2, _ := json.Marshal(actionsItem.TriggerWebhookActionConfig.Type)
-				actions1.TriggerWebhookActionConfig.Type = types.StringValue(string(typeResult2))
+				actions1.TriggerWebhookActionConfig.Type = types.StringNull()
 			}
 		}
 		if actionsItem.CreateDocumentActionConfig != nil {
@@ -651,11 +648,10 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 			} else {
 				actions1.CreateDocumentActionConfig.Name = types.StringNull()
 			}
-			if actionsItem.CreateDocumentActionConfig.Type == nil {
-				actions1.CreateDocumentActionConfig.Type = types.StringNull()
+			if actionsItem.CreateDocumentActionConfig.Type != nil {
+				actions1.CreateDocumentActionConfig.Type = types.StringValue(string(*actionsItem.CreateDocumentActionConfig.Type))
 			} else {
-				typeResult3, _ := json.Marshal(actionsItem.CreateDocumentActionConfig.Type)
-				actions1.CreateDocumentActionConfig.Type = types.StringValue(string(typeResult3))
+				actions1.CreateDocumentActionConfig.Type = types.StringNull()
 			}
 		}
 		if actionsItem.SendEmailActionConfig != nil {
@@ -745,11 +741,10 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 			} else {
 				actions1.SendEmailActionConfig.Name = types.StringNull()
 			}
-			if actionsItem.SendEmailActionConfig.Type == nil {
-				actions1.SendEmailActionConfig.Type = types.StringNull()
+			if actionsItem.SendEmailActionConfig.Type != nil {
+				actions1.SendEmailActionConfig.Type = types.StringValue(string(*actionsItem.SendEmailActionConfig.Type))
 			} else {
-				typeResult4, _ := json.Marshal(actionsItem.SendEmailActionConfig.Type)
-				actions1.SendEmailActionConfig.Type = types.StringValue(string(typeResult4))
+				actions1.SendEmailActionConfig.Type = types.StringNull()
 			}
 		}
 		if actionsItem.CartCheckoutActionConfig != nil {
@@ -966,11 +961,10 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 			} else {
 				actions1.CartCheckoutActionConfig.Name = types.StringNull()
 			}
-			if actionsItem.CartCheckoutActionConfig.Type == nil {
-				actions1.CartCheckoutActionConfig.Type = types.StringNull()
+			if actionsItem.CartCheckoutActionConfig.Type != nil {
+				actions1.CartCheckoutActionConfig.Type = types.StringValue(string(*actionsItem.CartCheckoutActionConfig.Type))
 			} else {
-				typeResult5, _ := json.Marshal(actionsItem.CartCheckoutActionConfig.Type)
-				actions1.CartCheckoutActionConfig.Type = types.StringValue(string(typeResult5))
+				actions1.CartCheckoutActionConfig.Type = types.StringNull()
 			}
 		}
 		if actionsItem.AutomationActionConfig != nil {
@@ -1086,7 +1080,7 @@ func (r *FlowResourceModel) RefreshFromSDKType(resp *shared.AutomationFlow) {
 				}
 			}
 			if triggerConditionsItem.Value.ArrayOfNumber != nil {
-				// Not Implemented triggerConditionsItem.Value.ArrayOfNumber, {"ItemType":{"ItemType":null,"RefType":"","Comments":null,"AdditionalProperties":null,"Name":"","AssociatedTypes":[],"Enum":null,"Input":false,"Example":null,"Discriminator":null,"Fields":[],"Extensions":{"Symbol":"UserIds"},"Type":"number","BaseName":"","Truncated":false,"Output":false,"Format":"","Scope":""},"AssociatedTypes":[],"Enum":null,"Output":false,"Discriminator":null,"Type":"array","Scope":"","RefType":"","Truncated":false,"Extensions":{},"Fields":[],"BaseName":"","AdditionalProperties":null,"Name":"arrayOfNumber","Comments":null,"Input":false,"Example":null,"Format":""}, false, , , triggerConditions1.Value.ArrayOfNumber
+				// Not Implemented triggerConditionsItem.Value.ArrayOfNumber, {"Output":false,"Extensions":{},"Format":"","Type":"array","ItemType":{"ItemType":null,"Fields":[],"Enum":null,"Truncated":false,"AssociatedTypes":[],"Scope":"","RefType":"","Output":false,"Name":"","BaseName":"","Example":null,"Discriminator":null,"AdditionalProperties":null,"Type":"number","Comments":null,"Input":false,"Extensions":{"Symbol":"UserIds"},"Format":""},"Enum":null,"RefType":"","Input":false,"Fields":[],"Example":null,"Name":"arrayOfNumber","AssociatedTypes":[],"BaseName":"","Truncated":false,"Scope":"","Comments":null,"AdditionalProperties":null,"Discriminator":null}, false, , , triggerConditions1.Value.ArrayOfNumber
 			}
 		}
 		r.TriggerConditions = append(r.TriggerConditions, triggerConditions1)

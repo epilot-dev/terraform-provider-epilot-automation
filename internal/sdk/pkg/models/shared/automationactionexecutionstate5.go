@@ -2,6 +2,35 @@
 
 package shared
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type AutomationActionExecutionStateTypeEnum5 string
+
+const (
+	AutomationActionExecutionStateTypeEnum5CartCheckout AutomationActionExecutionStateTypeEnum5 = "cart-checkout"
+)
+
+func (e AutomationActionExecutionStateTypeEnum5) ToPointer() *AutomationActionExecutionStateTypeEnum5 {
+	return &e
+}
+
+func (e *AutomationActionExecutionStateTypeEnum5) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "cart-checkout":
+		*e = AutomationActionExecutionStateTypeEnum5(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for AutomationActionExecutionStateTypeEnum5: %v", v)
+	}
+}
+
 // AutomationActionExecutionState5 - Creates an order entity with prices from journey
 type AutomationActionExecutionState5 struct {
 	Config          *CartCheckoutConfig    `json:"config,omitempty"`
@@ -9,8 +38,8 @@ type AutomationActionExecutionState5 struct {
 	ExecutionStatus *ExecutionStatusEnum   `json:"execution_status,omitempty"`
 	Outputs         map[string]interface{} `json:"outputs,omitempty"`
 	// different behaviors for retrying failed execution actions.
-	RetryStrategy *RetryStrategyEnum `json:"retry_strategy,omitempty"`
-	StartedAt     *string            `json:"started_at,omitempty"`
-	Type          interface{}        `json:"type,omitempty"`
-	UpdatedAt     *string            `json:"updated_at,omitempty"`
+	RetryStrategy *RetryStrategyEnum                       `json:"retry_strategy,omitempty"`
+	StartedAt     *string                                  `json:"started_at,omitempty"`
+	Type          *AutomationActionExecutionStateTypeEnum5 `json:"type,omitempty"`
+	UpdatedAt     *string                                  `json:"updated_at,omitempty"`
 }

@@ -239,7 +239,7 @@ Optional:
 - `flow_action_id` (String)
 - `id` (String)
 - `name` (String)
-- `type` (String) Parsed as JSON.
+- `type` (String)
 
 <a id="nestedatt--actions--cart_checkout_action_config--config"></a>
 ### Nested Schema for `actions.cart_checkout_action_config.config`
@@ -405,7 +405,7 @@ Optional:
 - `flow_action_id` (String)
 - `id` (String)
 - `name` (String)
-- `type` (String) Parsed as JSON.
+- `type` (String)
 
 <a id="nestedatt--actions--create_document_action_config--config"></a>
 ### Nested Schema for `actions.create_document_action_config.config`
@@ -428,7 +428,7 @@ Optional:
 - `flow_action_id` (String)
 - `id` (String)
 - `name` (String)
-- `type` (String) Parsed as JSON.
+- `type` (String)
 
 <a id="nestedatt--actions--map_entity_action_config--config"></a>
 ### Nested Schema for `actions.map_entity_action_config.config`
@@ -597,7 +597,7 @@ Optional:
 - `flow_action_id` (String)
 - `id` (String)
 - `name` (String)
-- `type` (String) Parsed as JSON.
+- `type` (String)
 
 <a id="nestedatt--actions--send_email_action_config--config"></a>
 ### Nested Schema for `actions.send_email_action_config.config`
@@ -643,7 +643,7 @@ Optional:
 - `flow_action_id` (String)
 - `id` (String)
 - `name` (String)
-- `type` (String) Parsed as JSON.
+- `type` (String)
 
 <a id="nestedatt--actions--trigger_webhook_action_config--config"></a>
 ### Nested Schema for `actions.trigger_webhook_action_config.config`
@@ -666,7 +666,7 @@ Optional:
 - `flow_action_id` (String)
 - `id` (String)
 - `name` (String)
-- `type` (String) Parsed as JSON.
+- `type` (String)
 
 <a id="nestedatt--actions--trigger_workflow_action_config--config"></a>
 ### Nested Schema for `actions.trigger_workflow_action_config.config`

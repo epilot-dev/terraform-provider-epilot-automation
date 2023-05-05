@@ -2,14 +2,43 @@
 
 package shared
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type MapEntityActionConfigTypeEnum string
+
+const (
+	MapEntityActionConfigTypeEnumMapEntity MapEntityActionConfigTypeEnum = "map-entity"
+)
+
+func (e MapEntityActionConfigTypeEnum) ToPointer() *MapEntityActionConfigTypeEnum {
+	return &e
+}
+
+func (e *MapEntityActionConfigTypeEnum) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "map-entity":
+		*e = MapEntityActionConfigTypeEnum(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for MapEntityActionConfigTypeEnum: %v", v)
+	}
+}
+
 type MapEntityActionConfig struct {
 	// Whether to stop execution in a failed state if this action fails
 	AllowFailure *bool            `json:"allow_failure,omitempty"`
 	Config       *MapEntityConfig `json:"config,omitempty"`
 	// Flag indicating whether the action was created automatically or manually
-	CreatedAutomatically *bool       `json:"created_automatically,omitempty"`
-	FlowActionID         *string     `json:"flow_action_id,omitempty"`
-	ID                   *string     `json:"id,omitempty"`
-	Name                 *string     `json:"name,omitempty"`
-	Type                 interface{} `json:"type,omitempty"`
+	CreatedAutomatically *bool                          `json:"created_automatically,omitempty"`
+	FlowActionID         *string                        `json:"flow_action_id,omitempty"`
+	ID                   *string                        `json:"id,omitempty"`
+	Name                 *string                        `json:"name,omitempty"`
+	Type                 *MapEntityActionConfigTypeEnum `json:"type,omitempty"`
 }
