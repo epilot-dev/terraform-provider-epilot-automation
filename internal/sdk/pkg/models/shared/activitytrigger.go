@@ -7,20 +7,20 @@ import (
 	"fmt"
 )
 
-type ActivityTriggerConfigurationTypesEnum string
+type ActivityTriggerConfigurationTypes string
 
 const (
-	ActivityTriggerConfigurationTypesEnumCreateMeterReading ActivityTriggerConfigurationTypesEnum = "CreateMeterReading"
-	ActivityTriggerConfigurationTypesEnumUpdateMeterReading ActivityTriggerConfigurationTypesEnum = "UpdateMeterReading"
-	ActivityTriggerConfigurationTypesEnumMessageActivity    ActivityTriggerConfigurationTypesEnum = "MessageActivity"
-	ActivityTriggerConfigurationTypesEnumSyncActivity       ActivityTriggerConfigurationTypesEnum = "SyncActivity"
+	ActivityTriggerConfigurationTypesCreateMeterReading ActivityTriggerConfigurationTypes = "CreateMeterReading"
+	ActivityTriggerConfigurationTypesUpdateMeterReading ActivityTriggerConfigurationTypes = "UpdateMeterReading"
+	ActivityTriggerConfigurationTypesMessageActivity    ActivityTriggerConfigurationTypes = "MessageActivity"
+	ActivityTriggerConfigurationTypesSyncActivity       ActivityTriggerConfigurationTypes = "SyncActivity"
 )
 
-func (e ActivityTriggerConfigurationTypesEnum) ToPointer() *ActivityTriggerConfigurationTypesEnum {
+func (e ActivityTriggerConfigurationTypes) ToPointer() *ActivityTriggerConfigurationTypes {
 	return &e
 }
 
-func (e *ActivityTriggerConfigurationTypesEnum) UnmarshalJSON(data []byte) error {
+func (e *ActivityTriggerConfigurationTypes) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -33,43 +33,43 @@ func (e *ActivityTriggerConfigurationTypesEnum) UnmarshalJSON(data []byte) error
 	case "MessageActivity":
 		fallthrough
 	case "SyncActivity":
-		*e = ActivityTriggerConfigurationTypesEnum(v)
+		*e = ActivityTriggerConfigurationTypes(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ActivityTriggerConfigurationTypesEnum: %v", v)
+		return fmt.Errorf("invalid value for ActivityTriggerConfigurationTypes: %v", v)
 	}
 }
 
 type ActivityTriggerConfiguration struct {
-	Schema *string                                 `json:"schema,omitempty"`
-	Types  []ActivityTriggerConfigurationTypesEnum `json:"types,omitempty"`
+	Schema *string                             `json:"schema,omitempty"`
+	Types  []ActivityTriggerConfigurationTypes `json:"types,omitempty"`
 }
 
-type ActivityTriggerTypeEnum string
+type ActivityTriggerType string
 
 const (
-	ActivityTriggerTypeEnumActivity ActivityTriggerTypeEnum = "activity"
+	ActivityTriggerTypeActivity ActivityTriggerType = "activity"
 )
 
-func (e ActivityTriggerTypeEnum) ToPointer() *ActivityTriggerTypeEnum {
+func (e ActivityTriggerType) ToPointer() *ActivityTriggerType {
 	return &e
 }
 
-func (e *ActivityTriggerTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *ActivityTriggerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "activity":
-		*e = ActivityTriggerTypeEnum(v)
+		*e = ActivityTriggerType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ActivityTriggerTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for ActivityTriggerType: %v", v)
 	}
 }
 
 type ActivityTrigger struct {
 	Configuration ActivityTriggerConfiguration `json:"configuration"`
-	Type          ActivityTriggerTypeEnum      `json:"type"`
+	Type          ActivityTriggerType          `json:"type"`
 }

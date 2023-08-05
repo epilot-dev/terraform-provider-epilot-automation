@@ -1,0 +1,31 @@
+terraform {
+  required_providers {
+    epilot-automation = {
+      source  = "epilot-dev/epilot-automation"
+      version = "0.0.3"
+    }
+  }
+}
+
+provider "epilot-automation" {
+  epilot_auth = var.epilot_api_key
+}
+
+variable "epilot_api_key" {
+  type = string
+}
+
+resource "epilot-automation_flow" "test" {
+  flow_name = "Test Automation Created By Terraform"
+
+  triggers = [
+    {
+      entity_manual_trigger = {
+        type = "entity_manual"
+        configuration = {
+          schema = "opportunity"
+        }
+      }
+    }
+  ]
+}

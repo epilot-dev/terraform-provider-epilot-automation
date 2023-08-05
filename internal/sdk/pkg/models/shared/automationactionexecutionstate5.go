@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type AutomationActionExecutionStateTypeEnum5 string
+type AutomationActionExecutionStateType5 string
 
 const (
-	AutomationActionExecutionStateTypeEnum5CartCheckout AutomationActionExecutionStateTypeEnum5 = "cart-checkout"
+	AutomationActionExecutionStateType5CartCheckout AutomationActionExecutionStateType5 = "cart-checkout"
 )
 
-func (e AutomationActionExecutionStateTypeEnum5) ToPointer() *AutomationActionExecutionStateTypeEnum5 {
+func (e AutomationActionExecutionStateType5) ToPointer() *AutomationActionExecutionStateType5 {
 	return &e
 }
 
-func (e *AutomationActionExecutionStateTypeEnum5) UnmarshalJSON(data []byte) error {
+func (e *AutomationActionExecutionStateType5) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "cart-checkout":
-		*e = AutomationActionExecutionStateTypeEnum5(v)
+		*e = AutomationActionExecutionStateType5(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AutomationActionExecutionStateTypeEnum5: %v", v)
+		return fmt.Errorf("invalid value for AutomationActionExecutionStateType5: %v", v)
 	}
 }
 
@@ -35,11 +35,11 @@ func (e *AutomationActionExecutionStateTypeEnum5) UnmarshalJSON(data []byte) err
 type AutomationActionExecutionState5 struct {
 	Config          *CartCheckoutConfig    `json:"config,omitempty"`
 	ErrorOutput     *ErrorOutput           `json:"error_output,omitempty"`
-	ExecutionStatus *ExecutionStatusEnum   `json:"execution_status,omitempty"`
+	ExecutionStatus *ExecutionStatus       `json:"execution_status,omitempty"`
 	Outputs         map[string]interface{} `json:"outputs,omitempty"`
 	// different behaviors for retrying failed execution actions.
-	RetryStrategy *RetryStrategyEnum                       `json:"retry_strategy,omitempty"`
-	StartedAt     *string                                  `json:"started_at,omitempty"`
-	Type          *AutomationActionExecutionStateTypeEnum5 `json:"type,omitempty"`
-	UpdatedAt     *string                                  `json:"updated_at,omitempty"`
+	RetryStrategy *RetryStrategy                       `json:"retry_strategy,omitempty"`
+	StartedAt     *string                              `json:"started_at,omitempty"`
+	Type          *AutomationActionExecutionStateType5 `json:"type,omitempty"`
+	UpdatedAt     *string                              `json:"updated_at,omitempty"`
 }

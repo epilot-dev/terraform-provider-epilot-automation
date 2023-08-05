@@ -13,15 +13,15 @@ type TriggerConditionValueType string
 const (
 	TriggerConditionValueTypeStr           TriggerConditionValueType = "str"
 	TriggerConditionValueTypeNumber        TriggerConditionValueType = "number"
-	TriggerConditionValueTypeArrayOfStr    TriggerConditionValueType = "arrayOfStr"
-	TriggerConditionValueTypeArrayOfNumber TriggerConditionValueType = "arrayOfNumber"
+	TriggerConditionValueTypeArrayOfstr    TriggerConditionValueType = "arrayOfstr"
+	TriggerConditionValueTypeArrayOfnumber TriggerConditionValueType = "arrayOfnumber"
 )
 
 type TriggerConditionValue struct {
 	Str           *string
 	Number        *float64
-	ArrayOfStr    []string
-	ArrayOfNumber []float64
+	ArrayOfstr    []string
+	ArrayOfnumber []float64
 
 	Type TriggerConditionValueType
 }
@@ -44,20 +44,20 @@ func CreateTriggerConditionValueNumber(number float64) TriggerConditionValue {
 	}
 }
 
-func CreateTriggerConditionValueArrayOfStr(arrayOfStr []string) TriggerConditionValue {
-	typ := TriggerConditionValueTypeArrayOfStr
+func CreateTriggerConditionValueArrayOfstr(arrayOfstr []string) TriggerConditionValue {
+	typ := TriggerConditionValueTypeArrayOfstr
 
 	return TriggerConditionValue{
-		ArrayOfStr: arrayOfStr,
+		ArrayOfstr: arrayOfstr,
 		Type:       typ,
 	}
 }
 
-func CreateTriggerConditionValueArrayOfNumber(arrayOfNumber []float64) TriggerConditionValue {
-	typ := TriggerConditionValueTypeArrayOfNumber
+func CreateTriggerConditionValueArrayOfnumber(arrayOfnumber []float64) TriggerConditionValue {
+	typ := TriggerConditionValueTypeArrayOfnumber
 
 	return TriggerConditionValue{
-		ArrayOfNumber: arrayOfNumber,
+		ArrayOfnumber: arrayOfnumber,
 		Type:          typ,
 	}
 }
@@ -83,21 +83,21 @@ func (u *TriggerConditionValue) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	arrayOfStr := []string{}
+	arrayOfstr := []string{}
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfStr); err == nil {
-		u.ArrayOfStr = arrayOfStr
-		u.Type = TriggerConditionValueTypeArrayOfStr
+	if err := d.Decode(&arrayOfstr); err == nil {
+		u.ArrayOfstr = arrayOfstr
+		u.Type = TriggerConditionValueTypeArrayOfstr
 		return nil
 	}
 
-	arrayOfNumber := []float64{}
+	arrayOfnumber := []float64{}
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfNumber); err == nil {
-		u.ArrayOfNumber = arrayOfNumber
-		u.Type = TriggerConditionValueTypeArrayOfNumber
+	if err := d.Decode(&arrayOfnumber); err == nil {
+		u.ArrayOfnumber = arrayOfnumber
+		u.Type = TriggerConditionValueTypeArrayOfnumber
 		return nil
 	}
 
@@ -113,19 +113,19 @@ func (u TriggerConditionValue) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.Number)
 	}
 
-	if u.ArrayOfStr != nil {
-		return json.Marshal(u.ArrayOfStr)
+	if u.ArrayOfstr != nil {
+		return json.Marshal(u.ArrayOfstr)
 	}
 
-	if u.ArrayOfNumber != nil {
-		return json.Marshal(u.ArrayOfNumber)
+	if u.ArrayOfnumber != nil {
+		return json.Marshal(u.ArrayOfnumber)
 	}
 
 	return nil, nil
 }
 
 type TriggerCondition struct {
-	Comparison ComparisonEnum         `json:"comparison"`
+	Comparison Comparison             `json:"comparison"`
 	Source     string                 `json:"source"`
 	Value      *TriggerConditionValue `json:"value,omitempty"`
 }

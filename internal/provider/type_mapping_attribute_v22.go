@@ -4,6 +4,7 @@ package provider
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type FrontendSubmitTriggerConfiguration struct {
-	SourceID types.String `tfsdk:"source_id"`
+type MappingAttributeV22 struct {
+	Operation OperationNode2 `tfsdk:"operation"`
+	Target    types.String   `tfsdk:"target"`
 }

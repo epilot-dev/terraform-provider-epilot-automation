@@ -7,19 +7,19 @@ import (
 	"fmt"
 )
 
-type EntityOperationTriggerConfigurationOperationsEnum string
+type EntityOperationTriggerConfigurationOperations string
 
 const (
-	EntityOperationTriggerConfigurationOperationsEnumCreateEntity EntityOperationTriggerConfigurationOperationsEnum = "createEntity"
-	EntityOperationTriggerConfigurationOperationsEnumUpdateEntity EntityOperationTriggerConfigurationOperationsEnum = "updateEntity"
-	EntityOperationTriggerConfigurationOperationsEnumDeleteEntity EntityOperationTriggerConfigurationOperationsEnum = "deleteEntity"
+	EntityOperationTriggerConfigurationOperationsCreateEntity EntityOperationTriggerConfigurationOperations = "createEntity"
+	EntityOperationTriggerConfigurationOperationsUpdateEntity EntityOperationTriggerConfigurationOperations = "updateEntity"
+	EntityOperationTriggerConfigurationOperationsDeleteEntity EntityOperationTriggerConfigurationOperations = "deleteEntity"
 )
 
-func (e EntityOperationTriggerConfigurationOperationsEnum) ToPointer() *EntityOperationTriggerConfigurationOperationsEnum {
+func (e EntityOperationTriggerConfigurationOperations) ToPointer() *EntityOperationTriggerConfigurationOperations {
 	return &e
 }
 
-func (e *EntityOperationTriggerConfigurationOperationsEnum) UnmarshalJSON(data []byte) error {
+func (e *EntityOperationTriggerConfigurationOperations) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -30,45 +30,45 @@ func (e *EntityOperationTriggerConfigurationOperationsEnum) UnmarshalJSON(data [
 	case "updateEntity":
 		fallthrough
 	case "deleteEntity":
-		*e = EntityOperationTriggerConfigurationOperationsEnum(v)
+		*e = EntityOperationTriggerConfigurationOperations(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for EntityOperationTriggerConfigurationOperationsEnum: %v", v)
+		return fmt.Errorf("invalid value for EntityOperationTriggerConfigurationOperations: %v", v)
 	}
 }
 
 type EntityOperationTriggerConfiguration struct {
-	ExcludeActivities []string                                            `json:"exclude_activities,omitempty"`
-	IncludeActivities []string                                            `json:"include_activities,omitempty"`
-	Operations        []EntityOperationTriggerConfigurationOperationsEnum `json:"operations"`
-	Schema            string                                              `json:"schema"`
+	ExcludeActivities []string                                        `json:"exclude_activities,omitempty"`
+	IncludeActivities []string                                        `json:"include_activities,omitempty"`
+	Operations        []EntityOperationTriggerConfigurationOperations `json:"operations"`
+	Schema            string                                          `json:"schema"`
 }
 
-type EntityOperationTriggerTypeEnum string
+type EntityOperationTriggerType string
 
 const (
-	EntityOperationTriggerTypeEnumEntityOperation EntityOperationTriggerTypeEnum = "entity_operation"
+	EntityOperationTriggerTypeEntityOperation EntityOperationTriggerType = "entity_operation"
 )
 
-func (e EntityOperationTriggerTypeEnum) ToPointer() *EntityOperationTriggerTypeEnum {
+func (e EntityOperationTriggerType) ToPointer() *EntityOperationTriggerType {
 	return &e
 }
 
-func (e *EntityOperationTriggerTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *EntityOperationTriggerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "entity_operation":
-		*e = EntityOperationTriggerTypeEnum(v)
+		*e = EntityOperationTriggerType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for EntityOperationTriggerTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for EntityOperationTriggerType: %v", v)
 	}
 }
 
 type EntityOperationTrigger struct {
 	Configuration EntityOperationTriggerConfiguration `json:"configuration"`
-	Type          EntityOperationTriggerTypeEnum      `json:"type"`
+	Type          EntityOperationTriggerType          `json:"type"`
 }

@@ -4,12 +4,12 @@ info:
   description: API Backend for epilot Automation Workflows feature
   version: 1.0.0
 tags:
-- name: flows
-  description: Automation flows
-- name: executions
-  description: Automation executions
+  - name: flows
+    description: Automation flows
+  - name: executions
+    description: Automation executions
 security:
-- EpilotAuth: []
+  - EpilotAuth: []
 paths:
   /v1/automation/flows:
     get:
@@ -17,58 +17,59 @@ paths:
       summary: searchFlows
       description: Search available automation flows
       tags:
-      - flows
+        - flows
       parameters:
-      - name: schema
-        in: query
-        description: Entity Schema
-        schema:
-          type: string
-          example: submission
-      - name: size
-        in: query
-        description: 'Pagination: max number of results to return'
-        schema:
-          type: integer
-          default: 25
-      - name: from
-        in: query
-        description: 'Pagination: starting for results'
-        schema:
-          type: integer
-          default: 0
-      - name: trigger_source_id
-        in: query
-        description: Trigger source identifier
-        schema:
-          type: string
-          example: 600945fe-212e-4b97-acf7-391d64648384
+        - name: schema
+          in: query
+          description: Entity Schema
+          schema:
+            type: string
+            example: submission
+        - name: size
+          in: query
+          description: "Pagination: max number of results to return"
+          schema:
+            type: integer
+            default: 25
+        - name: from
+          in: query
+          description: "Pagination: starting for results"
+          schema:
+            type: integer
+            default: 0
+        - name: trigger_source_id
+          in: query
+          description: Trigger source identifier
+          schema:
+            type: string
+            example: 600945fe-212e-4b97-acf7-391d64648384
       responses:
-        '200':
+        "200":
           description: List of automation flows, including total count
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchAutomationsResp'
+                $ref: "#/components/schemas/SearchAutomationsResp"
     post:
       operationId: createFlow
+      x-speakeasy-entity-operation: Flow#create
       summary: createFlow
       description: Create new automation flow
       tags:
-      - flows
+        - flows
       requestBody:
         description: Automation flow to create
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AutomationFlow'
+              $ref: "#/components/schemas/AutomationFlow"
       responses:
-        '201':
+        "201":
           description: The created automation flow
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AutomationFlow'
+                $ref: "#/components/schemas/AutomationFlow"
   /v1/automation/flows/{flow_id}:
     get:
       operationId: getFlow
@@ -76,103 +77,103 @@ paths:
       summary: getFlow
       description: List available automation flows
       tags:
-      - flows
+        - flows
       parameters:
-      - name: flow_id
-        in: path
-        x-speakeasy-match: id
-        required: true
-        description: Automation Workflow ID
-        schema:
-          $ref: '#/components/schemas/AutomationFlowId'
+        - name: flow_id
+          in: path
+          x-speakeasy-match: id
+          required: true
+          description: Automation Workflow ID
+          schema:
+            $ref: "#/components/schemas/AutomationFlowId"
       responses:
-        '200':
+        "200":
           description: The returned automation flow
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AutomationFlow'
+                $ref: "#/components/schemas/AutomationFlow"
     put:
       operationId: putFlow
       summary: putFlow
-      x-speakeasy-entity-operation: Flow#create,update
+      x-speakeasy-entity-operation: Flow#update
       description: Update automation flow by id
       tags:
-      - flows
+        - flows
       parameters:
-      - name: flow_id
-        in: path
-        required: true
-        x-speakeasy-match: id
-        description: Automation Workflow ID
-        schema:
-          $ref: '#/components/schemas/AutomationFlowId'
+        - name: flow_id
+          in: path
+          required: true
+          x-speakeasy-match: id
+          description: Automation Workflow ID
+          schema:
+            $ref: "#/components/schemas/AutomationFlowId"
       requestBody:
         description: Automation flow to create
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AutomationFlow'
+              $ref: "#/components/schemas/AutomationFlow"
       responses:
-        '200':
+        "200":
           description: The updated automation flow
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AutomationFlow'
+                $ref: "#/components/schemas/AutomationFlow"
     delete:
       operationId: deleteFlow
       summary: deleteFlow
       x-speakeasy-entity-operation: Flow#delete
       description: Update automation flow by id
       tags:
-      - flows
+        - flows
       parameters:
-      - name: flow_id
-        in: path
-        required: true
-        x-speakeasy-match: id
-        description: Automation Workflow ID
-        schema:
-          $ref: '#/components/schemas/AutomationFlowId'
+        - name: flow_id
+          in: path
+          required: true
+          x-speakeasy-match: id
+          description: Automation Workflow ID
+          schema:
+            $ref: "#/components/schemas/AutomationFlowId"
       responses:
-        '200':
+        "200":
           description: The deleted automation flow
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AutomationFlow'
+                $ref: "#/components/schemas/AutomationFlow"
   /v1/automation/executions:
     get:
       operationId: getExecutions
       summary: getExecutions
       description: List automation executions
       parameters:
-      - name: entity_id
-        in: query
-        schema:
-          $ref: '#/components/schemas/EntityId'
-      - name: size
-        in: query
-        description: 'Pagination: max number of results to return'
-        schema:
-          type: integer
-          default: 25
-      - name: from
-        in: query
-        description: 'Pagination: starting for results'
-        schema:
-          type: integer
-          default: 0
+        - name: entity_id
+          in: query
+          schema:
+            $ref: "#/components/schemas/EntityId"
+        - name: size
+          in: query
+          description: "Pagination: max number of results to return"
+          schema:
+            type: integer
+            default: 25
+        - name: from
+          in: query
+          description: "Pagination: starting for results"
+          schema:
+            type: integer
+            default: 0
       tags:
-      - executions
+        - executions
       responses:
-        '200':
+        "200":
           description: List of automation executions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetExecutionsResp'
+                $ref: "#/components/schemas/GetExecutionsResp"
     post:
       operationId: startExecution
       summary: startExecution
@@ -182,84 +183,84 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StartExecutionRequest'
+              $ref: "#/components/schemas/StartExecutionRequest"
       tags:
-      - executions
+        - executions
       responses:
-        '201':
+        "201":
           description: The created execution
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AutomationExecution'
+                $ref: "#/components/schemas/AutomationExecution"
   /v1/automation/executions/{execution_id}:
     get:
       operationId: getExecution
       summary: getExecution
       description: Get automation execution
       parameters:
-      - name: execution_id
-        in: path
-        schema:
-          $ref: '#/components/schemas/AutomationExecutionId'
-        required: true
+        - name: execution_id
+          in: path
+          schema:
+            $ref: "#/components/schemas/AutomationExecutionId"
+          required: true
       tags:
-      - executions
+        - executions
       responses:
-        '200':
+        "200":
           description: The returned execution
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AutomationExecution'
+                $ref: "#/components/schemas/AutomationExecution"
     delete:
       operationId: cancelExecution
       summary: cancelExecution
       description: Cancel automation execution
       parameters:
-      - name: execution_id
-        in: path
-        schema:
-          $ref: '#/components/schemas/AutomationExecutionId'
-        required: true
+        - name: execution_id
+          in: path
+          schema:
+            $ref: "#/components/schemas/AutomationExecutionId"
+          required: true
       tags:
-      - executions
+        - executions
       responses:
-        '200':
+        "200":
           description: The cancelled execution
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AutomationExecution'
+                $ref: "#/components/schemas/AutomationExecution"
   /v1/automation/executions/{execution_id}/{action_id}/retrigger:
     post:
       operationId: retriggerAction
       summary: retriggerAction
       description: Retry a specific automation execution action which failed / is stuck.
       tags:
-      - executions
+        - executions
       parameters:
-      - name: execution_id
-        in: path
-        description: Execution Id
-        schema:
-          $ref: '#/components/schemas/AutomationExecutionId'
-        required: true
-      - name: action_id
-        in: path
-        description: Id of Action to retry.
-        schema:
-          $ref: '#/components/schemas/AutomationActionId'
-        required: true
+        - name: execution_id
+          in: path
+          description: Execution Id
+          schema:
+            $ref: "#/components/schemas/AutomationExecutionId"
+          required: true
+        - name: action_id
+          in: path
+          description: Id of Action to retry.
+          schema:
+            $ref: "#/components/schemas/AutomationActionId"
+          required: true
       requestBody:
         description: Retry request details.
         required: false
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RetryReq'
+              $ref: "#/components/schemas/RetryReq"
       responses:
-        '200':
+        "200":
           description: action re-triggered with success
 components:
   securitySchemes:
@@ -280,7 +281,7 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/AutomationFlowId'
+          $ref: "#/components/schemas/AutomationFlowId"
         flow_name:
           type: string
           description: A descriptive name for the Automation
@@ -292,11 +293,11 @@ components:
         triggers:
           type: array
           items:
-            $ref: '#/components/schemas/AnyTrigger'
+            $ref: "#/components/schemas/AnyTrigger"
         trigger_conditions:
           type: array
           items:
-            $ref: '#/components/schemas/TriggerCondition'
+            $ref: "#/components/schemas/TriggerCondition"
         entity_schema:
           description: The triggering entity schema
           type: string
@@ -304,7 +305,7 @@ components:
         actions:
           type: array
           items:
-            $ref: '#/components/schemas/AnyActionConfig'
+            $ref: "#/components/schemas/AnyActionConfig"
           readOnly: true
         runs:
           type: number
@@ -330,13 +331,13 @@ components:
           readOnly: true
         org_id:
           type: string
-          example: '123'
+          example: "123"
           description: Organization the automation flow belongs to
           readOnly: true
       required:
-      - flow_name
-      - triggers
-      - actions
+        - flow_name
+        - triggers
+        - actions
     SearchAutomationsResp:
       type: object
       properties:
@@ -345,44 +346,44 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/AutomationFlow'
+            $ref: "#/components/schemas/AutomationFlow"
       required:
-      - total
-      - results
+        - total
+        - results
     AnyTrigger:
       oneOf:
-      - $ref: '#/components/schemas/FrontendSubmitTrigger'
-      - $ref: '#/components/schemas/JourneySubmitTrigger'
-      - $ref: '#/components/schemas/ApiSubmissionTrigger'
-      - $ref: '#/components/schemas/EntityOperationTrigger'
-      - $ref: '#/components/schemas/ActivityTrigger'
-      - $ref: '#/components/schemas/EntityManualTrigger'
-      - $ref: '#/components/schemas/ReceivedEmailTrigger'
+        - $ref: "#/components/schemas/FrontendSubmitTrigger"
+        - $ref: "#/components/schemas/JourneySubmitTrigger"
+        - $ref: "#/components/schemas/ApiSubmissionTrigger"
+        - $ref: "#/components/schemas/EntityOperationTrigger"
+        - $ref: "#/components/schemas/ActivityTrigger"
+        - $ref: "#/components/schemas/EntityManualTrigger"
+        - $ref: "#/components/schemas/ReceivedEmailTrigger"
     AnyAction:
       oneOf:
-      - $ref: '#/components/schemas/MapEntityAction'
-      - $ref: '#/components/schemas/TriggerWorkflowAction'
-      - $ref: '#/components/schemas/TriggerWebhookAction'
-      - $ref: '#/components/schemas/CreateDocumentAction'
-      - $ref: '#/components/schemas/SendEmailAction'
-      - $ref: '#/components/schemas/CartCheckoutAction'
-      - $ref: '#/components/schemas/AutomationAction'
+        - $ref: "#/components/schemas/MapEntityAction"
+        - $ref: "#/components/schemas/TriggerWorkflowAction"
+        - $ref: "#/components/schemas/TriggerWebhookAction"
+        - $ref: "#/components/schemas/CreateDocumentAction"
+        - $ref: "#/components/schemas/SendEmailAction"
+        - $ref: "#/components/schemas/CartCheckoutAction"
+        - $ref: "#/components/schemas/AutomationAction"
     AnyActionConfig:
       oneOf:
-      - $ref: '#/components/schemas/MapEntityActionConfig'
-      - $ref: '#/components/schemas/TriggerWorkflowActionConfig'
-      - $ref: '#/components/schemas/TriggerWebhookActionConfig'
-      - $ref: '#/components/schemas/CreateDocumentActionConfig'
-      - $ref: '#/components/schemas/SendEmailActionConfig'
-      - $ref: '#/components/schemas/CartCheckoutActionConfig'
-      - $ref: '#/components/schemas/AutomationActionConfig'
+        - $ref: "#/components/schemas/MapEntityActionConfig"
+        - $ref: "#/components/schemas/TriggerWorkflowActionConfig"
+        - $ref: "#/components/schemas/TriggerWebhookActionConfig"
+        - $ref: "#/components/schemas/CreateDocumentActionConfig"
+        - $ref: "#/components/schemas/SendEmailActionConfig"
+        - $ref: "#/components/schemas/CartCheckoutActionConfig"
+        - $ref: "#/components/schemas/AutomationActionConfig"
     AutomationActionConfig:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/AutomationActionId'
+          $ref: "#/components/schemas/AutomationActionId"
         flow_action_id:
-          $ref: '#/components/schemas/AutomationActionId'
+          $ref: "#/components/schemas/AutomationActionId"
         name:
           type: string
         type:
@@ -400,7 +401,7 @@ components:
       type: object
       properties:
         execution_status:
-          $ref: '#/components/schemas/ExecutionStatus'
+          $ref: "#/components/schemas/ExecutionStatus"
         started_at:
           type: string
         updated_at:
@@ -410,80 +411,80 @@ components:
           additionalProperties: true
           example: {}
         error_output:
-          $ref: '#/components/schemas/ErrorOutput'
+          $ref: "#/components/schemas/ErrorOutput"
         retry_strategy:
-          $ref: '#/components/schemas/RetryStrategy'
+          $ref: "#/components/schemas/RetryStrategy"
     RetryStrategy:
       type: string
       description: different behaviors for retrying failed execution actions.
       enum:
-      - RETRY_AND_RESUME
-      - RETRY_AND_STOP
+        - RETRY_AND_RESUME
+        - RETRY_AND_STOP
     AutomationAction:
       oneOf:
-      - $ref: '#/components/schemas/AutomationActionConfig'
-      - $ref: '#/components/schemas/AutomationActionExecutionState'
+        - $ref: "#/components/schemas/AutomationActionConfig"
+        - $ref: "#/components/schemas/AutomationActionExecutionState"
     ErrorOutput:
       type: object
       properties:
         error_code:
-          $ref: '#/components/schemas/ErrorCode'
+          $ref: "#/components/schemas/ErrorCode"
         error_reason:
           type: string
       required:
-      - error_code
-      - error_reason
+        - error_code
+        - error_reason
     ErrorCode:
       type: string
       enum:
-      - MAPPING_ERROR
-      - REFRESH_RELATIONS_ERROR
-      - DUPLICATE_ENTITY_ERROR
-      - TRIGGER_WORKFLOW_ERROR
-      - TIMEOUT_ERROR
-      - BAD_CONFIG
-      - INTERNAL_ERROR
+        - MAPPING_ERROR
+        - REFRESH_RELATIONS_ERROR
+        - DUPLICATE_ENTITY_ERROR
+        - TRIGGER_WORKFLOW_ERROR
+        - TIMEOUT_ERROR
+        - BAD_CONFIG
+        - INTERNAL_ERROR
     CartCheckoutActionConfig:
       allOf:
-      - $ref: '#/components/schemas/AutomationActionConfig'
-      - type: object
-        description: Creates an order entity with prices from journey
-        properties:
-          type:
-            enum:
-            - cart-checkout
-          config:
-            $ref: '#/components/schemas/CartCheckoutConfig'
+        - $ref: "#/components/schemas/AutomationActionConfig"
+        - type: object
+          description: Creates an order entity with prices from journey
+          properties:
+            type:
+              enum:
+                - cart-checkout
+            config:
+              $ref: "#/components/schemas/CartCheckoutConfig"
     CartCheckoutAction:
       allOf:
-      - $ref: '#/components/schemas/AutomationAction'
-      - type: object
-        description: Creates an order entity with prices from journey
-        properties:
-          type:
-            enum:
-            - cart-checkout
-          config:
-            $ref: '#/components/schemas/CartCheckoutConfig'
+        - $ref: "#/components/schemas/AutomationAction"
+        - type: object
+          description: Creates an order entity with prices from journey
+          properties:
+            type:
+              enum:
+                - cart-checkout
+            config:
+              $ref: "#/components/schemas/CartCheckoutConfig"
     CartCheckoutConfig:
       type: object
       properties:
         version:
           description: Version of the config
           type: string
-          default: '1'
+          default: "1"
         mapping_config:
-          $ref: '#/components/schemas/MappingConfigRef'
+          $ref: "#/components/schemas/MappingConfigRef"
         relation_attributes:
           type: array
           items:
-            $ref: '#/components/schemas/RelationAttribute'
+            $ref: "#/components/schemas/RelationAttribute"
         mapping_attributes:
           type: array
           items:
             oneOf:
-            - $ref: '#/components/schemas/MappingAttributeV2'
-            - $ref: '#/components/schemas/MappingAttribute'
+              - $ref: "#/components/schemas/MappingAttributeV2"
+              - $ref: "#/components/schemas/MappingAttribute"
         linkback_relation_attribute:
           type: string
           default: mapped_entities
@@ -501,14 +502,14 @@ components:
             type: string
     MapEntityActionConfig:
       allOf:
-      - $ref: '#/components/schemas/AutomationActionConfig'
-      - type: object
-        properties:
-          type:
-            enum:
-            - map-entity
-          config:
-            $ref: '#/components/schemas/MapEntityConfig'
+        - $ref: "#/components/schemas/AutomationActionConfig"
+        - type: object
+          properties:
+            type:
+              enum:
+                - map-entity
+            config:
+              $ref: "#/components/schemas/MapEntityConfig"
       example:
         id: 2520gja-2sgmsaga-0asg-822jgal
         name: Map Entity
@@ -516,82 +517,82 @@ components:
         config:
           target_schema: contact
           target_unique:
-          - email.0.email
+            - email.0.email
           relation_attributes:
-          - target: company
-            mode: append
-            source_filter:
-              schema: account
-              limit: 1
+            - target: company
+              mode: append
+              source_filter:
+                schema: account
+                limit: 1
           mapping_attributes:
-          - target: _tags
-            operation:
-              _append:
-              - primary
-              - payer
-              _uniq: true
-          - target: email
-            operation:
-              _append:
-              - email:
-                  _copy: billing_contact.email
-          - target: first_name
-            operation:
-              _copy: billing_contact.first_name
-          - target: last_name
-            operation:
-              _copy: billing_contact.last_name
-          - target: contact_type
-            operation:
-              _set: customer
-          - target: address
-            operation:
-              _append:
-              - _tags:
-                - billing
-                - primary
-                street_name:
-                  _copy: billing_contact.street_name
-                street_number:
-                  _copy: billing_contact.street_number
-                city:
-                  _copy: billing_contact.city
-                postal_code:
-                  _copy: billing_contact.postal_code
-                country:
-                  _copy: billing_contact.country
-              - _tags:
-                - delivery
-                street_name:
-                  _copy: delivery_contact.street_name
-                street_number:
-                  _copy: delivery_contact.street_number
-                city:
-                  _copy: delivery_contact.city
-                postal_code:
-                  _copy: delivery_contact.postal_code
-                country:
-                  _copy: delivery_contact.country
-              _uniq:
-              - street_name
-              - street_number
-              - postal_code
-              - country
+            - target: _tags
+              operation:
+                _append:
+                  - primary
+                  - payer
+                _uniq: true
+            - target: email
+              operation:
+                _append:
+                  - email:
+                      _copy: billing_contact.email
+            - target: first_name
+              operation:
+                _copy: billing_contact.first_name
+            - target: last_name
+              operation:
+                _copy: billing_contact.last_name
+            - target: contact_type
+              operation:
+                _set: customer
+            - target: address
+              operation:
+                _append:
+                  - _tags:
+                      - billing
+                      - primary
+                    street_name:
+                      _copy: billing_contact.street_name
+                    street_number:
+                      _copy: billing_contact.street_number
+                    city:
+                      _copy: billing_contact.city
+                    postal_code:
+                      _copy: billing_contact.postal_code
+                    country:
+                      _copy: billing_contact.country
+                  - _tags:
+                      - delivery
+                    street_name:
+                      _copy: delivery_contact.street_name
+                    street_number:
+                      _copy: delivery_contact.street_number
+                    city:
+                      _copy: delivery_contact.city
+                    postal_code:
+                      _copy: delivery_contact.postal_code
+                    country:
+                      _copy: delivery_contact.country
+                _uniq:
+                  - street_name
+                  - street_number
+                  - postal_code
+                  - country
     MapEntityAction:
       allOf:
-      - $ref: '#/components/schemas/AutomationAction'
-      - type: object
-        properties:
-          type:
-            enum:
-            - map-entity
-          config:
-            $ref: '#/components/schemas/MapEntityConfig'
+        - $ref: "#/components/schemas/AutomationAction"
+        - type: object
+          properties:
+            type:
+              enum:
+                - map-entity
+            config:
+              $ref: "#/components/schemas/MapEntityConfig"
     MapEntityConfig:
       type: object
       properties:
         mapping_config:
-          $ref: '#/components/schemas/MappingConfigRef'
+          $ref: "#/components/schemas/MappingConfigRef"
         target_schema:
           type: string
           description: Schema of target entity
@@ -605,13 +606,13 @@ components:
           description: Attribute mappings
           items:
             oneOf:
-            - $ref: '#/components/schemas/MappingAttributeV2'
-            - $ref: '#/components/schemas/MappingAttribute'
+              - $ref: "#/components/schemas/MappingAttributeV2"
+              - $ref: "#/components/schemas/MappingAttribute"
         relation_attributes:
           type: array
           description: Relation mappings
           items:
-            $ref: '#/components/schemas/RelationAttribute'
+            $ref: "#/components/schemas/RelationAttribute"
         linkback_relation_attribute:
           type: string
           default: mapped_entities
@@ -623,7 +624,7 @@ components:
           items:
             type: string
       required:
-      - target_schema
+        - target_schema
     MappingConfigRef:
       type: object
       properties:
@@ -637,8 +638,8 @@ components:
           type: number
           description: Version of Entity Mapping Configuration to run for mapping.
       required:
-      - config_id
-      - target_id
+        - config_id
+        - target_id
     RelationAttribute:
       type: object
       properties:
@@ -685,12 +686,12 @@ components:
         mode:
           type: string
           enum:
-          - append
-          - prepend
-          - set
+            - append
+            - prepend
+            - set
       required:
-      - target
-      - mode
+        - target
+        - mode
     MappingAttributeV2:
       type: object
       properties:
@@ -698,42 +699,42 @@ components:
           type: string
           description: Target JSON path for the attribute to set
         operation:
-          $ref: '#/components/schemas/OperationNode'
+          $ref: "#/components/schemas/OperationNode"
       required:
-      - targetPath
-      - operation
+        - targetPath
+        - operation
       example:
         target: _tags
         operation:
           _append:
-          - new
-          - tags
+            - new
+            - tags
           _uniq: true
     OperationNode:
       description: Mapping operation nodes are either primitive values or operation node objects
       oneOf:
-      - $ref: '#/components/schemas/OperationObjectNode'
-      - $ref: '#/components/schemas/PrimitiveJSONValue'
+        - $ref: "#/components/schemas/OperationObjectNode"
+        - $ref: "#/components/schemas/PrimitiveJSONValue"
     OperationObjectNode:
       type: object
       properties:
         _set:
-          $ref: '#/components/schemas/PrimitiveJSONValue'
+          $ref: "#/components/schemas/PrimitiveJSONValue"
         _append:
           description: Append to array
           items:
-            $ref: '#/components/schemas/PrimitiveJSONValue'
+            $ref: "#/components/schemas/PrimitiveJSONValue"
         _uniq:
           description: Unique array
           oneOf:
-          - type: boolean
-            example: true
-          - type: array
-            description: Unique key consisting of object keys
-            example:
-            - email
-            items:
-              type: string
+            - type: boolean
+              example: true
+            - type: array
+              description: Unique key consisting of object keys
+              example:
+                - email
+              items:
+                type: string
         _copy:
           description: Copy JSONPath value from source entity context
           type: string
@@ -742,15 +743,15 @@ components:
     PrimitiveJSONValue: {}
     MappingAttribute:
       oneOf:
-      - $ref: '#/components/schemas/SetValueMapper'
-      - $ref: '#/components/schemas/CopyValueMapper'
-      - $ref: '#/components/schemas/AppendValueMapper'
+        - $ref: "#/components/schemas/SetValueMapper"
+        - $ref: "#/components/schemas/CopyValueMapper"
+        - $ref: "#/components/schemas/AppendValueMapper"
     MappingAttributeMode:
       type: string
       enum:
-      - copy_if_exists
-      - append_if_exists
-      - set_value
+        - copy_if_exists
+        - append_if_exists
+        - set_value
       description: >
         - copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. -
         set_value - it sets a value to a predefined value. Must be used together with value property.
@@ -759,7 +760,7 @@ components:
       deprecated: true
       properties:
         mode:
-          $ref: '#/components/schemas/MappingAttributeMode'
+          $ref: "#/components/schemas/MappingAttributeMode"
         target:
           type: string
           description: JSON like target path for the attribute. Eg. last_name
@@ -767,15 +768,15 @@ components:
           description: |
             Any value to be set: string, number, string[], number[], JSON object, etc. It will override existing values, if any.
       required:
-      - mode
-      - target
-      - value
+        - mode
+        - target
+        - value
     CopyValueMapper:
       type: object
       deprecated: true
       properties:
         mode:
-          $ref: '#/components/schemas/MappingAttributeMode'
+          $ref: "#/components/schemas/MappingAttributeMode"
         target:
           type: string
           description: JSON like target path for the attribute. Eg. last_name
@@ -784,15 +785,15 @@ components:
           description: |
             JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price
       required:
-      - mode
-      - target
-      - source
+        - mode
+        - target
+        - source
     AppendValueMapper:
       type: object
       deprecated: true
       properties:
         mode:
-          $ref: '#/components/schemas/MappingAttributeMode'
+          $ref: "#/components/schemas/MappingAttributeMode"
         target:
           type: string
           description: JSON like target path for the attribute. Eg. last_name
@@ -811,19 +812,19 @@ components:
           description: |
             Array of keys which should be used when checking for uniqueness. Eg: [country, city, postal_code]
       required:
-      - mode
-      - target
-      - value_json
+        - mode
+        - target
+        - value_json
     SendEmailActionConfig:
       allOf:
-      - $ref: '#/components/schemas/AutomationActionConfig'
-      - type: object
-        properties:
-          type:
-            enum:
-            - send-email
-          config:
-            $ref: '#/components/schemas/SendEmailConfig'
+        - $ref: "#/components/schemas/AutomationActionConfig"
+        - type: object
+          properties:
+            type:
+              enum:
+                - send-email
+            config:
+              $ref: "#/components/schemas/SendEmailConfig"
       example:
         id: 25jga0-gkasl26-0asg-908sgaj2
         name: Send Email
@@ -833,14 +834,14 @@ components:
           language_code: de
     SendEmailAction:
       allOf:
-      - $ref: '#/components/schemas/AutomationAction'
-      - type: object
-        properties:
-          type:
-            enum:
-            - send-email
-          config:
-            $ref: '#/components/schemas/SendEmailConfig'
+        - $ref: "#/components/schemas/AutomationAction"
+        - type: object
+          properties:
+            type:
+              enum:
+                - send-email
+            config:
+              $ref: "#/components/schemas/SendEmailConfig"
     SendEmailConfig:
       type: object
       properties:
@@ -849,8 +850,8 @@ components:
         language_code:
           type: string
           enum:
-          - de
-          - en
+            - de
+            - en
         attachments:
           type: array
           description: |
@@ -888,33 +889,33 @@ components:
                     type: string
                     description: Filter by a specific document type (e.g. document)
                     enum:
-                    - document
-                    - text
-                    - image
-                    - video
-                    - audio
-                    - spreadsheet
-                    - presentation
-                    - font
-                    - archive
-                    - application
-                    - unknown
+                      - document
+                      - text
+                      - image
+                      - video
+                      - audio
+                      - spreadsheet
+                      - presentation
+                      - font
+                      - archive
+                      - application
+                      - unknown
                   self:
                     type: boolean
                     description: Picks main entity as file (only works if source entity is a file)
                     default: false
           required:
-          - email_template_id
+            - email_template_id
     CreateDocumentActionConfig:
       allOf:
-      - $ref: '#/components/schemas/AutomationActionConfig'
-      - type: object
-        properties:
-          type:
-            enum:
-            - create-document
-          config:
-            $ref: '#/components/schemas/CreateDocumentConfig'
+        - $ref: "#/components/schemas/AutomationActionConfig"
+        - type: object
+          properties:
+            type:
+              enum:
+                - create-document
+            config:
+              $ref: "#/components/schemas/CreateDocumentConfig"
       example:
         id: 08g988-ojt2jtaga-292h-8978gsaga
         name: Create Document
@@ -928,14 +929,14 @@ components:
             example: newsletter.pdf"
     CreateDocumentAction:
       allOf:
-      - $ref: '#/components/schemas/AutomationAction'
-      - type: object
-        properties:
-          type:
-            enum:
-            - create-document
-          config:
-            $ref: '#/components/schemas/CreateDocumentConfig'
+        - $ref: "#/components/schemas/AutomationAction"
+        - type: object
+          properties:
+            type:
+              enum:
+                - create-document
+            config:
+              $ref: "#/components/schemas/CreateDocumentConfig"
     CreateDocumentConfig:
       type: object
       properties:
@@ -945,14 +946,14 @@ components:
           type: string
     TriggerWorkflowActionConfig:
       allOf:
-      - $ref: '#/components/schemas/AutomationActionConfig'
-      - type: object
-        properties:
-          type:
-            enum:
-            - trigger-workflow
-          config:
-            $ref: '#/components/schemas/TriggerWorkflowConfig'
+        - $ref: "#/components/schemas/AutomationActionConfig"
+        - type: object
+          properties:
+            type:
+              enum:
+                - trigger-workflow
+            config:
+              $ref: "#/components/schemas/TriggerWorkflowConfig"
       example:
         id: 08g988-ojt2jtaga-292h-8978gsaga
         name: Trigger Workflow
@@ -960,28 +961,28 @@ components:
         config:
           target_workflow: mfptvUMH
           conditions:
-          - schema: ivy-opportunity
-            source: customer.type
-            comparison: equals
-            value: PRIVATE
+            - schema: ivy-opportunity
+              source: customer.type
+              comparison: equals
+              value: PRIVATE
           assign_steps:
-          - step_name: Lead Sales
-            user_ids:
-            - 10010729
-          - step_name: Operations
-            user_ids:
-            - 10010728
-            - 10010729
+            - step_name: Lead Sales
+              user_ids:
+                - 10010729
+            - step_name: Operations
+              user_ids:
+                - 10010728
+                - 10010729
     TriggerWorkflowAction:
       allOf:
-      - $ref: '#/components/schemas/AutomationAction'
-      - type: object
-        properties:
-          type:
-            enum:
-            - trigger-workflow
-          config:
-            $ref: '#/components/schemas/TriggerWorkflowConfig'
+        - $ref: "#/components/schemas/AutomationAction"
+        - type: object
+          properties:
+            type:
+              enum:
+                - trigger-workflow
+            config:
+              $ref: "#/components/schemas/TriggerWorkflowConfig"
     TriggerWorkflowConfig:
       type: object
       properties:
@@ -990,7 +991,7 @@ components:
         conditions:
           type: array
           items:
-            $ref: '#/components/schemas/TriggerWorkflowCondition'
+            $ref: "#/components/schemas/TriggerWorkflowCondition"
         assignees:
           type: array
           items:
@@ -998,18 +999,18 @@ components:
         assign_steps:
           type: array
           items:
-            $ref: '#/components/schemas/AssignUsersToStep'
+            $ref: "#/components/schemas/AssignUsersToStep"
     TriggerWorkflowCondition:
       allOf:
-      - $ref: '#/components/schemas/TriggerCondition'
-      - type: object
-        properties:
-          schema:
-            type: string
+        - $ref: "#/components/schemas/TriggerCondition"
+        - type: object
+          properties:
+            schema:
+              type: string
       required:
-      - schema
-      - source
-      - comparison
+        - schema
+        - source
+        - comparison
       example:
         schema: contact
         source: email
@@ -1027,44 +1028,44 @@ components:
           items:
             type: number
       example:
-      - step_id: xyh9t2ha
-        step_name: Lead Sales
-        user_ids:
-        - 10010729
-      - step_id: 29jgasl
-        step_name: Operations
-        user_ids:
-        - 10010728
-        - 10010729
+        - step_id: xyh9t2ha
+          step_name: Lead Sales
+          user_ids:
+            - 10010729
+        - step_id: 29jgasl
+          step_name: Operations
+          user_ids:
+            - 10010728
+            - 10010729
     TriggerWebhookActionConfig:
       allOf:
-      - $ref: '#/components/schemas/AutomationActionConfig'
-      - type: object
-        properties:
-          type:
-            enum:
-            - trigger-webhook
-          config:
-            $ref: '#/components/schemas/TriggerWebhookConfig'
+        - $ref: "#/components/schemas/AutomationActionConfig"
+        - type: object
+          properties:
+            type:
+              enum:
+                - trigger-webhook
+            config:
+              $ref: "#/components/schemas/TriggerWebhookConfig"
       example:
         id: 2520gja-2sgmsaga-0asg-822jgal
         name: Trigger Webhook
         type: trigger-webhook
         config:
           entity_sources:
-          - contact
-          - account
+            - contact
+            - account
           target_webhook_id: 25jg9ag2ga
     TriggerWebhookAction:
       allOf:
-      - $ref: '#/components/schemas/AutomationAction'
-      - type: object
-        properties:
-          type:
-            enum:
-            - trigger-webhook
-          config:
-            $ref: '#/components/schemas/TriggerWebhookConfig'
+        - $ref: "#/components/schemas/AutomationAction"
+        - type: object
+          properties:
+            type:
+              enum:
+                - trigger-webhook
+            config:
+              $ref: "#/components/schemas/TriggerWebhookConfig"
     TriggerWebhookConfig:
       type: object
       properties:
@@ -1081,19 +1082,19 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/AutomationExecutionId'
+          $ref: "#/components/schemas/AutomationExecutionId"
         execution_status:
-          $ref: '#/components/schemas/ExecutionStatus'
+          $ref: "#/components/schemas/ExecutionStatus"
         entity_id:
-          $ref: '#/components/schemas/EntityId'
+          $ref: "#/components/schemas/EntityId"
         activity_id:
-          $ref: '#/components/schemas/ActivityId'
+          $ref: "#/components/schemas/ActivityId"
         entity_snapshot:
-          $ref: '#/components/schemas/EntityItemSnapshot'
+          $ref: "#/components/schemas/EntityItemSnapshot"
         org_id:
-          $ref: '#/components/schemas/OrganizationId'
+          $ref: "#/components/schemas/OrganizationId"
         flow_id:
-          $ref: '#/components/schemas/AutomationFlowId'
+          $ref: "#/components/schemas/AutomationFlowId"
         flow_name:
           type: string
           example: Handle contact form
@@ -1104,26 +1105,26 @@ components:
           type: string
           format: date-time
         current_action_id:
-          $ref: '#/components/schemas/AutomationActionId'
+          $ref: "#/components/schemas/AutomationActionId"
         actions:
           type: array
           items:
-            $ref: '#/components/schemas/AnyAction'
+            $ref: "#/components/schemas/AnyAction"
       required:
-      - id
-      - status
-      - entity_id
-      - org_id
-      - flow_id
-      - actions
+        - id
+        - status
+        - entity_id
+        - org_id
+        - flow_id
+        - actions
     ExecutionStatus:
       type: string
       enum:
-      - pending
-      - in_progress
-      - success
-      - failed
-      - cancelled
+        - pending
+        - in_progress
+        - success
+        - failed
+        - cancelled
     GetExecutionsResp:
       type: object
       properties:
@@ -1132,17 +1133,17 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/AutomationExecution'
+            $ref: "#/components/schemas/AutomationExecution"
       required:
-      - total
-      - results
+        - total
+        - results
     StartExecutionRequest:
       type: object
       properties:
         entity_id:
-          $ref: '#/components/schemas/EntityId'
+          $ref: "#/components/schemas/EntityId"
         flow_id:
-          $ref: '#/components/schemas/AutomationFlowId'
+          $ref: "#/components/schemas/AutomationFlowId"
     EntityId:
       type: string
       example: e3d3ebac-baab-4395-abf4-50b5bf1f8b74
@@ -1158,7 +1159,7 @@ components:
         type:
           type: string
           enum:
-          - journey_submission
+            - journey_submission
         configuration:
           type: object
           properties:
@@ -1166,65 +1167,65 @@ components:
               type: string
               format: uuid
           required:
-          - source_id
+            - source_id
       required:
-      - type
-      - configuration
+        - type
+        - configuration
     FrontendSubmitTrigger:
       type: object
       properties:
         type:
           type: string
           enum:
-          - frontend_submission
+            - frontend_submission
         configuration:
           type: object
           properties:
             source_id:
               type: string
-              example: '99'
+              example: "99"
       required:
-      - type
-      - configuration
+        - type
+        - configuration
     ApiSubmissionTrigger:
       type: object
       properties:
         type:
           type: string
           enum:
-          - api_submission
+            - api_submission
         configuration:
           type: object
           properties:
             source_id:
               type: string
       required:
-      - type
-      - configuration
+        - type
+        - configuration
     ReceivedEmailTrigger:
       type: object
       properties:
         type:
           type: string
           enum:
-          - received_email
+            - received_email
         configuration:
           type: object
           properties:
             message_type:
               type: string
               enum:
-              - RECEIVED
+                - RECEIVED
       required:
-      - type
-      - configuration
+        - type
+        - configuration
     EntityOperationTrigger:
       type: object
       properties:
         type:
           type: string
           enum:
-          - entity_operation
+            - entity_operation
         configuration:
           type: object
           properties:
@@ -1237,34 +1238,34 @@ components:
               items:
                 type: string
                 enum:
-                - createEntity
-                - updateEntity
-                - deleteEntity
+                  - createEntity
+                  - updateEntity
+                  - deleteEntity
             include_activities:
               type: array
               items:
                 type: string
                 example:
-                - CreateEntity
+                  - CreateEntity
             exclude_activities:
               type: array
               items:
                 type: string
                 example:
-                - SyncEntity
+                  - SyncEntity
           required:
-          - schema
-          - operations
+            - schema
+            - operations
       required:
-      - type
-      - configuration
+        - type
+        - configuration
     ActivityTrigger:
       type: object
       properties:
         type:
           type: string
           enum:
-          - activity
+            - activity
         configuration:
           type: object
           properties:
@@ -1276,20 +1277,20 @@ components:
               items:
                 type: string
                 enum:
-                - CreateMeterReading
-                - UpdateMeterReading
-                - MessageActivity
-                - SyncActivity
+                  - CreateMeterReading
+                  - UpdateMeterReading
+                  - MessageActivity
+                  - SyncActivity
       required:
-      - type
-      - configuration
+        - type
+        - configuration
     EntityManualTrigger:
       type: object
       properties:
         type:
           type: string
           enum:
-          - entity_manual
+            - entity_manual
         configuration:
           type: object
           properties:
@@ -1298,43 +1299,43 @@ components:
               type: string
               example: submission
       required:
-      - type
-      - configuration
+        - type
+        - configuration
     TriggerCondition:
       type: object
       properties:
         source:
           type: string
         comparison:
-          $ref: '#/components/schemas/Comparison'
+          $ref: "#/components/schemas/Comparison"
         value:
           oneOf:
-          - type: string
-          - type: number
-          - type: array
-            items:
-              type: string
-          - type: array
-            items:
-              type: number
+            - type: string
+            - type: number
+            - type: array
+              items:
+                type: string
+            - type: array
+              items:
+                type: number
       required:
-      - source
-      - comparison
+        - source
+        - comparison
       example:
         source: billing_contact.email
         comparison: exists
     Comparison:
       type: string
       enum:
-      - equals
-      - any_of
-      - not_empty
-      - is_empty
+        - equals
+        - any_of
+        - not_empty
+        - is_empty
     EntityItemSnapshot:
       type: object
       properties:
         _id:
-          $ref: '#/components/schemas/EntityId'
+          $ref: "#/components/schemas/EntityId"
         _title:
           type: string
         _org:
@@ -1353,17 +1354,16 @@ components:
           format: date-time
       additionalProperties: true
       required:
-      - _id
-      - _title
-      - _org
-      - _schema
-      - _created_at
-      - _updated_at
+        - _id
+        - _title
+        - _org
+        - _schema
+        - _created_at
+        - _updated_at
     RetryReq:
       type: object
       properties:
         retry_strategy:
-          $ref: '#/components/schemas/RetryStrategy'
+          $ref: "#/components/schemas/RetryStrategy"
 servers:
-- url: https://automation.sls.epilot.io
-
+  - url: https://automation.sls.epilot.io

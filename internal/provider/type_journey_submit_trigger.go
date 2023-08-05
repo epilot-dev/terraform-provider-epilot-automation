@@ -5,6 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type JourneySubmitTrigger struct {
-	Configuration FrontendSubmitTriggerConfiguration `tfsdk:"configuration"`
-	Type          types.String                       `tfsdk:"type"`
+	Configuration APISubmissionTriggerConfiguration `tfsdk:"configuration"`
+	Type          types.String                      `tfsdk:"type"`
 }

@@ -36,6 +36,7 @@ func (p *EpilotAutomationProvider) Metadata(ctx context.Context, req provider.Me
 
 func (p *EpilotAutomationProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description: `Automation API: API Backend for epilot Automation Workflows feature`,
 		Attributes: map[string]schema.Attribute{
 			"server_url": schema.StringAttribute{
 				MarkdownDescription: "Server URL (defaults to https://automation.sls.epilot.io)",
@@ -87,7 +88,9 @@ func (p *EpilotAutomationProvider) Resources(ctx context.Context) []func() resou
 }
 
 func (p *EpilotAutomationProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{}
+	return []func() datasource.DataSource{
+		NewFlowDataSource,
+	}
 }
 
 func New(version string) func() provider.Provider {

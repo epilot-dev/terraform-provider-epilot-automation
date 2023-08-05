@@ -3,11 +3,11 @@
 package provider
 
 type AnyActionConfig struct {
-	MapEntityActionConfig       *MapEntityActionConfig       `tfsdk:"map_entity_action_config"`
-	TriggerWorkflowActionConfig *TriggerWorkflowActionConfig `tfsdk:"trigger_workflow_action_config"`
-	TriggerWebhookActionConfig  *TriggerWebhookActionConfig  `tfsdk:"trigger_webhook_action_config"`
-	CreateDocumentActionConfig  *CreateDocumentActionConfig  `tfsdk:"create_document_action_config"`
-	SendEmailActionConfig       *SendEmailActionConfig       `tfsdk:"send_email_action_config"`
-	CartCheckoutActionConfig    *CartCheckoutActionConfig    `tfsdk:"cart_checkout_action_config"`
 	AutomationActionConfig      *AutomationActionConfig      `tfsdk:"automation_action_config"`
+	CartCheckoutActionConfig    *CartCheckoutActionConfig    `tfsdk:"cart_checkout_action_config"`
+	CreateDocumentActionConfig  *CreateDocumentActionConfig  `tfsdk:"create_document_action_config"`
+	MapEntityActionConfig       *MapEntityActionConfig       `tfsdk:"map_entity_action_config"`
+	SendEmailActionConfig       *SendEmailActionConfig       `tfsdk:"send_email_action_config"`
+	TriggerWebhookActionConfig  *TriggerWebhookActionConfig  `tfsdk:"trigger_webhook_action_config"`
+	TriggerWorkflowActionConfig *TriggerWorkflowActionConfig `tfsdk:"trigger_workflow_action_config"`
 }

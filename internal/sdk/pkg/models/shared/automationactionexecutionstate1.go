@@ -7,38 +7,38 @@ import (
 	"fmt"
 )
 
-type AutomationActionExecutionStateTypeEnum1 string
+type AutomationActionExecutionStateType1 string
 
 const (
-	AutomationActionExecutionStateTypeEnum1TriggerWorkflow AutomationActionExecutionStateTypeEnum1 = "trigger-workflow"
+	AutomationActionExecutionStateType1TriggerWorkflow AutomationActionExecutionStateType1 = "trigger-workflow"
 )
 
-func (e AutomationActionExecutionStateTypeEnum1) ToPointer() *AutomationActionExecutionStateTypeEnum1 {
+func (e AutomationActionExecutionStateType1) ToPointer() *AutomationActionExecutionStateType1 {
 	return &e
 }
 
-func (e *AutomationActionExecutionStateTypeEnum1) UnmarshalJSON(data []byte) error {
+func (e *AutomationActionExecutionStateType1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "trigger-workflow":
-		*e = AutomationActionExecutionStateTypeEnum1(v)
+		*e = AutomationActionExecutionStateType1(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AutomationActionExecutionStateTypeEnum1: %v", v)
+		return fmt.Errorf("invalid value for AutomationActionExecutionStateType1: %v", v)
 	}
 }
 
 type AutomationActionExecutionState1 struct {
 	Config          *TriggerWorkflowConfig `json:"config,omitempty"`
 	ErrorOutput     *ErrorOutput           `json:"error_output,omitempty"`
-	ExecutionStatus *ExecutionStatusEnum   `json:"execution_status,omitempty"`
+	ExecutionStatus *ExecutionStatus       `json:"execution_status,omitempty"`
 	Outputs         map[string]interface{} `json:"outputs,omitempty"`
 	// different behaviors for retrying failed execution actions.
-	RetryStrategy *RetryStrategyEnum                       `json:"retry_strategy,omitempty"`
-	StartedAt     *string                                  `json:"started_at,omitempty"`
-	Type          *AutomationActionExecutionStateTypeEnum1 `json:"type,omitempty"`
-	UpdatedAt     *string                                  `json:"updated_at,omitempty"`
+	RetryStrategy *RetryStrategy                       `json:"retry_strategy,omitempty"`
+	StartedAt     *string                              `json:"started_at,omitempty"`
+	Type          *AutomationActionExecutionStateType1 `json:"type,omitempty"`
+	UpdatedAt     *string                              `json:"updated_at,omitempty"`
 }

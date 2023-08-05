@@ -7,6 +7,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type TriggerConditionValue struct {
 	Str           types.String   `tfsdk:"str"`
 	Number        types.Number   `tfsdk:"number"`
-	ArrayOfStr    []types.String `tfsdk:"array_of_str"`
-	ArrayOfNumber []types.Number `tfsdk:"array_of_number"`
+	ArrayOfstr    []types.String `tfsdk:"array_ofstr"`
+	ArrayOfnumber []types.Number `tfsdk:"array_ofnumber"`
 }

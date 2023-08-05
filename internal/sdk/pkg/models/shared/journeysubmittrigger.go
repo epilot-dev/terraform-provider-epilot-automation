@@ -11,31 +11,31 @@ type JourneySubmitTriggerConfiguration struct {
 	SourceID string `json:"source_id"`
 }
 
-type JourneySubmitTriggerTypeEnum string
+type JourneySubmitTriggerType string
 
 const (
-	JourneySubmitTriggerTypeEnumJourneySubmission JourneySubmitTriggerTypeEnum = "journey_submission"
+	JourneySubmitTriggerTypeJourneySubmission JourneySubmitTriggerType = "journey_submission"
 )
 
-func (e JourneySubmitTriggerTypeEnum) ToPointer() *JourneySubmitTriggerTypeEnum {
+func (e JourneySubmitTriggerType) ToPointer() *JourneySubmitTriggerType {
 	return &e
 }
 
-func (e *JourneySubmitTriggerTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *JourneySubmitTriggerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "journey_submission":
-		*e = JourneySubmitTriggerTypeEnum(v)
+		*e = JourneySubmitTriggerType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for JourneySubmitTriggerTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for JourneySubmitTriggerType: %v", v)
 	}
 }
 
 type JourneySubmitTrigger struct {
 	Configuration JourneySubmitTriggerConfiguration `json:"configuration"`
-	Type          JourneySubmitTriggerTypeEnum      `json:"type"`
+	Type          JourneySubmitTriggerType          `json:"type"`
 }

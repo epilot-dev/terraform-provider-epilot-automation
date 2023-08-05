@@ -3,6 +3,6 @@
 package shared
 
 type ErrorOutput struct {
-	ErrorCode   ErrorCodeEnum `json:"error_code"`
-	ErrorReason string        `json:"error_reason"`
+	ErrorCode   ErrorCode `json:"error_code"`
+	ErrorReason string    `json:"error_reason"`
 }

@@ -11,31 +11,31 @@ type APISubmissionTriggerConfiguration struct {
 	SourceID *string `json:"source_id,omitempty"`
 }
 
-type APISubmissionTriggerTypeEnum string
+type APISubmissionTriggerType string
 
 const (
-	APISubmissionTriggerTypeEnumAPISubmission APISubmissionTriggerTypeEnum = "api_submission"
+	APISubmissionTriggerTypeAPISubmission APISubmissionTriggerType = "api_submission"
 )
 
-func (e APISubmissionTriggerTypeEnum) ToPointer() *APISubmissionTriggerTypeEnum {
+func (e APISubmissionTriggerType) ToPointer() *APISubmissionTriggerType {
 	return &e
 }
 
-func (e *APISubmissionTriggerTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *APISubmissionTriggerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "api_submission":
-		*e = APISubmissionTriggerTypeEnum(v)
+		*e = APISubmissionTriggerType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for APISubmissionTriggerTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for APISubmissionTriggerType: %v", v)
 	}
 }
 
 type APISubmissionTrigger struct {
 	Configuration APISubmissionTriggerConfiguration `json:"configuration"`
-	Type          APISubmissionTriggerTypeEnum      `json:"type"`
+	Type          APISubmissionTriggerType          `json:"type"`
 }

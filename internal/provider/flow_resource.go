@@ -5,20 +5,17 @@ package provider
 import (
 	"context"
 	"epilot-automation/internal/sdk"
-	"epilot-automation/internal/sdk/pkg/models/operations"
 	"fmt"
 
+	"epilot-automation/internal/sdk/pkg/models/operations"
 	"epilot-automation/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -66,58 +63,196 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Computed: true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"map_entity_action_config": schema.SingleNestedAttribute{
+						"automation_action_config": schema.SingleNestedAttribute{
 							Computed: true,
-							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"allow_failure": schema.BoolAttribute{
+									Computed:    true,
+									Description: `Whether to stop execution in a failed state if this action fails`,
+								},
+								"config": schema.MapAttribute{
+									Computed:    true,
+									ElementType: types.StringType,
+									Validators: []validator.Map{
+										mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+									},
+								},
+								"created_automatically": schema.BoolAttribute{
+									Computed:    true,
+									Description: `Flag indicating whether the action was created automatically or manually`,
+								},
+								"flow_action_id": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
+								},
+								"id": schema.StringAttribute{
+									Computed: true,
+								},
+								"name": schema.StringAttribute{
+									Computed: true,
+								},
+								"type": schema.StringAttribute{
+									Computed: true,
+								},
+							},
+						},
+						"cart_checkout_action_config": schema.SingleNestedAttribute{
+							Computed: true,
+							Attributes: map[string]schema.Attribute{
+								"allow_failure": schema.BoolAttribute{
+									Computed:    true,
+									Description: `Whether to stop execution in a failed state if this action fails`,
 								},
 								"config": schema.SingleNestedAttribute{
 									Computed: true,
-									Optional: true,
 									Attributes: map[string]schema.Attribute{
 										"linkback_relation_attribute": schema.StringAttribute{
 											Computed: true,
-											Optional: true,
+											MarkdownDescription: `Relation attribute on the main entity where the target entity will be linked. Set to false to disable linkback` + "\n" +
+												``,
 										},
 										"linkback_relation_tags": schema.ListAttribute{
 											Computed:    true,
-											Optional:    true,
 											ElementType: types.StringType,
+											Description: `Relation tags (labels) to include in main entity linkback relation attribute`,
 										},
 										"mapping_attributes": schema.ListNestedAttribute{
 											Computed: true,
-											Optional: true,
 											NestedObject: schema.NestedAttributeObject{
 												Attributes: map[string]schema.Attribute{
+													"mapping_attribute": schema.SingleNestedAttribute{
+														Computed: true,
+														Attributes: map[string]schema.Attribute{
+															"append_value_mapper": schema.SingleNestedAttribute{
+																Computed: true,
+																Attributes: map[string]schema.Attribute{
+																	"mode": schema.StringAttribute{
+																		Computed: true,
+																		Validators: []validator.String{
+																			stringvalidator.OneOf(
+																				"copy_if_exists",
+																				"append_if_exists",
+																				"set_value",
+																			),
+																		},
+																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
+																			``,
+																	},
+																	"source": schema.StringAttribute{
+																		Computed: true,
+																		MarkdownDescription: `JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price` + "\n" +
+																			``,
+																	},
+																	"target": schema.StringAttribute{
+																		Computed:    true,
+																		Description: `JSON like target path for the attribute. Eg. last_name`,
+																	},
+																	"target_unique": schema.ListAttribute{
+																		Computed:    true,
+																		ElementType: types.StringType,
+																		MarkdownDescription: `Array of keys which should be used when checking for uniqueness. Eg: [country, city, postal_code]` + "\n" +
+																			``,
+																	},
+																	"value_json": schema.StringAttribute{
+																		Computed: true,
+																		MarkdownDescription: `To be provided only when mapping json objects into a target attribute. Eg array of addresses.` + "\n" +
+																			``,
+																	},
+																},
+															},
+															"copy_value_mapper": schema.SingleNestedAttribute{
+																Computed: true,
+																Attributes: map[string]schema.Attribute{
+																	"mode": schema.StringAttribute{
+																		Computed: true,
+																		Validators: []validator.String{
+																			stringvalidator.OneOf(
+																				"copy_if_exists",
+																				"append_if_exists",
+																				"set_value",
+																			),
+																		},
+																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
+																			``,
+																	},
+																	"source": schema.StringAttribute{
+																		Computed: true,
+																		MarkdownDescription: `JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price` + "\n" +
+																			``,
+																	},
+																	"target": schema.StringAttribute{
+																		Computed:    true,
+																		Description: `JSON like target path for the attribute. Eg. last_name`,
+																	},
+																},
+															},
+															"set_value_mapper": schema.SingleNestedAttribute{
+																Computed: true,
+																Attributes: map[string]schema.Attribute{
+																	"mode": schema.StringAttribute{
+																		Computed: true,
+																		Validators: []validator.String{
+																			stringvalidator.OneOf(
+																				"copy_if_exists",
+																				"append_if_exists",
+																				"set_value",
+																			),
+																		},
+																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
+																			``,
+																	},
+																	"target": schema.StringAttribute{
+																		Computed:    true,
+																		Description: `JSON like target path for the attribute. Eg. last_name`,
+																	},
+																	"value": schema.StringAttribute{
+																		Computed: true,
+																		Validators: []validator.String{
+																			validators.IsValidJSON(),
+																		},
+																		MarkdownDescription: `Parsed as JSON.` + "\n" +
+																			`Any value to be set: string, number, string[], number[], JSON object, etc. It will override existing values, if any.` + "\n" +
+																			``,
+																	},
+																},
+															},
+														},
+														Validators: []validator.Object{
+															validators.ExactlyOneChild(),
+														},
+													},
 													"mapping_attribute_v2": schema.SingleNestedAttribute{
 														Computed: true,
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"operation": schema.SingleNestedAttribute{
-																Required: true,
+																Computed: true,
 																Attributes: map[string]schema.Attribute{
+																	"any": schema.StringAttribute{
+																		Computed: true,
+																		Validators: []validator.String{
+																			validators.IsValidJSON(),
+																		},
+																		Description: `Parsed as JSON.`,
+																	},
 																	"operation_object_node": schema.SingleNestedAttribute{
 																		Computed: true,
-																		Optional: true,
 																		Attributes: map[string]schema.Attribute{
 																			"append": schema.ListAttribute{
 																				Computed:    true,
-																				Optional:    true,
 																				ElementType: types.StringType,
 																				Validators: []validator.List{
 																					listvalidator.ValueStringsAre(validators.IsValidJSON()),
 																				},
+																				Description: `Append to array`,
 																			},
 																			"copy": schema.StringAttribute{
-																				Computed: true,
-																				Optional: true,
+																				Computed:    true,
+																				Description: `Copy JSONPath value from source entity context`,
 																			},
 																			"set": schema.StringAttribute{
 																				Computed: true,
-																				Optional: true,
 																				Validators: []validator.String{
 																					validators.IsValidJSON(),
 																				},
@@ -125,144 +260,40 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																			},
 																			"uniq": schema.SingleNestedAttribute{
 																				Computed: true,
-																				Optional: true,
 																				Attributes: map[string]schema.Attribute{
 																					"boolean": schema.BoolAttribute{
 																						Computed: true,
-																						Optional: true,
 																					},
-																					"array_of_str": schema.ListAttribute{
+																					"array_ofstr": schema.ListAttribute{
 																						Computed:    true,
-																						Optional:    true,
 																						ElementType: types.StringType,
 																					},
 																				},
 																				Validators: []validator.Object{
 																					validators.ExactlyOneChild(),
 																				},
+																				Description: `Unique array`,
 																			},
-																			"additional_properties": schema.MapAttribute{
-																				Computed:    true,
-																				Optional:    true,
-																				ElementType: types.StringType,
-																				Validators: []validator.Map{
-																					mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+																			"additional_properties": schema.StringAttribute{
+																				Optional: true,
+																				Validators: []validator.String{
+																					validators.IsValidJSON(),
 																				},
+																				Description: `Parsed as JSON.`,
 																			},
 																		},
 																		Description: `Mapping operation nodes are either primitive values or operation node objects`,
-																	},
-																	"any": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																		Validators: []validator.String{
-																			validators.IsValidJSON(),
-																		},
-																		Description: `Parsed as JSON.`,
 																	},
 																},
 																Validators: []validator.Object{
 																	validators.ExactlyOneChild(),
 																},
+																Description: `Mapping operation nodes are either primitive values or operation node objects`,
 															},
 															"target": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
+																Computed:    true,
+																Description: `Target JSON path for the attribute to set`,
 															},
-														},
-													},
-													"mapping_attribute": schema.SingleNestedAttribute{
-														Computed: true,
-														Optional: true,
-														Attributes: map[string]schema.Attribute{
-															"set_value_mapper": schema.SingleNestedAttribute{
-																Computed: true,
-																Optional: true,
-																Attributes: map[string]schema.Attribute{
-																	"mode": schema.StringAttribute{
-																		Required: true,
-																		Validators: []validator.String{
-																			stringvalidator.OneOf(
-																				"copy_if_exists",
-																				"append_if_exists",
-																				"set_value",
-																			),
-																		},
-																		MarkdownDescription: `- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
-																			``,
-																	},
-																	"target": schema.StringAttribute{
-																		Required: true,
-																	},
-																	"value": schema.StringAttribute{
-																		Required: true,
-																		Validators: []validator.String{
-																			validators.IsValidJSON(),
-																		},
-																		Description: `Parsed as JSON.`,
-																	},
-																},
-															},
-															"copy_value_mapper": schema.SingleNestedAttribute{
-																Computed: true,
-																Optional: true,
-																Attributes: map[string]schema.Attribute{
-																	"mode": schema.StringAttribute{
-																		Required: true,
-																		Validators: []validator.String{
-																			stringvalidator.OneOf(
-																				"copy_if_exists",
-																				"append_if_exists",
-																				"set_value",
-																			),
-																		},
-																		MarkdownDescription: `- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
-																			``,
-																	},
-																	"source": schema.StringAttribute{
-																		Required: true,
-																	},
-																	"target": schema.StringAttribute{
-																		Required: true,
-																	},
-																},
-															},
-															"append_value_mapper": schema.SingleNestedAttribute{
-																Computed: true,
-																Optional: true,
-																Attributes: map[string]schema.Attribute{
-																	"mode": schema.StringAttribute{
-																		Required: true,
-																		Validators: []validator.String{
-																			stringvalidator.OneOf(
-																				"copy_if_exists",
-																				"append_if_exists",
-																				"set_value",
-																			),
-																		},
-																		MarkdownDescription: `- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
-																			``,
-																	},
-																	"source": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																	},
-																	"target": schema.StringAttribute{
-																		Required: true,
-																	},
-																	"target_unique": schema.ListAttribute{
-																		Computed:    true,
-																		Optional:    true,
-																		ElementType: types.StringType,
-																	},
-																	"value_json": schema.StringAttribute{
-																		Required: true,
-																	},
-																},
-															},
-														},
-														Validators: []validator.Object{
-															validators.ExactlyOneChild(),
 														},
 													},
 												},
@@ -273,27 +304,27 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 										},
 										"mapping_config": schema.SingleNestedAttribute{
 											Computed: true,
-											Optional: true,
 											Attributes: map[string]schema.Attribute{
 												"config_id": schema.StringAttribute{
-													Required: true,
+													Computed:    true,
+													Description: `Id of Entity Mapping Configuration to run for mapping.`,
 												},
 												"target_id": schema.StringAttribute{
-													Required: true,
+													Computed:    true,
+													Description: `Id of TargetConfig to run for mapping.`,
 												},
 												"version": schema.NumberAttribute{
-													Computed: true,
-													Optional: true,
+													Computed:    true,
+													Description: `Version of Entity Mapping Configuration to run for mapping.`,
 												},
 											},
 										},
 										"relation_attributes": schema.ListNestedAttribute{
 											Computed: true,
-											Optional: true,
 											NestedObject: schema.NestedAttributeObject{
 												Attributes: map[string]schema.Attribute{
 													"mode": schema.StringAttribute{
-														Required: true,
+														Computed: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"append",
@@ -301,10 +332,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																"set",
 															),
 														},
+														Description: `must be one of [append, prepend, set]`,
 													},
 													"related_to": schema.MapAttribute{
 														Computed:    true,
-														Optional:    true,
 														ElementType: types.StringType,
 														Validators: []validator.Map{
 															mapvalidator.ValueStringsAre(validators.IsValidJSON()),
@@ -312,337 +343,480 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 													},
 													"source_filter": schema.SingleNestedAttribute{
 														Computed: true,
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"attribute": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
+																Computed:    true,
+																Description: `Filter by a specific relation attribute on the main entity`,
 															},
 															"limit": schema.Int64Attribute{
-																Computed: true,
-																Optional: true,
+																Computed:    true,
+																Description: `Limit relations to maximum number (default, all matched relations)`,
 															},
 															"relation_tag": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
+																Computed:    true,
+																Description: `Filter by relation tag (label) on the main entity`,
 															},
 															"schema": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
+																Computed:    true,
+																Description: `Filter by specific schema`,
 															},
 															"self": schema.BoolAttribute{
-																Computed: true,
-																Optional: true,
+																Computed:    true,
+																Description: `Picks main entity as relation (overrides other filters)`,
 															},
 															"tag": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
+																Computed:    true,
+																Description: `Filter by a specific tag on the related entity`,
 															},
 														},
 														Description: `A filter to identify which source entities to pick as relations from main entity`,
 													},
 													"target": schema.StringAttribute{
-														Required: true,
+														Computed:    true,
+														Description: `Target attribute to store the relation in`,
 													},
 													"target_tags": schema.ListAttribute{
 														Computed:    true,
-														Optional:    true,
 														ElementType: types.StringType,
+														Description: `Relation tags (labels) to set for the stored relations`,
 													},
 													"target_tags_include_source": schema.BoolAttribute{
-														Computed: true,
-														Optional: true,
+														Computed:    true,
+														Description: `Include all relation tags (labels) present on the main entity relation`,
 													},
 												},
 											},
 										},
-										"target_schema": schema.StringAttribute{
-											Required: true,
-										},
 										"target_unique": schema.ListAttribute{
 											Computed:    true,
-											Optional:    true,
 											ElementType: types.StringType,
+											Description: `Unique key for target entity (see upsertEntity of Entity API)`,
+										},
+										"version": schema.StringAttribute{
+											Computed:    true,
+											Description: `Version of the config`,
 										},
 									},
 								},
 								"created_automatically": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
+									Computed:    true,
+									Description: `Flag indicating whether the action was created automatically or manually`,
 								},
 								"flow_action_id": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 								},
 								"id": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 								},
 								"name": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 								},
 								"type": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
-											"map-entity",
+											"cart-checkout",
 										),
 									},
+									Description: `must be one of [cart-checkout]`,
 								},
 							},
+							Description: `Creates an order entity with prices from journey`,
 						},
-						"trigger_workflow_action_config": schema.SingleNestedAttribute{
+						"create_document_action_config": schema.SingleNestedAttribute{
 							Computed: true,
-							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"allow_failure": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
+									Computed:    true,
+									Description: `Whether to stop execution in a failed state if this action fails`,
 								},
 								"config": schema.SingleNestedAttribute{
 									Computed: true,
-									Optional: true,
 									Attributes: map[string]schema.Attribute{
-										"assign_steps": schema.ListNestedAttribute{
+										"filename": schema.StringAttribute{
 											Computed: true,
-											Optional: true,
-											NestedObject: schema.NestedAttributeObject{
-												Attributes: map[string]schema.Attribute{
-													"step_id": schema.StringAttribute{
-														Computed: true,
-														Optional: true,
-													},
-													"step_name": schema.StringAttribute{
-														Computed: true,
-														Optional: true,
-													},
-													"user_ids": schema.ListAttribute{
-														Computed:    true,
-														Optional:    true,
-														ElementType: types.NumberType,
-													},
-												},
-											},
 										},
-										"assignees": schema.ListAttribute{
+										"template_id": schema.StringAttribute{
+											Computed: true,
+										},
+									},
+								},
+								"created_automatically": schema.BoolAttribute{
+									Computed:    true,
+									Description: `Flag indicating whether the action was created automatically or manually`,
+								},
+								"flow_action_id": schema.StringAttribute{
+									Computed: true,
+								},
+								"id": schema.StringAttribute{
+									Computed: true,
+								},
+								"name": schema.StringAttribute{
+									Computed: true,
+								},
+								"type": schema.StringAttribute{
+									Computed: true,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"create-document",
+										),
+									},
+									Description: `must be one of [create-document]`,
+								},
+							},
+						},
+						"map_entity_action_config": schema.SingleNestedAttribute{
+							Computed: true,
+							Attributes: map[string]schema.Attribute{
+								"allow_failure": schema.BoolAttribute{
+									Computed:    true,
+									Description: `Whether to stop execution in a failed state if this action fails`,
+								},
+								"config": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"linkback_relation_attribute": schema.StringAttribute{
+											Computed: true,
+											MarkdownDescription: `Relation attribute on the main entity where the target entity will be linked. Set to false to disable linkback` + "\n" +
+												``,
+										},
+										"linkback_relation_tags": schema.ListAttribute{
 											Computed:    true,
-											Optional:    true,
 											ElementType: types.StringType,
+											Description: `Relation tags (labels) to include in main entity linkback relation attribute`,
 										},
-										"conditions": schema.ListNestedAttribute{
+										"mapping_attributes": schema.ListNestedAttribute{
 											Computed: true,
-											Optional: true,
 											NestedObject: schema.NestedAttributeObject{
 												Attributes: map[string]schema.Attribute{
-													"comparison": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"equals",
-																"any_of",
-																"not_empty",
-																"is_empty",
-															),
-														},
-													},
-													"schema": schema.StringAttribute{
-														Required: true,
-													},
-													"source": schema.StringAttribute{
-														Required: true,
-													},
-													"value": schema.SingleNestedAttribute{
+													"mapping_attribute": schema.SingleNestedAttribute{
 														Computed: true,
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
-															"str": schema.StringAttribute{
+															"append_value_mapper": schema.SingleNestedAttribute{
 																Computed: true,
-																Optional: true,
+																Attributes: map[string]schema.Attribute{
+																	"mode": schema.StringAttribute{
+																		Computed: true,
+																		Validators: []validator.String{
+																			stringvalidator.OneOf(
+																				"copy_if_exists",
+																				"append_if_exists",
+																				"set_value",
+																			),
+																		},
+																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
+																			``,
+																	},
+																	"source": schema.StringAttribute{
+																		Computed: true,
+																		MarkdownDescription: `JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price` + "\n" +
+																			``,
+																	},
+																	"target": schema.StringAttribute{
+																		Computed:    true,
+																		Description: `JSON like target path for the attribute. Eg. last_name`,
+																	},
+																	"target_unique": schema.ListAttribute{
+																		Computed:    true,
+																		ElementType: types.StringType,
+																		MarkdownDescription: `Array of keys which should be used when checking for uniqueness. Eg: [country, city, postal_code]` + "\n" +
+																			``,
+																	},
+																	"value_json": schema.StringAttribute{
+																		Computed: true,
+																		MarkdownDescription: `To be provided only when mapping json objects into a target attribute. Eg array of addresses.` + "\n" +
+																			``,
+																	},
+																},
 															},
-															"number": schema.NumberAttribute{
+															"copy_value_mapper": schema.SingleNestedAttribute{
 																Computed: true,
-																Optional: true,
+																Attributes: map[string]schema.Attribute{
+																	"mode": schema.StringAttribute{
+																		Computed: true,
+																		Validators: []validator.String{
+																			stringvalidator.OneOf(
+																				"copy_if_exists",
+																				"append_if_exists",
+																				"set_value",
+																			),
+																		},
+																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
+																			``,
+																	},
+																	"source": schema.StringAttribute{
+																		Computed: true,
+																		MarkdownDescription: `JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price` + "\n" +
+																			``,
+																	},
+																	"target": schema.StringAttribute{
+																		Computed:    true,
+																		Description: `JSON like target path for the attribute. Eg. last_name`,
+																	},
+																},
 															},
-															"array_of_str": schema.ListAttribute{
-																Computed:    true,
-																Optional:    true,
-																ElementType: types.StringType,
-															},
-															"array_of_number": schema.ListAttribute{
-																Computed:    true,
-																Optional:    true,
-																ElementType: types.NumberType,
+															"set_value_mapper": schema.SingleNestedAttribute{
+																Computed: true,
+																Attributes: map[string]schema.Attribute{
+																	"mode": schema.StringAttribute{
+																		Computed: true,
+																		Validators: []validator.String{
+																			stringvalidator.OneOf(
+																				"copy_if_exists",
+																				"append_if_exists",
+																				"set_value",
+																			),
+																		},
+																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
+																			``,
+																	},
+																	"target": schema.StringAttribute{
+																		Computed:    true,
+																		Description: `JSON like target path for the attribute. Eg. last_name`,
+																	},
+																	"value": schema.StringAttribute{
+																		Computed: true,
+																		Validators: []validator.String{
+																			validators.IsValidJSON(),
+																		},
+																		MarkdownDescription: `Parsed as JSON.` + "\n" +
+																			`Any value to be set: string, number, string[], number[], JSON object, etc. It will override existing values, if any.` + "\n" +
+																			``,
+																	},
+																},
 															},
 														},
 														Validators: []validator.Object{
 															validators.ExactlyOneChild(),
 														},
 													},
+													"mapping_attribute_v2": schema.SingleNestedAttribute{
+														Computed: true,
+														Attributes: map[string]schema.Attribute{
+															"operation": schema.SingleNestedAttribute{
+																Computed: true,
+																Attributes: map[string]schema.Attribute{
+																	"any": schema.StringAttribute{
+																		Computed: true,
+																		Validators: []validator.String{
+																			validators.IsValidJSON(),
+																		},
+																		Description: `Parsed as JSON.`,
+																	},
+																	"operation_object_node": schema.SingleNestedAttribute{
+																		Computed: true,
+																		Attributes: map[string]schema.Attribute{
+																			"append": schema.ListAttribute{
+																				Computed:    true,
+																				ElementType: types.StringType,
+																				Validators: []validator.List{
+																					listvalidator.ValueStringsAre(validators.IsValidJSON()),
+																				},
+																				Description: `Append to array`,
+																			},
+																			"copy": schema.StringAttribute{
+																				Computed:    true,
+																				Description: `Copy JSONPath value from source entity context`,
+																			},
+																			"set": schema.StringAttribute{
+																				Computed: true,
+																				Validators: []validator.String{
+																					validators.IsValidJSON(),
+																				},
+																				Description: `Parsed as JSON.`,
+																			},
+																			"uniq": schema.SingleNestedAttribute{
+																				Computed: true,
+																				Attributes: map[string]schema.Attribute{
+																					"boolean": schema.BoolAttribute{
+																						Computed: true,
+																					},
+																					"array_ofstr": schema.ListAttribute{
+																						Computed:    true,
+																						ElementType: types.StringType,
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																				Description: `Unique array`,
+																			},
+																			"additional_properties": schema.StringAttribute{
+																				Optional: true,
+																				Validators: []validator.String{
+																					validators.IsValidJSON(),
+																				},
+																				Description: `Parsed as JSON.`,
+																			},
+																		},
+																		Description: `Mapping operation nodes are either primitive values or operation node objects`,
+																	},
+																},
+																Validators: []validator.Object{
+																	validators.ExactlyOneChild(),
+																},
+																Description: `Mapping operation nodes are either primitive values or operation node objects`,
+															},
+															"target": schema.StringAttribute{
+																Computed:    true,
+																Description: `Target JSON path for the attribute to set`,
+															},
+														},
+													},
+												},
+												Validators: []validator.Object{
+													validators.ExactlyOneChild(),
+												},
+											},
+											Description: `Attribute mappings`,
+										},
+										"mapping_config": schema.SingleNestedAttribute{
+											Computed: true,
+											Attributes: map[string]schema.Attribute{
+												"config_id": schema.StringAttribute{
+													Computed:    true,
+													Description: `Id of Entity Mapping Configuration to run for mapping.`,
+												},
+												"target_id": schema.StringAttribute{
+													Computed:    true,
+													Description: `Id of TargetConfig to run for mapping.`,
+												},
+												"version": schema.NumberAttribute{
+													Computed:    true,
+													Description: `Version of Entity Mapping Configuration to run for mapping.`,
 												},
 											},
 										},
-										"target_workflow": schema.StringAttribute{
+										"relation_attributes": schema.ListNestedAttribute{
 											Computed: true,
-											Optional: true,
+											NestedObject: schema.NestedAttributeObject{
+												Attributes: map[string]schema.Attribute{
+													"mode": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"append",
+																"prepend",
+																"set",
+															),
+														},
+														Description: `must be one of [append, prepend, set]`,
+													},
+													"related_to": schema.MapAttribute{
+														Computed:    true,
+														ElementType: types.StringType,
+														Validators: []validator.Map{
+															mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+														},
+													},
+													"source_filter": schema.SingleNestedAttribute{
+														Computed: true,
+														Attributes: map[string]schema.Attribute{
+															"attribute": schema.StringAttribute{
+																Computed:    true,
+																Description: `Filter by a specific relation attribute on the main entity`,
+															},
+															"limit": schema.Int64Attribute{
+																Computed:    true,
+																Description: `Limit relations to maximum number (default, all matched relations)`,
+															},
+															"relation_tag": schema.StringAttribute{
+																Computed:    true,
+																Description: `Filter by relation tag (label) on the main entity`,
+															},
+															"schema": schema.StringAttribute{
+																Computed:    true,
+																Description: `Filter by specific schema`,
+															},
+															"self": schema.BoolAttribute{
+																Computed:    true,
+																Description: `Picks main entity as relation (overrides other filters)`,
+															},
+															"tag": schema.StringAttribute{
+																Computed:    true,
+																Description: `Filter by a specific tag on the related entity`,
+															},
+														},
+														Description: `A filter to identify which source entities to pick as relations from main entity`,
+													},
+													"target": schema.StringAttribute{
+														Computed:    true,
+														Description: `Target attribute to store the relation in`,
+													},
+													"target_tags": schema.ListAttribute{
+														Computed:    true,
+														ElementType: types.StringType,
+														Description: `Relation tags (labels) to set for the stored relations`,
+													},
+													"target_tags_include_source": schema.BoolAttribute{
+														Computed:    true,
+														Description: `Include all relation tags (labels) present on the main entity relation`,
+													},
+												},
+											},
+											Description: `Relation mappings`,
 										},
-									},
-								},
-								"created_automatically": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"flow_action_id": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"id": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"name": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"type": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-									Validators: []validator.String{
-										stringvalidator.OneOf(
-											"trigger-workflow",
-										),
-									},
-								},
-							},
-						},
-						"trigger_webhook_action_config": schema.SingleNestedAttribute{
-							Computed: true,
-							Optional: true,
-							Attributes: map[string]schema.Attribute{
-								"allow_failure": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"config": schema.SingleNestedAttribute{
-									Computed: true,
-									Optional: true,
-									Attributes: map[string]schema.Attribute{
-										"entity_sources": schema.ListAttribute{
+										"target_schema": schema.StringAttribute{
 											Computed:    true,
-											Optional:    true,
+											Description: `Schema of target entity`,
+										},
+										"target_unique": schema.ListAttribute{
+											Computed:    true,
 											ElementType: types.StringType,
-										},
-										"target_webhook_id": schema.StringAttribute{
-											Computed: true,
-											Optional: true,
+											Description: `Unique key for target entity (see upsertEntity of Entity API)`,
 										},
 									},
 								},
 								"created_automatically": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
+									Computed:    true,
+									Description: `Flag indicating whether the action was created automatically or manually`,
 								},
 								"flow_action_id": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 								},
 								"id": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 								},
 								"name": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 								},
 								"type": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
-											"trigger-webhook",
+											"map-entity",
 										),
 									},
-								},
-							},
-						},
-						"create_document_action_config": schema.SingleNestedAttribute{
-							Computed: true,
-							Optional: true,
-							Attributes: map[string]schema.Attribute{
-								"allow_failure": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"config": schema.SingleNestedAttribute{
-									Computed: true,
-									Optional: true,
-									Attributes: map[string]schema.Attribute{
-										"filename": schema.StringAttribute{
-											Computed: true,
-											Optional: true,
-										},
-										"template_id": schema.StringAttribute{
-											Computed: true,
-											Optional: true,
-										},
-									},
-								},
-								"created_automatically": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"flow_action_id": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"id": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"name": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"type": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-									Validators: []validator.String{
-										stringvalidator.OneOf(
-											"create-document",
-										),
-									},
+									Description: `must be one of [map-entity]`,
 								},
 							},
 						},
 						"send_email_action_config": schema.SingleNestedAttribute{
 							Computed: true,
-							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"allow_failure": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
+									Computed:    true,
+									Description: `Whether to stop execution in a failed state if this action fails`,
 								},
 								"config": schema.SingleNestedAttribute{
 									Computed: true,
-									Optional: true,
 									Attributes: map[string]schema.Attribute{
 										"attachments": schema.ListNestedAttribute{
 											Computed: true,
-											Optional: true,
 											NestedObject: schema.NestedAttributeObject{
 												Attributes: map[string]schema.Attribute{
 													"source_filter": schema.SingleNestedAttribute{
 														Computed: true,
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"attribute": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
+																Computed:    true,
+																Description: `Filter by a specific relation attribute on the main entity`,
 															},
 															"document_type": schema.StringAttribute{
 																Computed: true,
-																Optional: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"document",
@@ -658,270 +832,190 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		"unknown",
 																	),
 																},
-																Description: `Filter by a specific document type (e.g. document)`,
+																MarkdownDescription: `must be one of [document, text, image, video, audio, spreadsheet, presentation, font, archive, application, unknown]` + "\n" +
+																	`Filter by a specific document type (e.g. document)`,
 															},
 															"filename_regex": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
+																Computed:    true,
+																Description: `Match by filename. Regex syntax supported`,
 															},
 															"limit": schema.Int64Attribute{
-																Computed: true,
-																Optional: true,
+																Computed:    true,
+																Description: `Limit files to maximum number (default, all matched file relations)`,
 															},
 															"relation_tag": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
+																Computed:    true,
+																Description: `Filter by relation tag (label) on the main entity`,
 															},
 															"self": schema.BoolAttribute{
-																Computed: true,
-																Optional: true,
+																Computed:    true,
+																Description: `Picks main entity as file (only works if source entity is a file)`,
 															},
 															"tag": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
+																Computed:    true,
+																Description: `Filter by a specific tag on the related file entity`,
 															},
 														},
 														Description: `Specify filters to match file entities related to main entity`,
 													},
 												},
 											},
+											MarkdownDescription: `Include extra file attachments in sent email.` + "\n" +
+												`` + "\n" +
+												`Attachments in email template will be sent regardless of this configuration.` + "\n" +
+												``,
 										},
 										"email_template_id": schema.StringAttribute{
 											Computed: true,
-											Optional: true,
 										},
 										"language_code": schema.StringAttribute{
 											Computed: true,
-											Optional: true,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
 													"de",
 													"en",
 												),
 											},
+											Description: `must be one of [de, en]`,
 										},
 									},
 								},
 								"created_automatically": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
+									Computed:    true,
+									Description: `Flag indicating whether the action was created automatically or manually`,
 								},
 								"flow_action_id": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 								},
 								"id": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 								},
 								"name": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 								},
 								"type": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
 											"send-email",
 										),
 									},
+									Description: `must be one of [send-email]`,
 								},
 							},
 						},
-						"cart_checkout_action_config": schema.SingleNestedAttribute{
+						"trigger_webhook_action_config": schema.SingleNestedAttribute{
 							Computed: true,
-							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"allow_failure": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
+									Computed:    true,
+									Description: `Whether to stop execution in a failed state if this action fails`,
 								},
 								"config": schema.SingleNestedAttribute{
 									Computed: true,
-									Optional: true,
 									Attributes: map[string]schema.Attribute{
-										"linkback_relation_attribute": schema.StringAttribute{
-											Computed: true,
-											Optional: true,
-										},
-										"linkback_relation_tags": schema.ListAttribute{
+										"entity_sources": schema.ListAttribute{
 											Computed:    true,
-											Optional:    true,
 											ElementType: types.StringType,
 										},
-										"mapping_attributes": schema.ListNestedAttribute{
+										"target_webhook_id": schema.StringAttribute{
 											Computed: true,
-											Optional: true,
+										},
+									},
+								},
+								"created_automatically": schema.BoolAttribute{
+									Computed:    true,
+									Description: `Flag indicating whether the action was created automatically or manually`,
+								},
+								"flow_action_id": schema.StringAttribute{
+									Computed: true,
+								},
+								"id": schema.StringAttribute{
+									Computed: true,
+								},
+								"name": schema.StringAttribute{
+									Computed: true,
+								},
+								"type": schema.StringAttribute{
+									Computed: true,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"trigger-webhook",
+										),
+									},
+									Description: `must be one of [trigger-webhook]`,
+								},
+							},
+						},
+						"trigger_workflow_action_config": schema.SingleNestedAttribute{
+							Computed: true,
+							Attributes: map[string]schema.Attribute{
+								"allow_failure": schema.BoolAttribute{
+									Computed:    true,
+									Description: `Whether to stop execution in a failed state if this action fails`,
+								},
+								"config": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"assign_steps": schema.ListNestedAttribute{
+											Computed: true,
 											NestedObject: schema.NestedAttributeObject{
 												Attributes: map[string]schema.Attribute{
-													"mapping_attribute_v2": schema.SingleNestedAttribute{
+													"step_id": schema.StringAttribute{
 														Computed: true,
-														Optional: true,
-														Attributes: map[string]schema.Attribute{
-															"operation": schema.SingleNestedAttribute{
-																Required: true,
-																Attributes: map[string]schema.Attribute{
-																	"operation_object_node": schema.SingleNestedAttribute{
-																		Computed: true,
-																		Optional: true,
-																		Attributes: map[string]schema.Attribute{
-																			"append": schema.ListAttribute{
-																				Computed:    true,
-																				Optional:    true,
-																				ElementType: types.StringType,
-																				Validators: []validator.List{
-																					listvalidator.ValueStringsAre(validators.IsValidJSON()),
-																				},
-																			},
-																			"copy": schema.StringAttribute{
-																				Computed: true,
-																				Optional: true,
-																			},
-																			"set": schema.StringAttribute{
-																				Computed: true,
-																				Optional: true,
-																				Validators: []validator.String{
-																					validators.IsValidJSON(),
-																				},
-																				Description: `Parsed as JSON.`,
-																			},
-																			"uniq": schema.SingleNestedAttribute{
-																				Computed: true,
-																				Optional: true,
-																				Attributes: map[string]schema.Attribute{
-																					"boolean": schema.BoolAttribute{
-																						Computed: true,
-																						Optional: true,
-																					},
-																					"array_of_str": schema.ListAttribute{
-																						Computed:    true,
-																						Optional:    true,
-																						ElementType: types.StringType,
-																					},
-																				},
-																				Validators: []validator.Object{
-																					validators.ExactlyOneChild(),
-																				},
-																			},
-																			"additional_properties": schema.MapAttribute{
-																				Computed:    true,
-																				Optional:    true,
-																				ElementType: types.StringType,
-																				Validators: []validator.Map{
-																					mapvalidator.ValueStringsAre(validators.IsValidJSON()),
-																				},
-																			},
-																		},
-																		Description: `Mapping operation nodes are either primitive values or operation node objects`,
-																	},
-																	"any": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																		Validators: []validator.String{
-																			validators.IsValidJSON(),
-																		},
-																		Description: `Parsed as JSON.`,
-																	},
-																},
-																Validators: []validator.Object{
-																	validators.ExactlyOneChild(),
-																},
-															},
-															"target": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
-															},
-														},
 													},
-													"mapping_attribute": schema.SingleNestedAttribute{
+													"step_name": schema.StringAttribute{
 														Computed: true,
-														Optional: true,
+													},
+													"user_ids": schema.ListAttribute{
+														Computed:    true,
+														ElementType: types.NumberType,
+													},
+												},
+											},
+										},
+										"assignees": schema.ListAttribute{
+											Computed:    true,
+											ElementType: types.StringType,
+										},
+										"conditions": schema.ListNestedAttribute{
+											Computed: true,
+											NestedObject: schema.NestedAttributeObject{
+												Attributes: map[string]schema.Attribute{
+													"comparison": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"equals",
+																"any_of",
+																"not_empty",
+																"is_empty",
+															),
+														},
+														Description: `must be one of [equals, any_of, not_empty, is_empty]`,
+													},
+													"schema": schema.StringAttribute{
+														Computed: true,
+													},
+													"source": schema.StringAttribute{
+														Computed: true,
+													},
+													"value": schema.SingleNestedAttribute{
+														Computed: true,
 														Attributes: map[string]schema.Attribute{
-															"set_value_mapper": schema.SingleNestedAttribute{
+															"str": schema.StringAttribute{
 																Computed: true,
-																Optional: true,
-																Attributes: map[string]schema.Attribute{
-																	"mode": schema.StringAttribute{
-																		Required: true,
-																		Validators: []validator.String{
-																			stringvalidator.OneOf(
-																				"copy_if_exists",
-																				"append_if_exists",
-																				"set_value",
-																			),
-																		},
-																		MarkdownDescription: `- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
-																			``,
-																	},
-																	"target": schema.StringAttribute{
-																		Required: true,
-																	},
-																	"value": schema.StringAttribute{
-																		Required: true,
-																		Validators: []validator.String{
-																			validators.IsValidJSON(),
-																		},
-																		Description: `Parsed as JSON.`,
-																	},
-																},
 															},
-															"copy_value_mapper": schema.SingleNestedAttribute{
+															"number": schema.NumberAttribute{
 																Computed: true,
-																Optional: true,
-																Attributes: map[string]schema.Attribute{
-																	"mode": schema.StringAttribute{
-																		Required: true,
-																		Validators: []validator.String{
-																			stringvalidator.OneOf(
-																				"copy_if_exists",
-																				"append_if_exists",
-																				"set_value",
-																			),
-																		},
-																		MarkdownDescription: `- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
-																			``,
-																	},
-																	"source": schema.StringAttribute{
-																		Required: true,
-																	},
-																	"target": schema.StringAttribute{
-																		Required: true,
-																	},
-																},
 															},
-															"append_value_mapper": schema.SingleNestedAttribute{
-																Computed: true,
-																Optional: true,
-																Attributes: map[string]schema.Attribute{
-																	"mode": schema.StringAttribute{
-																		Required: true,
-																		Validators: []validator.String{
-																			stringvalidator.OneOf(
-																				"copy_if_exists",
-																				"append_if_exists",
-																				"set_value",
-																			),
-																		},
-																		MarkdownDescription: `- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
-																			``,
-																	},
-																	"source": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																	},
-																	"target": schema.StringAttribute{
-																		Required: true,
-																	},
-																	"target_unique": schema.ListAttribute{
-																		Computed:    true,
-																		Optional:    true,
-																		ElementType: types.StringType,
-																	},
-																	"value_json": schema.StringAttribute{
-																		Required: true,
-																	},
-																},
+															"array_ofstr": schema.ListAttribute{
+																Computed:    true,
+																ElementType: types.StringType,
+															},
+															"array_ofnumber": schema.ListAttribute{
+																Computed:    true,
+																ElementType: types.NumberType,
 															},
 														},
 														Validators: []validator.Object{
@@ -929,170 +1023,34 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 														},
 													},
 												},
-												Validators: []validator.Object{
-													validators.ExactlyOneChild(),
-												},
 											},
 										},
-										"mapping_config": schema.SingleNestedAttribute{
+										"target_workflow": schema.StringAttribute{
 											Computed: true,
-											Optional: true,
-											Attributes: map[string]schema.Attribute{
-												"config_id": schema.StringAttribute{
-													Required: true,
-												},
-												"target_id": schema.StringAttribute{
-													Required: true,
-												},
-												"version": schema.NumberAttribute{
-													Computed: true,
-													Optional: true,
-												},
-											},
-										},
-										"relation_attributes": schema.ListNestedAttribute{
-											Computed: true,
-											Optional: true,
-											NestedObject: schema.NestedAttributeObject{
-												Attributes: map[string]schema.Attribute{
-													"mode": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"append",
-																"prepend",
-																"set",
-															),
-														},
-													},
-													"related_to": schema.MapAttribute{
-														Computed:    true,
-														Optional:    true,
-														ElementType: types.StringType,
-														Validators: []validator.Map{
-															mapvalidator.ValueStringsAre(validators.IsValidJSON()),
-														},
-													},
-													"source_filter": schema.SingleNestedAttribute{
-														Computed: true,
-														Optional: true,
-														Attributes: map[string]schema.Attribute{
-															"attribute": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
-															},
-															"limit": schema.Int64Attribute{
-																Computed: true,
-																Optional: true,
-															},
-															"relation_tag": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
-															},
-															"schema": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
-															},
-															"self": schema.BoolAttribute{
-																Computed: true,
-																Optional: true,
-															},
-															"tag": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
-															},
-														},
-														Description: `A filter to identify which source entities to pick as relations from main entity`,
-													},
-													"target": schema.StringAttribute{
-														Required: true,
-													},
-													"target_tags": schema.ListAttribute{
-														Computed:    true,
-														Optional:    true,
-														ElementType: types.StringType,
-													},
-													"target_tags_include_source": schema.BoolAttribute{
-														Computed: true,
-														Optional: true,
-													},
-												},
-											},
-										},
-										"target_unique": schema.ListAttribute{
-											Computed:    true,
-											Optional:    true,
-											ElementType: types.StringType,
-										},
-										"version": schema.StringAttribute{
-											Computed: true,
-											Optional: true,
 										},
 									},
 								},
 								"created_automatically": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
+									Computed:    true,
+									Description: `Flag indicating whether the action was created automatically or manually`,
 								},
 								"flow_action_id": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 								},
 								"id": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 								},
 								"name": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 								},
 								"type": schema.StringAttribute{
 									Computed: true,
-									Optional: true,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
-											"cart-checkout",
+											"trigger-workflow",
 										),
 									},
-								},
-							},
-							Description: `Creates an order entity with prices from journey`,
-						},
-						"automation_action_config": schema.SingleNestedAttribute{
-							Computed: true,
-							Optional: true,
-							Attributes: map[string]schema.Attribute{
-								"allow_failure": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"config": schema.MapAttribute{
-									Computed:    true,
-									Optional:    true,
-									ElementType: types.StringType,
-									Validators: []validator.Map{
-										mapvalidator.ValueStringsAre(validators.IsValidJSON()),
-									},
-								},
-								"created_automatically": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"flow_action_id": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"id": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"name": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-								},
-								"type": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
+									Description: `must be one of [trigger-workflow]`,
 								},
 							},
 						},
@@ -1109,35 +1067,38 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				},
 			},
 			"created_by": schema.StringAttribute{
-				Computed: true,
+				Computed:    true,
+				Description: `User / service who created automation flow`,
 			},
 			"enabled": schema.BoolAttribute{
-				Computed: true,
-				Optional: true,
+				Computed:    true,
+				Optional:    true,
+				Description: `Whether the automation is enabled or not`,
 			},
 			"entity_schema": schema.StringAttribute{
-				Computed: true,
-				Optional: true,
+				Computed:    true,
+				Optional:    true,
+				Description: `The triggering entity schema`,
 			},
 			"flow_name": schema.StringAttribute{
-				Required: true,
+				Required:    true,
+				Description: `A descriptive name for the Automation`,
 			},
 			"id": schema.StringAttribute{
 				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
-				Optional: true,
 			},
 			"last_updated_by": schema.StringAttribute{
-				Computed: true,
+				Computed:    true,
+				Description: `User / service who last updated automation flow`,
 			},
 			"org_id": schema.StringAttribute{
-				Computed: true,
+				Computed:    true,
+				Description: `Organization the automation flow belongs to`,
 			},
 			"runs": schema.NumberAttribute{
-				Computed: true,
-				Optional: true,
+				Computed:    true,
+				Optional:    true,
+				Description: `Number of automation executions that ran`,
 			},
 			"trigger_conditions": schema.ListNestedAttribute{
 				Computed: true,
@@ -1154,6 +1115,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									"is_empty",
 								),
 							},
+							Description: `must be one of [equals, any_of, not_empty, is_empty]`,
 						},
 						"source": schema.StringAttribute{
 							Required: true,
@@ -1167,16 +1129,13 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Optional: true,
 								},
 								"number": schema.NumberAttribute{
-									Computed: true,
 									Optional: true,
 								},
-								"array_of_str": schema.ListAttribute{
-									Computed:    true,
+								"array_ofstr": schema.ListAttribute{
 									Optional:    true,
 									ElementType: types.StringType,
 								},
-								"array_of_number": schema.ListAttribute{
-									Computed:    true,
+								"array_ofnumber": schema.ListAttribute{
 									Optional:    true,
 									ElementType: types.NumberType,
 								},
@@ -1192,38 +1151,21 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Required: true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"frontend_submit_trigger": schema.SingleNestedAttribute{
+						"activity_trigger": schema.SingleNestedAttribute{
 							Computed: true,
 							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Required: true,
 									Attributes: map[string]schema.Attribute{
-										"source_id": schema.StringAttribute{
+										"schema": schema.StringAttribute{
 											Computed: true,
 											Optional: true,
 										},
-									},
-								},
-								"type": schema.StringAttribute{
-									Required: true,
-									Validators: []validator.String{
-										stringvalidator.OneOf(
-											"frontend_submission",
-										),
-									},
-								},
-							},
-						},
-						"journey_submit_trigger": schema.SingleNestedAttribute{
-							Computed: true,
-							Optional: true,
-							Attributes: map[string]schema.Attribute{
-								"configuration": schema.SingleNestedAttribute{
-									Required: true,
-									Attributes: map[string]schema.Attribute{
-										"source_id": schema.StringAttribute{
-											Required: true,
+										"types": schema.ListAttribute{
+											Computed:    true,
+											Optional:    true,
+											ElementType: types.StringType,
 										},
 									},
 								},
@@ -1231,9 +1173,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Required: true,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
-											"journey_submission",
+											"activity",
 										),
 									},
+									Description: `must be one of [activity]`,
 								},
 							},
 						},
@@ -1257,6 +1200,32 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"api_submission",
 										),
 									},
+									Description: `must be one of [api_submission]`,
+								},
+							},
+						},
+						"entity_manual_trigger": schema.SingleNestedAttribute{
+							Computed: true,
+							Optional: true,
+							Attributes: map[string]schema.Attribute{
+								"configuration": schema.SingleNestedAttribute{
+									Required: true,
+									Attributes: map[string]schema.Attribute{
+										"schema": schema.StringAttribute{
+											Computed:    true,
+											Optional:    true,
+											Description: `Which entity type can this automation be triggered from`,
+										},
+									},
+								},
+								"type": schema.StringAttribute{
+									Required: true,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"entity_manual",
+										),
+									},
+									Description: `must be one of [entity_manual]`,
 								},
 							},
 						},
@@ -1293,45 +1262,18 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"entity_operation",
 										),
 									},
+									Description: `must be one of [entity_operation]`,
 								},
 							},
 						},
-						"activity_trigger": schema.SingleNestedAttribute{
+						"frontend_submit_trigger": schema.SingleNestedAttribute{
 							Computed: true,
 							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Required: true,
 									Attributes: map[string]schema.Attribute{
-										"schema": schema.StringAttribute{
-											Computed: true,
-											Optional: true,
-										},
-										"types": schema.ListAttribute{
-											Computed:    true,
-											Optional:    true,
-											ElementType: types.StringType,
-										},
-									},
-								},
-								"type": schema.StringAttribute{
-									Required: true,
-									Validators: []validator.String{
-										stringvalidator.OneOf(
-											"activity",
-										),
-									},
-								},
-							},
-						},
-						"entity_manual_trigger": schema.SingleNestedAttribute{
-							Computed: true,
-							Optional: true,
-							Attributes: map[string]schema.Attribute{
-								"configuration": schema.SingleNestedAttribute{
-									Required: true,
-									Attributes: map[string]schema.Attribute{
-										"schema": schema.StringAttribute{
+										"source_id": schema.StringAttribute{
 											Computed: true,
 											Optional: true,
 										},
@@ -1341,9 +1283,33 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Required: true,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
-											"entity_manual",
+											"frontend_submission",
 										),
 									},
+									Description: `must be one of [frontend_submission]`,
+								},
+							},
+						},
+						"journey_submit_trigger": schema.SingleNestedAttribute{
+							Computed: true,
+							Optional: true,
+							Attributes: map[string]schema.Attribute{
+								"configuration": schema.SingleNestedAttribute{
+									Required: true,
+									Attributes: map[string]schema.Attribute{
+										"source_id": schema.StringAttribute{
+											Required: true,
+										},
+									},
+								},
+								"type": schema.StringAttribute{
+									Required: true,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"journey_submission",
+										),
+									},
+									Description: `must be one of [journey_submission]`,
 								},
 							},
 						},
@@ -1362,6 +1328,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 													"RECEIVED",
 												),
 											},
+											Description: `must be one of [RECEIVED]`,
 										},
 									},
 								},
@@ -1372,6 +1339,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"received_email",
 										),
 									},
+									Description: `must be one of [received_email]`,
 								},
 							},
 						},
@@ -1429,13 +1397,8 @@ func (r *FlowResource) Create(ctx context.Context, req resource.CreateRequest, r
 		return
 	}
 
-	automationFlowInput := data.ToSDKType()
-	flowID := data.ID.ValueString()
-	request := operations.PutFlowRequest{
-		AutomationFlowInput: automationFlowInput,
-		FlowID:              flowID,
-	}
-	res, err := r.client.Flows.PutFlow(ctx, request)
+	request := *data.ToCreateSDKType()
+	res, err := r.client.Flows.CreateFlow(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		return
@@ -1444,7 +1407,7 @@ func (r *FlowResource) Create(ctx context.Context, req resource.CreateRequest, r
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 200 {
+	if res.StatusCode != 201 {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
@@ -1452,7 +1415,7 @@ func (r *FlowResource) Create(ctx context.Context, req resource.CreateRequest, r
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSDKType(res.AutomationFlow)
+	data.RefreshFromCreateResponse(res.AutomationFlow)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -1497,7 +1460,7 @@ func (r *FlowResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSDKType(res.AutomationFlow)
+	data.RefreshFromGetResponse(res.AutomationFlow)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -1510,7 +1473,7 @@ func (r *FlowResource) Update(ctx context.Context, req resource.UpdateRequest, r
 		return
 	}
 
-	automationFlowInput := data.ToSDKType()
+	automationFlowInput := data.ToUpdateSDKType()
 	flowID := data.ID.ValueString()
 	request := operations.PutFlowRequest{
 		AutomationFlowInput: automationFlowInput,
@@ -1533,7 +1496,7 @@ func (r *FlowResource) Update(ctx context.Context, req resource.UpdateRequest, r
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSDKType(res.AutomationFlow)
+	data.RefreshFromUpdateResponse(res.AutomationFlow)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

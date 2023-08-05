@@ -9,12 +9,6 @@
 </div>
 
 <!-- Start SDK Installation -->
-## Notice of Alpha Status
-
-This is a Alpha release of the epilot-automation Terraform Provider.
-
-It is under active development and you may experience breaking changes. Please pin to a version if trialing in production.
-
 ## SDK Installation
 
 To install this provider, copy and paste this code into your Terraform configuration. Then, run `terraform init`.

@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type TriggerWebhookActionConfigTypeEnum string
+type TriggerWebhookActionConfigType string
 
 const (
-	TriggerWebhookActionConfigTypeEnumTriggerWebhook TriggerWebhookActionConfigTypeEnum = "trigger-webhook"
+	TriggerWebhookActionConfigTypeTriggerWebhook TriggerWebhookActionConfigType = "trigger-webhook"
 )
 
-func (e TriggerWebhookActionConfigTypeEnum) ToPointer() *TriggerWebhookActionConfigTypeEnum {
+func (e TriggerWebhookActionConfigType) ToPointer() *TriggerWebhookActionConfigType {
 	return &e
 }
 
-func (e *TriggerWebhookActionConfigTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *TriggerWebhookActionConfigType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "trigger-webhook":
-		*e = TriggerWebhookActionConfigTypeEnum(v)
+		*e = TriggerWebhookActionConfigType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for TriggerWebhookActionConfigTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for TriggerWebhookActionConfigType: %v", v)
 	}
 }
 
@@ -36,9 +36,9 @@ type TriggerWebhookActionConfig struct {
 	AllowFailure *bool                 `json:"allow_failure,omitempty"`
 	Config       *TriggerWebhookConfig `json:"config,omitempty"`
 	// Flag indicating whether the action was created automatically or manually
-	CreatedAutomatically *bool                               `json:"created_automatically,omitempty"`
-	FlowActionID         *string                             `json:"flow_action_id,omitempty"`
-	ID                   *string                             `json:"id,omitempty"`
-	Name                 *string                             `json:"name,omitempty"`
-	Type                 *TriggerWebhookActionConfigTypeEnum `json:"type,omitempty"`
+	CreatedAutomatically *bool                           `json:"created_automatically,omitempty"`
+	FlowActionID         *string                         `json:"flow_action_id,omitempty"`
+	ID                   *string                         `json:"id,omitempty"`
+	Name                 *string                         `json:"name,omitempty"`
+	Type                 *TriggerWebhookActionConfigType `json:"type,omitempty"`
 }
