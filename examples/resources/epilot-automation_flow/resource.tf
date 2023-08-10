@@ -1,4 +1,4 @@
-resource "epilot_automation_flow" "my_flow" {
+resource "epilot-automation_flow" "my_flow" {
   actions = [
     {
       allow_failure = true

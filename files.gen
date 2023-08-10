@@ -188,7 +188,7 @@ internal/provider/provider.go
 examples/provider/provider.tf
 internal/provider/flow_resource.go
 internal/provider/flow_resource_sdk.go
-examples/resources/epilot_automation_flow/resource.tf
+examples/resources/epilot-automation_flow/resource.tf
 internal/provider/flow_data_source.go
 internal/provider/flow_data_source_sdk.go
-examples/data-sources/epilot_automation_flow/data-source.tf
+examples/data-sources/epilot-automation_flow/data-source.tf
