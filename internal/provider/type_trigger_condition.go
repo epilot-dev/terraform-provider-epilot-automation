@@ -5,7 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type TriggerCondition struct {
-	Comparison types.String           `tfsdk:"comparison"`
-	Source     types.String           `tfsdk:"source"`
-	Value      *TriggerConditionValue `tfsdk:"value"`
+	Comparison types.String                   `tfsdk:"comparison"`
+	Source     types.String                   `tfsdk:"source"`
+	Value      *TriggerWorkflowConditionValue `tfsdk:"value"`
 }

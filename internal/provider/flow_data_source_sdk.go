@@ -65,7 +65,7 @@ func (r *FlowDataSourceModel) RefreshFromGetResponse(resp *shared.AutomationFlow
 							if mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq == nil {
 								mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Uniq = nil
 							} else {
-								mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Uniq = &OperationObjectNodeUniq2{}
+								mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Uniq = &OperationObjectNodeUniq{}
 								if mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean != nil {
 									if mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean != nil {
 										mappingAttributes1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean = types.BoolValue(*mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean)
@@ -241,19 +241,19 @@ func (r *FlowDataSourceModel) RefreshFromGetResponse(resp *shared.AutomationFlow
 			}
 		}
 		if actionsItem.TriggerWorkflowActionConfig != nil {
-			actions1.TriggerWorkflowActionConfig = &TriggerWorkflowActionConfig1{}
+			actions1.TriggerWorkflowActionConfig = &TriggerWorkflowActionConfig{}
 			if actionsItem.TriggerWorkflowActionConfig.AllowFailure != nil {
 				actions1.TriggerWorkflowActionConfig.AllowFailure = types.BoolValue(*actionsItem.TriggerWorkflowActionConfig.AllowFailure)
 			} else {
 				actions1.TriggerWorkflowActionConfig.AllowFailure = types.BoolNull()
 			}
 			if actions1.TriggerWorkflowActionConfig.Config == nil {
-				actions1.TriggerWorkflowActionConfig.Config = &TriggerWorkflowConfig1{}
+				actions1.TriggerWorkflowActionConfig.Config = &TriggerWorkflowConfig{}
 			}
 			if actionsItem.TriggerWorkflowActionConfig.Config == nil {
 				actions1.TriggerWorkflowActionConfig.Config = nil
 			} else {
-				actions1.TriggerWorkflowActionConfig.Config = &TriggerWorkflowConfig1{}
+				actions1.TriggerWorkflowActionConfig.Config = &TriggerWorkflowConfig{}
 				actions1.TriggerWorkflowActionConfig.Config.AssignSteps = nil
 				for _, assignStepsItem := range actionsItem.TriggerWorkflowActionConfig.Config.AssignSteps {
 					var assignSteps1 AssignUsersToStep
@@ -279,14 +279,14 @@ func (r *FlowDataSourceModel) RefreshFromGetResponse(resp *shared.AutomationFlow
 				}
 				actions1.TriggerWorkflowActionConfig.Config.Conditions = nil
 				for _, conditionsItem := range actionsItem.TriggerWorkflowActionConfig.Config.Conditions {
-					var conditions1 TriggerWorkflowCondition1
+					var conditions1 TriggerWorkflowCondition
 					conditions1.Comparison = types.StringValue(string(conditionsItem.Comparison))
 					conditions1.Schema = types.StringValue(conditionsItem.Schema)
 					conditions1.Source = types.StringValue(conditionsItem.Source)
 					if conditionsItem.Value == nil {
 						conditions1.Value = nil
 					} else {
-						conditions1.Value = &TriggerWorkflowConditionValue1{}
+						conditions1.Value = &TriggerWorkflowConditionValue{}
 						if conditionsItem.Value.Str != nil {
 							if conditionsItem.Value.Str != nil {
 								conditions1.Value.Str = types.StringValue(*conditionsItem.Value.Str)
@@ -599,7 +599,7 @@ func (r *FlowDataSourceModel) RefreshFromGetResponse(resp *shared.AutomationFlow
 							if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq == nil {
 								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq = nil
 							} else {
-								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq = &OperationObjectNodeUniq3{}
+								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq = &OperationObjectNodeUniq{}
 								if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean != nil {
 									if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean != nil {
 										mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean = types.BoolValue(*mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean)
@@ -863,13 +863,13 @@ func (r *FlowDataSourceModel) RefreshFromGetResponse(resp *shared.AutomationFlow
 	}
 	r.TriggerConditions = nil
 	for _, triggerConditionsItem := range resp.TriggerConditions {
-		var triggerConditions1 TriggerCondition1
+		var triggerConditions1 TriggerCondition
 		triggerConditions1.Comparison = types.StringValue(string(triggerConditionsItem.Comparison))
 		triggerConditions1.Source = types.StringValue(triggerConditionsItem.Source)
 		if triggerConditionsItem.Value == nil {
 			triggerConditions1.Value = nil
 		} else {
-			triggerConditions1.Value = &TriggerConditionValue1{}
+			triggerConditions1.Value = &TriggerWorkflowConditionValue{}
 			if triggerConditionsItem.Value.Str != nil {
 				if triggerConditionsItem.Value.Str != nil {
 					triggerConditions1.Value.Str = types.StringValue(*triggerConditionsItem.Value.Str)

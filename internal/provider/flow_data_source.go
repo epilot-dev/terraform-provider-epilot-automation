@@ -34,19 +34,19 @@ type FlowDataSource struct {
 
 // FlowDataSourceModel describes the data model.
 type FlowDataSourceModel struct {
-	Actions           []AnyActionConfig1  `tfsdk:"actions"`
-	CreatedAt         types.String        `tfsdk:"created_at"`
-	CreatedBy         types.String        `tfsdk:"created_by"`
-	Enabled           types.Bool          `tfsdk:"enabled"`
-	EntitySchema      types.String        `tfsdk:"entity_schema"`
-	FlowName          types.String        `tfsdk:"flow_name"`
-	ID                types.String        `tfsdk:"id"`
-	LastUpdatedBy     types.String        `tfsdk:"last_updated_by"`
-	OrgID             types.String        `tfsdk:"org_id"`
-	Runs              types.Number        `tfsdk:"runs"`
-	TriggerConditions []TriggerCondition1 `tfsdk:"trigger_conditions"`
-	Triggers          []AnyTrigger        `tfsdk:"triggers"`
-	UpdatedAt         types.String        `tfsdk:"updated_at"`
+	Actions           []AnyActionConfig1 `tfsdk:"actions"`
+	CreatedAt         types.String       `tfsdk:"created_at"`
+	CreatedBy         types.String       `tfsdk:"created_by"`
+	Enabled           types.Bool         `tfsdk:"enabled"`
+	EntitySchema      types.String       `tfsdk:"entity_schema"`
+	FlowName          types.String       `tfsdk:"flow_name"`
+	ID                types.String       `tfsdk:"id"`
+	LastUpdatedBy     types.String       `tfsdk:"last_updated_by"`
+	OrgID             types.String       `tfsdk:"org_id"`
+	Runs              types.Number       `tfsdk:"runs"`
+	TriggerConditions []TriggerCondition `tfsdk:"trigger_conditions"`
+	Triggers          []AnyTrigger       `tfsdk:"triggers"`
+	UpdatedAt         types.String       `tfsdk:"updated_at"`
 }
 
 // Metadata returns the data source type name.
@@ -176,7 +176,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																				"set_value",
 																			),
 																		},
-																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																		MarkdownDescription: `must be one of ["copy_if_exists", "append_if_exists", "set_value"]` + "\n" +
 																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
 																			``,
 																	},
@@ -207,7 +207,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																				"set_value",
 																			),
 																		},
-																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																		MarkdownDescription: `must be one of ["copy_if_exists", "append_if_exists", "set_value"]` + "\n" +
 																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
 																			``,
 																	},
@@ -234,7 +234,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																				"set_value",
 																			),
 																		},
-																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																		MarkdownDescription: `must be one of ["copy_if_exists", "append_if_exists", "set_value"]` + "\n" +
 																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
 																			``,
 																	},
@@ -302,7 +302,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																"set",
 															),
 														},
-														Description: `must be one of [append, prepend, set]`,
+														Description: `must be one of ["append", "prepend", "set"]`,
 													},
 													"related_to": schema.MapAttribute{
 														Computed:    true,
@@ -389,7 +389,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											"map-entity",
 										),
 									},
-									Description: `must be one of [map-entity]`,
+									Description: `must be one of ["map-entity"]`,
 								},
 							},
 						},
@@ -438,7 +438,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																"is_empty",
 															),
 														},
-														Description: `must be one of [equals, any_of, not_empty, is_empty]`,
+														Description: `must be one of ["equals", "any_of", "not_empty", "is_empty"]`,
 													},
 													"schema": schema.StringAttribute{
 														Computed: true,
@@ -496,7 +496,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											"trigger-workflow",
 										),
 									},
-									Description: `must be one of [trigger-workflow]`,
+									Description: `must be one of ["trigger-workflow"]`,
 								},
 							},
 						},
@@ -539,7 +539,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											"trigger-webhook",
 										),
 									},
-									Description: `must be one of [trigger-webhook]`,
+									Description: `must be one of ["trigger-webhook"]`,
 								},
 							},
 						},
@@ -581,7 +581,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											"create-document",
 										),
 									},
-									Description: `must be one of [create-document]`,
+									Description: `must be one of ["create-document"]`,
 								},
 							},
 						},
@@ -623,7 +623,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																		"unknown",
 																	),
 																},
-																MarkdownDescription: `must be one of [document, text, image, video, audio, spreadsheet, presentation, font, archive, application, unknown]` + "\n" +
+																MarkdownDescription: `must be one of ["document", "text", "image", "video", "audio", "spreadsheet", "presentation", "font", "archive", "application", "unknown"]` + "\n" +
 																	`Filter by a specific document type (e.g. document)`,
 															},
 															"filename_regex": schema.StringAttribute{
@@ -667,7 +667,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 													"en",
 												),
 											},
-											Description: `must be one of [de, en]`,
+											Description: `must be one of ["de", "en"]`,
 										},
 									},
 								},
@@ -691,7 +691,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											"send-email",
 										),
 									},
-									Description: `must be one of [send-email]`,
+									Description: `must be one of ["send-email"]`,
 								},
 							},
 						},
@@ -807,7 +807,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																				"set_value",
 																			),
 																		},
-																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																		MarkdownDescription: `must be one of ["copy_if_exists", "append_if_exists", "set_value"]` + "\n" +
 																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
 																			``,
 																	},
@@ -838,7 +838,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																				"set_value",
 																			),
 																		},
-																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																		MarkdownDescription: `must be one of ["copy_if_exists", "append_if_exists", "set_value"]` + "\n" +
 																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
 																			``,
 																	},
@@ -865,7 +865,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																				"set_value",
 																			),
 																		},
-																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																		MarkdownDescription: `must be one of ["copy_if_exists", "append_if_exists", "set_value"]` + "\n" +
 																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
 																			``,
 																	},
@@ -932,7 +932,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																"set",
 															),
 														},
-														Description: `must be one of [append, prepend, set]`,
+														Description: `must be one of ["append", "prepend", "set"]`,
 													},
 													"related_to": schema.MapAttribute{
 														Computed:    true,
@@ -1018,7 +1018,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											"cart-checkout",
 										),
 									},
-									Description: `must be one of [cart-checkout]`,
+									Description: `must be one of ["cart-checkout"]`,
 								},
 							},
 							Description: `Creates an order entity with prices from journey`,
@@ -1113,7 +1113,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 									"is_empty",
 								),
 							},
-							Description: `must be one of [equals, any_of, not_empty, is_empty]`,
+							Description: `must be one of ["equals", "any_of", "not_empty", "is_empty"]`,
 						},
 						"source": schema.StringAttribute{
 							Computed: true,
@@ -1165,7 +1165,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											"frontend_submission",
 										),
 									},
-									Description: `must be one of [frontend_submission]`,
+									Description: `must be one of ["frontend_submission"]`,
 								},
 							},
 						},
@@ -1187,7 +1187,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											"journey_submission",
 										),
 									},
-									Description: `must be one of [journey_submission]`,
+									Description: `must be one of ["journey_submission"]`,
 								},
 							},
 						},
@@ -1209,7 +1209,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											"api_submission",
 										),
 									},
-									Description: `must be one of [api_submission]`,
+									Description: `must be one of ["api_submission"]`,
 								},
 							},
 						},
@@ -1243,7 +1243,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											"entity_operation",
 										),
 									},
-									Description: `must be one of [entity_operation]`,
+									Description: `must be one of ["entity_operation"]`,
 								},
 							},
 						},
@@ -1269,7 +1269,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											"activity",
 										),
 									},
-									Description: `must be one of [activity]`,
+									Description: `must be one of ["activity"]`,
 								},
 							},
 						},
@@ -1292,7 +1292,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											"entity_manual",
 										),
 									},
-									Description: `must be one of [entity_manual]`,
+									Description: `must be one of ["entity_manual"]`,
 								},
 							},
 						},
@@ -1309,7 +1309,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 													"RECEIVED",
 												),
 											},
-											Description: `must be one of [RECEIVED]`,
+											Description: `must be one of ["RECEIVED"]`,
 										},
 									},
 								},
@@ -1320,7 +1320,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											"received_email",
 										),
 									},
-									Description: `must be one of [received_email]`,
+									Description: `must be one of ["received_email"]`,
 								},
 							},
 						},

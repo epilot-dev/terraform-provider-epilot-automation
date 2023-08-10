@@ -87,36 +87,52 @@ func (r *FlowResourceModel) ToCreateSDKType() *shared.AutomationFlowInput {
 	var triggers []shared.AnyTrigger = nil
 	for _, triggersItem := range r.Triggers {
 		if triggersItem.FrontendSubmitTrigger != nil {
-			configuration := shared.FrontendSubmitTriggerConfiguration{}
-			type1 := shared.FrontendSubmitTriggerType(triggersItem.ActivityTrigger.Type.ValueString())
+			sourceID := new(string)
+			if !triggersItem.FrontendSubmitTrigger.Configuration.SourceID.IsUnknown() && !triggersItem.FrontendSubmitTrigger.Configuration.SourceID.IsNull() {
+				*sourceID = triggersItem.FrontendSubmitTrigger.Configuration.SourceID.ValueString()
+			} else {
+				sourceID = nil
+			}
+			configuration := shared.FrontendSubmitTriggerConfiguration{
+				SourceID: sourceID,
+			}
+			typeVar := shared.FrontendSubmitTriggerType(triggersItem.FrontendSubmitTrigger.Type.ValueString())
 			frontendSubmitTrigger := shared.FrontendSubmitTrigger{
 				Configuration: configuration,
-				Type:          type1,
+				Type:          typeVar,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				FrontendSubmitTrigger: &frontendSubmitTrigger,
 			})
 		}
 		if triggersItem.JourneySubmitTrigger != nil {
-			sourceID := triggersItem.APISubmissionTrigger.Configuration.SourceID.ValueString()
+			sourceId1 := triggersItem.JourneySubmitTrigger.Configuration.SourceID.ValueString()
 			configuration1 := shared.JourneySubmitTriggerConfiguration{
-				SourceID: sourceID,
+				SourceID: sourceId1,
 			}
-			type2 := shared.JourneySubmitTriggerType(triggersItem.APISubmissionTrigger.Type.ValueString())
+			typeVar1 := shared.JourneySubmitTriggerType(triggersItem.JourneySubmitTrigger.Type.ValueString())
 			journeySubmitTrigger := shared.JourneySubmitTrigger{
 				Configuration: configuration1,
-				Type:          type2,
+				Type:          typeVar1,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				JourneySubmitTrigger: &journeySubmitTrigger,
 			})
 		}
 		if triggersItem.APISubmissionTrigger != nil {
-			configuration2 := shared.APISubmissionTriggerConfiguration{}
-			type3 := shared.APISubmissionTriggerType(triggersItem.EntityManualTrigger.Type.ValueString())
+			sourceId2 := new(string)
+			if !triggersItem.APISubmissionTrigger.Configuration.SourceID.IsUnknown() && !triggersItem.APISubmissionTrigger.Configuration.SourceID.IsNull() {
+				*sourceId2 = triggersItem.APISubmissionTrigger.Configuration.SourceID.ValueString()
+			} else {
+				sourceId2 = nil
+			}
+			configuration2 := shared.APISubmissionTriggerConfiguration{
+				SourceID: sourceId2,
+			}
+			typeVar2 := shared.APISubmissionTriggerType(triggersItem.APISubmissionTrigger.Type.ValueString())
 			apiSubmissionTrigger := shared.APISubmissionTrigger{
 				Configuration: configuration2,
-				Type:          type3,
+				Type:          typeVar2,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				APISubmissionTrigger: &apiSubmissionTrigger,
@@ -131,43 +147,64 @@ func (r *FlowResourceModel) ToCreateSDKType() *shared.AutomationFlowInput {
 			for _, includeActivitiesItem := range triggersItem.EntityOperationTrigger.Configuration.IncludeActivities {
 				includeActivities = append(includeActivities, includeActivitiesItem.ValueString())
 			}
-			var operations []shared.EntityOperationTriggerConfigurationOperations = nil
+			var operationsVar []shared.EntityOperationTriggerConfigurationOperations = nil
 			for _, operationsItem := range triggersItem.EntityOperationTrigger.Configuration.Operations {
-				operations = append(operations, shared.EntityOperationTriggerConfigurationOperations(operationsItem.ValueString()))
+				operationsVar = append(operationsVar, shared.EntityOperationTriggerConfigurationOperations(operationsItem.ValueString()))
 			}
 			schema := triggersItem.EntityOperationTrigger.Configuration.Schema.ValueString()
 			configuration3 := shared.EntityOperationTriggerConfiguration{
 				ExcludeActivities: excludeActivities,
 				IncludeActivities: includeActivities,
-				Operations:        operations,
+				Operations:        operationsVar,
 				Schema:            schema,
 			}
-			type4 := shared.EntityOperationTriggerType(triggersItem.EntityOperationTrigger.Type.ValueString())
+			typeVar3 := shared.EntityOperationTriggerType(triggersItem.EntityOperationTrigger.Type.ValueString())
 			entityOperationTrigger := shared.EntityOperationTrigger{
 				Configuration: configuration3,
-				Type:          type4,
+				Type:          typeVar3,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				EntityOperationTrigger: &entityOperationTrigger,
 			})
 		}
 		if triggersItem.ActivityTrigger != nil {
-			configuration4 := shared.ActivityTriggerConfiguration{}
-			type5 := shared.ActivityTriggerType(triggersItem.FrontendSubmitTrigger.Type.ValueString())
+			schema1 := new(string)
+			if !triggersItem.ActivityTrigger.Configuration.Schema.IsUnknown() && !triggersItem.ActivityTrigger.Configuration.Schema.IsNull() {
+				*schema1 = triggersItem.ActivityTrigger.Configuration.Schema.ValueString()
+			} else {
+				schema1 = nil
+			}
+			var types []shared.ActivityTriggerConfigurationTypes = nil
+			for _, typesItem := range triggersItem.ActivityTrigger.Configuration.Types {
+				types = append(types, shared.ActivityTriggerConfigurationTypes(typesItem.ValueString()))
+			}
+			configuration4 := shared.ActivityTriggerConfiguration{
+				Schema: schema1,
+				Types:  types,
+			}
+			typeVar4 := shared.ActivityTriggerType(triggersItem.ActivityTrigger.Type.ValueString())
 			activityTrigger := shared.ActivityTrigger{
 				Configuration: configuration4,
-				Type:          type5,
+				Type:          typeVar4,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				ActivityTrigger: &activityTrigger,
 			})
 		}
 		if triggersItem.EntityManualTrigger != nil {
-			configuration5 := shared.EntityManualTriggerConfiguration{}
-			type6 := shared.EntityManualTriggerType(triggersItem.JourneySubmitTrigger.Type.ValueString())
+			schema2 := new(string)
+			if !triggersItem.EntityManualTrigger.Configuration.Schema.IsUnknown() && !triggersItem.EntityManualTrigger.Configuration.Schema.IsNull() {
+				*schema2 = triggersItem.EntityManualTrigger.Configuration.Schema.ValueString()
+			} else {
+				schema2 = nil
+			}
+			configuration5 := shared.EntityManualTriggerConfiguration{
+				Schema: schema2,
+			}
+			typeVar5 := shared.EntityManualTriggerType(triggersItem.EntityManualTrigger.Type.ValueString())
 			entityManualTrigger := shared.EntityManualTrigger{
 				Configuration: configuration5,
-				Type:          type6,
+				Type:          typeVar5,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				EntityManualTrigger: &entityManualTrigger,
@@ -183,10 +220,10 @@ func (r *FlowResourceModel) ToCreateSDKType() *shared.AutomationFlowInput {
 			configuration6 := shared.ReceivedEmailTriggerConfiguration{
 				MessageType: messageType,
 			}
-			type7 := shared.ReceivedEmailTriggerType(triggersItem.ReceivedEmailTrigger.Type.ValueString())
+			typeVar6 := shared.ReceivedEmailTriggerType(triggersItem.ReceivedEmailTrigger.Type.ValueString())
 			receivedEmailTrigger := shared.ReceivedEmailTrigger{
 				Configuration: configuration6,
-				Type:          type7,
+				Type:          typeVar6,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				ReceivedEmailTrigger: &receivedEmailTrigger,
@@ -630,7 +667,7 @@ func (r *FlowResourceModel) RefreshFromGetResponse(resp *shared.AutomationFlow) 
 							if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq == nil {
 								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq = nil
 							} else {
-								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq = &OperationObjectNodeUniq1{}
+								mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq = &OperationObjectNodeUniq{}
 								if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean != nil {
 									if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean != nil {
 										mappingAttributes3.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean = types.BoolValue(*mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean)
@@ -1078,7 +1115,7 @@ func (r *FlowResourceModel) RefreshFromGetResponse(resp *shared.AutomationFlow) 
 		if triggerConditionsItem.Value == nil {
 			triggerConditions1.Value = nil
 		} else {
-			triggerConditions1.Value = &TriggerConditionValue{}
+			triggerConditions1.Value = &TriggerWorkflowConditionValue{}
 			if triggerConditionsItem.Value.Str != nil {
 				if triggerConditionsItem.Value.Str != nil {
 					triggerConditions1.Value.Str = types.StringValue(*triggerConditionsItem.Value.Str)

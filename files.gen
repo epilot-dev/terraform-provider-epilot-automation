@@ -18,7 +18,6 @@ internal/provider/type_cart_checkout_config.go
 internal/provider/type_cart_checkout_action_config.go
 internal/provider/type_create_document_config.go
 internal/provider/type_create_document_action_config.go
-internal/provider/type_operation_object_node_uniq1.go
 internal/provider/type_operation_object_node1.go
 internal/provider/type_operation_node1.go
 internal/provider/type_mapping_attribute_v21.go
@@ -37,7 +36,6 @@ internal/provider/type_trigger_workflow_condition.go
 internal/provider/type_trigger_workflow_config.go
 internal/provider/type_trigger_workflow_action_config.go
 internal/provider/type_any_action_config.go
-internal/provider/type_trigger_condition_value.go
 internal/provider/type_trigger_condition.go
 internal/provider/type_activity_trigger_configuration.go
 internal/provider/type_activity_trigger.go
@@ -52,18 +50,12 @@ internal/provider/type_journey_submit_trigger.go
 internal/provider/type_received_email_trigger_configuration.go
 internal/provider/type_received_email_trigger.go
 internal/provider/type_any_trigger.go
-internal/provider/type_operation_object_node_uniq2.go
 internal/provider/type_operation_object_node2.go
 internal/provider/type_operation_node2.go
 internal/provider/type_mapping_attribute_v22.go
 internal/provider/type_map_entity_config_mapping_attributes1.go
 internal/provider/type_map_entity_config1.go
 internal/provider/type_map_entity_action_config1.go
-internal/provider/type_trigger_workflow_condition_value1.go
-internal/provider/type_trigger_workflow_condition1.go
-internal/provider/type_trigger_workflow_config1.go
-internal/provider/type_trigger_workflow_action_config1.go
-internal/provider/type_operation_object_node_uniq3.go
 internal/provider/type_operation_object_node3.go
 internal/provider/type_operation_node3.go
 internal/provider/type_mapping_attribute_v23.go
@@ -71,8 +63,6 @@ internal/provider/type_cart_checkout_config_mapping_attributes1.go
 internal/provider/type_cart_checkout_config1.go
 internal/provider/type_cart_checkout_action_config1.go
 internal/provider/type_any_action_config1.go
-internal/provider/type_trigger_condition_value1.go
-internal/provider/type_trigger_condition1.go
 examples/README.md
 go.mod
 go.sum

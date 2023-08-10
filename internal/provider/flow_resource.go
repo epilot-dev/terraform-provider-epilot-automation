@@ -134,7 +134,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																				"set_value",
 																			),
 																		},
-																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																		MarkdownDescription: `must be one of ["copy_if_exists", "append_if_exists", "set_value"]` + "\n" +
 																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
 																			``,
 																	},
@@ -172,7 +172,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																				"set_value",
 																			),
 																		},
-																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																		MarkdownDescription: `must be one of ["copy_if_exists", "append_if_exists", "set_value"]` + "\n" +
 																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
 																			``,
 																	},
@@ -199,7 +199,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																				"set_value",
 																			),
 																		},
-																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																		MarkdownDescription: `must be one of ["copy_if_exists", "append_if_exists", "set_value"]` + "\n" +
 																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
 																			``,
 																	},
@@ -332,7 +332,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																"set",
 															),
 														},
-														Description: `must be one of [append, prepend, set]`,
+														Description: `must be one of ["append", "prepend", "set"]`,
 													},
 													"related_to": schema.MapAttribute{
 														Computed:    true,
@@ -418,7 +418,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"cart-checkout",
 										),
 									},
-									Description: `must be one of [cart-checkout]`,
+									Description: `must be one of ["cart-checkout"]`,
 								},
 							},
 							Description: `Creates an order entity with prices from journey`,
@@ -461,7 +461,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"create-document",
 										),
 									},
-									Description: `must be one of [create-document]`,
+									Description: `must be one of ["create-document"]`,
 								},
 							},
 						},
@@ -504,7 +504,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																				"set_value",
 																			),
 																		},
-																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																		MarkdownDescription: `must be one of ["copy_if_exists", "append_if_exists", "set_value"]` + "\n" +
 																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
 																			``,
 																	},
@@ -542,7 +542,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																				"set_value",
 																			),
 																		},
-																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																		MarkdownDescription: `must be one of ["copy_if_exists", "append_if_exists", "set_value"]` + "\n" +
 																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
 																			``,
 																	},
@@ -569,7 +569,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																				"set_value",
 																			),
 																		},
-																		MarkdownDescription: `must be one of [copy_if_exists, append_if_exists, set_value]` + "\n" +
+																		MarkdownDescription: `must be one of ["copy_if_exists", "append_if_exists", "set_value"]` + "\n" +
 																			`- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.` + "\n" +
 																			``,
 																	},
@@ -703,7 +703,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																"set",
 															),
 														},
-														Description: `must be one of [append, prepend, set]`,
+														Description: `must be one of ["append", "prepend", "set"]`,
 													},
 													"related_to": schema.MapAttribute{
 														Computed:    true,
@@ -790,7 +790,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"map-entity",
 										),
 									},
-									Description: `must be one of [map-entity]`,
+									Description: `must be one of ["map-entity"]`,
 								},
 							},
 						},
@@ -832,7 +832,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		"unknown",
 																	),
 																},
-																MarkdownDescription: `must be one of [document, text, image, video, audio, spreadsheet, presentation, font, archive, application, unknown]` + "\n" +
+																MarkdownDescription: `must be one of ["document", "text", "image", "video", "audio", "spreadsheet", "presentation", "font", "archive", "application", "unknown"]` + "\n" +
 																	`Filter by a specific document type (e.g. document)`,
 															},
 															"filename_regex": schema.StringAttribute{
@@ -876,7 +876,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 													"en",
 												),
 											},
-											Description: `must be one of [de, en]`,
+											Description: `must be one of ["de", "en"]`,
 										},
 									},
 								},
@@ -900,7 +900,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"send-email",
 										),
 									},
-									Description: `must be one of [send-email]`,
+									Description: `must be one of ["send-email"]`,
 								},
 							},
 						},
@@ -943,7 +943,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"trigger-webhook",
 										),
 									},
-									Description: `must be one of [trigger-webhook]`,
+									Description: `must be one of ["trigger-webhook"]`,
 								},
 							},
 						},
@@ -992,7 +992,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																"is_empty",
 															),
 														},
-														Description: `must be one of [equals, any_of, not_empty, is_empty]`,
+														Description: `must be one of ["equals", "any_of", "not_empty", "is_empty"]`,
 													},
 													"schema": schema.StringAttribute{
 														Computed: true,
@@ -1050,7 +1050,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"trigger-workflow",
 										),
 									},
-									Description: `must be one of [trigger-workflow]`,
+									Description: `must be one of ["trigger-workflow"]`,
 								},
 							},
 						},
@@ -1115,7 +1115,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									"is_empty",
 								),
 							},
-							Description: `must be one of [equals, any_of, not_empty, is_empty]`,
+							Description: `must be one of ["equals", "any_of", "not_empty", "is_empty"]`,
 						},
 						"source": schema.StringAttribute{
 							Required: true,
@@ -1176,7 +1176,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"activity",
 										),
 									},
-									Description: `must be one of [activity]`,
+									Description: `must be one of ["activity"]`,
 								},
 							},
 						},
@@ -1200,7 +1200,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"api_submission",
 										),
 									},
-									Description: `must be one of [api_submission]`,
+									Description: `must be one of ["api_submission"]`,
 								},
 							},
 						},
@@ -1225,7 +1225,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"entity_manual",
 										),
 									},
-									Description: `must be one of [entity_manual]`,
+									Description: `must be one of ["entity_manual"]`,
 								},
 							},
 						},
@@ -1262,7 +1262,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"entity_operation",
 										),
 									},
-									Description: `must be one of [entity_operation]`,
+									Description: `must be one of ["entity_operation"]`,
 								},
 							},
 						},
@@ -1286,7 +1286,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"frontend_submission",
 										),
 									},
-									Description: `must be one of [frontend_submission]`,
+									Description: `must be one of ["frontend_submission"]`,
 								},
 							},
 						},
@@ -1309,7 +1309,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"journey_submission",
 										),
 									},
-									Description: `must be one of [journey_submission]`,
+									Description: `must be one of ["journey_submission"]`,
 								},
 							},
 						},
@@ -1328,7 +1328,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 													"RECEIVED",
 												),
 											},
-											Description: `must be one of [RECEIVED]`,
+											Description: `must be one of ["RECEIVED"]`,
 										},
 									},
 								},
@@ -1339,7 +1339,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											"received_email",
 										),
 									},
-									Description: `must be one of [received_email]`,
+									Description: `must be one of ["received_email"]`,
 								},
 							},
 						},

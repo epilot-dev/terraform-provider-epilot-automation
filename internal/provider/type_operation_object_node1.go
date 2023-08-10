@@ -5,9 +5,9 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type OperationObjectNode1 struct {
-	Append               []types.String            `tfsdk:"append"`
-	Copy                 types.String              `tfsdk:"copy"`
-	Set                  types.String              `tfsdk:"set"`
-	Uniq                 *OperationObjectNodeUniq1 `tfsdk:"uniq"`
-	AdditionalProperties types.String              `tfsdk:"additional_properties"`
+	Append               []types.String           `tfsdk:"append"`
+	Copy                 types.String             `tfsdk:"copy"`
+	Set                  types.String             `tfsdk:"set"`
+	Uniq                 *OperationObjectNodeUniq `tfsdk:"uniq"`
+	AdditionalProperties types.String             `tfsdk:"additional_properties"`
 }
