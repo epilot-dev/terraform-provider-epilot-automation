@@ -17,7 +17,16 @@ variable "epilot_api_key" {
 
 resource "epilot-automation_flow" "test" {
   flow_name = "Test Automation Created By Terraform"
-
+  actions = [
+    {
+      automation_action_config = {
+        allow_failure         = true
+        created_automatically = true
+        name                  = "test_automation_action"
+        type                  = "automation"
+      }
+    }
+  ]
   triggers = [
     {
       entity_manual_trigger = {

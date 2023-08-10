@@ -17,6 +17,7 @@ Flow Resource
 
 ### Required
 
+- `actions` (Attributes List) (see [below for nested schema](#nestedatt--actions))
 - `flow_name` (String) A descriptive name for the Automation
 - `triggers` (Attributes List) (see [below for nested schema](#nestedatt--triggers))
 
@@ -29,13 +30,538 @@ Flow Resource
 
 ### Read-Only
 
-- `actions` (Attributes List) (see [below for nested schema](#nestedatt--actions))
 - `created_at` (String)
 - `created_by` (String) User / service who created automation flow
 - `id` (String) The ID of this resource.
 - `last_updated_by` (String) User / service who last updated automation flow
 - `org_id` (String) Organization the automation flow belongs to
 - `updated_at` (String)
+
+<a id="nestedatt--actions"></a>
+### Nested Schema for `actions`
+
+Optional:
+
+- `automation_action_config` (Attributes) (see [below for nested schema](#nestedatt--actions--automation_action_config))
+- `cart_checkout_action_config` (Attributes) Creates an order entity with prices from journey (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config))
+- `create_document_action_config` (Attributes) (see [below for nested schema](#nestedatt--actions--create_document_action_config))
+- `map_entity_action_config` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config))
+- `send_email_action_config` (Attributes) (see [below for nested schema](#nestedatt--actions--send_email_action_config))
+- `trigger_webhook_action_config` (Attributes) (see [below for nested schema](#nestedatt--actions--trigger_webhook_action_config))
+- `trigger_workflow_action_config` (Attributes) (see [below for nested schema](#nestedatt--actions--trigger_workflow_action_config))
+
+<a id="nestedatt--actions--automation_action_config"></a>
+### Nested Schema for `actions.automation_action_config`
+
+Optional:
+
+- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
+- `config` (Map of String)
+- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
+- `flow_action_id` (String)
+- `id` (String)
+- `name` (String)
+- `type` (String)
+
+
+<a id="nestedatt--actions--cart_checkout_action_config"></a>
+### Nested Schema for `actions.cart_checkout_action_config`
+
+Optional:
+
+- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
+- `config` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config))
+- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
+- `flow_action_id` (String)
+- `id` (String)
+- `name` (String)
+- `type` (String) must be one of ["cart-checkout"]
+
+<a id="nestedatt--actions--cart_checkout_action_config--config"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config`
+
+Optional:
+
+- `linkback_relation_attribute` (String) Relation attribute on the main entity where the target entity will be linked. Set to false to disable linkback
+- `linkback_relation_tags` (List of String) Relation tags (labels) to include in main entity linkback relation attribute
+- `mapping_attributes` (Attributes List) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--mapping_attributes))
+- `mapping_config` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--mapping_config))
+- `relation_attributes` (Attributes List) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--relation_attributes))
+- `target_unique` (List of String) Unique key for target entity (see upsertEntity of Entity API)
+- `version` (String) Version of the config
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--mapping_attributes"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version`
+
+Optional:
+
+- `mapping_attribute` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute))
+- `mapping_attribute_v2` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2))
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute`
+
+Optional:
+
+- `append_value_mapper` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute--append_value_mapper))
+- `copy_value_mapper` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute--copy_value_mapper))
+- `set_value_mapper` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute--set_value_mapper))
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute--append_value_mapper"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute.set_value_mapper`
+
+Required:
+
+- `mode` (String) must be one of ["copy_if_exists", "append_if_exists", "set_value"]
+- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
+- `target` (String) JSON like target path for the attribute. Eg. last_name
+- `value_json` (String) To be provided only when mapping json objects into a target attribute. Eg array of addresses.
+
+Optional:
+
+- `source` (String) JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price
+- `target_unique` (List of String) Array of keys which should be used when checking for uniqueness. Eg: [country, city, postal_code]
+
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute--copy_value_mapper"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute.set_value_mapper`
+
+Required:
+
+- `mode` (String) must be one of ["copy_if_exists", "append_if_exists", "set_value"]
+- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
+- `source` (String) JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price
+- `target` (String) JSON like target path for the attribute. Eg. last_name
+
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute--set_value_mapper"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute.set_value_mapper`
+
+Required:
+
+- `mode` (String) must be one of ["copy_if_exists", "append_if_exists", "set_value"]
+- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
+- `target` (String) JSON like target path for the attribute. Eg. last_name
+- `value` (String) Parsed as JSON.
+Any value to be set: string, number, string[], number[], JSON object, etc. It will override existing values, if any.
+
+
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute_v2`
+
+Required:
+
+- `operation` (Attributes) Mapping operation nodes are either primitive values or operation node objects (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--operation))
+
+Optional:
+
+- `target` (String) Target JSON path for the attribute to set
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--operation"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute_v2.target`
+
+Optional:
+
+- `any` (String) Parsed as JSON.
+- `operation_object_node` (Attributes) Mapping operation nodes are either primitive values or operation node objects (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--target--operation_object_node))
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--target--operation_object_node"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute_v2.target.operation_object_node`
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+- `append` (List of String) Append to array
+- `copy` (String) Copy JSONPath value from source entity context
+- `set` (String) Parsed as JSON.
+- `uniq` (Attributes) Unique array (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--target--operation_object_node--uniq))
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--target--operation_object_node--uniq"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute_v2.target.operation_object_node.uniq`
+
+Optional:
+
+- `array_ofstr` (List of String)
+- `boolean` (Boolean)
+
+
+
+
+
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--mapping_config"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version`
+
+Required:
+
+- `config_id` (String) Id of Entity Mapping Configuration to run for mapping.
+- `target_id` (String) Id of TargetConfig to run for mapping.
+
+Optional:
+
+- `version` (Number) Version of Entity Mapping Configuration to run for mapping.
+
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--relation_attributes"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version`
+
+Required:
+
+- `mode` (String) must be one of ["append", "prepend", "set"]
+- `target` (String) Target attribute to store the relation in
+
+Optional:
+
+- `related_to` (Map of String)
+- `source_filter` (Attributes) A filter to identify which source entities to pick as relations from main entity (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--source_filter))
+- `target_tags` (List of String) Relation tags (labels) to set for the stored relations
+- `target_tags_include_source` (Boolean) Include all relation tags (labels) present on the main entity relation
+
+<a id="nestedatt--actions--cart_checkout_action_config--config--version--source_filter"></a>
+### Nested Schema for `actions.cart_checkout_action_config.config.version.source_filter`
+
+Optional:
+
+- `attribute` (String) Filter by a specific relation attribute on the main entity
+- `limit` (Number) Limit relations to maximum number (default, all matched relations)
+- `relation_tag` (String) Filter by relation tag (label) on the main entity
+- `schema` (String) Filter by specific schema
+- `self` (Boolean) Picks main entity as relation (overrides other filters)
+- `tag` (String) Filter by a specific tag on the related entity
+
+
+
+
+
+<a id="nestedatt--actions--create_document_action_config"></a>
+### Nested Schema for `actions.create_document_action_config`
+
+Optional:
+
+- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
+- `config` (Attributes) (see [below for nested schema](#nestedatt--actions--create_document_action_config--config))
+- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
+- `flow_action_id` (String)
+- `id` (String)
+- `name` (String)
+- `type` (String) must be one of ["create-document"]
+
+<a id="nestedatt--actions--create_document_action_config--config"></a>
+### Nested Schema for `actions.create_document_action_config.config`
+
+Optional:
+
+- `filename` (String)
+- `template_id` (String)
+
+
+
+<a id="nestedatt--actions--map_entity_action_config"></a>
+### Nested Schema for `actions.map_entity_action_config`
+
+Optional:
+
+- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
+- `config` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config))
+- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
+- `flow_action_id` (String)
+- `id` (String)
+- `name` (String)
+- `type` (String) must be one of ["map-entity"]
+
+<a id="nestedatt--actions--map_entity_action_config--config"></a>
+### Nested Schema for `actions.map_entity_action_config.config`
+
+Required:
+
+- `target_schema` (String) Schema of target entity
+
+Optional:
+
+- `linkback_relation_attribute` (String) Relation attribute on the main entity where the target entity will be linked. Set to false to disable linkback
+- `linkback_relation_tags` (List of String) Relation tags (labels) to include in main entity linkback relation attribute
+- `mapping_attributes` (Attributes List) Attribute mappings (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--mapping_attributes))
+- `mapping_config` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--mapping_config))
+- `relation_attributes` (Attributes List) Relation mappings (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--relation_attributes))
+- `target_unique` (List of String) Unique key for target entity (see upsertEntity of Entity API)
+
+<a id="nestedatt--actions--map_entity_action_config--config--mapping_attributes"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique`
+
+Optional:
+
+- `mapping_attribute` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute))
+- `mapping_attribute_v2` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2))
+
+<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute`
+
+Optional:
+
+- `append_value_mapper` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute--append_value_mapper))
+- `copy_value_mapper` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute--copy_value_mapper))
+- `set_value_mapper` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute--set_value_mapper))
+
+<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute--append_value_mapper"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute.set_value_mapper`
+
+Required:
+
+- `mode` (String) must be one of ["copy_if_exists", "append_if_exists", "set_value"]
+- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
+- `target` (String) JSON like target path for the attribute. Eg. last_name
+- `value_json` (String) To be provided only when mapping json objects into a target attribute. Eg array of addresses.
+
+Optional:
+
+- `source` (String) JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price
+- `target_unique` (List of String) Array of keys which should be used when checking for uniqueness. Eg: [country, city, postal_code]
+
+
+<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute--copy_value_mapper"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute.set_value_mapper`
+
+Required:
+
+- `mode` (String) must be one of ["copy_if_exists", "append_if_exists", "set_value"]
+- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
+- `source` (String) JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price
+- `target` (String) JSON like target path for the attribute. Eg. last_name
+
+
+<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute--set_value_mapper"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute.set_value_mapper`
+
+Required:
+
+- `mode` (String) must be one of ["copy_if_exists", "append_if_exists", "set_value"]
+- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
+- `target` (String) JSON like target path for the attribute. Eg. last_name
+- `value` (String) Parsed as JSON.
+Any value to be set: string, number, string[], number[], JSON object, etc. It will override existing values, if any.
+
+
+
+<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute_v2`
+
+Required:
+
+- `operation` (Attributes) Mapping operation nodes are either primitive values or operation node objects (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--operation))
+
+Optional:
+
+- `target` (String) Target JSON path for the attribute to set
+
+<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--operation"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute_v2.target`
+
+Optional:
+
+- `any` (String) Parsed as JSON.
+- `operation_object_node` (Attributes) Mapping operation nodes are either primitive values or operation node objects (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--target--operation_object_node))
+
+<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--target--operation_object_node"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute_v2.target.operation_object_node`
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+- `append` (List of String) Append to array
+- `copy` (String) Copy JSONPath value from source entity context
+- `set` (String) Parsed as JSON.
+- `uniq` (Attributes) Unique array (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--target--operation_object_node--uniq))
+
+<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--target--operation_object_node--uniq"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute_v2.target.operation_object_node.uniq`
+
+Optional:
+
+- `array_ofstr` (List of String)
+- `boolean` (Boolean)
+
+
+
+
+
+
+<a id="nestedatt--actions--map_entity_action_config--config--mapping_config"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique`
+
+Required:
+
+- `config_id` (String) Id of Entity Mapping Configuration to run for mapping.
+- `target_id` (String) Id of TargetConfig to run for mapping.
+
+Optional:
+
+- `version` (Number) Version of Entity Mapping Configuration to run for mapping.
+
+
+<a id="nestedatt--actions--map_entity_action_config--config--relation_attributes"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique`
+
+Required:
+
+- `mode` (String) must be one of ["append", "prepend", "set"]
+- `target` (String) Target attribute to store the relation in
+
+Optional:
+
+- `related_to` (Map of String)
+- `source_filter` (Attributes) A filter to identify which source entities to pick as relations from main entity (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--source_filter))
+- `target_tags` (List of String) Relation tags (labels) to set for the stored relations
+- `target_tags_include_source` (Boolean) Include all relation tags (labels) present on the main entity relation
+
+<a id="nestedatt--actions--map_entity_action_config--config--target_unique--source_filter"></a>
+### Nested Schema for `actions.map_entity_action_config.config.target_unique.source_filter`
+
+Optional:
+
+- `attribute` (String) Filter by a specific relation attribute on the main entity
+- `limit` (Number) Limit relations to maximum number (default, all matched relations)
+- `relation_tag` (String) Filter by relation tag (label) on the main entity
+- `schema` (String) Filter by specific schema
+- `self` (Boolean) Picks main entity as relation (overrides other filters)
+- `tag` (String) Filter by a specific tag on the related entity
+
+
+
+
+
+<a id="nestedatt--actions--send_email_action_config"></a>
+### Nested Schema for `actions.send_email_action_config`
+
+Optional:
+
+- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
+- `config` (Attributes) (see [below for nested schema](#nestedatt--actions--send_email_action_config--config))
+- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
+- `flow_action_id` (String)
+- `id` (String)
+- `name` (String)
+- `type` (String) must be one of ["send-email"]
+
+<a id="nestedatt--actions--send_email_action_config--config"></a>
+### Nested Schema for `actions.send_email_action_config.config`
+
+Optional:
+
+- `attachments` (Attributes List) Include extra file attachments in sent email.
+
+Attachments in email template will be sent regardless of this configuration. (see [below for nested schema](#nestedatt--actions--send_email_action_config--config--attachments))
+- `email_template_id` (String)
+- `language_code` (String) must be one of ["de", "en"]
+
+<a id="nestedatt--actions--send_email_action_config--config--attachments"></a>
+### Nested Schema for `actions.send_email_action_config.config.language_code`
+
+Optional:
+
+- `source_filter` (Attributes) Specify filters to match file entities related to main entity (see [below for nested schema](#nestedatt--actions--send_email_action_config--config--language_code--source_filter))
+
+<a id="nestedatt--actions--send_email_action_config--config--language_code--source_filter"></a>
+### Nested Schema for `actions.send_email_action_config.config.language_code.source_filter`
+
+Optional:
+
+- `attribute` (String) Filter by a specific relation attribute on the main entity
+- `document_type` (String) must be one of ["document", "text", "image", "video", "audio", "spreadsheet", "presentation", "font", "archive", "application", "unknown"]
+Filter by a specific document type (e.g. document)
+- `filename_regex` (String) Match by filename. Regex syntax supported
+- `limit` (Number) Limit files to maximum number (default, all matched file relations)
+- `relation_tag` (String) Filter by relation tag (label) on the main entity
+- `self` (Boolean) Picks main entity as file (only works if source entity is a file)
+- `tag` (String) Filter by a specific tag on the related file entity
+
+
+
+
+
+<a id="nestedatt--actions--trigger_webhook_action_config"></a>
+### Nested Schema for `actions.trigger_webhook_action_config`
+
+Optional:
+
+- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
+- `config` (Attributes) (see [below for nested schema](#nestedatt--actions--trigger_webhook_action_config--config))
+- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
+- `flow_action_id` (String)
+- `id` (String)
+- `name` (String)
+- `type` (String) must be one of ["trigger-webhook"]
+
+<a id="nestedatt--actions--trigger_webhook_action_config--config"></a>
+### Nested Schema for `actions.trigger_webhook_action_config.config`
+
+Optional:
+
+- `entity_sources` (List of String)
+- `target_webhook_id` (String)
+
+
+
+<a id="nestedatt--actions--trigger_workflow_action_config"></a>
+### Nested Schema for `actions.trigger_workflow_action_config`
+
+Optional:
+
+- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
+- `config` (Attributes) (see [below for nested schema](#nestedatt--actions--trigger_workflow_action_config--config))
+- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
+- `flow_action_id` (String)
+- `id` (String)
+- `name` (String)
+- `type` (String) must be one of ["trigger-workflow"]
+
+<a id="nestedatt--actions--trigger_workflow_action_config--config"></a>
+### Nested Schema for `actions.trigger_workflow_action_config.config`
+
+Optional:
+
+- `assign_steps` (Attributes List) (see [below for nested schema](#nestedatt--actions--trigger_workflow_action_config--config--assign_steps))
+- `assignees` (List of String)
+- `conditions` (Attributes List) (see [below for nested schema](#nestedatt--actions--trigger_workflow_action_config--config--conditions))
+- `target_workflow` (String)
+
+<a id="nestedatt--actions--trigger_workflow_action_config--config--assign_steps"></a>
+### Nested Schema for `actions.trigger_workflow_action_config.config.target_workflow`
+
+Optional:
+
+- `step_id` (String)
+- `step_name` (String)
+- `user_ids` (List of Number)
+
+
+<a id="nestedatt--actions--trigger_workflow_action_config--config--conditions"></a>
+### Nested Schema for `actions.trigger_workflow_action_config.config.target_workflow`
+
+Required:
+
+- `comparison` (String) must be one of ["equals", "any_of", "not_empty", "is_empty"]
+- `schema` (String)
+- `source` (String)
+
+Optional:
+
+- `value` (Attributes) (see [below for nested schema](#nestedatt--actions--trigger_workflow_action_config--config--target_workflow--value))
+
+<a id="nestedatt--actions--trigger_workflow_action_config--config--target_workflow--value"></a>
+### Nested Schema for `actions.trigger_workflow_action_config.config.target_workflow.value`
+
+Optional:
+
+- `array_ofnumber` (List of Number)
+- `array_ofstr` (List of String)
+- `number` (Number)
+- `str` (String)
+
+
+
+
+
 
 <a id="nestedatt--triggers"></a>
 ### Nested Schema for `triggers`
@@ -193,505 +719,6 @@ Optional:
 ### Nested Schema for `trigger_conditions.value`
 
 Optional:
-
-- `array_ofnumber` (List of Number)
-- `array_ofstr` (List of String)
-- `number` (Number)
-- `str` (String)
-
-
-
-<a id="nestedatt--actions"></a>
-### Nested Schema for `actions`
-
-Read-Only:
-
-- `automation_action_config` (Attributes) (see [below for nested schema](#nestedatt--actions--automation_action_config))
-- `cart_checkout_action_config` (Attributes) Creates an order entity with prices from journey (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config))
-- `create_document_action_config` (Attributes) (see [below for nested schema](#nestedatt--actions--create_document_action_config))
-- `map_entity_action_config` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config))
-- `send_email_action_config` (Attributes) (see [below for nested schema](#nestedatt--actions--send_email_action_config))
-- `trigger_webhook_action_config` (Attributes) (see [below for nested schema](#nestedatt--actions--trigger_webhook_action_config))
-- `trigger_workflow_action_config` (Attributes) (see [below for nested schema](#nestedatt--actions--trigger_workflow_action_config))
-
-<a id="nestedatt--actions--automation_action_config"></a>
-### Nested Schema for `actions.automation_action_config`
-
-Read-Only:
-
-- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
-- `config` (Map of String)
-- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
-- `flow_action_id` (String)
-- `id` (String)
-- `name` (String)
-- `type` (String)
-
-
-<a id="nestedatt--actions--cart_checkout_action_config"></a>
-### Nested Schema for `actions.cart_checkout_action_config`
-
-Read-Only:
-
-- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
-- `config` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config))
-- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
-- `flow_action_id` (String)
-- `id` (String)
-- `name` (String)
-- `type` (String) must be one of ["cart-checkout"]
-
-<a id="nestedatt--actions--cart_checkout_action_config--config"></a>
-### Nested Schema for `actions.cart_checkout_action_config.config`
-
-Read-Only:
-
-- `linkback_relation_attribute` (String) Relation attribute on the main entity where the target entity will be linked. Set to false to disable linkback
-- `linkback_relation_tags` (List of String) Relation tags (labels) to include in main entity linkback relation attribute
-- `mapping_attributes` (Attributes List) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--mapping_attributes))
-- `mapping_config` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--mapping_config))
-- `relation_attributes` (Attributes List) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--relation_attributes))
-- `target_unique` (List of String) Unique key for target entity (see upsertEntity of Entity API)
-- `version` (String) Version of the config
-
-<a id="nestedatt--actions--cart_checkout_action_config--config--mapping_attributes"></a>
-### Nested Schema for `actions.cart_checkout_action_config.config.version`
-
-Read-Only:
-
-- `mapping_attribute` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute))
-- `mapping_attribute_v2` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2))
-
-<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute"></a>
-### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute`
-
-Read-Only:
-
-- `append_value_mapper` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute--append_value_mapper))
-- `copy_value_mapper` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute--copy_value_mapper))
-- `set_value_mapper` (Attributes) (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute--set_value_mapper))
-
-<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute--append_value_mapper"></a>
-### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute.set_value_mapper`
-
-Read-Only:
-
-- `mode` (String) must be one of ["copy_if_exists", "append_if_exists", "set_value"]
-- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
-- `source` (String) JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price
-- `target` (String) JSON like target path for the attribute. Eg. last_name
-- `target_unique` (List of String) Array of keys which should be used when checking for uniqueness. Eg: [country, city, postal_code]
-- `value_json` (String) To be provided only when mapping json objects into a target attribute. Eg array of addresses.
-
-
-<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute--copy_value_mapper"></a>
-### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute.set_value_mapper`
-
-Read-Only:
-
-- `mode` (String) must be one of ["copy_if_exists", "append_if_exists", "set_value"]
-- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
-- `source` (String) JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price
-- `target` (String) JSON like target path for the attribute. Eg. last_name
-
-
-<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute--set_value_mapper"></a>
-### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute.set_value_mapper`
-
-Read-Only:
-
-- `mode` (String) must be one of ["copy_if_exists", "append_if_exists", "set_value"]
-- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
-- `target` (String) JSON like target path for the attribute. Eg. last_name
-- `value` (String) Parsed as JSON.
-Any value to be set: string, number, string[], number[], JSON object, etc. It will override existing values, if any.
-
-
-
-<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2"></a>
-### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute_v2`
-
-Read-Only:
-
-- `operation` (Attributes) Mapping operation nodes are either primitive values or operation node objects (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--operation))
-- `target` (String) Target JSON path for the attribute to set
-
-<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--operation"></a>
-### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute_v2.target`
-
-Read-Only:
-
-- `any` (String) Parsed as JSON.
-- `operation_object_node` (Attributes) Mapping operation nodes are either primitive values or operation node objects (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--target--operation_object_node))
-
-<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--target--operation_object_node"></a>
-### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute_v2.target.operation_object_node`
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `append` (List of String) Append to array
-- `copy` (String) Copy JSONPath value from source entity context
-- `set` (String) Parsed as JSON.
-- `uniq` (Attributes) Unique array (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--target--operation_object_node--uniq))
-
-<a id="nestedatt--actions--cart_checkout_action_config--config--version--mapping_attribute_v2--target--operation_object_node--uniq"></a>
-### Nested Schema for `actions.cart_checkout_action_config.config.version.mapping_attribute_v2.target.operation_object_node.uniq`
-
-Read-Only:
-
-- `array_ofstr` (List of String)
-- `boolean` (Boolean)
-
-
-
-
-
-
-<a id="nestedatt--actions--cart_checkout_action_config--config--mapping_config"></a>
-### Nested Schema for `actions.cart_checkout_action_config.config.version`
-
-Read-Only:
-
-- `config_id` (String) Id of Entity Mapping Configuration to run for mapping.
-- `target_id` (String) Id of TargetConfig to run for mapping.
-- `version` (Number) Version of Entity Mapping Configuration to run for mapping.
-
-
-<a id="nestedatt--actions--cart_checkout_action_config--config--relation_attributes"></a>
-### Nested Schema for `actions.cart_checkout_action_config.config.version`
-
-Read-Only:
-
-- `mode` (String) must be one of ["append", "prepend", "set"]
-- `related_to` (Map of String)
-- `source_filter` (Attributes) A filter to identify which source entities to pick as relations from main entity (see [below for nested schema](#nestedatt--actions--cart_checkout_action_config--config--version--source_filter))
-- `target` (String) Target attribute to store the relation in
-- `target_tags` (List of String) Relation tags (labels) to set for the stored relations
-- `target_tags_include_source` (Boolean) Include all relation tags (labels) present on the main entity relation
-
-<a id="nestedatt--actions--cart_checkout_action_config--config--version--source_filter"></a>
-### Nested Schema for `actions.cart_checkout_action_config.config.version.source_filter`
-
-Read-Only:
-
-- `attribute` (String) Filter by a specific relation attribute on the main entity
-- `limit` (Number) Limit relations to maximum number (default, all matched relations)
-- `relation_tag` (String) Filter by relation tag (label) on the main entity
-- `schema` (String) Filter by specific schema
-- `self` (Boolean) Picks main entity as relation (overrides other filters)
-- `tag` (String) Filter by a specific tag on the related entity
-
-
-
-
-
-<a id="nestedatt--actions--create_document_action_config"></a>
-### Nested Schema for `actions.create_document_action_config`
-
-Read-Only:
-
-- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
-- `config` (Attributes) (see [below for nested schema](#nestedatt--actions--create_document_action_config--config))
-- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
-- `flow_action_id` (String)
-- `id` (String)
-- `name` (String)
-- `type` (String) must be one of ["create-document"]
-
-<a id="nestedatt--actions--create_document_action_config--config"></a>
-### Nested Schema for `actions.create_document_action_config.config`
-
-Read-Only:
-
-- `filename` (String)
-- `template_id` (String)
-
-
-
-<a id="nestedatt--actions--map_entity_action_config"></a>
-### Nested Schema for `actions.map_entity_action_config`
-
-Read-Only:
-
-- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
-- `config` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config))
-- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
-- `flow_action_id` (String)
-- `id` (String)
-- `name` (String)
-- `type` (String) must be one of ["map-entity"]
-
-<a id="nestedatt--actions--map_entity_action_config--config"></a>
-### Nested Schema for `actions.map_entity_action_config.config`
-
-Read-Only:
-
-- `linkback_relation_attribute` (String) Relation attribute on the main entity where the target entity will be linked. Set to false to disable linkback
-- `linkback_relation_tags` (List of String) Relation tags (labels) to include in main entity linkback relation attribute
-- `mapping_attributes` (Attributes List) Attribute mappings (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--mapping_attributes))
-- `mapping_config` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--mapping_config))
-- `relation_attributes` (Attributes List) Relation mappings (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--relation_attributes))
-- `target_schema` (String) Schema of target entity
-- `target_unique` (List of String) Unique key for target entity (see upsertEntity of Entity API)
-
-<a id="nestedatt--actions--map_entity_action_config--config--mapping_attributes"></a>
-### Nested Schema for `actions.map_entity_action_config.config.target_unique`
-
-Read-Only:
-
-- `mapping_attribute` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute))
-- `mapping_attribute_v2` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2))
-
-<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute"></a>
-### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute`
-
-Read-Only:
-
-- `append_value_mapper` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute--append_value_mapper))
-- `copy_value_mapper` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute--copy_value_mapper))
-- `set_value_mapper` (Attributes) (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute--set_value_mapper))
-
-<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute--append_value_mapper"></a>
-### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute.set_value_mapper`
-
-Read-Only:
-
-- `mode` (String) must be one of ["copy_if_exists", "append_if_exists", "set_value"]
-- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
-- `source` (String) JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price
-- `target` (String) JSON like target path for the attribute. Eg. last_name
-- `target_unique` (List of String) Array of keys which should be used when checking for uniqueness. Eg: [country, city, postal_code]
-- `value_json` (String) To be provided only when mapping json objects into a target attribute. Eg array of addresses.
-
-
-<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute--copy_value_mapper"></a>
-### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute.set_value_mapper`
-
-Read-Only:
-
-- `mode` (String) must be one of ["copy_if_exists", "append_if_exists", "set_value"]
-- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
-- `source` (String) JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price
-- `target` (String) JSON like target path for the attribute. Eg. last_name
-
-
-<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute--set_value_mapper"></a>
-### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute.set_value_mapper`
-
-Read-Only:
-
-- `mode` (String) must be one of ["copy_if_exists", "append_if_exists", "set_value"]
-- copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
-- `target` (String) JSON like target path for the attribute. Eg. last_name
-- `value` (String) Parsed as JSON.
-Any value to be set: string, number, string[], number[], JSON object, etc. It will override existing values, if any.
-
-
-
-<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2"></a>
-### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute_v2`
-
-Read-Only:
-
-- `operation` (Attributes) Mapping operation nodes are either primitive values or operation node objects (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--operation))
-- `target` (String) Target JSON path for the attribute to set
-
-<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--operation"></a>
-### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute_v2.target`
-
-Read-Only:
-
-- `any` (String) Parsed as JSON.
-- `operation_object_node` (Attributes) Mapping operation nodes are either primitive values or operation node objects (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--target--operation_object_node))
-
-<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--target--operation_object_node"></a>
-### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute_v2.target.operation_object_node`
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `append` (List of String) Append to array
-- `copy` (String) Copy JSONPath value from source entity context
-- `set` (String) Parsed as JSON.
-- `uniq` (Attributes) Unique array (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--target--operation_object_node--uniq))
-
-<a id="nestedatt--actions--map_entity_action_config--config--target_unique--mapping_attribute_v2--target--operation_object_node--uniq"></a>
-### Nested Schema for `actions.map_entity_action_config.config.target_unique.mapping_attribute_v2.target.operation_object_node.uniq`
-
-Read-Only:
-
-- `array_ofstr` (List of String)
-- `boolean` (Boolean)
-
-
-
-
-
-
-<a id="nestedatt--actions--map_entity_action_config--config--mapping_config"></a>
-### Nested Schema for `actions.map_entity_action_config.config.target_unique`
-
-Read-Only:
-
-- `config_id` (String) Id of Entity Mapping Configuration to run for mapping.
-- `target_id` (String) Id of TargetConfig to run for mapping.
-- `version` (Number) Version of Entity Mapping Configuration to run for mapping.
-
-
-<a id="nestedatt--actions--map_entity_action_config--config--relation_attributes"></a>
-### Nested Schema for `actions.map_entity_action_config.config.target_unique`
-
-Read-Only:
-
-- `mode` (String) must be one of ["append", "prepend", "set"]
-- `related_to` (Map of String)
-- `source_filter` (Attributes) A filter to identify which source entities to pick as relations from main entity (see [below for nested schema](#nestedatt--actions--map_entity_action_config--config--target_unique--source_filter))
-- `target` (String) Target attribute to store the relation in
-- `target_tags` (List of String) Relation tags (labels) to set for the stored relations
-- `target_tags_include_source` (Boolean) Include all relation tags (labels) present on the main entity relation
-
-<a id="nestedatt--actions--map_entity_action_config--config--target_unique--source_filter"></a>
-### Nested Schema for `actions.map_entity_action_config.config.target_unique.source_filter`
-
-Read-Only:
-
-- `attribute` (String) Filter by a specific relation attribute on the main entity
-- `limit` (Number) Limit relations to maximum number (default, all matched relations)
-- `relation_tag` (String) Filter by relation tag (label) on the main entity
-- `schema` (String) Filter by specific schema
-- `self` (Boolean) Picks main entity as relation (overrides other filters)
-- `tag` (String) Filter by a specific tag on the related entity
-
-
-
-
-
-<a id="nestedatt--actions--send_email_action_config"></a>
-### Nested Schema for `actions.send_email_action_config`
-
-Read-Only:
-
-- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
-- `config` (Attributes) (see [below for nested schema](#nestedatt--actions--send_email_action_config--config))
-- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
-- `flow_action_id` (String)
-- `id` (String)
-- `name` (String)
-- `type` (String) must be one of ["send-email"]
-
-<a id="nestedatt--actions--send_email_action_config--config"></a>
-### Nested Schema for `actions.send_email_action_config.config`
-
-Read-Only:
-
-- `attachments` (Attributes List) Include extra file attachments in sent email.
-
-Attachments in email template will be sent regardless of this configuration. (see [below for nested schema](#nestedatt--actions--send_email_action_config--config--attachments))
-- `email_template_id` (String)
-- `language_code` (String) must be one of ["de", "en"]
-
-<a id="nestedatt--actions--send_email_action_config--config--attachments"></a>
-### Nested Schema for `actions.send_email_action_config.config.language_code`
-
-Read-Only:
-
-- `source_filter` (Attributes) Specify filters to match file entities related to main entity (see [below for nested schema](#nestedatt--actions--send_email_action_config--config--language_code--source_filter))
-
-<a id="nestedatt--actions--send_email_action_config--config--language_code--source_filter"></a>
-### Nested Schema for `actions.send_email_action_config.config.language_code.source_filter`
-
-Read-Only:
-
-- `attribute` (String) Filter by a specific relation attribute on the main entity
-- `document_type` (String) must be one of ["document", "text", "image", "video", "audio", "spreadsheet", "presentation", "font", "archive", "application", "unknown"]
-Filter by a specific document type (e.g. document)
-- `filename_regex` (String) Match by filename. Regex syntax supported
-- `limit` (Number) Limit files to maximum number (default, all matched file relations)
-- `relation_tag` (String) Filter by relation tag (label) on the main entity
-- `self` (Boolean) Picks main entity as file (only works if source entity is a file)
-- `tag` (String) Filter by a specific tag on the related file entity
-
-
-
-
-
-<a id="nestedatt--actions--trigger_webhook_action_config"></a>
-### Nested Schema for `actions.trigger_webhook_action_config`
-
-Read-Only:
-
-- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
-- `config` (Attributes) (see [below for nested schema](#nestedatt--actions--trigger_webhook_action_config--config))
-- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
-- `flow_action_id` (String)
-- `id` (String)
-- `name` (String)
-- `type` (String) must be one of ["trigger-webhook"]
-
-<a id="nestedatt--actions--trigger_webhook_action_config--config"></a>
-### Nested Schema for `actions.trigger_webhook_action_config.config`
-
-Read-Only:
-
-- `entity_sources` (List of String)
-- `target_webhook_id` (String)
-
-
-
-<a id="nestedatt--actions--trigger_workflow_action_config"></a>
-### Nested Schema for `actions.trigger_workflow_action_config`
-
-Read-Only:
-
-- `allow_failure` (Boolean) Whether to stop execution in a failed state if this action fails
-- `config` (Attributes) (see [below for nested schema](#nestedatt--actions--trigger_workflow_action_config--config))
-- `created_automatically` (Boolean) Flag indicating whether the action was created automatically or manually
-- `flow_action_id` (String)
-- `id` (String)
-- `name` (String)
-- `type` (String) must be one of ["trigger-workflow"]
-
-<a id="nestedatt--actions--trigger_workflow_action_config--config"></a>
-### Nested Schema for `actions.trigger_workflow_action_config.config`
-
-Read-Only:
-
-- `assign_steps` (Attributes List) (see [below for nested schema](#nestedatt--actions--trigger_workflow_action_config--config--assign_steps))
-- `assignees` (List of String)
-- `conditions` (Attributes List) (see [below for nested schema](#nestedatt--actions--trigger_workflow_action_config--config--conditions))
-- `target_workflow` (String)
-
-<a id="nestedatt--actions--trigger_workflow_action_config--config--assign_steps"></a>
-### Nested Schema for `actions.trigger_workflow_action_config.config.target_workflow`
-
-Read-Only:
-
-- `step_id` (String)
-- `step_name` (String)
-- `user_ids` (List of Number)
-
-
-<a id="nestedatt--actions--trigger_workflow_action_config--config--conditions"></a>
-### Nested Schema for `actions.trigger_workflow_action_config.config.target_workflow`
-
-Read-Only:
-
-- `comparison` (String) must be one of ["equals", "any_of", "not_empty", "is_empty"]
-- `schema` (String)
-- `source` (String)
-- `value` (Attributes) (see [below for nested schema](#nestedatt--actions--trigger_workflow_action_config--config--target_workflow--value))
-
-<a id="nestedatt--actions--trigger_workflow_action_config--config--target_workflow--value"></a>
-### Nested Schema for `actions.trigger_workflow_action_config.config.target_workflow.value`
-
-Read-Only:
 
 - `array_ofnumber` (List of Number)
 - `array_ofstr` (List of String)

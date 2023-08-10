@@ -11,6 +11,1118 @@ import (
 )
 
 func (r *FlowResourceModel) ToCreateSDKType() *shared.AutomationFlowInput {
+	var actions []shared.AnyActionConfig = nil
+	for _, actionsItem := range r.Actions {
+		if actionsItem.MapEntityActionConfig != nil {
+			allowFailure := new(bool)
+			if !actionsItem.MapEntityActionConfig.AllowFailure.IsUnknown() && !actionsItem.MapEntityActionConfig.AllowFailure.IsNull() {
+				*allowFailure = actionsItem.MapEntityActionConfig.AllowFailure.ValueBool()
+			} else {
+				allowFailure = nil
+			}
+			var config *shared.MapEntityConfig
+			if actionsItem.MapEntityActionConfig.Config != nil {
+				linkbackRelationAttribute := new(string)
+				if !actionsItem.MapEntityActionConfig.Config.LinkbackRelationAttribute.IsUnknown() && !actionsItem.MapEntityActionConfig.Config.LinkbackRelationAttribute.IsNull() {
+					*linkbackRelationAttribute = actionsItem.MapEntityActionConfig.Config.LinkbackRelationAttribute.ValueString()
+				} else {
+					linkbackRelationAttribute = nil
+				}
+				var linkbackRelationTags []string = nil
+				for _, linkbackRelationTagsItem := range actionsItem.MapEntityActionConfig.Config.LinkbackRelationTags {
+					linkbackRelationTags = append(linkbackRelationTags, linkbackRelationTagsItem.ValueString())
+				}
+				var mappingAttributes []shared.MapEntityConfigMappingAttributes = nil
+				for _, mappingAttributesItem := range actionsItem.MapEntityActionConfig.Config.MappingAttributes {
+					if mappingAttributesItem.MappingAttributeV2 != nil {
+						var operation shared.OperationNode
+						var operationObjectNode *shared.OperationObjectNode
+						if mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode != nil {
+							var append1 []interface{} = nil
+							for _, appendItem := range mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Append {
+								var appendTmp interface{}
+								_ = json.Unmarshal([]byte(appendItem.ValueString()), &appendTmp)
+								append1 = append(append1, appendTmp)
+							}
+							copy := new(string)
+							if !mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Copy.IsUnknown() && !mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Copy.IsNull() {
+								*copy = mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Copy.ValueString()
+							} else {
+								copy = nil
+							}
+							var set interface{}
+							if !mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Set.IsUnknown() && !mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Set.IsNull() {
+								_ = json.Unmarshal([]byte(mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Set.ValueString()), &set)
+							}
+							var uniq *shared.OperationObjectNodeUniq
+							if mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq != nil {
+								boolean := new(bool)
+								if !mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean.IsUnknown() && !mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean.IsNull() {
+									*boolean = mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean.ValueBool()
+								} else {
+									boolean = nil
+								}
+								if boolean != nil {
+									uniq = &shared.OperationObjectNodeUniq{
+										Boolean: boolean,
+									}
+								}
+								var arrayOfstr []string = nil
+								for _, arrayOfstrItem := range mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.Uniq.ArrayOfstr {
+									arrayOfstr = append(arrayOfstr, arrayOfstrItem.ValueString())
+								}
+								if arrayOfstr != nil {
+									uniq = &shared.OperationObjectNodeUniq{
+										ArrayOfstr: arrayOfstr,
+									}
+								}
+							}
+							var additionalProperties interface{}
+							if !mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties.IsUnknown() && !mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties.IsNull() {
+								_ = json.Unmarshal([]byte(mappingAttributesItem.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties.ValueString()), &additionalProperties)
+							}
+							operationObjectNode = &shared.OperationObjectNode{
+								Append:               append1,
+								Copy:                 copy,
+								Set:                  set,
+								Uniq:                 uniq,
+								AdditionalProperties: additionalProperties,
+							}
+						}
+						if operationObjectNode != nil {
+							operation = shared.OperationNode{
+								OperationObjectNode: operationObjectNode,
+							}
+						}
+						var any interface{}
+						if !mappingAttributesItem.MappingAttributeV2.Operation.Any.IsUnknown() && !mappingAttributesItem.MappingAttributeV2.Operation.Any.IsNull() {
+							_ = json.Unmarshal([]byte(mappingAttributesItem.MappingAttributeV2.Operation.Any.ValueString()), &any)
+						}
+						if any != nil {
+							operation = shared.OperationNode{
+								Any: any,
+							}
+						}
+						target := new(string)
+						if !mappingAttributesItem.MappingAttributeV2.Target.IsUnknown() && !mappingAttributesItem.MappingAttributeV2.Target.IsNull() {
+							*target = mappingAttributesItem.MappingAttributeV2.Target.ValueString()
+						} else {
+							target = nil
+						}
+						mappingAttributeV2 := shared.MappingAttributeV2{
+							Operation: operation,
+							Target:    target,
+						}
+						mappingAttributes = append(mappingAttributes, shared.MapEntityConfigMappingAttributes{
+							MappingAttributeV2: &mappingAttributeV2,
+						})
+					}
+					if mappingAttributesItem.MappingAttribute != nil {
+						var mappingAttribute shared.MappingAttribute
+						var setValueMapper *shared.SetValueMapper
+						if mappingAttributesItem.MappingAttribute.SetValueMapper != nil {
+							mode := shared.MappingAttributeMode(mappingAttributesItem.MappingAttribute.SetValueMapper.Mode.ValueString())
+							target1 := mappingAttributesItem.MappingAttribute.SetValueMapper.Target.ValueString()
+							var value interface{}
+							_ = json.Unmarshal([]byte(mappingAttributesItem.MappingAttribute.SetValueMapper.Value.ValueString()), &value)
+							setValueMapper = &shared.SetValueMapper{
+								Mode:   mode,
+								Target: target1,
+								Value:  value,
+							}
+						}
+						if setValueMapper != nil {
+							mappingAttribute = shared.MappingAttribute{
+								SetValueMapper: setValueMapper,
+							}
+						}
+						var copyValueMapper *shared.CopyValueMapper
+						if mappingAttributesItem.MappingAttribute.CopyValueMapper != nil {
+							mode1 := shared.MappingAttributeMode(mappingAttributesItem.MappingAttribute.CopyValueMapper.Mode.ValueString())
+							source := mappingAttributesItem.MappingAttribute.CopyValueMapper.Source.ValueString()
+							target2 := mappingAttributesItem.MappingAttribute.CopyValueMapper.Target.ValueString()
+							copyValueMapper = &shared.CopyValueMapper{
+								Mode:   mode1,
+								Source: source,
+								Target: target2,
+							}
+						}
+						if copyValueMapper != nil {
+							mappingAttribute = shared.MappingAttribute{
+								CopyValueMapper: copyValueMapper,
+							}
+						}
+						var appendValueMapper *shared.AppendValueMapper
+						if mappingAttributesItem.MappingAttribute.AppendValueMapper != nil {
+							mode2 := shared.MappingAttributeMode(mappingAttributesItem.MappingAttribute.AppendValueMapper.Mode.ValueString())
+							source1 := new(string)
+							if !mappingAttributesItem.MappingAttribute.AppendValueMapper.Source.IsUnknown() && !mappingAttributesItem.MappingAttribute.AppendValueMapper.Source.IsNull() {
+								*source1 = mappingAttributesItem.MappingAttribute.AppendValueMapper.Source.ValueString()
+							} else {
+								source1 = nil
+							}
+							target3 := mappingAttributesItem.MappingAttribute.AppendValueMapper.Target.ValueString()
+							var targetUnique []string = nil
+							for _, targetUniqueItem := range mappingAttributesItem.MappingAttribute.AppendValueMapper.TargetUnique {
+								targetUnique = append(targetUnique, targetUniqueItem.ValueString())
+							}
+							valueJSON := mappingAttributesItem.MappingAttribute.AppendValueMapper.ValueJSON.ValueString()
+							appendValueMapper = &shared.AppendValueMapper{
+								Mode:         mode2,
+								Source:       source1,
+								Target:       target3,
+								TargetUnique: targetUnique,
+								ValueJSON:    valueJSON,
+							}
+						}
+						if appendValueMapper != nil {
+							mappingAttribute = shared.MappingAttribute{
+								AppendValueMapper: appendValueMapper,
+							}
+						}
+						mappingAttributes = append(mappingAttributes, shared.MapEntityConfigMappingAttributes{
+							MappingAttribute: &mappingAttribute,
+						})
+					}
+				}
+				var mappingConfig *shared.MappingConfigRef
+				if actionsItem.MapEntityActionConfig.Config.MappingConfig != nil {
+					configID := actionsItem.MapEntityActionConfig.Config.MappingConfig.ConfigID.ValueString()
+					targetID := actionsItem.MapEntityActionConfig.Config.MappingConfig.TargetID.ValueString()
+					version := new(float64)
+					if !actionsItem.MapEntityActionConfig.Config.MappingConfig.Version.IsUnknown() && !actionsItem.MapEntityActionConfig.Config.MappingConfig.Version.IsNull() {
+						*version, _ = actionsItem.MapEntityActionConfig.Config.MappingConfig.Version.ValueBigFloat().Float64()
+					} else {
+						version = nil
+					}
+					mappingConfig = &shared.MappingConfigRef{
+						ConfigID: configID,
+						TargetID: targetID,
+						Version:  version,
+					}
+				}
+				var relationAttributes []shared.RelationAttribute = nil
+				for _, relationAttributesItem := range actionsItem.MapEntityActionConfig.Config.RelationAttributes {
+					mode3 := shared.RelationAttributeMode(relationAttributesItem.Mode.ValueString())
+					relatedTo := make(map[string]interface{})
+					// Warning. This is a map, but the source tf var is not a map. This might indicate a bug.
+					var sourceFilter *shared.RelationAttributeSourceFilter
+					if relationAttributesItem.SourceFilter != nil {
+						attribute := new(string)
+						if !relationAttributesItem.SourceFilter.Attribute.IsUnknown() && !relationAttributesItem.SourceFilter.Attribute.IsNull() {
+							*attribute = relationAttributesItem.SourceFilter.Attribute.ValueString()
+						} else {
+							attribute = nil
+						}
+						limit := new(int64)
+						if !relationAttributesItem.SourceFilter.Limit.IsUnknown() && !relationAttributesItem.SourceFilter.Limit.IsNull() {
+							*limit = relationAttributesItem.SourceFilter.Limit.ValueInt64()
+						} else {
+							limit = nil
+						}
+						relationTag := new(string)
+						if !relationAttributesItem.SourceFilter.RelationTag.IsUnknown() && !relationAttributesItem.SourceFilter.RelationTag.IsNull() {
+							*relationTag = relationAttributesItem.SourceFilter.RelationTag.ValueString()
+						} else {
+							relationTag = nil
+						}
+						schema := new(string)
+						if !relationAttributesItem.SourceFilter.Schema.IsUnknown() && !relationAttributesItem.SourceFilter.Schema.IsNull() {
+							*schema = relationAttributesItem.SourceFilter.Schema.ValueString()
+						} else {
+							schema = nil
+						}
+						self := new(bool)
+						if !relationAttributesItem.SourceFilter.Self.IsUnknown() && !relationAttributesItem.SourceFilter.Self.IsNull() {
+							*self = relationAttributesItem.SourceFilter.Self.ValueBool()
+						} else {
+							self = nil
+						}
+						tag := new(string)
+						if !relationAttributesItem.SourceFilter.Tag.IsUnknown() && !relationAttributesItem.SourceFilter.Tag.IsNull() {
+							*tag = relationAttributesItem.SourceFilter.Tag.ValueString()
+						} else {
+							tag = nil
+						}
+						sourceFilter = &shared.RelationAttributeSourceFilter{
+							Attribute:   attribute,
+							Limit:       limit,
+							RelationTag: relationTag,
+							Schema:      schema,
+							Self:        self,
+							Tag:         tag,
+						}
+					}
+					target4 := relationAttributesItem.Target.ValueString()
+					var targetTags []string = nil
+					for _, targetTagsItem := range relationAttributesItem.TargetTags {
+						targetTags = append(targetTags, targetTagsItem.ValueString())
+					}
+					targetTagsIncludeSource := new(bool)
+					if !relationAttributesItem.TargetTagsIncludeSource.IsUnknown() && !relationAttributesItem.TargetTagsIncludeSource.IsNull() {
+						*targetTagsIncludeSource = relationAttributesItem.TargetTagsIncludeSource.ValueBool()
+					} else {
+						targetTagsIncludeSource = nil
+					}
+					relationAttributes = append(relationAttributes, shared.RelationAttribute{
+						Mode:                    mode3,
+						RelatedTo:               relatedTo,
+						SourceFilter:            sourceFilter,
+						Target:                  target4,
+						TargetTags:              targetTags,
+						TargetTagsIncludeSource: targetTagsIncludeSource,
+					})
+				}
+				targetSchema := actionsItem.MapEntityActionConfig.Config.TargetSchema.ValueString()
+				var targetUnique1 []string = nil
+				for _, targetUniqueItem1 := range actionsItem.MapEntityActionConfig.Config.TargetUnique {
+					targetUnique1 = append(targetUnique1, targetUniqueItem1.ValueString())
+				}
+				config = &shared.MapEntityConfig{
+					LinkbackRelationAttribute: linkbackRelationAttribute,
+					LinkbackRelationTags:      linkbackRelationTags,
+					MappingAttributes:         mappingAttributes,
+					MappingConfig:             mappingConfig,
+					RelationAttributes:        relationAttributes,
+					TargetSchema:              targetSchema,
+					TargetUnique:              targetUnique1,
+				}
+			}
+			createdAutomatically := new(bool)
+			if !actionsItem.MapEntityActionConfig.CreatedAutomatically.IsUnknown() && !actionsItem.MapEntityActionConfig.CreatedAutomatically.IsNull() {
+				*createdAutomatically = actionsItem.MapEntityActionConfig.CreatedAutomatically.ValueBool()
+			} else {
+				createdAutomatically = nil
+			}
+			flowActionID := new(string)
+			if !actionsItem.MapEntityActionConfig.FlowActionID.IsUnknown() && !actionsItem.MapEntityActionConfig.FlowActionID.IsNull() {
+				*flowActionID = actionsItem.MapEntityActionConfig.FlowActionID.ValueString()
+			} else {
+				flowActionID = nil
+			}
+			id := new(string)
+			if !actionsItem.MapEntityActionConfig.ID.IsUnknown() && !actionsItem.MapEntityActionConfig.ID.IsNull() {
+				*id = actionsItem.MapEntityActionConfig.ID.ValueString()
+			} else {
+				id = nil
+			}
+			name := new(string)
+			if !actionsItem.MapEntityActionConfig.Name.IsUnknown() && !actionsItem.MapEntityActionConfig.Name.IsNull() {
+				*name = actionsItem.MapEntityActionConfig.Name.ValueString()
+			} else {
+				name = nil
+			}
+			typeVar := new(shared.MapEntityActionConfigType)
+			if !actionsItem.MapEntityActionConfig.Type.IsUnknown() && !actionsItem.MapEntityActionConfig.Type.IsNull() {
+				*typeVar = shared.MapEntityActionConfigType(actionsItem.MapEntityActionConfig.Type.ValueString())
+			} else {
+				typeVar = nil
+			}
+			mapEntityActionConfig := shared.MapEntityActionConfig{
+				AllowFailure:         allowFailure,
+				Config:               config,
+				CreatedAutomatically: createdAutomatically,
+				FlowActionID:         flowActionID,
+				ID:                   id,
+				Name:                 name,
+				Type:                 typeVar,
+			}
+			actions = append(actions, shared.AnyActionConfig{
+				MapEntityActionConfig: &mapEntityActionConfig,
+			})
+		}
+		if actionsItem.TriggerWorkflowActionConfig != nil {
+			allowFailure1 := new(bool)
+			if !actionsItem.TriggerWorkflowActionConfig.AllowFailure.IsUnknown() && !actionsItem.TriggerWorkflowActionConfig.AllowFailure.IsNull() {
+				*allowFailure1 = actionsItem.TriggerWorkflowActionConfig.AllowFailure.ValueBool()
+			} else {
+				allowFailure1 = nil
+			}
+			var config1 *shared.TriggerWorkflowConfig
+			if actionsItem.TriggerWorkflowActionConfig.Config != nil {
+				var assignSteps []shared.AssignUsersToStep = nil
+				for _, assignStepsItem := range actionsItem.TriggerWorkflowActionConfig.Config.AssignSteps {
+					stepID := new(string)
+					if !assignStepsItem.StepID.IsUnknown() && !assignStepsItem.StepID.IsNull() {
+						*stepID = assignStepsItem.StepID.ValueString()
+					} else {
+						stepID = nil
+					}
+					stepName := new(string)
+					if !assignStepsItem.StepName.IsUnknown() && !assignStepsItem.StepName.IsNull() {
+						*stepName = assignStepsItem.StepName.ValueString()
+					} else {
+						stepName = nil
+					}
+					var userIds []float64 = nil
+					for _, userIdsItem := range assignStepsItem.UserIds {
+						userIdsTmp, _ := userIdsItem.ValueBigFloat().Float64()
+						userIds = append(userIds, userIdsTmp)
+					}
+					assignSteps = append(assignSteps, shared.AssignUsersToStep{
+						StepID:   stepID,
+						StepName: stepName,
+						UserIds:  userIds,
+					})
+				}
+				var assignees []string = nil
+				for _, assigneesItem := range actionsItem.TriggerWorkflowActionConfig.Config.Assignees {
+					assignees = append(assignees, assigneesItem.ValueString())
+				}
+				var conditions []shared.TriggerWorkflowCondition = nil
+				for _, conditionsItem := range actionsItem.TriggerWorkflowActionConfig.Config.Conditions {
+					comparison := shared.Comparison(conditionsItem.Comparison.ValueString())
+					schema1 := conditionsItem.Schema.ValueString()
+					source2 := conditionsItem.Source.ValueString()
+					var value1 *shared.TriggerWorkflowConditionValue
+					if conditionsItem.Value != nil {
+						str := new(string)
+						if !conditionsItem.Value.Str.IsUnknown() && !conditionsItem.Value.Str.IsNull() {
+							*str = conditionsItem.Value.Str.ValueString()
+						} else {
+							str = nil
+						}
+						if str != nil {
+							value1 = &shared.TriggerWorkflowConditionValue{
+								Str: str,
+							}
+						}
+						number := new(float64)
+						if !conditionsItem.Value.Number.IsUnknown() && !conditionsItem.Value.Number.IsNull() {
+							*number, _ = conditionsItem.Value.Number.ValueBigFloat().Float64()
+						} else {
+							number = nil
+						}
+						if number != nil {
+							value1 = &shared.TriggerWorkflowConditionValue{
+								Number: number,
+							}
+						}
+						var arrayOfstr1 []string = nil
+						for _, arrayOfstrItem1 := range conditionsItem.Value.ArrayOfstr {
+							arrayOfstr1 = append(arrayOfstr1, arrayOfstrItem1.ValueString())
+						}
+						if arrayOfstr1 != nil {
+							value1 = &shared.TriggerWorkflowConditionValue{
+								ArrayOfstr: arrayOfstr1,
+							}
+						}
+						var arrayOfnumber []float64 = nil
+						for _, arrayOfnumberItem := range conditionsItem.Value.ArrayOfnumber {
+							arrayOfnumberTmp, _ := arrayOfnumberItem.ValueBigFloat().Float64()
+							arrayOfnumber = append(arrayOfnumber, arrayOfnumberTmp)
+						}
+						if arrayOfnumber != nil {
+							value1 = &shared.TriggerWorkflowConditionValue{
+								ArrayOfnumber: arrayOfnumber,
+							}
+						}
+					}
+					conditions = append(conditions, shared.TriggerWorkflowCondition{
+						Comparison: comparison,
+						Schema:     schema1,
+						Source:     source2,
+						Value:      value1,
+					})
+				}
+				targetWorkflow := new(string)
+				if !actionsItem.TriggerWorkflowActionConfig.Config.TargetWorkflow.IsUnknown() && !actionsItem.TriggerWorkflowActionConfig.Config.TargetWorkflow.IsNull() {
+					*targetWorkflow = actionsItem.TriggerWorkflowActionConfig.Config.TargetWorkflow.ValueString()
+				} else {
+					targetWorkflow = nil
+				}
+				config1 = &shared.TriggerWorkflowConfig{
+					AssignSteps:    assignSteps,
+					Assignees:      assignees,
+					Conditions:     conditions,
+					TargetWorkflow: targetWorkflow,
+				}
+			}
+			createdAutomatically1 := new(bool)
+			if !actionsItem.TriggerWorkflowActionConfig.CreatedAutomatically.IsUnknown() && !actionsItem.TriggerWorkflowActionConfig.CreatedAutomatically.IsNull() {
+				*createdAutomatically1 = actionsItem.TriggerWorkflowActionConfig.CreatedAutomatically.ValueBool()
+			} else {
+				createdAutomatically1 = nil
+			}
+			flowActionId1 := new(string)
+			if !actionsItem.TriggerWorkflowActionConfig.FlowActionID.IsUnknown() && !actionsItem.TriggerWorkflowActionConfig.FlowActionID.IsNull() {
+				*flowActionId1 = actionsItem.TriggerWorkflowActionConfig.FlowActionID.ValueString()
+			} else {
+				flowActionId1 = nil
+			}
+			id1 := new(string)
+			if !actionsItem.TriggerWorkflowActionConfig.ID.IsUnknown() && !actionsItem.TriggerWorkflowActionConfig.ID.IsNull() {
+				*id1 = actionsItem.TriggerWorkflowActionConfig.ID.ValueString()
+			} else {
+				id1 = nil
+			}
+			name1 := new(string)
+			if !actionsItem.TriggerWorkflowActionConfig.Name.IsUnknown() && !actionsItem.TriggerWorkflowActionConfig.Name.IsNull() {
+				*name1 = actionsItem.TriggerWorkflowActionConfig.Name.ValueString()
+			} else {
+				name1 = nil
+			}
+			typeVar1 := new(shared.TriggerWorkflowActionConfigType)
+			if !actionsItem.TriggerWorkflowActionConfig.Type.IsUnknown() && !actionsItem.TriggerWorkflowActionConfig.Type.IsNull() {
+				*typeVar1 = shared.TriggerWorkflowActionConfigType(actionsItem.TriggerWorkflowActionConfig.Type.ValueString())
+			} else {
+				typeVar1 = nil
+			}
+			triggerWorkflowActionConfig := shared.TriggerWorkflowActionConfig{
+				AllowFailure:         allowFailure1,
+				Config:               config1,
+				CreatedAutomatically: createdAutomatically1,
+				FlowActionID:         flowActionId1,
+				ID:                   id1,
+				Name:                 name1,
+				Type:                 typeVar1,
+			}
+			actions = append(actions, shared.AnyActionConfig{
+				TriggerWorkflowActionConfig: &triggerWorkflowActionConfig,
+			})
+		}
+		if actionsItem.TriggerWebhookActionConfig != nil {
+			allowFailure2 := new(bool)
+			if !actionsItem.TriggerWebhookActionConfig.AllowFailure.IsUnknown() && !actionsItem.TriggerWebhookActionConfig.AllowFailure.IsNull() {
+				*allowFailure2 = actionsItem.TriggerWebhookActionConfig.AllowFailure.ValueBool()
+			} else {
+				allowFailure2 = nil
+			}
+			var config2 *shared.TriggerWebhookConfig
+			if actionsItem.TriggerWebhookActionConfig.Config != nil {
+				var entitySources []string = nil
+				for _, entitySourcesItem := range actionsItem.TriggerWebhookActionConfig.Config.EntitySources {
+					entitySources = append(entitySources, entitySourcesItem.ValueString())
+				}
+				targetWebhookID := new(string)
+				if !actionsItem.TriggerWebhookActionConfig.Config.TargetWebhookID.IsUnknown() && !actionsItem.TriggerWebhookActionConfig.Config.TargetWebhookID.IsNull() {
+					*targetWebhookID = actionsItem.TriggerWebhookActionConfig.Config.TargetWebhookID.ValueString()
+				} else {
+					targetWebhookID = nil
+				}
+				config2 = &shared.TriggerWebhookConfig{
+					EntitySources:   entitySources,
+					TargetWebhookID: targetWebhookID,
+				}
+			}
+			createdAutomatically2 := new(bool)
+			if !actionsItem.TriggerWebhookActionConfig.CreatedAutomatically.IsUnknown() && !actionsItem.TriggerWebhookActionConfig.CreatedAutomatically.IsNull() {
+				*createdAutomatically2 = actionsItem.TriggerWebhookActionConfig.CreatedAutomatically.ValueBool()
+			} else {
+				createdAutomatically2 = nil
+			}
+			flowActionId2 := new(string)
+			if !actionsItem.TriggerWebhookActionConfig.FlowActionID.IsUnknown() && !actionsItem.TriggerWebhookActionConfig.FlowActionID.IsNull() {
+				*flowActionId2 = actionsItem.TriggerWebhookActionConfig.FlowActionID.ValueString()
+			} else {
+				flowActionId2 = nil
+			}
+			id2 := new(string)
+			if !actionsItem.TriggerWebhookActionConfig.ID.IsUnknown() && !actionsItem.TriggerWebhookActionConfig.ID.IsNull() {
+				*id2 = actionsItem.TriggerWebhookActionConfig.ID.ValueString()
+			} else {
+				id2 = nil
+			}
+			name2 := new(string)
+			if !actionsItem.TriggerWebhookActionConfig.Name.IsUnknown() && !actionsItem.TriggerWebhookActionConfig.Name.IsNull() {
+				*name2 = actionsItem.TriggerWebhookActionConfig.Name.ValueString()
+			} else {
+				name2 = nil
+			}
+			typeVar2 := new(shared.TriggerWebhookActionConfigType)
+			if !actionsItem.TriggerWebhookActionConfig.Type.IsUnknown() && !actionsItem.TriggerWebhookActionConfig.Type.IsNull() {
+				*typeVar2 = shared.TriggerWebhookActionConfigType(actionsItem.TriggerWebhookActionConfig.Type.ValueString())
+			} else {
+				typeVar2 = nil
+			}
+			triggerWebhookActionConfig := shared.TriggerWebhookActionConfig{
+				AllowFailure:         allowFailure2,
+				Config:               config2,
+				CreatedAutomatically: createdAutomatically2,
+				FlowActionID:         flowActionId2,
+				ID:                   id2,
+				Name:                 name2,
+				Type:                 typeVar2,
+			}
+			actions = append(actions, shared.AnyActionConfig{
+				TriggerWebhookActionConfig: &triggerWebhookActionConfig,
+			})
+		}
+		if actionsItem.CreateDocumentActionConfig != nil {
+			allowFailure3 := new(bool)
+			if !actionsItem.CreateDocumentActionConfig.AllowFailure.IsUnknown() && !actionsItem.CreateDocumentActionConfig.AllowFailure.IsNull() {
+				*allowFailure3 = actionsItem.CreateDocumentActionConfig.AllowFailure.ValueBool()
+			} else {
+				allowFailure3 = nil
+			}
+			var config3 *shared.CreateDocumentConfig
+			if actionsItem.CreateDocumentActionConfig.Config != nil {
+				filename := new(string)
+				if !actionsItem.CreateDocumentActionConfig.Config.Filename.IsUnknown() && !actionsItem.CreateDocumentActionConfig.Config.Filename.IsNull() {
+					*filename = actionsItem.CreateDocumentActionConfig.Config.Filename.ValueString()
+				} else {
+					filename = nil
+				}
+				templateID := new(string)
+				if !actionsItem.CreateDocumentActionConfig.Config.TemplateID.IsUnknown() && !actionsItem.CreateDocumentActionConfig.Config.TemplateID.IsNull() {
+					*templateID = actionsItem.CreateDocumentActionConfig.Config.TemplateID.ValueString()
+				} else {
+					templateID = nil
+				}
+				config3 = &shared.CreateDocumentConfig{
+					Filename:   filename,
+					TemplateID: templateID,
+				}
+			}
+			createdAutomatically3 := new(bool)
+			if !actionsItem.CreateDocumentActionConfig.CreatedAutomatically.IsUnknown() && !actionsItem.CreateDocumentActionConfig.CreatedAutomatically.IsNull() {
+				*createdAutomatically3 = actionsItem.CreateDocumentActionConfig.CreatedAutomatically.ValueBool()
+			} else {
+				createdAutomatically3 = nil
+			}
+			flowActionId3 := new(string)
+			if !actionsItem.CreateDocumentActionConfig.FlowActionID.IsUnknown() && !actionsItem.CreateDocumentActionConfig.FlowActionID.IsNull() {
+				*flowActionId3 = actionsItem.CreateDocumentActionConfig.FlowActionID.ValueString()
+			} else {
+				flowActionId3 = nil
+			}
+			id3 := new(string)
+			if !actionsItem.CreateDocumentActionConfig.ID.IsUnknown() && !actionsItem.CreateDocumentActionConfig.ID.IsNull() {
+				*id3 = actionsItem.CreateDocumentActionConfig.ID.ValueString()
+			} else {
+				id3 = nil
+			}
+			name3 := new(string)
+			if !actionsItem.CreateDocumentActionConfig.Name.IsUnknown() && !actionsItem.CreateDocumentActionConfig.Name.IsNull() {
+				*name3 = actionsItem.CreateDocumentActionConfig.Name.ValueString()
+			} else {
+				name3 = nil
+			}
+			typeVar3 := new(shared.CreateDocumentActionConfigType)
+			if !actionsItem.CreateDocumentActionConfig.Type.IsUnknown() && !actionsItem.CreateDocumentActionConfig.Type.IsNull() {
+				*typeVar3 = shared.CreateDocumentActionConfigType(actionsItem.CreateDocumentActionConfig.Type.ValueString())
+			} else {
+				typeVar3 = nil
+			}
+			createDocumentActionConfig := shared.CreateDocumentActionConfig{
+				AllowFailure:         allowFailure3,
+				Config:               config3,
+				CreatedAutomatically: createdAutomatically3,
+				FlowActionID:         flowActionId3,
+				ID:                   id3,
+				Name:                 name3,
+				Type:                 typeVar3,
+			}
+			actions = append(actions, shared.AnyActionConfig{
+				CreateDocumentActionConfig: &createDocumentActionConfig,
+			})
+		}
+		if actionsItem.SendEmailActionConfig != nil {
+			allowFailure4 := new(bool)
+			if !actionsItem.SendEmailActionConfig.AllowFailure.IsUnknown() && !actionsItem.SendEmailActionConfig.AllowFailure.IsNull() {
+				*allowFailure4 = actionsItem.SendEmailActionConfig.AllowFailure.ValueBool()
+			} else {
+				allowFailure4 = nil
+			}
+			var config4 *shared.SendEmailConfig
+			if actionsItem.SendEmailActionConfig.Config != nil {
+				var attachments []shared.SendEmailConfigAttachments = nil
+				for _, attachmentsItem := range actionsItem.SendEmailActionConfig.Config.Attachments {
+					var sourceFilter1 *shared.SendEmailConfigAttachmentsSourceFilter
+					if attachmentsItem.SourceFilter != nil {
+						attribute1 := new(string)
+						if !attachmentsItem.SourceFilter.Attribute.IsUnknown() && !attachmentsItem.SourceFilter.Attribute.IsNull() {
+							*attribute1 = attachmentsItem.SourceFilter.Attribute.ValueString()
+						} else {
+							attribute1 = nil
+						}
+						documentType := new(shared.SendEmailConfigAttachmentsSourceFilterDocumentType)
+						if !attachmentsItem.SourceFilter.DocumentType.IsUnknown() && !attachmentsItem.SourceFilter.DocumentType.IsNull() {
+							*documentType = shared.SendEmailConfigAttachmentsSourceFilterDocumentType(attachmentsItem.SourceFilter.DocumentType.ValueString())
+						} else {
+							documentType = nil
+						}
+						filenameRegex := new(string)
+						if !attachmentsItem.SourceFilter.FilenameRegex.IsUnknown() && !attachmentsItem.SourceFilter.FilenameRegex.IsNull() {
+							*filenameRegex = attachmentsItem.SourceFilter.FilenameRegex.ValueString()
+						} else {
+							filenameRegex = nil
+						}
+						limit1 := new(int64)
+						if !attachmentsItem.SourceFilter.Limit.IsUnknown() && !attachmentsItem.SourceFilter.Limit.IsNull() {
+							*limit1 = attachmentsItem.SourceFilter.Limit.ValueInt64()
+						} else {
+							limit1 = nil
+						}
+						relationTag1 := new(string)
+						if !attachmentsItem.SourceFilter.RelationTag.IsUnknown() && !attachmentsItem.SourceFilter.RelationTag.IsNull() {
+							*relationTag1 = attachmentsItem.SourceFilter.RelationTag.ValueString()
+						} else {
+							relationTag1 = nil
+						}
+						self1 := new(bool)
+						if !attachmentsItem.SourceFilter.Self.IsUnknown() && !attachmentsItem.SourceFilter.Self.IsNull() {
+							*self1 = attachmentsItem.SourceFilter.Self.ValueBool()
+						} else {
+							self1 = nil
+						}
+						tag1 := new(string)
+						if !attachmentsItem.SourceFilter.Tag.IsUnknown() && !attachmentsItem.SourceFilter.Tag.IsNull() {
+							*tag1 = attachmentsItem.SourceFilter.Tag.ValueString()
+						} else {
+							tag1 = nil
+						}
+						sourceFilter1 = &shared.SendEmailConfigAttachmentsSourceFilter{
+							Attribute:     attribute1,
+							DocumentType:  documentType,
+							FilenameRegex: filenameRegex,
+							Limit:         limit1,
+							RelationTag:   relationTag1,
+							Self:          self1,
+							Tag:           tag1,
+						}
+					}
+					attachments = append(attachments, shared.SendEmailConfigAttachments{
+						SourceFilter: sourceFilter1,
+					})
+				}
+				emailTemplateID := new(string)
+				if !actionsItem.SendEmailActionConfig.Config.EmailTemplateID.IsUnknown() && !actionsItem.SendEmailActionConfig.Config.EmailTemplateID.IsNull() {
+					*emailTemplateID = actionsItem.SendEmailActionConfig.Config.EmailTemplateID.ValueString()
+				} else {
+					emailTemplateID = nil
+				}
+				languageCode := new(shared.SendEmailConfigLanguageCode)
+				if !actionsItem.SendEmailActionConfig.Config.LanguageCode.IsUnknown() && !actionsItem.SendEmailActionConfig.Config.LanguageCode.IsNull() {
+					*languageCode = shared.SendEmailConfigLanguageCode(actionsItem.SendEmailActionConfig.Config.LanguageCode.ValueString())
+				} else {
+					languageCode = nil
+				}
+				config4 = &shared.SendEmailConfig{
+					Attachments:     attachments,
+					EmailTemplateID: emailTemplateID,
+					LanguageCode:    languageCode,
+				}
+			}
+			createdAutomatically4 := new(bool)
+			if !actionsItem.SendEmailActionConfig.CreatedAutomatically.IsUnknown() && !actionsItem.SendEmailActionConfig.CreatedAutomatically.IsNull() {
+				*createdAutomatically4 = actionsItem.SendEmailActionConfig.CreatedAutomatically.ValueBool()
+			} else {
+				createdAutomatically4 = nil
+			}
+			flowActionId4 := new(string)
+			if !actionsItem.SendEmailActionConfig.FlowActionID.IsUnknown() && !actionsItem.SendEmailActionConfig.FlowActionID.IsNull() {
+				*flowActionId4 = actionsItem.SendEmailActionConfig.FlowActionID.ValueString()
+			} else {
+				flowActionId4 = nil
+			}
+			id4 := new(string)
+			if !actionsItem.SendEmailActionConfig.ID.IsUnknown() && !actionsItem.SendEmailActionConfig.ID.IsNull() {
+				*id4 = actionsItem.SendEmailActionConfig.ID.ValueString()
+			} else {
+				id4 = nil
+			}
+			name4 := new(string)
+			if !actionsItem.SendEmailActionConfig.Name.IsUnknown() && !actionsItem.SendEmailActionConfig.Name.IsNull() {
+				*name4 = actionsItem.SendEmailActionConfig.Name.ValueString()
+			} else {
+				name4 = nil
+			}
+			typeVar4 := new(shared.SendEmailActionConfigType)
+			if !actionsItem.SendEmailActionConfig.Type.IsUnknown() && !actionsItem.SendEmailActionConfig.Type.IsNull() {
+				*typeVar4 = shared.SendEmailActionConfigType(actionsItem.SendEmailActionConfig.Type.ValueString())
+			} else {
+				typeVar4 = nil
+			}
+			sendEmailActionConfig := shared.SendEmailActionConfig{
+				AllowFailure:         allowFailure4,
+				Config:               config4,
+				CreatedAutomatically: createdAutomatically4,
+				FlowActionID:         flowActionId4,
+				ID:                   id4,
+				Name:                 name4,
+				Type:                 typeVar4,
+			}
+			actions = append(actions, shared.AnyActionConfig{
+				SendEmailActionConfig: &sendEmailActionConfig,
+			})
+		}
+		if actionsItem.CartCheckoutActionConfig != nil {
+			allowFailure5 := new(bool)
+			if !actionsItem.CartCheckoutActionConfig.AllowFailure.IsUnknown() && !actionsItem.CartCheckoutActionConfig.AllowFailure.IsNull() {
+				*allowFailure5 = actionsItem.CartCheckoutActionConfig.AllowFailure.ValueBool()
+			} else {
+				allowFailure5 = nil
+			}
+			var config5 *shared.CartCheckoutConfig
+			if actionsItem.CartCheckoutActionConfig.Config != nil {
+				linkbackRelationAttribute1 := new(string)
+				if !actionsItem.CartCheckoutActionConfig.Config.LinkbackRelationAttribute.IsUnknown() && !actionsItem.CartCheckoutActionConfig.Config.LinkbackRelationAttribute.IsNull() {
+					*linkbackRelationAttribute1 = actionsItem.CartCheckoutActionConfig.Config.LinkbackRelationAttribute.ValueString()
+				} else {
+					linkbackRelationAttribute1 = nil
+				}
+				var linkbackRelationTags1 []string = nil
+				for _, linkbackRelationTagsItem1 := range actionsItem.CartCheckoutActionConfig.Config.LinkbackRelationTags {
+					linkbackRelationTags1 = append(linkbackRelationTags1, linkbackRelationTagsItem1.ValueString())
+				}
+				var mappingAttributes1 []shared.CartCheckoutConfigMappingAttributes = nil
+				for _, mappingAttributesItem1 := range actionsItem.CartCheckoutActionConfig.Config.MappingAttributes {
+					if mappingAttributesItem1.MappingAttributeV2 != nil {
+						var operation1 shared.OperationNode
+						var operationObjectNode1 *shared.OperationObjectNode
+						if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode != nil {
+							var append2 []interface{} = nil
+							for _, appendItem1 := range mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Append {
+								var appendTmp1 interface{}
+								_ = json.Unmarshal([]byte(appendItem1.ValueString()), &appendTmp1)
+								append2 = append(append2, appendTmp1)
+							}
+							copy1 := new(string)
+							if !mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Copy.IsUnknown() && !mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Copy.IsNull() {
+								*copy1 = mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Copy.ValueString()
+							} else {
+								copy1 = nil
+							}
+							var set1 interface{}
+							if !mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Set.IsUnknown() && !mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Set.IsNull() {
+								_ = json.Unmarshal([]byte(mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Set.ValueString()), &set1)
+							}
+							var uniq1 *shared.OperationObjectNodeUniq
+							if mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq != nil {
+								boolean1 := new(bool)
+								if !mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean.IsUnknown() && !mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean.IsNull() {
+									*boolean1 = mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.Boolean.ValueBool()
+								} else {
+									boolean1 = nil
+								}
+								if boolean1 != nil {
+									uniq1 = &shared.OperationObjectNodeUniq{
+										Boolean: boolean1,
+									}
+								}
+								var arrayOfstr2 []string = nil
+								for _, arrayOfstrItem2 := range mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.Uniq.ArrayOfstr {
+									arrayOfstr2 = append(arrayOfstr2, arrayOfstrItem2.ValueString())
+								}
+								if arrayOfstr2 != nil {
+									uniq1 = &shared.OperationObjectNodeUniq{
+										ArrayOfstr: arrayOfstr2,
+									}
+								}
+							}
+							var additionalProperties1 interface{}
+							if !mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties.IsUnknown() && !mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties.IsNull() {
+								_ = json.Unmarshal([]byte(mappingAttributesItem1.MappingAttributeV2.Operation.OperationObjectNode.AdditionalProperties.ValueString()), &additionalProperties1)
+							}
+							operationObjectNode1 = &shared.OperationObjectNode{
+								Append:               append2,
+								Copy:                 copy1,
+								Set:                  set1,
+								Uniq:                 uniq1,
+								AdditionalProperties: additionalProperties1,
+							}
+						}
+						if operationObjectNode1 != nil {
+							operation1 = shared.OperationNode{
+								OperationObjectNode: operationObjectNode1,
+							}
+						}
+						var any1 interface{}
+						if !mappingAttributesItem1.MappingAttributeV2.Operation.Any.IsUnknown() && !mappingAttributesItem1.MappingAttributeV2.Operation.Any.IsNull() {
+							_ = json.Unmarshal([]byte(mappingAttributesItem1.MappingAttributeV2.Operation.Any.ValueString()), &any1)
+						}
+						if any1 != nil {
+							operation1 = shared.OperationNode{
+								Any: any1,
+							}
+						}
+						target5 := new(string)
+						if !mappingAttributesItem1.MappingAttributeV2.Target.IsUnknown() && !mappingAttributesItem1.MappingAttributeV2.Target.IsNull() {
+							*target5 = mappingAttributesItem1.MappingAttributeV2.Target.ValueString()
+						} else {
+							target5 = nil
+						}
+						mappingAttributeV21 := shared.MappingAttributeV2{
+							Operation: operation1,
+							Target:    target5,
+						}
+						mappingAttributes1 = append(mappingAttributes1, shared.CartCheckoutConfigMappingAttributes{
+							MappingAttributeV2: &mappingAttributeV21,
+						})
+					}
+					if mappingAttributesItem1.MappingAttribute != nil {
+						var mappingAttribute1 shared.MappingAttribute
+						var setValueMapper1 *shared.SetValueMapper
+						if mappingAttributesItem1.MappingAttribute.SetValueMapper != nil {
+							mode4 := shared.MappingAttributeMode(mappingAttributesItem1.MappingAttribute.SetValueMapper.Mode.ValueString())
+							target6 := mappingAttributesItem1.MappingAttribute.SetValueMapper.Target.ValueString()
+							var value2 interface{}
+							_ = json.Unmarshal([]byte(mappingAttributesItem1.MappingAttribute.SetValueMapper.Value.ValueString()), &value2)
+							setValueMapper1 = &shared.SetValueMapper{
+								Mode:   mode4,
+								Target: target6,
+								Value:  value2,
+							}
+						}
+						if setValueMapper1 != nil {
+							mappingAttribute1 = shared.MappingAttribute{
+								SetValueMapper: setValueMapper1,
+							}
+						}
+						var copyValueMapper1 *shared.CopyValueMapper
+						if mappingAttributesItem1.MappingAttribute.CopyValueMapper != nil {
+							mode5 := shared.MappingAttributeMode(mappingAttributesItem1.MappingAttribute.CopyValueMapper.Mode.ValueString())
+							source3 := mappingAttributesItem1.MappingAttribute.CopyValueMapper.Source.ValueString()
+							target7 := mappingAttributesItem1.MappingAttribute.CopyValueMapper.Target.ValueString()
+							copyValueMapper1 = &shared.CopyValueMapper{
+								Mode:   mode5,
+								Source: source3,
+								Target: target7,
+							}
+						}
+						if copyValueMapper1 != nil {
+							mappingAttribute1 = shared.MappingAttribute{
+								CopyValueMapper: copyValueMapper1,
+							}
+						}
+						var appendValueMapper1 *shared.AppendValueMapper
+						if mappingAttributesItem1.MappingAttribute.AppendValueMapper != nil {
+							mode6 := shared.MappingAttributeMode(mappingAttributesItem1.MappingAttribute.AppendValueMapper.Mode.ValueString())
+							source4 := new(string)
+							if !mappingAttributesItem1.MappingAttribute.AppendValueMapper.Source.IsUnknown() && !mappingAttributesItem1.MappingAttribute.AppendValueMapper.Source.IsNull() {
+								*source4 = mappingAttributesItem1.MappingAttribute.AppendValueMapper.Source.ValueString()
+							} else {
+								source4 = nil
+							}
+							target8 := mappingAttributesItem1.MappingAttribute.AppendValueMapper.Target.ValueString()
+							var targetUnique2 []string = nil
+							for _, targetUniqueItem2 := range mappingAttributesItem1.MappingAttribute.AppendValueMapper.TargetUnique {
+								targetUnique2 = append(targetUnique2, targetUniqueItem2.ValueString())
+							}
+							valueJson1 := mappingAttributesItem1.MappingAttribute.AppendValueMapper.ValueJSON.ValueString()
+							appendValueMapper1 = &shared.AppendValueMapper{
+								Mode:         mode6,
+								Source:       source4,
+								Target:       target8,
+								TargetUnique: targetUnique2,
+								ValueJSON:    valueJson1,
+							}
+						}
+						if appendValueMapper1 != nil {
+							mappingAttribute1 = shared.MappingAttribute{
+								AppendValueMapper: appendValueMapper1,
+							}
+						}
+						mappingAttributes1 = append(mappingAttributes1, shared.CartCheckoutConfigMappingAttributes{
+							MappingAttribute: &mappingAttribute1,
+						})
+					}
+				}
+				var mappingConfig1 *shared.MappingConfigRef
+				if actionsItem.CartCheckoutActionConfig.Config.MappingConfig != nil {
+					configId1 := actionsItem.CartCheckoutActionConfig.Config.MappingConfig.ConfigID.ValueString()
+					targetId1 := actionsItem.CartCheckoutActionConfig.Config.MappingConfig.TargetID.ValueString()
+					version1 := new(float64)
+					if !actionsItem.CartCheckoutActionConfig.Config.MappingConfig.Version.IsUnknown() && !actionsItem.CartCheckoutActionConfig.Config.MappingConfig.Version.IsNull() {
+						*version1, _ = actionsItem.CartCheckoutActionConfig.Config.MappingConfig.Version.ValueBigFloat().Float64()
+					} else {
+						version1 = nil
+					}
+					mappingConfig1 = &shared.MappingConfigRef{
+						ConfigID: configId1,
+						TargetID: targetId1,
+						Version:  version1,
+					}
+				}
+				var relationAttributes1 []shared.RelationAttribute = nil
+				for _, relationAttributesItem1 := range actionsItem.CartCheckoutActionConfig.Config.RelationAttributes {
+					mode7 := shared.RelationAttributeMode(relationAttributesItem1.Mode.ValueString())
+					relatedTo1 := make(map[string]interface{})
+					// Warning. This is a map, but the source tf var is not a map. This might indicate a bug.
+					var sourceFilter2 *shared.RelationAttributeSourceFilter
+					if relationAttributesItem1.SourceFilter != nil {
+						attribute2 := new(string)
+						if !relationAttributesItem1.SourceFilter.Attribute.IsUnknown() && !relationAttributesItem1.SourceFilter.Attribute.IsNull() {
+							*attribute2 = relationAttributesItem1.SourceFilter.Attribute.ValueString()
+						} else {
+							attribute2 = nil
+						}
+						limit2 := new(int64)
+						if !relationAttributesItem1.SourceFilter.Limit.IsUnknown() && !relationAttributesItem1.SourceFilter.Limit.IsNull() {
+							*limit2 = relationAttributesItem1.SourceFilter.Limit.ValueInt64()
+						} else {
+							limit2 = nil
+						}
+						relationTag2 := new(string)
+						if !relationAttributesItem1.SourceFilter.RelationTag.IsUnknown() && !relationAttributesItem1.SourceFilter.RelationTag.IsNull() {
+							*relationTag2 = relationAttributesItem1.SourceFilter.RelationTag.ValueString()
+						} else {
+							relationTag2 = nil
+						}
+						schema2 := new(string)
+						if !relationAttributesItem1.SourceFilter.Schema.IsUnknown() && !relationAttributesItem1.SourceFilter.Schema.IsNull() {
+							*schema2 = relationAttributesItem1.SourceFilter.Schema.ValueString()
+						} else {
+							schema2 = nil
+						}
+						self2 := new(bool)
+						if !relationAttributesItem1.SourceFilter.Self.IsUnknown() && !relationAttributesItem1.SourceFilter.Self.IsNull() {
+							*self2 = relationAttributesItem1.SourceFilter.Self.ValueBool()
+						} else {
+							self2 = nil
+						}
+						tag2 := new(string)
+						if !relationAttributesItem1.SourceFilter.Tag.IsUnknown() && !relationAttributesItem1.SourceFilter.Tag.IsNull() {
+							*tag2 = relationAttributesItem1.SourceFilter.Tag.ValueString()
+						} else {
+							tag2 = nil
+						}
+						sourceFilter2 = &shared.RelationAttributeSourceFilter{
+							Attribute:   attribute2,
+							Limit:       limit2,
+							RelationTag: relationTag2,
+							Schema:      schema2,
+							Self:        self2,
+							Tag:         tag2,
+						}
+					}
+					target9 := relationAttributesItem1.Target.ValueString()
+					var targetTags1 []string = nil
+					for _, targetTagsItem1 := range relationAttributesItem1.TargetTags {
+						targetTags1 = append(targetTags1, targetTagsItem1.ValueString())
+					}
+					targetTagsIncludeSource1 := new(bool)
+					if !relationAttributesItem1.TargetTagsIncludeSource.IsUnknown() && !relationAttributesItem1.TargetTagsIncludeSource.IsNull() {
+						*targetTagsIncludeSource1 = relationAttributesItem1.TargetTagsIncludeSource.ValueBool()
+					} else {
+						targetTagsIncludeSource1 = nil
+					}
+					relationAttributes1 = append(relationAttributes1, shared.RelationAttribute{
+						Mode:                    mode7,
+						RelatedTo:               relatedTo1,
+						SourceFilter:            sourceFilter2,
+						Target:                  target9,
+						TargetTags:              targetTags1,
+						TargetTagsIncludeSource: targetTagsIncludeSource1,
+					})
+				}
+				var targetUnique3 []string = nil
+				for _, targetUniqueItem3 := range actionsItem.CartCheckoutActionConfig.Config.TargetUnique {
+					targetUnique3 = append(targetUnique3, targetUniqueItem3.ValueString())
+				}
+				version2 := new(string)
+				if !actionsItem.CartCheckoutActionConfig.Config.Version.IsUnknown() && !actionsItem.CartCheckoutActionConfig.Config.Version.IsNull() {
+					*version2 = actionsItem.CartCheckoutActionConfig.Config.Version.ValueString()
+				} else {
+					version2 = nil
+				}
+				config5 = &shared.CartCheckoutConfig{
+					LinkbackRelationAttribute: linkbackRelationAttribute1,
+					LinkbackRelationTags:      linkbackRelationTags1,
+					MappingAttributes:         mappingAttributes1,
+					MappingConfig:             mappingConfig1,
+					RelationAttributes:        relationAttributes1,
+					TargetUnique:              targetUnique3,
+					Version:                   version2,
+				}
+			}
+			createdAutomatically5 := new(bool)
+			if !actionsItem.CartCheckoutActionConfig.CreatedAutomatically.IsUnknown() && !actionsItem.CartCheckoutActionConfig.CreatedAutomatically.IsNull() {
+				*createdAutomatically5 = actionsItem.CartCheckoutActionConfig.CreatedAutomatically.ValueBool()
+			} else {
+				createdAutomatically5 = nil
+			}
+			flowActionId5 := new(string)
+			if !actionsItem.CartCheckoutActionConfig.FlowActionID.IsUnknown() && !actionsItem.CartCheckoutActionConfig.FlowActionID.IsNull() {
+				*flowActionId5 = actionsItem.CartCheckoutActionConfig.FlowActionID.ValueString()
+			} else {
+				flowActionId5 = nil
+			}
+			id5 := new(string)
+			if !actionsItem.CartCheckoutActionConfig.ID.IsUnknown() && !actionsItem.CartCheckoutActionConfig.ID.IsNull() {
+				*id5 = actionsItem.CartCheckoutActionConfig.ID.ValueString()
+			} else {
+				id5 = nil
+			}
+			name5 := new(string)
+			if !actionsItem.CartCheckoutActionConfig.Name.IsUnknown() && !actionsItem.CartCheckoutActionConfig.Name.IsNull() {
+				*name5 = actionsItem.CartCheckoutActionConfig.Name.ValueString()
+			} else {
+				name5 = nil
+			}
+			typeVar5 := new(shared.CartCheckoutActionConfigType)
+			if !actionsItem.CartCheckoutActionConfig.Type.IsUnknown() && !actionsItem.CartCheckoutActionConfig.Type.IsNull() {
+				*typeVar5 = shared.CartCheckoutActionConfigType(actionsItem.CartCheckoutActionConfig.Type.ValueString())
+			} else {
+				typeVar5 = nil
+			}
+			cartCheckoutActionConfig := shared.CartCheckoutActionConfig{
+				AllowFailure:         allowFailure5,
+				Config:               config5,
+				CreatedAutomatically: createdAutomatically5,
+				FlowActionID:         flowActionId5,
+				ID:                   id5,
+				Name:                 name5,
+				Type:                 typeVar5,
+			}
+			actions = append(actions, shared.AnyActionConfig{
+				CartCheckoutActionConfig: &cartCheckoutActionConfig,
+			})
+		}
+		if actionsItem.AutomationActionConfig != nil {
+			allowFailure6 := new(bool)
+			if !actionsItem.AutomationActionConfig.AllowFailure.IsUnknown() && !actionsItem.AutomationActionConfig.AllowFailure.IsNull() {
+				*allowFailure6 = actionsItem.AutomationActionConfig.AllowFailure.ValueBool()
+			} else {
+				allowFailure6 = nil
+			}
+			config6 := make(map[string]interface{})
+			// Warning. This is a map, but the source tf var is not a map. This might indicate a bug.
+			createdAutomatically6 := new(bool)
+			if !actionsItem.AutomationActionConfig.CreatedAutomatically.IsUnknown() && !actionsItem.AutomationActionConfig.CreatedAutomatically.IsNull() {
+				*createdAutomatically6 = actionsItem.AutomationActionConfig.CreatedAutomatically.ValueBool()
+			} else {
+				createdAutomatically6 = nil
+			}
+			flowActionId6 := new(string)
+			if !actionsItem.AutomationActionConfig.FlowActionID.IsUnknown() && !actionsItem.AutomationActionConfig.FlowActionID.IsNull() {
+				*flowActionId6 = actionsItem.AutomationActionConfig.FlowActionID.ValueString()
+			} else {
+				flowActionId6 = nil
+			}
+			id6 := new(string)
+			if !actionsItem.AutomationActionConfig.ID.IsUnknown() && !actionsItem.AutomationActionConfig.ID.IsNull() {
+				*id6 = actionsItem.AutomationActionConfig.ID.ValueString()
+			} else {
+				id6 = nil
+			}
+			name6 := new(string)
+			if !actionsItem.AutomationActionConfig.Name.IsUnknown() && !actionsItem.AutomationActionConfig.Name.IsNull() {
+				*name6 = actionsItem.AutomationActionConfig.Name.ValueString()
+			} else {
+				name6 = nil
+			}
+			typeVar6 := new(string)
+			if !actionsItem.AutomationActionConfig.Type.IsUnknown() && !actionsItem.AutomationActionConfig.Type.IsNull() {
+				*typeVar6 = actionsItem.AutomationActionConfig.Type.ValueString()
+			} else {
+				typeVar6 = nil
+			}
+			automationActionConfig := shared.AutomationActionConfig{
+				AllowFailure:         allowFailure6,
+				Config:               config6,
+				CreatedAutomatically: createdAutomatically6,
+				FlowActionID:         flowActionId6,
+				ID:                   id6,
+				Name:                 name6,
+				Type:                 typeVar6,
+			}
+			actions = append(actions, shared.AnyActionConfig{
+				AutomationActionConfig: &automationActionConfig,
+			})
+		}
+	}
 	enabled := new(bool)
 	if !r.Enabled.IsUnknown() && !r.Enabled.IsNull() {
 		*enabled = r.Enabled.ValueBool()
@@ -32,56 +1144,56 @@ func (r *FlowResourceModel) ToCreateSDKType() *shared.AutomationFlowInput {
 	}
 	var triggerConditions []shared.TriggerCondition = nil
 	for _, triggerConditionsItem := range r.TriggerConditions {
-		comparison := shared.Comparison(triggerConditionsItem.Comparison.ValueString())
-		source := triggerConditionsItem.Source.ValueString()
-		var value *shared.TriggerConditionValue
+		comparison1 := shared.Comparison(triggerConditionsItem.Comparison.ValueString())
+		source5 := triggerConditionsItem.Source.ValueString()
+		var value3 *shared.TriggerConditionValue
 		if triggerConditionsItem.Value != nil {
-			str := new(string)
+			str1 := new(string)
 			if !triggerConditionsItem.Value.Str.IsUnknown() && !triggerConditionsItem.Value.Str.IsNull() {
-				*str = triggerConditionsItem.Value.Str.ValueString()
+				*str1 = triggerConditionsItem.Value.Str.ValueString()
 			} else {
-				str = nil
+				str1 = nil
 			}
-			if str != nil {
-				value = &shared.TriggerConditionValue{
-					Str: str,
+			if str1 != nil {
+				value3 = &shared.TriggerConditionValue{
+					Str: str1,
 				}
 			}
-			number := new(float64)
+			number1 := new(float64)
 			if !triggerConditionsItem.Value.Number.IsUnknown() && !triggerConditionsItem.Value.Number.IsNull() {
-				*number, _ = triggerConditionsItem.Value.Number.ValueBigFloat().Float64()
+				*number1, _ = triggerConditionsItem.Value.Number.ValueBigFloat().Float64()
 			} else {
-				number = nil
+				number1 = nil
 			}
-			if number != nil {
-				value = &shared.TriggerConditionValue{
-					Number: number,
+			if number1 != nil {
+				value3 = &shared.TriggerConditionValue{
+					Number: number1,
 				}
 			}
-			var arrayOfstr []string = nil
-			for _, arrayOfstrItem := range triggerConditionsItem.Value.ArrayOfstr {
-				arrayOfstr = append(arrayOfstr, arrayOfstrItem.ValueString())
+			var arrayOfstr3 []string = nil
+			for _, arrayOfstrItem3 := range triggerConditionsItem.Value.ArrayOfstr {
+				arrayOfstr3 = append(arrayOfstr3, arrayOfstrItem3.ValueString())
 			}
-			if arrayOfstr != nil {
-				value = &shared.TriggerConditionValue{
-					ArrayOfstr: arrayOfstr,
+			if arrayOfstr3 != nil {
+				value3 = &shared.TriggerConditionValue{
+					ArrayOfstr: arrayOfstr3,
 				}
 			}
-			var arrayOfnumber []float64 = nil
-			for _, arrayOfnumberItem := range triggerConditionsItem.Value.ArrayOfnumber {
-				arrayOfnumberTmp, _ := arrayOfnumberItem.ValueBigFloat().Float64()
-				arrayOfnumber = append(arrayOfnumber, arrayOfnumberTmp)
+			var arrayOfnumber1 []float64 = nil
+			for _, arrayOfnumberItem1 := range triggerConditionsItem.Value.ArrayOfnumber {
+				arrayOfnumberTmp1, _ := arrayOfnumberItem1.ValueBigFloat().Float64()
+				arrayOfnumber1 = append(arrayOfnumber1, arrayOfnumberTmp1)
 			}
-			if arrayOfnumber != nil {
-				value = &shared.TriggerConditionValue{
-					ArrayOfnumber: arrayOfnumber,
+			if arrayOfnumber1 != nil {
+				value3 = &shared.TriggerConditionValue{
+					ArrayOfnumber: arrayOfnumber1,
 				}
 			}
 		}
 		triggerConditions = append(triggerConditions, shared.TriggerCondition{
-			Comparison: comparison,
-			Source:     source,
-			Value:      value,
+			Comparison: comparison1,
+			Source:     source5,
+			Value:      value3,
 		})
 	}
 	var triggers []shared.AnyTrigger = nil
@@ -96,10 +1208,10 @@ func (r *FlowResourceModel) ToCreateSDKType() *shared.AutomationFlowInput {
 			configuration := shared.FrontendSubmitTriggerConfiguration{
 				SourceID: sourceID,
 			}
-			typeVar := shared.FrontendSubmitTriggerType(triggersItem.FrontendSubmitTrigger.Type.ValueString())
+			typeVar7 := shared.FrontendSubmitTriggerType(triggersItem.FrontendSubmitTrigger.Type.ValueString())
 			frontendSubmitTrigger := shared.FrontendSubmitTrigger{
 				Configuration: configuration,
-				Type:          typeVar,
+				Type:          typeVar7,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				FrontendSubmitTrigger: &frontendSubmitTrigger,
@@ -110,10 +1222,10 @@ func (r *FlowResourceModel) ToCreateSDKType() *shared.AutomationFlowInput {
 			configuration1 := shared.JourneySubmitTriggerConfiguration{
 				SourceID: sourceId1,
 			}
-			typeVar1 := shared.JourneySubmitTriggerType(triggersItem.JourneySubmitTrigger.Type.ValueString())
+			typeVar8 := shared.JourneySubmitTriggerType(triggersItem.JourneySubmitTrigger.Type.ValueString())
 			journeySubmitTrigger := shared.JourneySubmitTrigger{
 				Configuration: configuration1,
-				Type:          typeVar1,
+				Type:          typeVar8,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				JourneySubmitTrigger: &journeySubmitTrigger,
@@ -129,10 +1241,10 @@ func (r *FlowResourceModel) ToCreateSDKType() *shared.AutomationFlowInput {
 			configuration2 := shared.APISubmissionTriggerConfiguration{
 				SourceID: sourceId2,
 			}
-			typeVar2 := shared.APISubmissionTriggerType(triggersItem.APISubmissionTrigger.Type.ValueString())
+			typeVar9 := shared.APISubmissionTriggerType(triggersItem.APISubmissionTrigger.Type.ValueString())
 			apiSubmissionTrigger := shared.APISubmissionTrigger{
 				Configuration: configuration2,
-				Type:          typeVar2,
+				Type:          typeVar9,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				APISubmissionTrigger: &apiSubmissionTrigger,
@@ -151,60 +1263,60 @@ func (r *FlowResourceModel) ToCreateSDKType() *shared.AutomationFlowInput {
 			for _, operationsItem := range triggersItem.EntityOperationTrigger.Configuration.Operations {
 				operationsVar = append(operationsVar, shared.EntityOperationTriggerConfigurationOperations(operationsItem.ValueString()))
 			}
-			schema := triggersItem.EntityOperationTrigger.Configuration.Schema.ValueString()
+			schema3 := triggersItem.EntityOperationTrigger.Configuration.Schema.ValueString()
 			configuration3 := shared.EntityOperationTriggerConfiguration{
 				ExcludeActivities: excludeActivities,
 				IncludeActivities: includeActivities,
 				Operations:        operationsVar,
-				Schema:            schema,
+				Schema:            schema3,
 			}
-			typeVar3 := shared.EntityOperationTriggerType(triggersItem.EntityOperationTrigger.Type.ValueString())
+			typeVar10 := shared.EntityOperationTriggerType(triggersItem.EntityOperationTrigger.Type.ValueString())
 			entityOperationTrigger := shared.EntityOperationTrigger{
 				Configuration: configuration3,
-				Type:          typeVar3,
+				Type:          typeVar10,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				EntityOperationTrigger: &entityOperationTrigger,
 			})
 		}
 		if triggersItem.ActivityTrigger != nil {
-			schema1 := new(string)
+			schema4 := new(string)
 			if !triggersItem.ActivityTrigger.Configuration.Schema.IsUnknown() && !triggersItem.ActivityTrigger.Configuration.Schema.IsNull() {
-				*schema1 = triggersItem.ActivityTrigger.Configuration.Schema.ValueString()
+				*schema4 = triggersItem.ActivityTrigger.Configuration.Schema.ValueString()
 			} else {
-				schema1 = nil
+				schema4 = nil
 			}
 			var types []shared.ActivityTriggerConfigurationTypes = nil
 			for _, typesItem := range triggersItem.ActivityTrigger.Configuration.Types {
 				types = append(types, shared.ActivityTriggerConfigurationTypes(typesItem.ValueString()))
 			}
 			configuration4 := shared.ActivityTriggerConfiguration{
-				Schema: schema1,
+				Schema: schema4,
 				Types:  types,
 			}
-			typeVar4 := shared.ActivityTriggerType(triggersItem.ActivityTrigger.Type.ValueString())
+			typeVar11 := shared.ActivityTriggerType(triggersItem.ActivityTrigger.Type.ValueString())
 			activityTrigger := shared.ActivityTrigger{
 				Configuration: configuration4,
-				Type:          typeVar4,
+				Type:          typeVar11,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				ActivityTrigger: &activityTrigger,
 			})
 		}
 		if triggersItem.EntityManualTrigger != nil {
-			schema2 := new(string)
+			schema5 := new(string)
 			if !triggersItem.EntityManualTrigger.Configuration.Schema.IsUnknown() && !triggersItem.EntityManualTrigger.Configuration.Schema.IsNull() {
-				*schema2 = triggersItem.EntityManualTrigger.Configuration.Schema.ValueString()
+				*schema5 = triggersItem.EntityManualTrigger.Configuration.Schema.ValueString()
 			} else {
-				schema2 = nil
+				schema5 = nil
 			}
 			configuration5 := shared.EntityManualTriggerConfiguration{
-				Schema: schema2,
+				Schema: schema5,
 			}
-			typeVar5 := shared.EntityManualTriggerType(triggersItem.EntityManualTrigger.Type.ValueString())
+			typeVar12 := shared.EntityManualTriggerType(triggersItem.EntityManualTrigger.Type.ValueString())
 			entityManualTrigger := shared.EntityManualTrigger{
 				Configuration: configuration5,
-				Type:          typeVar5,
+				Type:          typeVar12,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				EntityManualTrigger: &entityManualTrigger,
@@ -220,10 +1332,10 @@ func (r *FlowResourceModel) ToCreateSDKType() *shared.AutomationFlowInput {
 			configuration6 := shared.ReceivedEmailTriggerConfiguration{
 				MessageType: messageType,
 			}
-			typeVar6 := shared.ReceivedEmailTriggerType(triggersItem.ReceivedEmailTrigger.Type.ValueString())
+			typeVar13 := shared.ReceivedEmailTriggerType(triggersItem.ReceivedEmailTrigger.Type.ValueString())
 			receivedEmailTrigger := shared.ReceivedEmailTrigger{
 				Configuration: configuration6,
-				Type:          typeVar6,
+				Type:          typeVar13,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
 				ReceivedEmailTrigger: &receivedEmailTrigger,
@@ -231,6 +1343,7 @@ func (r *FlowResourceModel) ToCreateSDKType() *shared.AutomationFlowInput {
 		}
 	}
 	out := shared.AutomationFlowInput{
+		Actions:           actions,
 		Enabled:           enabled,
 		EntitySchema:      entitySchema,
 		FlowName:          flowName,

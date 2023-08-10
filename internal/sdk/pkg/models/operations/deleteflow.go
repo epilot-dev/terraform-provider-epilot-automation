@@ -3,7 +3,6 @@
 package operations
 
 import (
-	"epilot-automation/internal/sdk/pkg/models/shared"
 	"net/http"
 )
 
@@ -13,9 +12,7 @@ type DeleteFlowRequest struct {
 }
 
 type DeleteFlowResponse struct {
-	// The deleted automation flow
-	AutomationFlow *shared.AutomationFlow
-	ContentType    string
-	StatusCode     int
-	RawResponse    *http.Response
+	ContentType string
+	StatusCode  int
+	RawResponse *http.Response
 }

@@ -138,11 +138,7 @@ paths:
             $ref: "#/components/schemas/AutomationFlowId"
       responses:
         "200":
-          description: The deleted automation flow
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AutomationFlow"
+          description: OK
   /v1/automation/executions:
     get:
       operationId: getExecutions
@@ -306,7 +302,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/AnyActionConfig"
-          readOnly: true
         runs:
           type: number
           example: 7

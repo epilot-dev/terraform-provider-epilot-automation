@@ -71,7 +71,7 @@ func (s *executions) CancelExecution(ctx context.Context, request operations.Can
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.AutomationExecution
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.AutomationExecution = out
@@ -127,7 +127,7 @@ func (s *executions) GetExecution(ctx context.Context, request operations.GetExe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.AutomationExecution
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.AutomationExecution = out
@@ -184,7 +184,7 @@ func (s *executions) GetExecutions(ctx context.Context, request operations.GetEx
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.GetExecutionsResp
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.GetExecutionsResp = out
@@ -306,7 +306,7 @@ func (s *executions) StartExecution(ctx context.Context, request shared.StartExe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.AutomationExecution
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.AutomationExecution = out

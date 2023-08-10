@@ -79,7 +79,7 @@ func (s *flows) CreateFlow(ctx context.Context, request shared.AutomationFlowInp
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.AutomationFlow
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.AutomationFlow = out
@@ -102,7 +102,7 @@ func (s *flows) DeleteFlow(ctx context.Context, request operations.DeleteFlowReq
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Accept", "*/*")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
 	client := s.sdkConfiguration.SecurityClient
@@ -131,15 +131,6 @@ func (s *flows) DeleteFlow(ctx context.Context, request operations.DeleteFlowReq
 	}
 	switch {
 	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.AutomationFlow
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
-			}
-
-			res.AutomationFlow = out
-		}
 	}
 
 	return res, nil
@@ -191,7 +182,7 @@ func (s *flows) GetFlow(ctx context.Context, request operations.GetFlowRequest) 
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.AutomationFlow
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.AutomationFlow = out
@@ -258,7 +249,7 @@ func (s *flows) PutFlow(ctx context.Context, request operations.PutFlowRequest) 
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.AutomationFlow
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.AutomationFlow = out
@@ -315,7 +306,7 @@ func (s *flows) SearchFlows(ctx context.Context, request operations.SearchFlowsR
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SearchAutomationsResp
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SearchAutomationsResp = out
