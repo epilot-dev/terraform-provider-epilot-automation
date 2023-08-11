@@ -5,5 +5,5 @@ package shared
 // RetryReq - Retry request details.
 type RetryReq struct {
 	// different behaviors for retrying failed execution actions.
-	RetryStrategy *RetryStrategyEnum `json:"retry_strategy,omitempty"`
+	RetryStrategy *RetryStrategy `json:"retry_strategy,omitempty"`
 }

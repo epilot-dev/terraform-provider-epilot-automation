@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type CartCheckoutActionConfigTypeEnum string
+type CartCheckoutActionConfigType string
 
 const (
-	CartCheckoutActionConfigTypeEnumCartCheckout CartCheckoutActionConfigTypeEnum = "cart-checkout"
+	CartCheckoutActionConfigTypeCartCheckout CartCheckoutActionConfigType = "cart-checkout"
 )
 
-func (e CartCheckoutActionConfigTypeEnum) ToPointer() *CartCheckoutActionConfigTypeEnum {
+func (e CartCheckoutActionConfigType) ToPointer() *CartCheckoutActionConfigType {
 	return &e
 }
 
-func (e *CartCheckoutActionConfigTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *CartCheckoutActionConfigType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "cart-checkout":
-		*e = CartCheckoutActionConfigTypeEnum(v)
+		*e = CartCheckoutActionConfigType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CartCheckoutActionConfigTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for CartCheckoutActionConfigType: %v", v)
 	}
 }
 
@@ -37,9 +37,9 @@ type CartCheckoutActionConfig struct {
 	AllowFailure *bool               `json:"allow_failure,omitempty"`
 	Config       *CartCheckoutConfig `json:"config,omitempty"`
 	// Flag indicating whether the action was created automatically or manually
-	CreatedAutomatically *bool                             `json:"created_automatically,omitempty"`
-	FlowActionID         *string                           `json:"flow_action_id,omitempty"`
-	ID                   *string                           `json:"id,omitempty"`
-	Name                 *string                           `json:"name,omitempty"`
-	Type                 *CartCheckoutActionConfigTypeEnum `json:"type,omitempty"`
+	CreatedAutomatically *bool                         `json:"created_automatically,omitempty"`
+	FlowActionID         *string                       `json:"flow_action_id,omitempty"`
+	ID                   *string                       `json:"id,omitempty"`
+	Name                 *string                       `json:"name,omitempty"`
+	Type                 *CartCheckoutActionConfigType `json:"type,omitempty"`
 }

@@ -3,6 +3,6 @@
 package provider
 
 type CartCheckoutConfigMappingAttributes struct {
-	MappingAttributeV2 *MappingAttributeV21 `tfsdk:"mapping_attribute_v2"`
-	MappingAttribute   *MappingAttribute    `tfsdk:"mapping_attribute"`
+	MappingAttribute   *MappingAttribute   `tfsdk:"mapping_attribute"`
+	MappingAttributeV2 *MappingAttributeV2 `tfsdk:"mapping_attribute_v2"`
 }

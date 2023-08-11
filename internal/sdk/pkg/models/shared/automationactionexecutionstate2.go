@@ -7,38 +7,38 @@ import (
 	"fmt"
 )
 
-type AutomationActionExecutionStateTypeEnum2 string
+type AutomationActionExecutionStateType2 string
 
 const (
-	AutomationActionExecutionStateTypeEnum2TriggerWebhook AutomationActionExecutionStateTypeEnum2 = "trigger-webhook"
+	AutomationActionExecutionStateType2TriggerWebhook AutomationActionExecutionStateType2 = "trigger-webhook"
 )
 
-func (e AutomationActionExecutionStateTypeEnum2) ToPointer() *AutomationActionExecutionStateTypeEnum2 {
+func (e AutomationActionExecutionStateType2) ToPointer() *AutomationActionExecutionStateType2 {
 	return &e
 }
 
-func (e *AutomationActionExecutionStateTypeEnum2) UnmarshalJSON(data []byte) error {
+func (e *AutomationActionExecutionStateType2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "trigger-webhook":
-		*e = AutomationActionExecutionStateTypeEnum2(v)
+		*e = AutomationActionExecutionStateType2(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AutomationActionExecutionStateTypeEnum2: %v", v)
+		return fmt.Errorf("invalid value for AutomationActionExecutionStateType2: %v", v)
 	}
 }
 
 type AutomationActionExecutionState2 struct {
 	Config          *TriggerWebhookConfig  `json:"config,omitempty"`
 	ErrorOutput     *ErrorOutput           `json:"error_output,omitempty"`
-	ExecutionStatus *ExecutionStatusEnum   `json:"execution_status,omitempty"`
+	ExecutionStatus *ExecutionStatus       `json:"execution_status,omitempty"`
 	Outputs         map[string]interface{} `json:"outputs,omitempty"`
 	// different behaviors for retrying failed execution actions.
-	RetryStrategy *RetryStrategyEnum                       `json:"retry_strategy,omitempty"`
-	StartedAt     *string                                  `json:"started_at,omitempty"`
-	Type          *AutomationActionExecutionStateTypeEnum2 `json:"type,omitempty"`
-	UpdatedAt     *string                                  `json:"updated_at,omitempty"`
+	RetryStrategy *RetryStrategy                       `json:"retry_strategy,omitempty"`
+	StartedAt     *string                              `json:"started_at,omitempty"`
+	Type          *AutomationActionExecutionStateType2 `json:"type,omitempty"`
+	UpdatedAt     *string                              `json:"updated_at,omitempty"`
 }

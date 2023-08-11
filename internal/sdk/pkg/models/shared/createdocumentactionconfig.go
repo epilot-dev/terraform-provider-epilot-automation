@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type CreateDocumentActionConfigTypeEnum string
+type CreateDocumentActionConfigType string
 
 const (
-	CreateDocumentActionConfigTypeEnumCreateDocument CreateDocumentActionConfigTypeEnum = "create-document"
+	CreateDocumentActionConfigTypeCreateDocument CreateDocumentActionConfigType = "create-document"
 )
 
-func (e CreateDocumentActionConfigTypeEnum) ToPointer() *CreateDocumentActionConfigTypeEnum {
+func (e CreateDocumentActionConfigType) ToPointer() *CreateDocumentActionConfigType {
 	return &e
 }
 
-func (e *CreateDocumentActionConfigTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *CreateDocumentActionConfigType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "create-document":
-		*e = CreateDocumentActionConfigTypeEnum(v)
+		*e = CreateDocumentActionConfigType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDocumentActionConfigTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for CreateDocumentActionConfigType: %v", v)
 	}
 }
 
@@ -36,9 +36,9 @@ type CreateDocumentActionConfig struct {
 	AllowFailure *bool                 `json:"allow_failure,omitempty"`
 	Config       *CreateDocumentConfig `json:"config,omitempty"`
 	// Flag indicating whether the action was created automatically or manually
-	CreatedAutomatically *bool                               `json:"created_automatically,omitempty"`
-	FlowActionID         *string                             `json:"flow_action_id,omitempty"`
-	ID                   *string                             `json:"id,omitempty"`
-	Name                 *string                             `json:"name,omitempty"`
-	Type                 *CreateDocumentActionConfigTypeEnum `json:"type,omitempty"`
+	CreatedAutomatically *bool                           `json:"created_automatically,omitempty"`
+	FlowActionID         *string                         `json:"flow_action_id,omitempty"`
+	ID                   *string                         `json:"id,omitempty"`
+	Name                 *string                         `json:"name,omitempty"`
+	Type                 *CreateDocumentActionConfigType `json:"type,omitempty"`
 }

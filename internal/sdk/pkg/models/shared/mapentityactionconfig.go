@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type MapEntityActionConfigTypeEnum string
+type MapEntityActionConfigType string
 
 const (
-	MapEntityActionConfigTypeEnumMapEntity MapEntityActionConfigTypeEnum = "map-entity"
+	MapEntityActionConfigTypeMapEntity MapEntityActionConfigType = "map-entity"
 )
 
-func (e MapEntityActionConfigTypeEnum) ToPointer() *MapEntityActionConfigTypeEnum {
+func (e MapEntityActionConfigType) ToPointer() *MapEntityActionConfigType {
 	return &e
 }
 
-func (e *MapEntityActionConfigTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *MapEntityActionConfigType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "map-entity":
-		*e = MapEntityActionConfigTypeEnum(v)
+		*e = MapEntityActionConfigType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for MapEntityActionConfigTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for MapEntityActionConfigType: %v", v)
 	}
 }
 
@@ -36,9 +36,9 @@ type MapEntityActionConfig struct {
 	AllowFailure *bool            `json:"allow_failure,omitempty"`
 	Config       *MapEntityConfig `json:"config,omitempty"`
 	// Flag indicating whether the action was created automatically or manually
-	CreatedAutomatically *bool                          `json:"created_automatically,omitempty"`
-	FlowActionID         *string                        `json:"flow_action_id,omitempty"`
-	ID                   *string                        `json:"id,omitempty"`
-	Name                 *string                        `json:"name,omitempty"`
-	Type                 *MapEntityActionConfigTypeEnum `json:"type,omitempty"`
+	CreatedAutomatically *bool                      `json:"created_automatically,omitempty"`
+	FlowActionID         *string                    `json:"flow_action_id,omitempty"`
+	ID                   *string                    `json:"id,omitempty"`
+	Name                 *string                    `json:"name,omitempty"`
+	Type                 *MapEntityActionConfigType `json:"type,omitempty"`
 }

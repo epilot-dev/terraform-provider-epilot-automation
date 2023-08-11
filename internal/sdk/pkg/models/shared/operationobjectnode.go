@@ -12,12 +12,12 @@ type OperationObjectNodeUniqType string
 
 const (
 	OperationObjectNodeUniqTypeBoolean    OperationObjectNodeUniqType = "boolean"
-	OperationObjectNodeUniqTypeArrayOfStr OperationObjectNodeUniqType = "arrayOfStr"
+	OperationObjectNodeUniqTypeArrayOfstr OperationObjectNodeUniqType = "arrayOfstr"
 )
 
 type OperationObjectNodeUniq struct {
 	Boolean    *bool
-	ArrayOfStr []string
+	ArrayOfstr []string
 
 	Type OperationObjectNodeUniqType
 }
@@ -31,11 +31,11 @@ func CreateOperationObjectNodeUniqBoolean(boolean bool) OperationObjectNodeUniq 
 	}
 }
 
-func CreateOperationObjectNodeUniqArrayOfStr(arrayOfStr []string) OperationObjectNodeUniq {
-	typ := OperationObjectNodeUniqTypeArrayOfStr
+func CreateOperationObjectNodeUniqArrayOfstr(arrayOfstr []string) OperationObjectNodeUniq {
+	typ := OperationObjectNodeUniqTypeArrayOfstr
 
 	return OperationObjectNodeUniq{
-		ArrayOfStr: arrayOfStr,
+		ArrayOfstr: arrayOfstr,
 		Type:       typ,
 	}
 }
@@ -52,12 +52,12 @@ func (u *OperationObjectNodeUniq) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	arrayOfStr := []string{}
+	arrayOfstr := []string{}
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfStr); err == nil {
-		u.ArrayOfStr = arrayOfStr
-		u.Type = OperationObjectNodeUniqTypeArrayOfStr
+	if err := d.Decode(&arrayOfstr); err == nil {
+		u.ArrayOfstr = arrayOfstr
+		u.Type = OperationObjectNodeUniqTypeArrayOfstr
 		return nil
 	}
 
@@ -69,8 +69,8 @@ func (u OperationObjectNodeUniq) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.Boolean)
 	}
 
-	if u.ArrayOfStr != nil {
-		return json.Marshal(u.ArrayOfStr)
+	if u.ArrayOfstr != nil {
+		return json.Marshal(u.ArrayOfstr)
 	}
 
 	return nil, nil
@@ -86,7 +86,7 @@ type OperationObjectNode struct {
 	// Unique array
 	Uniq *OperationObjectNodeUniq `json:"_uniq,omitempty"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _OperationObjectNode OperationObjectNode
 

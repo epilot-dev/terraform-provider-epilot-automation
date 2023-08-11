@@ -11,31 +11,31 @@ type FrontendSubmitTriggerConfiguration struct {
 	SourceID *string `json:"source_id,omitempty"`
 }
 
-type FrontendSubmitTriggerTypeEnum string
+type FrontendSubmitTriggerType string
 
 const (
-	FrontendSubmitTriggerTypeEnumFrontendSubmission FrontendSubmitTriggerTypeEnum = "frontend_submission"
+	FrontendSubmitTriggerTypeFrontendSubmission FrontendSubmitTriggerType = "frontend_submission"
 )
 
-func (e FrontendSubmitTriggerTypeEnum) ToPointer() *FrontendSubmitTriggerTypeEnum {
+func (e FrontendSubmitTriggerType) ToPointer() *FrontendSubmitTriggerType {
 	return &e
 }
 
-func (e *FrontendSubmitTriggerTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *FrontendSubmitTriggerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "frontend_submission":
-		*e = FrontendSubmitTriggerTypeEnum(v)
+		*e = FrontendSubmitTriggerType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for FrontendSubmitTriggerTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for FrontendSubmitTriggerType: %v", v)
 	}
 }
 
 type FrontendSubmitTrigger struct {
 	Configuration FrontendSubmitTriggerConfiguration `json:"configuration"`
-	Type          FrontendSubmitTriggerTypeEnum      `json:"type"`
+	Type          FrontendSubmitTriggerType          `json:"type"`
 }

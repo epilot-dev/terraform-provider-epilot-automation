@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type TriggerWorkflowActionConfigTypeEnum string
+type TriggerWorkflowActionConfigType string
 
 const (
-	TriggerWorkflowActionConfigTypeEnumTriggerWorkflow TriggerWorkflowActionConfigTypeEnum = "trigger-workflow"
+	TriggerWorkflowActionConfigTypeTriggerWorkflow TriggerWorkflowActionConfigType = "trigger-workflow"
 )
 
-func (e TriggerWorkflowActionConfigTypeEnum) ToPointer() *TriggerWorkflowActionConfigTypeEnum {
+func (e TriggerWorkflowActionConfigType) ToPointer() *TriggerWorkflowActionConfigType {
 	return &e
 }
 
-func (e *TriggerWorkflowActionConfigTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *TriggerWorkflowActionConfigType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "trigger-workflow":
-		*e = TriggerWorkflowActionConfigTypeEnum(v)
+		*e = TriggerWorkflowActionConfigType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for TriggerWorkflowActionConfigTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for TriggerWorkflowActionConfigType: %v", v)
 	}
 }
 
@@ -36,9 +36,9 @@ type TriggerWorkflowActionConfig struct {
 	AllowFailure *bool                  `json:"allow_failure,omitempty"`
 	Config       *TriggerWorkflowConfig `json:"config,omitempty"`
 	// Flag indicating whether the action was created automatically or manually
-	CreatedAutomatically *bool                                `json:"created_automatically,omitempty"`
-	FlowActionID         *string                              `json:"flow_action_id,omitempty"`
-	ID                   *string                              `json:"id,omitempty"`
-	Name                 *string                              `json:"name,omitempty"`
-	Type                 *TriggerWorkflowActionConfigTypeEnum `json:"type,omitempty"`
+	CreatedAutomatically *bool                            `json:"created_automatically,omitempty"`
+	FlowActionID         *string                          `json:"flow_action_id,omitempty"`
+	ID                   *string                          `json:"id,omitempty"`
+	Name                 *string                          `json:"name,omitempty"`
+	Type                 *TriggerWorkflowActionConfigType `json:"type,omitempty"`
 }

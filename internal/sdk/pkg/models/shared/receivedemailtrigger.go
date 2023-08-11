@@ -7,59 +7,59 @@ import (
 	"fmt"
 )
 
-type ReceivedEmailTriggerConfigurationMessageTypeEnum string
+type ReceivedEmailTriggerConfigurationMessageType string
 
 const (
-	ReceivedEmailTriggerConfigurationMessageTypeEnumReceived ReceivedEmailTriggerConfigurationMessageTypeEnum = "RECEIVED"
+	ReceivedEmailTriggerConfigurationMessageTypeReceived ReceivedEmailTriggerConfigurationMessageType = "RECEIVED"
 )
 
-func (e ReceivedEmailTriggerConfigurationMessageTypeEnum) ToPointer() *ReceivedEmailTriggerConfigurationMessageTypeEnum {
+func (e ReceivedEmailTriggerConfigurationMessageType) ToPointer() *ReceivedEmailTriggerConfigurationMessageType {
 	return &e
 }
 
-func (e *ReceivedEmailTriggerConfigurationMessageTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *ReceivedEmailTriggerConfigurationMessageType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "RECEIVED":
-		*e = ReceivedEmailTriggerConfigurationMessageTypeEnum(v)
+		*e = ReceivedEmailTriggerConfigurationMessageType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ReceivedEmailTriggerConfigurationMessageTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for ReceivedEmailTriggerConfigurationMessageType: %v", v)
 	}
 }
 
 type ReceivedEmailTriggerConfiguration struct {
-	MessageType *ReceivedEmailTriggerConfigurationMessageTypeEnum `json:"message_type,omitempty"`
+	MessageType *ReceivedEmailTriggerConfigurationMessageType `json:"message_type,omitempty"`
 }
 
-type ReceivedEmailTriggerTypeEnum string
+type ReceivedEmailTriggerType string
 
 const (
-	ReceivedEmailTriggerTypeEnumReceivedEmail ReceivedEmailTriggerTypeEnum = "received_email"
+	ReceivedEmailTriggerTypeReceivedEmail ReceivedEmailTriggerType = "received_email"
 )
 
-func (e ReceivedEmailTriggerTypeEnum) ToPointer() *ReceivedEmailTriggerTypeEnum {
+func (e ReceivedEmailTriggerType) ToPointer() *ReceivedEmailTriggerType {
 	return &e
 }
 
-func (e *ReceivedEmailTriggerTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *ReceivedEmailTriggerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "received_email":
-		*e = ReceivedEmailTriggerTypeEnum(v)
+		*e = ReceivedEmailTriggerType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ReceivedEmailTriggerTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for ReceivedEmailTriggerType: %v", v)
 	}
 }
 
 type ReceivedEmailTrigger struct {
 	Configuration ReceivedEmailTriggerConfiguration `json:"configuration"`
-	Type          ReceivedEmailTriggerTypeEnum      `json:"type"`
+	Type          ReceivedEmailTriggerType          `json:"type"`
 }

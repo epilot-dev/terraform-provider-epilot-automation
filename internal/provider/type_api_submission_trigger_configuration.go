@@ -4,7 +4,6 @@ package provider
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type OperationObjectNodeUniq1 struct {
-	Boolean    types.Bool     `tfsdk:"boolean"`
-	ArrayOfStr []types.String `tfsdk:"array_of_str"`
+type APISubmissionTriggerConfiguration struct {
+	SourceID types.String `tfsdk:"source_id"`
 }

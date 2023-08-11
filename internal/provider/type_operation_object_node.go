@@ -9,5 +9,5 @@ type OperationObjectNode struct {
 	Copy                 types.String             `tfsdk:"copy"`
 	Set                  types.String             `tfsdk:"set"`
 	Uniq                 *OperationObjectNodeUniq `tfsdk:"uniq"`
-	AdditionalProperties map[string]types.String  `tfsdk:"additional_properties"`
+	AdditionalProperties types.String             `tfsdk:"additional_properties"`
 }

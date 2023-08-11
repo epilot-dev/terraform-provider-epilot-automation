@@ -16,7 +16,7 @@ type EntityItemSnapshot struct {
 	Title     string    `json:"_title"`
 	UpdatedAt time.Time `json:"_updated_at"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _EntityItemSnapshot EntityItemSnapshot
 

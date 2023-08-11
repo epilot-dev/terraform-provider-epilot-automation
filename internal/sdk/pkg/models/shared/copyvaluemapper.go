@@ -2,10 +2,13 @@
 
 package shared
 
+// CopyValueMapper
+//
+// @deprecated null: This will be removed in a future release, please migrate away from it as soon as possible.
 type CopyValueMapper struct {
 	// - copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
 	//
-	Mode MappingAttributeModeEnum `json:"mode"`
+	Mode MappingAttributeMode `json:"mode"`
 	// JSON source path for the value to be extracted from the main entity. Eg: steps[1].['Product Info'].price
 	//
 	Source string `json:"source"`

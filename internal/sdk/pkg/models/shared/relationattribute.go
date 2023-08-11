@@ -7,19 +7,19 @@ import (
 	"fmt"
 )
 
-type RelationAttributeModeEnum string
+type RelationAttributeMode string
 
 const (
-	RelationAttributeModeEnumAppend  RelationAttributeModeEnum = "append"
-	RelationAttributeModeEnumPrepend RelationAttributeModeEnum = "prepend"
-	RelationAttributeModeEnumSet     RelationAttributeModeEnum = "set"
+	RelationAttributeModeAppend  RelationAttributeMode = "append"
+	RelationAttributeModePrepend RelationAttributeMode = "prepend"
+	RelationAttributeModeSet     RelationAttributeMode = "set"
 )
 
-func (e RelationAttributeModeEnum) ToPointer() *RelationAttributeModeEnum {
+func (e RelationAttributeMode) ToPointer() *RelationAttributeMode {
 	return &e
 }
 
-func (e *RelationAttributeModeEnum) UnmarshalJSON(data []byte) error {
+func (e *RelationAttributeMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -30,10 +30,10 @@ func (e *RelationAttributeModeEnum) UnmarshalJSON(data []byte) error {
 	case "prepend":
 		fallthrough
 	case "set":
-		*e = RelationAttributeModeEnum(v)
+		*e = RelationAttributeMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RelationAttributeModeEnum: %v", v)
+		return fmt.Errorf("invalid value for RelationAttributeMode: %v", v)
 	}
 }
 
@@ -54,8 +54,9 @@ type RelationAttributeSourceFilter struct {
 }
 
 type RelationAttribute struct {
-	Mode      RelationAttributeModeEnum `json:"mode"`
-	RelatedTo map[string]interface{}    `json:"related_to,omitempty"`
+	Mode RelationAttributeMode `json:"mode"`
+	// @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	RelatedTo map[string]interface{} `json:"related_to,omitempty"`
 	// A filter to identify which source entities to pick as relations from main entity
 	SourceFilter *RelationAttributeSourceFilter `json:"source_filter,omitempty"`
 	// Target attribute to store the relation in

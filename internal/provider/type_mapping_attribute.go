@@ -3,7 +3,7 @@
 package provider
 
 type MappingAttribute struct {
-	SetValueMapper    *SetValueMapper    `tfsdk:"set_value_mapper"`
-	CopyValueMapper   *CopyValueMapper   `tfsdk:"copy_value_mapper"`
 	AppendValueMapper *AppendValueMapper `tfsdk:"append_value_mapper"`
+	CopyValueMapper   *CopyValueMapper   `tfsdk:"copy_value_mapper"`
+	SetValueMapper    *SetValueMapper    `tfsdk:"set_value_mapper"`
 }

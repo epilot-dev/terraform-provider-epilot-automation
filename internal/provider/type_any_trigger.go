@@ -3,11 +3,11 @@
 package provider
 
 type AnyTrigger struct {
+	ActivityTrigger        *ActivityTrigger        `tfsdk:"activity_trigger"`
+	APISubmissionTrigger   *APISubmissionTrigger   `tfsdk:"api_submission_trigger"`
+	EntityManualTrigger    *EntityManualTrigger    `tfsdk:"entity_manual_trigger"`
+	EntityOperationTrigger *EntityOperationTrigger `tfsdk:"entity_operation_trigger"`
 	FrontendSubmitTrigger  *FrontendSubmitTrigger  `tfsdk:"frontend_submit_trigger"`
 	JourneySubmitTrigger   *JourneySubmitTrigger   `tfsdk:"journey_submit_trigger"`
-	APISubmissionTrigger   *APISubmissionTrigger   `tfsdk:"api_submission_trigger"`
-	EntityOperationTrigger *EntityOperationTrigger `tfsdk:"entity_operation_trigger"`
-	ActivityTrigger        *ActivityTrigger        `tfsdk:"activity_trigger"`
-	EntityManualTrigger    *EntityManualTrigger    `tfsdk:"entity_manual_trigger"`
 	ReceivedEmailTrigger   *ReceivedEmailTrigger   `tfsdk:"received_email_trigger"`
 }

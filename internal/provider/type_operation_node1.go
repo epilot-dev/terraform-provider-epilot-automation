@@ -5,6 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type OperationNode1 struct {
-	OperationObjectNode *OperationObjectNode1 `tfsdk:"operation_object_node"`
 	Any                 types.String          `tfsdk:"any"`
+	OperationObjectNode *OperationObjectNode1 `tfsdk:"operation_object_node"`
 }

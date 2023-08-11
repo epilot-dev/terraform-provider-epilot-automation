@@ -13,15 +13,15 @@ type TriggerWorkflowConditionValueType string
 const (
 	TriggerWorkflowConditionValueTypeStr           TriggerWorkflowConditionValueType = "str"
 	TriggerWorkflowConditionValueTypeNumber        TriggerWorkflowConditionValueType = "number"
-	TriggerWorkflowConditionValueTypeArrayOfStr    TriggerWorkflowConditionValueType = "arrayOfStr"
-	TriggerWorkflowConditionValueTypeArrayOfNumber TriggerWorkflowConditionValueType = "arrayOfNumber"
+	TriggerWorkflowConditionValueTypeArrayOfstr    TriggerWorkflowConditionValueType = "arrayOfstr"
+	TriggerWorkflowConditionValueTypeArrayOfnumber TriggerWorkflowConditionValueType = "arrayOfnumber"
 )
 
 type TriggerWorkflowConditionValue struct {
 	Str           *string
 	Number        *float64
-	ArrayOfStr    []string
-	ArrayOfNumber []float64
+	ArrayOfstr    []string
+	ArrayOfnumber []float64
 
 	Type TriggerWorkflowConditionValueType
 }
@@ -44,20 +44,20 @@ func CreateTriggerWorkflowConditionValueNumber(number float64) TriggerWorkflowCo
 	}
 }
 
-func CreateTriggerWorkflowConditionValueArrayOfStr(arrayOfStr []string) TriggerWorkflowConditionValue {
-	typ := TriggerWorkflowConditionValueTypeArrayOfStr
+func CreateTriggerWorkflowConditionValueArrayOfstr(arrayOfstr []string) TriggerWorkflowConditionValue {
+	typ := TriggerWorkflowConditionValueTypeArrayOfstr
 
 	return TriggerWorkflowConditionValue{
-		ArrayOfStr: arrayOfStr,
+		ArrayOfstr: arrayOfstr,
 		Type:       typ,
 	}
 }
 
-func CreateTriggerWorkflowConditionValueArrayOfNumber(arrayOfNumber []float64) TriggerWorkflowConditionValue {
-	typ := TriggerWorkflowConditionValueTypeArrayOfNumber
+func CreateTriggerWorkflowConditionValueArrayOfnumber(arrayOfnumber []float64) TriggerWorkflowConditionValue {
+	typ := TriggerWorkflowConditionValueTypeArrayOfnumber
 
 	return TriggerWorkflowConditionValue{
-		ArrayOfNumber: arrayOfNumber,
+		ArrayOfnumber: arrayOfnumber,
 		Type:          typ,
 	}
 }
@@ -83,21 +83,21 @@ func (u *TriggerWorkflowConditionValue) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	arrayOfStr := []string{}
+	arrayOfstr := []string{}
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfStr); err == nil {
-		u.ArrayOfStr = arrayOfStr
-		u.Type = TriggerWorkflowConditionValueTypeArrayOfStr
+	if err := d.Decode(&arrayOfstr); err == nil {
+		u.ArrayOfstr = arrayOfstr
+		u.Type = TriggerWorkflowConditionValueTypeArrayOfstr
 		return nil
 	}
 
-	arrayOfNumber := []float64{}
+	arrayOfnumber := []float64{}
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfNumber); err == nil {
-		u.ArrayOfNumber = arrayOfNumber
-		u.Type = TriggerWorkflowConditionValueTypeArrayOfNumber
+	if err := d.Decode(&arrayOfnumber); err == nil {
+		u.ArrayOfnumber = arrayOfnumber
+		u.Type = TriggerWorkflowConditionValueTypeArrayOfnumber
 		return nil
 	}
 
@@ -113,19 +113,19 @@ func (u TriggerWorkflowConditionValue) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.Number)
 	}
 
-	if u.ArrayOfStr != nil {
-		return json.Marshal(u.ArrayOfStr)
+	if u.ArrayOfstr != nil {
+		return json.Marshal(u.ArrayOfstr)
 	}
 
-	if u.ArrayOfNumber != nil {
-		return json.Marshal(u.ArrayOfNumber)
+	if u.ArrayOfnumber != nil {
+		return json.Marshal(u.ArrayOfnumber)
 	}
 
 	return nil, nil
 }
 
 type TriggerWorkflowCondition struct {
-	Comparison ComparisonEnum                 `json:"comparison"`
+	Comparison Comparison                     `json:"comparison"`
 	Schema     string                         `json:"schema"`
 	Source     string                         `json:"source"`
 	Value      *TriggerWorkflowConditionValue `json:"value,omitempty"`

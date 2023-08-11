@@ -32,6 +32,7 @@ type AutomationFlow struct {
 
 // AutomationFlowInput - Automation flow to create
 type AutomationFlowInput struct {
+	Actions []AnyActionConfig `json:"actions"`
 	// Whether the automation is enabled or not
 	Enabled *bool `json:"enabled,omitempty"`
 	// The triggering entity schema

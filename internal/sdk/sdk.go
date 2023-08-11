@@ -5,6 +5,7 @@ package sdk
 import (
 	"epilot-automation/internal/sdk/pkg/models/shared"
 	"epilot-automation/internal/sdk/pkg/utils"
+	"fmt"
 	"net/http"
 	"time"
 )
@@ -22,21 +23,49 @@ type HTTPClient interface {
 // String provides a helper function to return a pointer to a string
 func String(s string) *string { return &s }
 
-// SDK - API Backend for epilot Automation Workflows feature
+// Bool provides a helper function to return a pointer to a bool
+func Bool(b bool) *bool { return &b }
+
+// Int provides a helper function to return a pointer to an int
+func Int(i int) *int { return &i }
+
+// Int64 provides a helper function to return a pointer to an int64
+func Int64(i int64) *int64 { return &i }
+
+// Float32 provides a helper function to return a pointer to a float32
+func Float32(f float32) *float32 { return &f }
+
+// Float64 provides a helper function to return a pointer to a float64
+func Float64(f float64) *float64 { return &f }
+
+type sdkConfiguration struct {
+	DefaultClient     HTTPClient
+	SecurityClient    HTTPClient
+	Security          *shared.Security
+	ServerURL         string
+	ServerIndex       int
+	Language          string
+	OpenAPIDocVersion string
+	SDKVersion        string
+	GenVersion        string
+}
+
+func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
+	if c.ServerURL != "" {
+		return c.ServerURL, nil
+	}
+
+	return ServerList[c.ServerIndex], nil
+}
+
+// SDK - Automation API: API Backend for epilot Automation Workflows feature
 type SDK struct {
 	// Executions - Automation executions
 	Executions *executions
 	// Flows - Automation flows
 	Flows *flows
 
-	// Non-idiomatic field names below are to namespace fields from the fields names above to avoid name conflicts
-	_defaultClient  HTTPClient
-	_securityClient HTTPClient
-	_security       *shared.Security
-	_serverURL      string
-	_language       string
-	_sdkVersion     string
-	_genVersion     string
+	sdkConfiguration sdkConfiguration
 }
 
 type SDKOption func(*SDK)
@@ -44,7 +73,7 @@ type SDKOption func(*SDK)
 // WithServerURL allows the overriding of the default server URL
 func WithServerURL(serverURL string) SDKOption {
 	return func(sdk *SDK) {
-		sdk._serverURL = serverURL
+		sdk.sdkConfiguration.ServerURL = serverURL
 	}
 }
 
@@ -55,68 +84,64 @@ func WithTemplatedServerURL(serverURL string, params map[string]string) SDKOptio
 			serverURL = utils.ReplaceParameters(serverURL, params)
 		}
 
-		sdk._serverURL = serverURL
+		sdk.sdkConfiguration.ServerURL = serverURL
+	}
+}
+
+// WithServerIndex allows the overriding of the default server by index
+func WithServerIndex(serverIndex int) SDKOption {
+	return func(sdk *SDK) {
+		if serverIndex < 0 || serverIndex >= len(ServerList) {
+			panic(fmt.Errorf("server index %d out of range", serverIndex))
+		}
+
+		sdk.sdkConfiguration.ServerIndex = serverIndex
 	}
 }
 
 // WithClient allows the overriding of the default HTTP client used by the SDK
 func WithClient(client HTTPClient) SDKOption {
 	return func(sdk *SDK) {
-		sdk._defaultClient = client
+		sdk.sdkConfiguration.DefaultClient = client
 	}
 }
 
 // WithSecurity configures the SDK to use the provided security details
 func WithSecurity(security shared.Security) SDKOption {
 	return func(sdk *SDK) {
-		sdk._security = &security
+		sdk.sdkConfiguration.Security = &security
 	}
 }
 
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *SDK {
 	sdk := &SDK{
-		_language:   "go",
-		_sdkVersion: "0.0.3",
-		_genVersion: "internal",
+		sdkConfiguration: sdkConfiguration{
+			Language:          "terraform",
+			OpenAPIDocVersion: "1.0.0",
+			SDKVersion:        "0.0.3",
+			GenVersion:        "internal",
+		},
 	}
 	for _, opt := range opts {
 		opt(sdk)
 	}
 
 	// Use WithClient to override the default client if you would like to customize the timeout
-	if sdk._defaultClient == nil {
-		sdk._defaultClient = &http.Client{Timeout: 60 * time.Second}
+	if sdk.sdkConfiguration.DefaultClient == nil {
+		sdk.sdkConfiguration.DefaultClient = &http.Client{Timeout: 60 * time.Second}
 	}
-	if sdk._securityClient == nil {
-		if sdk._security != nil {
-			sdk._securityClient = utils.ConfigureSecurityClient(sdk._defaultClient, sdk._security)
+	if sdk.sdkConfiguration.SecurityClient == nil {
+		if sdk.sdkConfiguration.Security != nil {
+			sdk.sdkConfiguration.SecurityClient = utils.ConfigureSecurityClient(sdk.sdkConfiguration.DefaultClient, sdk.sdkConfiguration.Security)
 		} else {
-			sdk._securityClient = sdk._defaultClient
+			sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
 		}
 	}
 
-	if sdk._serverURL == "" {
-		sdk._serverURL = ServerList[0]
-	}
+	sdk.Executions = newExecutions(sdk.sdkConfiguration)
 
-	sdk.Executions = newExecutions(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
-
-	sdk.Flows = newFlows(
-		sdk._defaultClient,
-		sdk._securityClient,
-		sdk._serverURL,
-		sdk._language,
-		sdk._sdkVersion,
-		sdk._genVersion,
-	)
+	sdk.Flows = newFlows(sdk.sdkConfiguration)
 
 	return sdk
 }
