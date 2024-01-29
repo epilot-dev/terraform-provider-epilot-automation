@@ -3,9 +3,8 @@
 package shared
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
 )
 
 type AnyTriggerType string
@@ -96,66 +95,51 @@ func CreateAnyTriggerReceivedEmailTrigger(receivedEmailTrigger ReceivedEmailTrig
 }
 
 func (u *AnyTrigger) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	frontendSubmitTrigger := new(FrontendSubmitTrigger)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&frontendSubmitTrigger); err == nil {
+	if err := utils.UnmarshalJSON(data, &frontendSubmitTrigger, "", true, true); err == nil {
 		u.FrontendSubmitTrigger = frontendSubmitTrigger
 		u.Type = AnyTriggerTypeFrontendSubmitTrigger
 		return nil
 	}
 
 	journeySubmitTrigger := new(JourneySubmitTrigger)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&journeySubmitTrigger); err == nil {
+	if err := utils.UnmarshalJSON(data, &journeySubmitTrigger, "", true, true); err == nil {
 		u.JourneySubmitTrigger = journeySubmitTrigger
 		u.Type = AnyTriggerTypeJourneySubmitTrigger
 		return nil
 	}
 
 	apiSubmissionTrigger := new(APISubmissionTrigger)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&apiSubmissionTrigger); err == nil {
+	if err := utils.UnmarshalJSON(data, &apiSubmissionTrigger, "", true, true); err == nil {
 		u.APISubmissionTrigger = apiSubmissionTrigger
 		u.Type = AnyTriggerTypeAPISubmissionTrigger
 		return nil
 	}
 
 	entityOperationTrigger := new(EntityOperationTrigger)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&entityOperationTrigger); err == nil {
+	if err := utils.UnmarshalJSON(data, &entityOperationTrigger, "", true, true); err == nil {
 		u.EntityOperationTrigger = entityOperationTrigger
 		u.Type = AnyTriggerTypeEntityOperationTrigger
 		return nil
 	}
 
 	activityTrigger := new(ActivityTrigger)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&activityTrigger); err == nil {
+	if err := utils.UnmarshalJSON(data, &activityTrigger, "", true, true); err == nil {
 		u.ActivityTrigger = activityTrigger
 		u.Type = AnyTriggerTypeActivityTrigger
 		return nil
 	}
 
 	entityManualTrigger := new(EntityManualTrigger)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&entityManualTrigger); err == nil {
+	if err := utils.UnmarshalJSON(data, &entityManualTrigger, "", true, true); err == nil {
 		u.EntityManualTrigger = entityManualTrigger
 		u.Type = AnyTriggerTypeEntityManualTrigger
 		return nil
 	}
 
 	receivedEmailTrigger := new(ReceivedEmailTrigger)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&receivedEmailTrigger); err == nil {
+	if err := utils.UnmarshalJSON(data, &receivedEmailTrigger, "", true, true); err == nil {
 		u.ReceivedEmailTrigger = receivedEmailTrigger
 		u.Type = AnyTriggerTypeReceivedEmailTrigger
 		return nil
@@ -166,32 +150,32 @@ func (u *AnyTrigger) UnmarshalJSON(data []byte) error {
 
 func (u AnyTrigger) MarshalJSON() ([]byte, error) {
 	if u.FrontendSubmitTrigger != nil {
-		return json.Marshal(u.FrontendSubmitTrigger)
+		return utils.MarshalJSON(u.FrontendSubmitTrigger, "", true)
 	}
 
 	if u.JourneySubmitTrigger != nil {
-		return json.Marshal(u.JourneySubmitTrigger)
+		return utils.MarshalJSON(u.JourneySubmitTrigger, "", true)
 	}
 
 	if u.APISubmissionTrigger != nil {
-		return json.Marshal(u.APISubmissionTrigger)
+		return utils.MarshalJSON(u.APISubmissionTrigger, "", true)
 	}
 
 	if u.EntityOperationTrigger != nil {
-		return json.Marshal(u.EntityOperationTrigger)
+		return utils.MarshalJSON(u.EntityOperationTrigger, "", true)
 	}
 
 	if u.ActivityTrigger != nil {
-		return json.Marshal(u.ActivityTrigger)
+		return utils.MarshalJSON(u.ActivityTrigger, "", true)
 	}
 
 	if u.EntityManualTrigger != nil {
-		return json.Marshal(u.EntityManualTrigger)
+		return utils.MarshalJSON(u.EntityManualTrigger, "", true)
 	}
 
 	if u.ReceivedEmailTrigger != nil {
-		return json.Marshal(u.ReceivedEmailTrigger)
+		return utils.MarshalJSON(u.ReceivedEmailTrigger, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }

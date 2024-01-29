@@ -7,6 +7,27 @@ import (
 	"fmt"
 )
 
+type CartCheckoutActionConfigReason struct {
+	// Why the action has to be skipped/failed
+	Message *string `json:"message,omitempty"`
+	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
+	Payload map[string]interface{} `json:"payload,omitempty"`
+}
+
+func (o *CartCheckoutActionConfigReason) GetMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Message
+}
+
+func (o *CartCheckoutActionConfigReason) GetPayload() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Payload
+}
+
 type CartCheckoutActionConfigType string
 
 const (
@@ -37,9 +58,66 @@ type CartCheckoutActionConfig struct {
 	AllowFailure *bool               `json:"allow_failure,omitempty"`
 	Config       *CartCheckoutConfig `json:"config,omitempty"`
 	// Flag indicating whether the action was created automatically or manually
-	CreatedAutomatically *bool                         `json:"created_automatically,omitempty"`
-	FlowActionID         *string                       `json:"flow_action_id,omitempty"`
-	ID                   *string                       `json:"id,omitempty"`
-	Name                 *string                       `json:"name,omitempty"`
-	Type                 *CartCheckoutActionConfigType `json:"type,omitempty"`
+	CreatedAutomatically *bool                           `json:"created_automatically,omitempty"`
+	FlowActionID         *string                         `json:"flow_action_id,omitempty"`
+	ID                   *string                         `json:"id,omitempty"`
+	Name                 *string                         `json:"name,omitempty"`
+	Reason               *CartCheckoutActionConfigReason `json:"reason,omitempty"`
+	Type                 *CartCheckoutActionConfigType   `json:"type,omitempty"`
+}
+
+func (o *CartCheckoutActionConfig) GetAllowFailure() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AllowFailure
+}
+
+func (o *CartCheckoutActionConfig) GetConfig() *CartCheckoutConfig {
+	if o == nil {
+		return nil
+	}
+	return o.Config
+}
+
+func (o *CartCheckoutActionConfig) GetCreatedAutomatically() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAutomatically
+}
+
+func (o *CartCheckoutActionConfig) GetFlowActionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FlowActionID
+}
+
+func (o *CartCheckoutActionConfig) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *CartCheckoutActionConfig) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *CartCheckoutActionConfig) GetReason() *CartCheckoutActionConfigReason {
+	if o == nil {
+		return nil
+	}
+	return o.Reason
+}
+
+func (o *CartCheckoutActionConfig) GetType() *CartCheckoutActionConfigType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

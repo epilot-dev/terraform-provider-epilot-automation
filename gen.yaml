@@ -1,18 +1,23 @@
-configVersion: 1.0.0
+configVersion: 2.0.0
 generation:
   sdkClassName: SDK
+  usageSnippets:
+    optionalPropertyRendering: withExample
+  fixes:
+    nameResolutionDec2023: false
   sdkFlattening: true
-  singleTagPerOp: false
   telemetryEnabled: false
-features:
-  terraform:
-    core: 2.83.1
-    deprecations: 2.81.1
-    globalSecurity: 2.81.1
-    globalServerURLs: 2.81.1
-    includes: 2.81.1
-    inputOutputModels: 2.81.1
 terraform:
-  version: 0.0.3
+  version: 0.2.5
   author: epilot-dev
+  imports:
+    option: openapi
+    paths:
+      callbacks: callbacks
+      errors: sdkerrors
+      operations: operations
+      shared: shared
+      webhooks: webhooks
+  inputModelSuffix: input
+  outputModelSuffix: output
   packageName: epilot-automation

@@ -3,9 +3,8 @@
 package shared
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
 )
 
 type TriggerWorkflowConditionValueType string
@@ -63,39 +62,30 @@ func CreateTriggerWorkflowConditionValueArrayOfnumber(arrayOfnumber []float64) T
 }
 
 func (u *TriggerWorkflowConditionValue) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = TriggerWorkflowConditionValueTypeStr
 		return nil
 	}
 
 	number := new(float64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&number); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
 		u.Number = number
 		u.Type = TriggerWorkflowConditionValueTypeNumber
 		return nil
 	}
 
 	arrayOfstr := []string{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfstr); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfstr, "", true, true); err == nil {
 		u.ArrayOfstr = arrayOfstr
 		u.Type = TriggerWorkflowConditionValueTypeArrayOfstr
 		return nil
 	}
 
 	arrayOfnumber := []float64{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfnumber); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfnumber, "", true, true); err == nil {
 		u.ArrayOfnumber = arrayOfnumber
 		u.Type = TriggerWorkflowConditionValueTypeArrayOfnumber
 		return nil
@@ -106,22 +96,22 @@ func (u *TriggerWorkflowConditionValue) UnmarshalJSON(data []byte) error {
 
 func (u TriggerWorkflowConditionValue) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Number != nil {
-		return json.Marshal(u.Number)
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.ArrayOfstr != nil {
-		return json.Marshal(u.ArrayOfstr)
+		return utils.MarshalJSON(u.ArrayOfstr, "", true)
 	}
 
 	if u.ArrayOfnumber != nil {
-		return json.Marshal(u.ArrayOfnumber)
+		return utils.MarshalJSON(u.ArrayOfnumber, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type TriggerWorkflowCondition struct {
@@ -129,4 +119,32 @@ type TriggerWorkflowCondition struct {
 	Schema     string                         `json:"schema"`
 	Source     string                         `json:"source"`
 	Value      *TriggerWorkflowConditionValue `json:"value,omitempty"`
+}
+
+func (o *TriggerWorkflowCondition) GetComparison() Comparison {
+	if o == nil {
+		return Comparison("")
+	}
+	return o.Comparison
+}
+
+func (o *TriggerWorkflowCondition) GetSchema() string {
+	if o == nil {
+		return ""
+	}
+	return o.Schema
+}
+
+func (o *TriggerWorkflowCondition) GetSource() string {
+	if o == nil {
+		return ""
+	}
+	return o.Source
+}
+
+func (o *TriggerWorkflowCondition) GetValue() *TriggerWorkflowConditionValue {
+	if o == nil {
+		return nil
+	}
+	return o.Value
 }

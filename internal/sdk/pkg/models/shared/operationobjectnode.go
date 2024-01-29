@@ -3,135 +3,127 @@
 package shared
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
 )
 
-type OperationObjectNodeUniqType string
+type UniqType string
 
 const (
-	OperationObjectNodeUniqTypeBoolean    OperationObjectNodeUniqType = "boolean"
-	OperationObjectNodeUniqTypeArrayOfstr OperationObjectNodeUniqType = "arrayOfstr"
+	UniqTypeBoolean    UniqType = "boolean"
+	UniqTypeArrayOfstr UniqType = "arrayOfstr"
 )
 
-type OperationObjectNodeUniq struct {
+// Uniq - Unique array
+type Uniq struct {
 	Boolean    *bool
 	ArrayOfstr []string
 
-	Type OperationObjectNodeUniqType
+	Type UniqType
 }
 
-func CreateOperationObjectNodeUniqBoolean(boolean bool) OperationObjectNodeUniq {
-	typ := OperationObjectNodeUniqTypeBoolean
+func CreateUniqBoolean(boolean bool) Uniq {
+	typ := UniqTypeBoolean
 
-	return OperationObjectNodeUniq{
+	return Uniq{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func CreateOperationObjectNodeUniqArrayOfstr(arrayOfstr []string) OperationObjectNodeUniq {
-	typ := OperationObjectNodeUniqTypeArrayOfstr
+func CreateUniqArrayOfstr(arrayOfstr []string) Uniq {
+	typ := UniqTypeArrayOfstr
 
-	return OperationObjectNodeUniq{
+	return Uniq{
 		ArrayOfstr: arrayOfstr,
 		Type:       typ,
 	}
 }
 
-func (u *OperationObjectNodeUniq) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+func (u *Uniq) UnmarshalJSON(data []byte) error {
 
 	boolean := new(bool)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&boolean); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = boolean
-		u.Type = OperationObjectNodeUniqTypeBoolean
+		u.Type = UniqTypeBoolean
 		return nil
 	}
 
 	arrayOfstr := []string{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfstr); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfstr, "", true, true); err == nil {
 		u.ArrayOfstr = arrayOfstr
-		u.Type = OperationObjectNodeUniqTypeArrayOfstr
+		u.Type = UniqTypeArrayOfstr
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u OperationObjectNodeUniq) MarshalJSON() ([]byte, error) {
+func (u Uniq) MarshalJSON() ([]byte, error) {
 	if u.Boolean != nil {
-		return json.Marshal(u.Boolean)
+		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
 	if u.ArrayOfstr != nil {
-		return json.Marshal(u.ArrayOfstr)
+		return utils.MarshalJSON(u.ArrayOfstr, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// OperationObjectNode - Mapping operation nodes are either primitive values or operation node objects
 type OperationObjectNode struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// Append to array
 	Append []interface{} `json:"_append,omitempty"`
 	// Copy JSONPath value from source entity context
 	Copy *string     `json:"_copy,omitempty"`
 	Set  interface{} `json:"_set,omitempty"`
 	// Unique array
-	Uniq *OperationObjectNodeUniq `json:"_uniq,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
+	Uniq *Uniq `json:"_uniq,omitempty"`
 }
-type _OperationObjectNode OperationObjectNode
 
-func (c *OperationObjectNode) UnmarshalJSON(bs []byte) error {
-	data := _OperationObjectNode{}
+func (o OperationObjectNode) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(o, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (o *OperationObjectNode) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &o, "", false, true); err != nil {
 		return err
 	}
-	*c = OperationObjectNode(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "_append")
-	delete(additionalFields, "_copy")
-	delete(additionalFields, "_set")
-	delete(additionalFields, "_uniq")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c OperationObjectNode) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_OperationObjectNode(c))
-	if err != nil {
-		return nil, err
+func (o *OperationObjectNode) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *OperationObjectNode) GetAppend() []interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.Append
+}
 
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
+func (o *OperationObjectNode) GetCopy() *string {
+	if o == nil {
+		return nil
 	}
+	return o.Copy
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *OperationObjectNode) GetSet() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.Set
+}
 
-	return json.Marshal(out)
+func (o *OperationObjectNode) GetUniq() *Uniq {
+	if o == nil {
+		return nil
+	}
+	return o.Uniq
 }

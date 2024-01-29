@@ -17,6 +17,8 @@ const (
 	ErrorCodeTimeoutError          ErrorCode = "TIMEOUT_ERROR"
 	ErrorCodeBadConfig             ErrorCode = "BAD_CONFIG"
 	ErrorCodeInternalError         ErrorCode = "INTERNAL_ERROR"
+	ErrorCodeTriggerWebhookError   ErrorCode = "TRIGGER_WEBHOOK_ERROR"
+	ErrorCodeTemplateError         ErrorCode = "TEMPLATE_ERROR"
 )
 
 func (e ErrorCode) ToPointer() *ErrorCode {
@@ -42,6 +44,10 @@ func (e *ErrorCode) UnmarshalJSON(data []byte) error {
 	case "BAD_CONFIG":
 		fallthrough
 	case "INTERNAL_ERROR":
+		fallthrough
+	case "TRIGGER_WEBHOOK_ERROR":
+		fallthrough
+	case "TEMPLATE_ERROR":
 		*e = ErrorCode(v)
 		return nil
 	default:

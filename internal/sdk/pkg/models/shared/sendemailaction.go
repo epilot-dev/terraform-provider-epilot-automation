@@ -3,75 +3,169 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
-	"errors"
+	"fmt"
 )
+
+type SendEmailActionReason struct {
+	// Why the action has to be skipped/failed
+	Message *string `json:"message,omitempty"`
+	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
+	Payload map[string]interface{} `json:"payload,omitempty"`
+}
+
+func (o *SendEmailActionReason) GetMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Message
+}
+
+func (o *SendEmailActionReason) GetPayload() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Payload
+}
 
 type SendEmailActionType string
 
 const (
-	SendEmailActionTypeAutomationActionConfig          SendEmailActionType = "AutomationActionConfig"
-	SendEmailActionTypeAutomationActionExecutionState4 SendEmailActionType = "AutomationActionExecutionState4"
+	SendEmailActionTypeSendEmail SendEmailActionType = "send-email"
 )
 
+func (e SendEmailActionType) ToPointer() *SendEmailActionType {
+	return &e
+}
+
+func (e *SendEmailActionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "send-email":
+		*e = SendEmailActionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SendEmailActionType: %v", v)
+	}
+}
+
 type SendEmailAction struct {
-	AutomationActionConfig          *AutomationActionConfig
-	AutomationActionExecutionState4 *AutomationActionExecutionState4
-
-	Type SendEmailActionType
+	// Whether to stop execution in a failed state if this action fails
+	AllowFailure *bool            `json:"allow_failure,omitempty"`
+	Config       *SendEmailConfig `json:"config,omitempty"`
+	// Flag indicating whether the action was created automatically or manually
+	CreatedAutomatically *bool                  `json:"created_automatically,omitempty"`
+	ErrorOutput          *ErrorOutput           `json:"error_output,omitempty"`
+	ExecutionStatus      *ExecutionStatus       `json:"execution_status,omitempty"`
+	FlowActionID         *string                `json:"flow_action_id,omitempty"`
+	ID                   *string                `json:"id,omitempty"`
+	Name                 *string                `json:"name,omitempty"`
+	Outputs              map[string]interface{} `json:"outputs,omitempty"`
+	Reason               *SendEmailActionReason `json:"reason,omitempty"`
+	// different behaviors for retrying failed execution actions.
+	RetryStrategy *RetryStrategy       `json:"retry_strategy,omitempty"`
+	StartedAt     *string              `json:"started_at,omitempty"`
+	Type          *SendEmailActionType `json:"type,omitempty"`
+	UpdatedAt     *string              `json:"updated_at,omitempty"`
 }
 
-func CreateSendEmailActionAutomationActionConfig(automationActionConfig AutomationActionConfig) SendEmailAction {
-	typ := SendEmailActionTypeAutomationActionConfig
-
-	return SendEmailAction{
-		AutomationActionConfig: &automationActionConfig,
-		Type:                   typ,
-	}
-}
-
-func CreateSendEmailActionAutomationActionExecutionState4(automationActionExecutionState4 AutomationActionExecutionState4) SendEmailAction {
-	typ := SendEmailActionTypeAutomationActionExecutionState4
-
-	return SendEmailAction{
-		AutomationActionExecutionState4: &automationActionExecutionState4,
-		Type:                            typ,
-	}
-}
-
-func (u *SendEmailAction) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	automationActionConfig := new(AutomationActionConfig)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&automationActionConfig); err == nil {
-		u.AutomationActionConfig = automationActionConfig
-		u.Type = SendEmailActionTypeAutomationActionConfig
+func (o *SendEmailAction) GetAllowFailure() *bool {
+	if o == nil {
 		return nil
 	}
-
-	automationActionExecutionState4 := new(AutomationActionExecutionState4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&automationActionExecutionState4); err == nil {
-		u.AutomationActionExecutionState4 = automationActionExecutionState4
-		u.Type = SendEmailActionTypeAutomationActionExecutionState4
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
+	return o.AllowFailure
 }
 
-func (u SendEmailAction) MarshalJSON() ([]byte, error) {
-	if u.AutomationActionConfig != nil {
-		return json.Marshal(u.AutomationActionConfig)
+func (o *SendEmailAction) GetConfig() *SendEmailConfig {
+	if o == nil {
+		return nil
 	}
+	return o.Config
+}
 
-	if u.AutomationActionExecutionState4 != nil {
-		return json.Marshal(u.AutomationActionExecutionState4)
+func (o *SendEmailAction) GetCreatedAutomatically() *bool {
+	if o == nil {
+		return nil
 	}
+	return o.CreatedAutomatically
+}
 
-	return nil, nil
+func (o *SendEmailAction) GetErrorOutput() *ErrorOutput {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorOutput
+}
+
+func (o *SendEmailAction) GetExecutionStatus() *ExecutionStatus {
+	if o == nil {
+		return nil
+	}
+	return o.ExecutionStatus
+}
+
+func (o *SendEmailAction) GetFlowActionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FlowActionID
+}
+
+func (o *SendEmailAction) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *SendEmailAction) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *SendEmailAction) GetOutputs() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Outputs
+}
+
+func (o *SendEmailAction) GetReason() *SendEmailActionReason {
+	if o == nil {
+		return nil
+	}
+	return o.Reason
+}
+
+func (o *SendEmailAction) GetRetryStrategy() *RetryStrategy {
+	if o == nil {
+		return nil
+	}
+	return o.RetryStrategy
+}
+
+func (o *SendEmailAction) GetStartedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartedAt
+}
+
+func (o *SendEmailAction) GetType() *SendEmailActionType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *SendEmailAction) GetUpdatedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
 }

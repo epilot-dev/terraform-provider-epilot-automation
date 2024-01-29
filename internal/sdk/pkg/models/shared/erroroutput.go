@@ -3,6 +3,28 @@
 package shared
 
 type ErrorOutput struct {
-	ErrorCode   ErrorCode `json:"error_code"`
-	ErrorReason string    `json:"error_reason"`
+	ErrorCode   ErrorCode              `json:"error_code"`
+	ErrorInfo   map[string]interface{} `json:"error_info,omitempty"`
+	ErrorReason string                 `json:"error_reason"`
+}
+
+func (o *ErrorOutput) GetErrorCode() ErrorCode {
+	if o == nil {
+		return ErrorCode("")
+	}
+	return o.ErrorCode
+}
+
+func (o *ErrorOutput) GetErrorInfo() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorInfo
+}
+
+func (o *ErrorOutput) GetErrorReason() string {
+	if o == nil {
+		return ""
+	}
+	return o.ErrorReason
 }

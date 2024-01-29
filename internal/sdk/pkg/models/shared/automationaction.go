@@ -2,76 +2,141 @@
 
 package shared
 
-import (
-	"bytes"
-	"encoding/json"
-	"errors"
-)
+type Reason struct {
+	// Why the action has to be skipped/failed
+	Message *string `json:"message,omitempty"`
+	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
+	Payload map[string]interface{} `json:"payload,omitempty"`
+}
 
-type AutomationActionType string
+func (o *Reason) GetMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Message
+}
 
-const (
-	AutomationActionTypeAutomationActionConfig          AutomationActionType = "AutomationActionConfig"
-	AutomationActionTypeAutomationActionExecutionState6 AutomationActionType = "AutomationActionExecutionState6"
-)
+func (o *Reason) GetPayload() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Payload
+}
 
 type AutomationAction struct {
-	AutomationActionConfig          *AutomationActionConfig
-	AutomationActionExecutionState6 *AutomationActionExecutionState6
-
-	Type AutomationActionType
+	// Whether to stop execution in a failed state if this action fails
+	AllowFailure *bool                  `json:"allow_failure,omitempty"`
+	Config       map[string]interface{} `json:"config,omitempty"`
+	// Flag indicating whether the action was created automatically or manually
+	CreatedAutomatically *bool                  `json:"created_automatically,omitempty"`
+	ErrorOutput          *ErrorOutput           `json:"error_output,omitempty"`
+	ExecutionStatus      *ExecutionStatus       `json:"execution_status,omitempty"`
+	FlowActionID         *string                `json:"flow_action_id,omitempty"`
+	ID                   *string                `json:"id,omitempty"`
+	Name                 *string                `json:"name,omitempty"`
+	Outputs              map[string]interface{} `json:"outputs,omitempty"`
+	Reason               *Reason                `json:"reason,omitempty"`
+	// different behaviors for retrying failed execution actions.
+	RetryStrategy *RetryStrategy `json:"retry_strategy,omitempty"`
+	StartedAt     *string        `json:"started_at,omitempty"`
+	Type          *string        `json:"type,omitempty"`
+	UpdatedAt     *string        `json:"updated_at,omitempty"`
 }
 
-func CreateAutomationActionAutomationActionConfig(automationActionConfig AutomationActionConfig) AutomationAction {
-	typ := AutomationActionTypeAutomationActionConfig
-
-	return AutomationAction{
-		AutomationActionConfig: &automationActionConfig,
-		Type:                   typ,
-	}
-}
-
-func CreateAutomationActionAutomationActionExecutionState6(automationActionExecutionState6 AutomationActionExecutionState6) AutomationAction {
-	typ := AutomationActionTypeAutomationActionExecutionState6
-
-	return AutomationAction{
-		AutomationActionExecutionState6: &automationActionExecutionState6,
-		Type:                            typ,
-	}
-}
-
-func (u *AutomationAction) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	automationActionConfig := new(AutomationActionConfig)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&automationActionConfig); err == nil {
-		u.AutomationActionConfig = automationActionConfig
-		u.Type = AutomationActionTypeAutomationActionConfig
+func (o *AutomationAction) GetAllowFailure() *bool {
+	if o == nil {
 		return nil
 	}
-
-	automationActionExecutionState6 := new(AutomationActionExecutionState6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&automationActionExecutionState6); err == nil {
-		u.AutomationActionExecutionState6 = automationActionExecutionState6
-		u.Type = AutomationActionTypeAutomationActionExecutionState6
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
+	return o.AllowFailure
 }
 
-func (u AutomationAction) MarshalJSON() ([]byte, error) {
-	if u.AutomationActionConfig != nil {
-		return json.Marshal(u.AutomationActionConfig)
+func (o *AutomationAction) GetConfig() map[string]interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.Config
+}
 
-	if u.AutomationActionExecutionState6 != nil {
-		return json.Marshal(u.AutomationActionExecutionState6)
+func (o *AutomationAction) GetCreatedAutomatically() *bool {
+	if o == nil {
+		return nil
 	}
+	return o.CreatedAutomatically
+}
 
-	return nil, nil
+func (o *AutomationAction) GetErrorOutput() *ErrorOutput {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorOutput
+}
+
+func (o *AutomationAction) GetExecutionStatus() *ExecutionStatus {
+	if o == nil {
+		return nil
+	}
+	return o.ExecutionStatus
+}
+
+func (o *AutomationAction) GetFlowActionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FlowActionID
+}
+
+func (o *AutomationAction) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *AutomationAction) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AutomationAction) GetOutputs() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Outputs
+}
+
+func (o *AutomationAction) GetReason() *Reason {
+	if o == nil {
+		return nil
+	}
+	return o.Reason
+}
+
+func (o *AutomationAction) GetRetryStrategy() *RetryStrategy {
+	if o == nil {
+		return nil
+	}
+	return o.RetryStrategy
+}
+
+func (o *AutomationAction) GetStartedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartedAt
+}
+
+func (o *AutomationAction) GetType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *AutomationAction) GetUpdatedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
 }

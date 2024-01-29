@@ -11,6 +11,13 @@ type FrontendSubmitTriggerConfiguration struct {
 	SourceID *string `json:"source_id,omitempty"`
 }
 
+func (o *FrontendSubmitTriggerConfiguration) GetSourceID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SourceID
+}
+
 type FrontendSubmitTriggerType string
 
 const (
@@ -38,4 +45,18 @@ func (e *FrontendSubmitTriggerType) UnmarshalJSON(data []byte) error {
 type FrontendSubmitTrigger struct {
 	Configuration FrontendSubmitTriggerConfiguration `json:"configuration"`
 	Type          FrontendSubmitTriggerType          `json:"type"`
+}
+
+func (o *FrontendSubmitTrigger) GetConfiguration() FrontendSubmitTriggerConfiguration {
+	if o == nil {
+		return FrontendSubmitTriggerConfiguration{}
+	}
+	return o.Configuration
+}
+
+func (o *FrontendSubmitTrigger) GetType() FrontendSubmitTriggerType {
+	if o == nil {
+		return FrontendSubmitTriggerType("")
+	}
+	return o.Type
 }

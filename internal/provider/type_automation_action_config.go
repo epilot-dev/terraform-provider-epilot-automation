@@ -5,11 +5,12 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type AutomationActionConfig struct {
-	AllowFailure         types.Bool              `tfsdk:"allow_failure"`
-	Config               map[string]types.String `tfsdk:"config"`
-	CreatedAutomatically types.Bool              `tfsdk:"created_automatically"`
-	FlowActionID         types.String            `tfsdk:"flow_action_id"`
-	ID                   types.String            `tfsdk:"id"`
-	Name                 types.String            `tfsdk:"name"`
-	Type                 types.String            `tfsdk:"type"`
+	AllowFailure         types.Bool                    `tfsdk:"allow_failure"`
+	Config               map[string]types.String       `tfsdk:"config"`
+	CreatedAutomatically types.Bool                    `tfsdk:"created_automatically"`
+	FlowActionID         types.String                  `tfsdk:"flow_action_id"`
+	ID                   types.String                  `tfsdk:"id"`
+	Name                 types.String                  `tfsdk:"name"`
+	Reason               *AutomationActionConfigReason `tfsdk:"reason"`
+	Type                 types.String                  `tfsdk:"type"`
 }

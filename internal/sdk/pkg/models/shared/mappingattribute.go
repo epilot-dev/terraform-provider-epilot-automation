@@ -3,9 +3,8 @@
 package shared
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
 )
 
 type MappingAttributeType string
@@ -52,30 +51,23 @@ func CreateMappingAttributeAppendValueMapper(appendValueMapper AppendValueMapper
 }
 
 func (u *MappingAttribute) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	setValueMapper := new(SetValueMapper)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&setValueMapper); err == nil {
+	if err := utils.UnmarshalJSON(data, &setValueMapper, "", true, true); err == nil {
 		u.SetValueMapper = setValueMapper
 		u.Type = MappingAttributeTypeSetValueMapper
 		return nil
 	}
 
 	copyValueMapper := new(CopyValueMapper)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&copyValueMapper); err == nil {
+	if err := utils.UnmarshalJSON(data, &copyValueMapper, "", true, true); err == nil {
 		u.CopyValueMapper = copyValueMapper
 		u.Type = MappingAttributeTypeCopyValueMapper
 		return nil
 	}
 
 	appendValueMapper := new(AppendValueMapper)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&appendValueMapper); err == nil {
+	if err := utils.UnmarshalJSON(data, &appendValueMapper, "", true, true); err == nil {
 		u.AppendValueMapper = appendValueMapper
 		u.Type = MappingAttributeTypeAppendValueMapper
 		return nil
@@ -86,16 +78,16 @@ func (u *MappingAttribute) UnmarshalJSON(data []byte) error {
 
 func (u MappingAttribute) MarshalJSON() ([]byte, error) {
 	if u.SetValueMapper != nil {
-		return json.Marshal(u.SetValueMapper)
+		return utils.MarshalJSON(u.SetValueMapper, "", true)
 	}
 
 	if u.CopyValueMapper != nil {
-		return json.Marshal(u.CopyValueMapper)
+		return utils.MarshalJSON(u.CopyValueMapper, "", true)
 	}
 
 	if u.AppendValueMapper != nil {
-		return json.Marshal(u.AppendValueMapper)
+		return utils.MarshalJSON(u.AppendValueMapper, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }

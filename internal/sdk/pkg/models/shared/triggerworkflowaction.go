@@ -3,75 +3,169 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
-	"errors"
+	"fmt"
 )
+
+type TriggerWorkflowActionReason struct {
+	// Why the action has to be skipped/failed
+	Message *string `json:"message,omitempty"`
+	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
+	Payload map[string]interface{} `json:"payload,omitempty"`
+}
+
+func (o *TriggerWorkflowActionReason) GetMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Message
+}
+
+func (o *TriggerWorkflowActionReason) GetPayload() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Payload
+}
 
 type TriggerWorkflowActionType string
 
 const (
-	TriggerWorkflowActionTypeAutomationActionConfig          TriggerWorkflowActionType = "AutomationActionConfig"
-	TriggerWorkflowActionTypeAutomationActionExecutionState1 TriggerWorkflowActionType = "AutomationActionExecutionState1"
+	TriggerWorkflowActionTypeTriggerWorkflow TriggerWorkflowActionType = "trigger-workflow"
 )
 
+func (e TriggerWorkflowActionType) ToPointer() *TriggerWorkflowActionType {
+	return &e
+}
+
+func (e *TriggerWorkflowActionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "trigger-workflow":
+		*e = TriggerWorkflowActionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for TriggerWorkflowActionType: %v", v)
+	}
+}
+
 type TriggerWorkflowAction struct {
-	AutomationActionConfig          *AutomationActionConfig
-	AutomationActionExecutionState1 *AutomationActionExecutionState1
-
-	Type TriggerWorkflowActionType
+	// Whether to stop execution in a failed state if this action fails
+	AllowFailure *bool                  `json:"allow_failure,omitempty"`
+	Config       *TriggerWorkflowConfig `json:"config,omitempty"`
+	// Flag indicating whether the action was created automatically or manually
+	CreatedAutomatically *bool                        `json:"created_automatically,omitempty"`
+	ErrorOutput          *ErrorOutput                 `json:"error_output,omitempty"`
+	ExecutionStatus      *ExecutionStatus             `json:"execution_status,omitempty"`
+	FlowActionID         *string                      `json:"flow_action_id,omitempty"`
+	ID                   *string                      `json:"id,omitempty"`
+	Name                 *string                      `json:"name,omitempty"`
+	Outputs              map[string]interface{}       `json:"outputs,omitempty"`
+	Reason               *TriggerWorkflowActionReason `json:"reason,omitempty"`
+	// different behaviors for retrying failed execution actions.
+	RetryStrategy *RetryStrategy             `json:"retry_strategy,omitempty"`
+	StartedAt     *string                    `json:"started_at,omitempty"`
+	Type          *TriggerWorkflowActionType `json:"type,omitempty"`
+	UpdatedAt     *string                    `json:"updated_at,omitempty"`
 }
 
-func CreateTriggerWorkflowActionAutomationActionConfig(automationActionConfig AutomationActionConfig) TriggerWorkflowAction {
-	typ := TriggerWorkflowActionTypeAutomationActionConfig
-
-	return TriggerWorkflowAction{
-		AutomationActionConfig: &automationActionConfig,
-		Type:                   typ,
-	}
-}
-
-func CreateTriggerWorkflowActionAutomationActionExecutionState1(automationActionExecutionState1 AutomationActionExecutionState1) TriggerWorkflowAction {
-	typ := TriggerWorkflowActionTypeAutomationActionExecutionState1
-
-	return TriggerWorkflowAction{
-		AutomationActionExecutionState1: &automationActionExecutionState1,
-		Type:                            typ,
-	}
-}
-
-func (u *TriggerWorkflowAction) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	automationActionConfig := new(AutomationActionConfig)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&automationActionConfig); err == nil {
-		u.AutomationActionConfig = automationActionConfig
-		u.Type = TriggerWorkflowActionTypeAutomationActionConfig
+func (o *TriggerWorkflowAction) GetAllowFailure() *bool {
+	if o == nil {
 		return nil
 	}
-
-	automationActionExecutionState1 := new(AutomationActionExecutionState1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&automationActionExecutionState1); err == nil {
-		u.AutomationActionExecutionState1 = automationActionExecutionState1
-		u.Type = TriggerWorkflowActionTypeAutomationActionExecutionState1
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
+	return o.AllowFailure
 }
 
-func (u TriggerWorkflowAction) MarshalJSON() ([]byte, error) {
-	if u.AutomationActionConfig != nil {
-		return json.Marshal(u.AutomationActionConfig)
+func (o *TriggerWorkflowAction) GetConfig() *TriggerWorkflowConfig {
+	if o == nil {
+		return nil
 	}
+	return o.Config
+}
 
-	if u.AutomationActionExecutionState1 != nil {
-		return json.Marshal(u.AutomationActionExecutionState1)
+func (o *TriggerWorkflowAction) GetCreatedAutomatically() *bool {
+	if o == nil {
+		return nil
 	}
+	return o.CreatedAutomatically
+}
 
-	return nil, nil
+func (o *TriggerWorkflowAction) GetErrorOutput() *ErrorOutput {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorOutput
+}
+
+func (o *TriggerWorkflowAction) GetExecutionStatus() *ExecutionStatus {
+	if o == nil {
+		return nil
+	}
+	return o.ExecutionStatus
+}
+
+func (o *TriggerWorkflowAction) GetFlowActionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FlowActionID
+}
+
+func (o *TriggerWorkflowAction) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *TriggerWorkflowAction) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *TriggerWorkflowAction) GetOutputs() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Outputs
+}
+
+func (o *TriggerWorkflowAction) GetReason() *TriggerWorkflowActionReason {
+	if o == nil {
+		return nil
+	}
+	return o.Reason
+}
+
+func (o *TriggerWorkflowAction) GetRetryStrategy() *RetryStrategy {
+	if o == nil {
+		return nil
+	}
+	return o.RetryStrategy
+}
+
+func (o *TriggerWorkflowAction) GetStartedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartedAt
+}
+
+func (o *TriggerWorkflowAction) GetType() *TriggerWorkflowActionType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *TriggerWorkflowAction) GetUpdatedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
 }

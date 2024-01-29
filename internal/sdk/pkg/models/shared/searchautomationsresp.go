@@ -2,8 +2,21 @@
 
 package shared
 
-// SearchAutomationsResp - List of automation flows, including total count
 type SearchAutomationsResp struct {
 	Results []AutomationFlow `json:"results"`
 	Total   float64          `json:"total"`
+}
+
+func (o *SearchAutomationsResp) GetResults() []AutomationFlow {
+	if o == nil {
+		return []AutomationFlow{}
+	}
+	return o.Results
+}
+
+func (o *SearchAutomationsResp) GetTotal() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Total
 }

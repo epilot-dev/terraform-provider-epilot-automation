@@ -3,9 +3,8 @@
 package shared
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
 )
 
 type OperationNodeType string
@@ -15,6 +14,7 @@ const (
 	OperationNodeTypeAny                 OperationNodeType = "any"
 )
 
+// OperationNode - Mapping operation nodes are either primitive values or operation node objects
 type OperationNode struct {
 	OperationObjectNode *OperationObjectNode
 	Any                 interface{}
@@ -41,21 +41,16 @@ func CreateOperationNodeAny(any interface{}) OperationNode {
 }
 
 func (u *OperationNode) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	operationObjectNode := new(OperationObjectNode)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&operationObjectNode); err == nil {
+	if err := utils.UnmarshalJSON(data, &operationObjectNode, "", true, true); err == nil {
 		u.OperationObjectNode = operationObjectNode
 		u.Type = OperationNodeTypeOperationObjectNode
 		return nil
 	}
 
 	any := new(interface{})
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&any); err == nil {
+	if err := utils.UnmarshalJSON(data, &any, "", true, true); err == nil {
 		u.Any = any
 		u.Type = OperationNodeTypeAny
 		return nil
@@ -66,12 +61,12 @@ func (u *OperationNode) UnmarshalJSON(data []byte) error {
 
 func (u OperationNode) MarshalJSON() ([]byte, error) {
 	if u.OperationObjectNode != nil {
-		return json.Marshal(u.OperationObjectNode)
+		return utils.MarshalJSON(u.OperationObjectNode, "", true)
 	}
 
 	if u.Any != nil {
-		return json.Marshal(u.Any)
+		return utils.MarshalJSON(u.Any, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }

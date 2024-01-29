@@ -2,14 +2,92 @@
 
 package shared
 
+type AutomationActionConfigReason struct {
+	// Why the action has to be skipped/failed
+	Message *string `json:"message,omitempty"`
+	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
+	Payload map[string]interface{} `json:"payload,omitempty"`
+}
+
+func (o *AutomationActionConfigReason) GetMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Message
+}
+
+func (o *AutomationActionConfigReason) GetPayload() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Payload
+}
+
 type AutomationActionConfig struct {
 	// Whether to stop execution in a failed state if this action fails
 	AllowFailure *bool                  `json:"allow_failure,omitempty"`
 	Config       map[string]interface{} `json:"config,omitempty"`
 	// Flag indicating whether the action was created automatically or manually
-	CreatedAutomatically *bool   `json:"created_automatically,omitempty"`
-	FlowActionID         *string `json:"flow_action_id,omitempty"`
-	ID                   *string `json:"id,omitempty"`
-	Name                 *string `json:"name,omitempty"`
-	Type                 *string `json:"type,omitempty"`
+	CreatedAutomatically *bool                         `json:"created_automatically,omitempty"`
+	FlowActionID         *string                       `json:"flow_action_id,omitempty"`
+	ID                   *string                       `json:"id,omitempty"`
+	Name                 *string                       `json:"name,omitempty"`
+	Reason               *AutomationActionConfigReason `json:"reason,omitempty"`
+	Type                 *string                       `json:"type,omitempty"`
+}
+
+func (o *AutomationActionConfig) GetAllowFailure() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AllowFailure
+}
+
+func (o *AutomationActionConfig) GetConfig() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Config
+}
+
+func (o *AutomationActionConfig) GetCreatedAutomatically() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAutomatically
+}
+
+func (o *AutomationActionConfig) GetFlowActionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FlowActionID
+}
+
+func (o *AutomationActionConfig) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *AutomationActionConfig) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AutomationActionConfig) GetReason() *AutomationActionConfigReason {
+	if o == nil {
+		return nil
+	}
+	return o.Reason
+}
+
+func (o *AutomationActionConfig) GetType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

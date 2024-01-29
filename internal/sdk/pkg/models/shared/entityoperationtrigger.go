@@ -4,44 +4,403 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
 )
 
-type EntityOperationTriggerConfigurationOperations string
+type EntityOperationTriggerSchemasTypeType string
 
 const (
-	EntityOperationTriggerConfigurationOperationsCreateEntity EntityOperationTriggerConfigurationOperations = "createEntity"
-	EntityOperationTriggerConfigurationOperationsUpdateEntity EntityOperationTriggerConfigurationOperations = "updateEntity"
-	EntityOperationTriggerConfigurationOperationsDeleteEntity EntityOperationTriggerConfigurationOperations = "deleteEntity"
+	EntityOperationTriggerSchemasTypeTypeStr                       EntityOperationTriggerSchemasTypeType = "str"
+	EntityOperationTriggerSchemasTypeTypeEqualsIgnoreCaseCondition EntityOperationTriggerSchemasTypeType = "EqualsIgnoreCaseCondition"
+	EntityOperationTriggerSchemasTypeTypeAnythingButCondition      EntityOperationTriggerSchemasTypeType = "AnythingButCondition"
+	EntityOperationTriggerSchemasTypeTypeExistsCondition           EntityOperationTriggerSchemasTypeType = "ExistsCondition"
+	EntityOperationTriggerSchemasTypeTypePrefixCondition           EntityOperationTriggerSchemasTypeType = "PrefixCondition"
+	EntityOperationTriggerSchemasTypeTypeSuffixCondition           EntityOperationTriggerSchemasTypeType = "SuffixCondition"
+	EntityOperationTriggerSchemasTypeTypeWildcardCondition         EntityOperationTriggerSchemasTypeType = "WildcardCondition"
 )
 
-func (e EntityOperationTriggerConfigurationOperations) ToPointer() *EntityOperationTriggerConfigurationOperations {
-	return &e
+type EntityOperationTriggerSchemasType struct {
+	Str                       *string
+	EqualsIgnoreCaseCondition *EqualsIgnoreCaseCondition
+	AnythingButCondition      *AnythingButCondition
+	ExistsCondition           *ExistsCondition
+	PrefixCondition           *PrefixCondition
+	SuffixCondition           *SuffixCondition
+	WildcardCondition         *WildcardCondition
+
+	Type EntityOperationTriggerSchemasTypeType
 }
 
-func (e *EntityOperationTriggerConfigurationOperations) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func CreateEntityOperationTriggerSchemasTypeStr(str string) EntityOperationTriggerSchemasType {
+	typ := EntityOperationTriggerSchemasTypeTypeStr
+
+	return EntityOperationTriggerSchemasType{
+		Str:  &str,
+		Type: typ,
 	}
-	switch v {
-	case "createEntity":
-		fallthrough
-	case "updateEntity":
-		fallthrough
-	case "deleteEntity":
-		*e = EntityOperationTriggerConfigurationOperations(v)
+}
+
+func CreateEntityOperationTriggerSchemasTypeEqualsIgnoreCaseCondition(equalsIgnoreCaseCondition EqualsIgnoreCaseCondition) EntityOperationTriggerSchemasType {
+	typ := EntityOperationTriggerSchemasTypeTypeEqualsIgnoreCaseCondition
+
+	return EntityOperationTriggerSchemasType{
+		EqualsIgnoreCaseCondition: &equalsIgnoreCaseCondition,
+		Type:                      typ,
+	}
+}
+
+func CreateEntityOperationTriggerSchemasTypeAnythingButCondition(anythingButCondition AnythingButCondition) EntityOperationTriggerSchemasType {
+	typ := EntityOperationTriggerSchemasTypeTypeAnythingButCondition
+
+	return EntityOperationTriggerSchemasType{
+		AnythingButCondition: &anythingButCondition,
+		Type:                 typ,
+	}
+}
+
+func CreateEntityOperationTriggerSchemasTypeExistsCondition(existsCondition ExistsCondition) EntityOperationTriggerSchemasType {
+	typ := EntityOperationTriggerSchemasTypeTypeExistsCondition
+
+	return EntityOperationTriggerSchemasType{
+		ExistsCondition: &existsCondition,
+		Type:            typ,
+	}
+}
+
+func CreateEntityOperationTriggerSchemasTypePrefixCondition(prefixCondition PrefixCondition) EntityOperationTriggerSchemasType {
+	typ := EntityOperationTriggerSchemasTypeTypePrefixCondition
+
+	return EntityOperationTriggerSchemasType{
+		PrefixCondition: &prefixCondition,
+		Type:            typ,
+	}
+}
+
+func CreateEntityOperationTriggerSchemasTypeSuffixCondition(suffixCondition SuffixCondition) EntityOperationTriggerSchemasType {
+	typ := EntityOperationTriggerSchemasTypeTypeSuffixCondition
+
+	return EntityOperationTriggerSchemasType{
+		SuffixCondition: &suffixCondition,
+		Type:            typ,
+	}
+}
+
+func CreateEntityOperationTriggerSchemasTypeWildcardCondition(wildcardCondition WildcardCondition) EntityOperationTriggerSchemasType {
+	typ := EntityOperationTriggerSchemasTypeTypeWildcardCondition
+
+	return EntityOperationTriggerSchemasType{
+		WildcardCondition: &wildcardCondition,
+		Type:              typ,
+	}
+}
+
+func (u *EntityOperationTriggerSchemasType) UnmarshalJSON(data []byte) error {
+
+	equalsIgnoreCaseCondition := new(EqualsIgnoreCaseCondition)
+	if err := utils.UnmarshalJSON(data, &equalsIgnoreCaseCondition, "", true, true); err == nil {
+		u.EqualsIgnoreCaseCondition = equalsIgnoreCaseCondition
+		u.Type = EntityOperationTriggerSchemasTypeTypeEqualsIgnoreCaseCondition
 		return nil
-	default:
-		return fmt.Errorf("invalid value for EntityOperationTriggerConfigurationOperations: %v", v)
 	}
+
+	anythingButCondition := new(AnythingButCondition)
+	if err := utils.UnmarshalJSON(data, &anythingButCondition, "", true, true); err == nil {
+		u.AnythingButCondition = anythingButCondition
+		u.Type = EntityOperationTriggerSchemasTypeTypeAnythingButCondition
+		return nil
+	}
+
+	existsCondition := new(ExistsCondition)
+	if err := utils.UnmarshalJSON(data, &existsCondition, "", true, true); err == nil {
+		u.ExistsCondition = existsCondition
+		u.Type = EntityOperationTriggerSchemasTypeTypeExistsCondition
+		return nil
+	}
+
+	prefixCondition := new(PrefixCondition)
+	if err := utils.UnmarshalJSON(data, &prefixCondition, "", true, true); err == nil {
+		u.PrefixCondition = prefixCondition
+		u.Type = EntityOperationTriggerSchemasTypeTypePrefixCondition
+		return nil
+	}
+
+	suffixCondition := new(SuffixCondition)
+	if err := utils.UnmarshalJSON(data, &suffixCondition, "", true, true); err == nil {
+		u.SuffixCondition = suffixCondition
+		u.Type = EntityOperationTriggerSchemasTypeTypeSuffixCondition
+		return nil
+	}
+
+	wildcardCondition := new(WildcardCondition)
+	if err := utils.UnmarshalJSON(data, &wildcardCondition, "", true, true); err == nil {
+		u.WildcardCondition = wildcardCondition
+		u.Type = EntityOperationTriggerSchemasTypeTypeWildcardCondition
+		return nil
+	}
+
+	str := new(string)
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = str
+		u.Type = EntityOperationTriggerSchemasTypeTypeStr
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u EntityOperationTriggerSchemasType) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.EqualsIgnoreCaseCondition != nil {
+		return utils.MarshalJSON(u.EqualsIgnoreCaseCondition, "", true)
+	}
+
+	if u.AnythingButCondition != nil {
+		return utils.MarshalJSON(u.AnythingButCondition, "", true)
+	}
+
+	if u.ExistsCondition != nil {
+		return utils.MarshalJSON(u.ExistsCondition, "", true)
+	}
+
+	if u.PrefixCondition != nil {
+		return utils.MarshalJSON(u.PrefixCondition, "", true)
+	}
+
+	if u.SuffixCondition != nil {
+		return utils.MarshalJSON(u.SuffixCondition, "", true)
+	}
+
+	if u.WildcardCondition != nil {
+		return utils.MarshalJSON(u.WildcardCondition, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
+type Activity struct {
+	// Filter on activity type. If not specified, all activities will be matched on execution.
+	// Example:
+	//   1. Filter the events when an entity is updated from portal
+	//     ```
+	//       {
+	//         "activity":{
+	//           "type": ["EntityUpdatedFromPortal"]
+	//         }
+	//       }
+	//     ```
+	//   2. Filter the events when either a doc is uploaded/removed on an entity from a portal
+	//     ```
+	//       {
+	//         "activity":{
+	//           "type": ["DocUploadedFromPortal", "DocRemovedFromPortal"]
+	//         }
+	//       }
+	//     ```
+	//
+	Type []EntityOperationTriggerSchemasType `json:"type,omitempty"`
+}
+
+func (o *Activity) GetType() []EntityOperationTriggerSchemasType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+// EntityOperationTrigger2 - Diff to it's prior state when an entity is updated
+type EntityOperationTrigger2 struct {
+	Added   *DiffAdded   `json:"added,omitempty"`
+	Deleted *DiffDeleted `json:"deleted,omitempty"`
+	Updated *DiffUpdated `json:"updated,omitempty"`
+}
+
+func (o *EntityOperationTrigger2) GetAdded() *DiffAdded {
+	if o == nil {
+		return nil
+	}
+	return o.Added
+}
+
+func (o *EntityOperationTrigger2) GetDeleted() *DiffDeleted {
+	if o == nil {
+		return nil
+	}
+	return o.Deleted
+}
+
+func (o *EntityOperationTrigger2) GetUpdated() *DiffUpdated {
+	if o == nil {
+		return nil
+	}
+	return o.Updated
+}
+
+type DiffType string
+
+const (
+	DiffTypeOrConditionForDiff      DiffType = "OrConditionForDiff"
+	DiffTypeEntityOperationTrigger2 DiffType = "EntityOperationTrigger_2"
+)
+
+type Diff struct {
+	OrConditionForDiff      *OrConditionForDiff
+	EntityOperationTrigger2 *EntityOperationTrigger2
+
+	Type DiffType
+}
+
+func CreateDiffOrConditionForDiff(orConditionForDiff OrConditionForDiff) Diff {
+	typ := DiffTypeOrConditionForDiff
+
+	return Diff{
+		OrConditionForDiff: &orConditionForDiff,
+		Type:               typ,
+	}
+}
+
+func CreateDiffEntityOperationTrigger2(entityOperationTrigger2 EntityOperationTrigger2) Diff {
+	typ := DiffTypeEntityOperationTrigger2
+
+	return Diff{
+		EntityOperationTrigger2: &entityOperationTrigger2,
+		Type:                    typ,
+	}
+}
+
+func (u *Diff) UnmarshalJSON(data []byte) error {
+
+	orConditionForDiff := new(OrConditionForDiff)
+	if err := utils.UnmarshalJSON(data, &orConditionForDiff, "", true, true); err == nil {
+		u.OrConditionForDiff = orConditionForDiff
+		u.Type = DiffTypeOrConditionForDiff
+		return nil
+	}
+
+	entityOperationTrigger2 := new(EntityOperationTrigger2)
+	if err := utils.UnmarshalJSON(data, &entityOperationTrigger2, "", true, true); err == nil {
+		u.EntityOperationTrigger2 = entityOperationTrigger2
+		u.Type = DiffTypeEntityOperationTrigger2
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u Diff) MarshalJSON() ([]byte, error) {
+	if u.OrConditionForDiff != nil {
+		return utils.MarshalJSON(u.OrConditionForDiff, "", true)
+	}
+
+	if u.EntityOperationTrigger2 != nil {
+		return utils.MarshalJSON(u.EntityOperationTrigger2, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
+type Operation struct {
+	Diff *Diff `json:"diff,omitempty"`
+	// Filter on operation type. If not specified, all operations will be matched on execution.
+	// Example:
+	//   1. Filter all the createEntity/updateEntity operations
+	//   ```
+	//     {
+	//       "operation":{
+	//         "operation": ["createEntity", "updateEntity"]
+	//       }
+	//     }
+	//   ```
+	//
+	Operation []EntityOperation       `json:"operation,omitempty"`
+	Payload   *FilterConditionOnEvent `json:"payload,omitempty"`
+}
+
+func (o *Operation) GetDiff() *Diff {
+	if o == nil {
+		return nil
+	}
+	return o.Diff
+}
+
+func (o *Operation) GetOperation() []EntityOperation {
+	if o == nil {
+		return nil
+	}
+	return o.Operation
+}
+
+func (o *Operation) GetPayload() *FilterConditionOnEvent {
+	if o == nil {
+		return nil
+	}
+	return o.Payload
+}
+
+type FilterConfig struct {
+	Activity  *Activity  `json:"activity,omitempty"`
+	Operation *Operation `json:"operation,omitempty"`
+}
+
+func (o *FilterConfig) GetActivity() *Activity {
+	if o == nil {
+		return nil
+	}
+	return o.Activity
+}
+
+func (o *FilterConfig) GetOperation() *Operation {
+	if o == nil {
+		return nil
+	}
+	return o.Operation
 }
 
 type EntityOperationTriggerConfiguration struct {
-	ExcludeActivities []string                                        `json:"exclude_activities,omitempty"`
-	IncludeActivities []string                                        `json:"include_activities,omitempty"`
-	Operations        []EntityOperationTriggerConfigurationOperations `json:"operations"`
-	Schema            string                                          `json:"schema"`
+	ExcludeActivities []string          `json:"exclude_activities,omitempty"`
+	FilterConfig      *FilterConfig     `json:"filter_config,omitempty"`
+	IncludeActivities []string          `json:"include_activities,omitempty"`
+	Operations        []EntityOperation `json:"operations,omitempty"`
+	Schema            *string           `json:"schema,omitempty"`
+}
+
+func (o *EntityOperationTriggerConfiguration) GetExcludeActivities() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeActivities
+}
+
+func (o *EntityOperationTriggerConfiguration) GetFilterConfig() *FilterConfig {
+	if o == nil {
+		return nil
+	}
+	return o.FilterConfig
+}
+
+func (o *EntityOperationTriggerConfiguration) GetIncludeActivities() []string {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeActivities
+}
+
+func (o *EntityOperationTriggerConfiguration) GetOperations() []EntityOperation {
+	if o == nil {
+		return nil
+	}
+	return o.Operations
+}
+
+func (o *EntityOperationTriggerConfiguration) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
 }
 
 type EntityOperationTriggerType string
@@ -68,7 +427,134 @@ func (e *EntityOperationTriggerType) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// EntityOperationTrigger - - If provides filter_config, executes an automation based on the filtered configuration when an entity event occurs.
+//   - The conditions on a filter follows the event bridge patterns - `https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-patterns.html`
+//     | Comparison             | Example                                             | Rule syntax                                              |
+//     |------------------------|-----------------------------------------------------|----------------------------------------------------------|
+//     | Null                   | first_name is null                                  | `"first_name": [ null ]`                                 |
+//     | Empty                  | last_name is empty                                  | `"last_name": [""]`                                      |
+//     | Equals                 | email is "j.doe@email.com"                          | `"email": [ "j.doe@email.com" ]`                         |
+//     | Equals (ignore case)   | first_name is "John"                                | `"first_name": [ { "equals-ignore-case": "john" } ]`     |
+//     | And                    | fist_name is "John" and last_name is "Doe"          | `"first_name": [ "John" ], "last_name": ["Doe"]`         |
+//     | Or                     | PaymentType is "Invoice" or "SEPA"                  | `"PaymentType": [ "invoice", "sepa"]`                    |
+//     | Or (multiple fields)   | first_name is "John", or last_name is "Doe".        | `"$or": [ { "first_name": [ "John" ] }, { "last_name": [ "Doe" ] } ]` |
+//     | Not                    | status is anything but "cancelled"                  | `"status": [ { "anything-but": [ "cancelled" ] } ]`      |
+//     | Numeric (equals)       | Price is 100                                        | `"Price": [ { "numeric": [ "=", 100 ] } ]`               |
+//     | Numeric (range)        | Price is more than 10, and less than or equal to 20 | `"Price": [ { "numeric": [ ">", 10, "<=", 20 ] } ]`      |
+//     | Exists                 | ProductName exists                                  | `"ProductName": [ { "exists": true } ]`                  |
+//     | Does not exist         | ProductName does not exist                          | `"ProductName": [ { "exists": false } ]`                 |
+//     | Begins with            | OpportunityNumber starts with OPP-                  | `"opportunity_number": [ { "prefix": "OPP-" } ]`         |
+//     | Ends with              | FileName ends with a .png extension                 | `"filename": [ { "suffix": ".png" } ]`                   |
+//     | Wildcard               | search a string using a wildcard                    | `"email": [ { "wildcard": "*@doe.com" } ]`               |
+//   - To run the execution on all update events
+//     ```
+//     {
+//     "type": "filter_entity_event",
+//     "configuration": {
+//     "operation": {
+//     "operation": ["updateEntity"]
+//     }
+//     }
+//     }
+//     ```
+//   - To run the execution only when the updates are from a portal user
+//     ```
+//     {
+//     "type": "filter_entity_event",
+//     "configuration": {
+//     "operation": {
+//     "operation": ["updateEntity"]
+//     },
+//     "activity": {
+//     "type": "EntityUpdatedFromPortal"
+//     }
+//     }
+//     }
+//     ```
+//   - To run the execution only when there is an update on a specific attribute
+//     ```
+//     Only starts the automation when the email on a contact is changed
+//     {
+//     "type": "filter_entity_event",
+//     "configuration": {
+//     "operation": {
+//     "operation": ["updateEntity"],
+//     "payload": {
+//     "_schema": ["contact"]
+//     },
+//     "diff": {
+//     "updated": {
+//     "email": [{ "exists": true }]
+//     }
+//     }
+//     }
+//     }
+//     }
+//     ```
+//   - To run the execution only when a specific attribute is altered(created/updated/deleted)
+//     ```
+//     Only starts the automation when a price is altered on a contract
+//     {
+//     "type": "filter_entity_event",
+//     "configuration": {
+//     "operation": {
+//     "payload": {
+//     "_schema": ["contract"]
+//     },
+//     "diff": {
+//     // Whether he first_name has been added, updated, or removed
+//     $or: [
+//     {
+//     'added.first_name': [{ exists: true }]
+//     },
+//     {
+//     'updated.first_name': [{ exists: true }]
+//     },
+//     {
+//     'deleted.first_name': [{ exists: true }]
+//     }
+//     ]
+//     }
+//     }
+//     }
+//     }
+//     ```
+//   - To run the execution if an attribute is changed from one state to another
+//     ```
+//     Only starts the automation when the order status changes from `open_for_acceptance` to `placed`
+//     {
+//     "type": "filter_entity_event",
+//     "configuration": {
+//     "operation": {
+//     "operation": ["updateEntity"],
+//     "payload": {
+//     "_schema": ["order"],
+//     "status": ["placed"]
+//     },
+//     "diff": {
+//     "updated": {
+//     "status": ["open_for_acceptance"]
+//     }
+//     }
+//     }
+//     }
+//     }
+//     ```
 type EntityOperationTrigger struct {
 	Configuration EntityOperationTriggerConfiguration `json:"configuration"`
 	Type          EntityOperationTriggerType          `json:"type"`
+}
+
+func (o *EntityOperationTrigger) GetConfiguration() EntityOperationTriggerConfiguration {
+	if o == nil {
+		return EntityOperationTriggerConfiguration{}
+	}
+	return o.Configuration
+}
+
+func (o *EntityOperationTrigger) GetType() EntityOperationTriggerType {
+	if o == nil {
+		return EntityOperationTriggerType("")
+	}
+	return o.Type
 }

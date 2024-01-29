@@ -6,5 +6,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type TriggerWebhookConfig struct {
 	EntitySources   []types.String `tfsdk:"entity_sources"`
+	Sync            types.Bool     `tfsdk:"sync"`
 	TargetWebhookID types.String   `tfsdk:"target_webhook_id"`
 }

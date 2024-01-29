@@ -3,129 +3,140 @@
 package shared
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
 )
 
-type TriggerConditionValueType string
+type ValueType string
 
 const (
-	TriggerConditionValueTypeStr           TriggerConditionValueType = "str"
-	TriggerConditionValueTypeNumber        TriggerConditionValueType = "number"
-	TriggerConditionValueTypeArrayOfstr    TriggerConditionValueType = "arrayOfstr"
-	TriggerConditionValueTypeArrayOfnumber TriggerConditionValueType = "arrayOfnumber"
+	ValueTypeStr           ValueType = "str"
+	ValueTypeNumber        ValueType = "number"
+	ValueTypeArrayOfstr    ValueType = "arrayOfstr"
+	ValueTypeArrayOfnumber ValueType = "arrayOfnumber"
 )
 
-type TriggerConditionValue struct {
+type Value struct {
 	Str           *string
 	Number        *float64
 	ArrayOfstr    []string
 	ArrayOfnumber []float64
 
-	Type TriggerConditionValueType
+	Type ValueType
 }
 
-func CreateTriggerConditionValueStr(str string) TriggerConditionValue {
-	typ := TriggerConditionValueTypeStr
+func CreateValueStr(str string) Value {
+	typ := ValueTypeStr
 
-	return TriggerConditionValue{
+	return Value{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateTriggerConditionValueNumber(number float64) TriggerConditionValue {
-	typ := TriggerConditionValueTypeNumber
+func CreateValueNumber(number float64) Value {
+	typ := ValueTypeNumber
 
-	return TriggerConditionValue{
+	return Value{
 		Number: &number,
 		Type:   typ,
 	}
 }
 
-func CreateTriggerConditionValueArrayOfstr(arrayOfstr []string) TriggerConditionValue {
-	typ := TriggerConditionValueTypeArrayOfstr
+func CreateValueArrayOfstr(arrayOfstr []string) Value {
+	typ := ValueTypeArrayOfstr
 
-	return TriggerConditionValue{
+	return Value{
 		ArrayOfstr: arrayOfstr,
 		Type:       typ,
 	}
 }
 
-func CreateTriggerConditionValueArrayOfnumber(arrayOfnumber []float64) TriggerConditionValue {
-	typ := TriggerConditionValueTypeArrayOfnumber
+func CreateValueArrayOfnumber(arrayOfnumber []float64) Value {
+	typ := ValueTypeArrayOfnumber
 
-	return TriggerConditionValue{
+	return Value{
 		ArrayOfnumber: arrayOfnumber,
 		Type:          typ,
 	}
 }
 
-func (u *TriggerConditionValue) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+func (u *Value) UnmarshalJSON(data []byte) error {
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
-		u.Type = TriggerConditionValueTypeStr
+		u.Type = ValueTypeStr
 		return nil
 	}
 
 	number := new(float64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&number); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
 		u.Number = number
-		u.Type = TriggerConditionValueTypeNumber
+		u.Type = ValueTypeNumber
 		return nil
 	}
 
 	arrayOfstr := []string{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfstr); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfstr, "", true, true); err == nil {
 		u.ArrayOfstr = arrayOfstr
-		u.Type = TriggerConditionValueTypeArrayOfstr
+		u.Type = ValueTypeArrayOfstr
 		return nil
 	}
 
 	arrayOfnumber := []float64{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfnumber); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfnumber, "", true, true); err == nil {
 		u.ArrayOfnumber = arrayOfnumber
-		u.Type = TriggerConditionValueTypeArrayOfnumber
+		u.Type = ValueTypeArrayOfnumber
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u TriggerConditionValue) MarshalJSON() ([]byte, error) {
+func (u Value) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Number != nil {
-		return json.Marshal(u.Number)
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.ArrayOfstr != nil {
-		return json.Marshal(u.ArrayOfstr)
+		return utils.MarshalJSON(u.ArrayOfstr, "", true)
 	}
 
 	if u.ArrayOfnumber != nil {
-		return json.Marshal(u.ArrayOfnumber)
+		return utils.MarshalJSON(u.ArrayOfnumber, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type TriggerCondition struct {
-	Comparison Comparison             `json:"comparison"`
-	Source     string                 `json:"source"`
-	Value      *TriggerConditionValue `json:"value,omitempty"`
+	Comparison Comparison `json:"comparison"`
+	Source     string     `json:"source"`
+	Value      *Value     `json:"value,omitempty"`
+}
+
+func (o *TriggerCondition) GetComparison() Comparison {
+	if o == nil {
+		return Comparison("")
+	}
+	return o.Comparison
+}
+
+func (o *TriggerCondition) GetSource() string {
+	if o == nil {
+		return ""
+	}
+	return o.Source
+}
+
+func (o *TriggerCondition) GetValue() *Value {
+	if o == nil {
+		return nil
+	}
+	return o.Value
 }

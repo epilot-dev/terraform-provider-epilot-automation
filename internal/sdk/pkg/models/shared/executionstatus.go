@@ -15,6 +15,7 @@ const (
 	ExecutionStatusSuccess    ExecutionStatus = "success"
 	ExecutionStatusFailed     ExecutionStatus = "failed"
 	ExecutionStatusCancelled  ExecutionStatus = "cancelled"
+	ExecutionStatusSkipped    ExecutionStatus = "skipped"
 )
 
 func (e ExecutionStatus) ToPointer() *ExecutionStatus {
@@ -36,6 +37,8 @@ func (e *ExecutionStatus) UnmarshalJSON(data []byte) error {
 	case "failed":
 		fallthrough
 	case "cancelled":
+		fallthrough
+	case "skipped":
 		*e = ExecutionStatus(v)
 		return nil
 	default:

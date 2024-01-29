@@ -7,6 +7,27 @@ import (
 	"fmt"
 )
 
+type MapEntityActionConfigReason struct {
+	// Why the action has to be skipped/failed
+	Message *string `json:"message,omitempty"`
+	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
+	Payload map[string]interface{} `json:"payload,omitempty"`
+}
+
+func (o *MapEntityActionConfigReason) GetMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Message
+}
+
+func (o *MapEntityActionConfigReason) GetPayload() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Payload
+}
+
 type MapEntityActionConfigType string
 
 const (
@@ -36,9 +57,66 @@ type MapEntityActionConfig struct {
 	AllowFailure *bool            `json:"allow_failure,omitempty"`
 	Config       *MapEntityConfig `json:"config,omitempty"`
 	// Flag indicating whether the action was created automatically or manually
-	CreatedAutomatically *bool                      `json:"created_automatically,omitempty"`
-	FlowActionID         *string                    `json:"flow_action_id,omitempty"`
-	ID                   *string                    `json:"id,omitempty"`
-	Name                 *string                    `json:"name,omitempty"`
-	Type                 *MapEntityActionConfigType `json:"type,omitempty"`
+	CreatedAutomatically *bool                        `json:"created_automatically,omitempty"`
+	FlowActionID         *string                      `json:"flow_action_id,omitempty"`
+	ID                   *string                      `json:"id,omitempty"`
+	Name                 *string                      `json:"name,omitempty"`
+	Reason               *MapEntityActionConfigReason `json:"reason,omitempty"`
+	Type                 *MapEntityActionConfigType   `json:"type,omitempty"`
+}
+
+func (o *MapEntityActionConfig) GetAllowFailure() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AllowFailure
+}
+
+func (o *MapEntityActionConfig) GetConfig() *MapEntityConfig {
+	if o == nil {
+		return nil
+	}
+	return o.Config
+}
+
+func (o *MapEntityActionConfig) GetCreatedAutomatically() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAutomatically
+}
+
+func (o *MapEntityActionConfig) GetFlowActionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FlowActionID
+}
+
+func (o *MapEntityActionConfig) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *MapEntityActionConfig) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *MapEntityActionConfig) GetReason() *MapEntityActionConfigReason {
+	if o == nil {
+		return nil
+	}
+	return o.Reason
+}
+
+func (o *MapEntityActionConfig) GetType() *MapEntityActionConfigType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

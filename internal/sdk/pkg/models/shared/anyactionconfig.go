@@ -3,9 +3,8 @@
 package shared
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
 )
 
 type AnyActionConfigType string
@@ -96,66 +95,51 @@ func CreateAnyActionConfigAutomationActionConfig(automationActionConfig Automati
 }
 
 func (u *AnyActionConfig) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	mapEntityActionConfig := new(MapEntityActionConfig)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&mapEntityActionConfig); err == nil {
+	if err := utils.UnmarshalJSON(data, &mapEntityActionConfig, "", true, true); err == nil {
 		u.MapEntityActionConfig = mapEntityActionConfig
 		u.Type = AnyActionConfigTypeMapEntityActionConfig
 		return nil
 	}
 
 	triggerWorkflowActionConfig := new(TriggerWorkflowActionConfig)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&triggerWorkflowActionConfig); err == nil {
+	if err := utils.UnmarshalJSON(data, &triggerWorkflowActionConfig, "", true, true); err == nil {
 		u.TriggerWorkflowActionConfig = triggerWorkflowActionConfig
 		u.Type = AnyActionConfigTypeTriggerWorkflowActionConfig
 		return nil
 	}
 
 	triggerWebhookActionConfig := new(TriggerWebhookActionConfig)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&triggerWebhookActionConfig); err == nil {
+	if err := utils.UnmarshalJSON(data, &triggerWebhookActionConfig, "", true, true); err == nil {
 		u.TriggerWebhookActionConfig = triggerWebhookActionConfig
 		u.Type = AnyActionConfigTypeTriggerWebhookActionConfig
 		return nil
 	}
 
 	createDocumentActionConfig := new(CreateDocumentActionConfig)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDocumentActionConfig); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDocumentActionConfig, "", true, true); err == nil {
 		u.CreateDocumentActionConfig = createDocumentActionConfig
 		u.Type = AnyActionConfigTypeCreateDocumentActionConfig
 		return nil
 	}
 
 	sendEmailActionConfig := new(SendEmailActionConfig)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sendEmailActionConfig); err == nil {
+	if err := utils.UnmarshalJSON(data, &sendEmailActionConfig, "", true, true); err == nil {
 		u.SendEmailActionConfig = sendEmailActionConfig
 		u.Type = AnyActionConfigTypeSendEmailActionConfig
 		return nil
 	}
 
 	cartCheckoutActionConfig := new(CartCheckoutActionConfig)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cartCheckoutActionConfig); err == nil {
+	if err := utils.UnmarshalJSON(data, &cartCheckoutActionConfig, "", true, true); err == nil {
 		u.CartCheckoutActionConfig = cartCheckoutActionConfig
 		u.Type = AnyActionConfigTypeCartCheckoutActionConfig
 		return nil
 	}
 
 	automationActionConfig := new(AutomationActionConfig)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&automationActionConfig); err == nil {
+	if err := utils.UnmarshalJSON(data, &automationActionConfig, "", true, true); err == nil {
 		u.AutomationActionConfig = automationActionConfig
 		u.Type = AnyActionConfigTypeAutomationActionConfig
 		return nil
@@ -166,32 +150,32 @@ func (u *AnyActionConfig) UnmarshalJSON(data []byte) error {
 
 func (u AnyActionConfig) MarshalJSON() ([]byte, error) {
 	if u.MapEntityActionConfig != nil {
-		return json.Marshal(u.MapEntityActionConfig)
+		return utils.MarshalJSON(u.MapEntityActionConfig, "", true)
 	}
 
 	if u.TriggerWorkflowActionConfig != nil {
-		return json.Marshal(u.TriggerWorkflowActionConfig)
+		return utils.MarshalJSON(u.TriggerWorkflowActionConfig, "", true)
 	}
 
 	if u.TriggerWebhookActionConfig != nil {
-		return json.Marshal(u.TriggerWebhookActionConfig)
+		return utils.MarshalJSON(u.TriggerWebhookActionConfig, "", true)
 	}
 
 	if u.CreateDocumentActionConfig != nil {
-		return json.Marshal(u.CreateDocumentActionConfig)
+		return utils.MarshalJSON(u.CreateDocumentActionConfig, "", true)
 	}
 
 	if u.SendEmailActionConfig != nil {
-		return json.Marshal(u.SendEmailActionConfig)
+		return utils.MarshalJSON(u.SendEmailActionConfig, "", true)
 	}
 
 	if u.CartCheckoutActionConfig != nil {
-		return json.Marshal(u.CartCheckoutActionConfig)
+		return utils.MarshalJSON(u.CartCheckoutActionConfig, "", true)
 	}
 
 	if u.AutomationActionConfig != nil {
-		return json.Marshal(u.AutomationActionConfig)
+		return utils.MarshalJSON(u.AutomationActionConfig, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }

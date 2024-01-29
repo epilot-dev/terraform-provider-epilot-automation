@@ -5,7 +5,8 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SendEmailConfig struct {
-	Attachments     []SendEmailConfigAttachments `tfsdk:"attachments"`
-	EmailTemplateID types.String                 `tfsdk:"email_template_id"`
-	LanguageCode    types.String                 `tfsdk:"language_code"`
+	Attachments          []Attachments `tfsdk:"attachments"`
+	EmailTemplateID      types.String  `tfsdk:"email_template_id"`
+	LanguageCode         types.String  `tfsdk:"language_code"`
+	NotifyPortalUserOnly types.Bool    `tfsdk:"notify_portal_user_only"`
 }

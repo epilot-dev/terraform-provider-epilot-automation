@@ -5,30 +5,31 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
 )
 
-// SendEmailConfigAttachmentsSourceFilterDocumentType - Filter by a specific document type (e.g. document)
-type SendEmailConfigAttachmentsSourceFilterDocumentType string
+// DocumentType - Filter by a specific document type (e.g. document)
+type DocumentType string
 
 const (
-	SendEmailConfigAttachmentsSourceFilterDocumentTypeDocument     SendEmailConfigAttachmentsSourceFilterDocumentType = "document"
-	SendEmailConfigAttachmentsSourceFilterDocumentTypeText         SendEmailConfigAttachmentsSourceFilterDocumentType = "text"
-	SendEmailConfigAttachmentsSourceFilterDocumentTypeImage        SendEmailConfigAttachmentsSourceFilterDocumentType = "image"
-	SendEmailConfigAttachmentsSourceFilterDocumentTypeVideo        SendEmailConfigAttachmentsSourceFilterDocumentType = "video"
-	SendEmailConfigAttachmentsSourceFilterDocumentTypeAudio        SendEmailConfigAttachmentsSourceFilterDocumentType = "audio"
-	SendEmailConfigAttachmentsSourceFilterDocumentTypeSpreadsheet  SendEmailConfigAttachmentsSourceFilterDocumentType = "spreadsheet"
-	SendEmailConfigAttachmentsSourceFilterDocumentTypePresentation SendEmailConfigAttachmentsSourceFilterDocumentType = "presentation"
-	SendEmailConfigAttachmentsSourceFilterDocumentTypeFont         SendEmailConfigAttachmentsSourceFilterDocumentType = "font"
-	SendEmailConfigAttachmentsSourceFilterDocumentTypeArchive      SendEmailConfigAttachmentsSourceFilterDocumentType = "archive"
-	SendEmailConfigAttachmentsSourceFilterDocumentTypeApplication  SendEmailConfigAttachmentsSourceFilterDocumentType = "application"
-	SendEmailConfigAttachmentsSourceFilterDocumentTypeUnknown      SendEmailConfigAttachmentsSourceFilterDocumentType = "unknown"
+	DocumentTypeDocument     DocumentType = "document"
+	DocumentTypeText         DocumentType = "text"
+	DocumentTypeImage        DocumentType = "image"
+	DocumentTypeVideo        DocumentType = "video"
+	DocumentTypeAudio        DocumentType = "audio"
+	DocumentTypeSpreadsheet  DocumentType = "spreadsheet"
+	DocumentTypePresentation DocumentType = "presentation"
+	DocumentTypeFont         DocumentType = "font"
+	DocumentTypeArchive      DocumentType = "archive"
+	DocumentTypeApplication  DocumentType = "application"
+	DocumentTypeUnknown      DocumentType = "unknown"
 )
 
-func (e SendEmailConfigAttachmentsSourceFilterDocumentType) ToPointer() *SendEmailConfigAttachmentsSourceFilterDocumentType {
+func (e DocumentType) ToPointer() *DocumentType {
 	return &e
 }
 
-func (e *SendEmailConfigAttachmentsSourceFilterDocumentType) UnmarshalJSON(data []byte) error {
+func (e *DocumentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -55,19 +56,19 @@ func (e *SendEmailConfigAttachmentsSourceFilterDocumentType) UnmarshalJSON(data 
 	case "application":
 		fallthrough
 	case "unknown":
-		*e = SendEmailConfigAttachmentsSourceFilterDocumentType(v)
+		*e = DocumentType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SendEmailConfigAttachmentsSourceFilterDocumentType: %v", v)
+		return fmt.Errorf("invalid value for DocumentType: %v", v)
 	}
 }
 
-// SendEmailConfigAttachmentsSourceFilter - Specify filters to match file entities related to main entity
-type SendEmailConfigAttachmentsSourceFilter struct {
+// SendEmailConfigSourceFilter - Specify filters to match file entities related to main entity
+type SendEmailConfigSourceFilter struct {
 	// Filter by a specific relation attribute on the main entity
 	Attribute *string `json:"attribute,omitempty"`
 	// Filter by a specific document type (e.g. document)
-	DocumentType *SendEmailConfigAttachmentsSourceFilterDocumentType `json:"document_type,omitempty"`
+	DocumentType *DocumentType `json:"document_type,omitempty"`
 	// Match by filename. Regex syntax supported
 	FilenameRegex *string `json:"filename_regex,omitempty"`
 	// Limit files to maximum number (default, all matched file relations)
@@ -75,28 +76,95 @@ type SendEmailConfigAttachmentsSourceFilter struct {
 	// Filter by relation tag (label) on the main entity
 	RelationTag *string `json:"relation_tag,omitempty"`
 	// Picks main entity as file (only works if source entity is a file)
-	Self *bool `json:"self,omitempty"`
+	Self *bool `default:"false" json:"self"`
 	// Filter by a specific tag on the related file entity
 	Tag *string `json:"tag,omitempty"`
 }
 
-type SendEmailConfigAttachments struct {
-	// Specify filters to match file entities related to main entity
-	SourceFilter *SendEmailConfigAttachmentsSourceFilter `json:"source_filter,omitempty"`
+func (s SendEmailConfigSourceFilter) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
 }
 
-type SendEmailConfigLanguageCode string
+func (s *SendEmailConfigSourceFilter) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SendEmailConfigSourceFilter) GetAttribute() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Attribute
+}
+
+func (o *SendEmailConfigSourceFilter) GetDocumentType() *DocumentType {
+	if o == nil {
+		return nil
+	}
+	return o.DocumentType
+}
+
+func (o *SendEmailConfigSourceFilter) GetFilenameRegex() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FilenameRegex
+}
+
+func (o *SendEmailConfigSourceFilter) GetLimit() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Limit
+}
+
+func (o *SendEmailConfigSourceFilter) GetRelationTag() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RelationTag
+}
+
+func (o *SendEmailConfigSourceFilter) GetSelf() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Self
+}
+
+func (o *SendEmailConfigSourceFilter) GetTag() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Tag
+}
+
+type Attachments struct {
+	// Specify filters to match file entities related to main entity
+	SourceFilter *SendEmailConfigSourceFilter `json:"source_filter,omitempty"`
+}
+
+func (o *Attachments) GetSourceFilter() *SendEmailConfigSourceFilter {
+	if o == nil {
+		return nil
+	}
+	return o.SourceFilter
+}
+
+type LanguageCode string
 
 const (
-	SendEmailConfigLanguageCodeDe SendEmailConfigLanguageCode = "de"
-	SendEmailConfigLanguageCodeEn SendEmailConfigLanguageCode = "en"
+	LanguageCodeDe LanguageCode = "de"
+	LanguageCodeEn LanguageCode = "en"
 )
 
-func (e SendEmailConfigLanguageCode) ToPointer() *SendEmailConfigLanguageCode {
+func (e LanguageCode) ToPointer() *LanguageCode {
 	return &e
 }
 
-func (e *SendEmailConfigLanguageCode) UnmarshalJSON(data []byte) error {
+func (e *LanguageCode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -105,10 +173,10 @@ func (e *SendEmailConfigLanguageCode) UnmarshalJSON(data []byte) error {
 	case "de":
 		fallthrough
 	case "en":
-		*e = SendEmailConfigLanguageCode(v)
+		*e = LanguageCode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SendEmailConfigLanguageCode: %v", v)
+		return fmt.Errorf("invalid value for LanguageCode: %v", v)
 	}
 }
 
@@ -117,7 +185,48 @@ type SendEmailConfig struct {
 	//
 	// Attachments in email template will be sent regardless of this configuration.
 	//
-	Attachments     []SendEmailConfigAttachments `json:"attachments,omitempty"`
-	EmailTemplateID *string                      `json:"email_template_id,omitempty"`
-	LanguageCode    *SendEmailConfigLanguageCode `json:"language_code,omitempty"`
+	Attachments     []Attachments `json:"attachments,omitempty"`
+	EmailTemplateID *string       `json:"email_template_id,omitempty"`
+	LanguageCode    *LanguageCode `json:"language_code,omitempty"`
+	// Send an email exclusively to the portal user if they are registered on the portal.
+	NotifyPortalUserOnly *bool `default:"false" json:"notify_portal_user_only"`
+}
+
+func (s SendEmailConfig) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SendEmailConfig) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SendEmailConfig) GetAttachments() []Attachments {
+	if o == nil {
+		return nil
+	}
+	return o.Attachments
+}
+
+func (o *SendEmailConfig) GetEmailTemplateID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EmailTemplateID
+}
+
+func (o *SendEmailConfig) GetLanguageCode() *LanguageCode {
+	if o == nil {
+		return nil
+	}
+	return o.LanguageCode
+}
+
+func (o *SendEmailConfig) GetNotifyPortalUserOnly() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.NotifyPortalUserOnly
 }

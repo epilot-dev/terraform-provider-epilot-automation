@@ -4,7 +4,7 @@ package shared
 
 // AppendValueMapper
 //
-// @deprecated null: This will be removed in a future release, please migrate away from it as soon as possible.
+// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
 type AppendValueMapper struct {
 	// - copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
 	//
@@ -20,4 +20,39 @@ type AppendValueMapper struct {
 	// To be provided only when mapping json objects into a target attribute. Eg array of addresses.
 	//
 	ValueJSON string `json:"value_json"`
+}
+
+func (o *AppendValueMapper) GetMode() MappingAttributeMode {
+	if o == nil {
+		return MappingAttributeMode("")
+	}
+	return o.Mode
+}
+
+func (o *AppendValueMapper) GetSource() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Source
+}
+
+func (o *AppendValueMapper) GetTarget() string {
+	if o == nil {
+		return ""
+	}
+	return o.Target
+}
+
+func (o *AppendValueMapper) GetTargetUnique() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TargetUnique
+}
+
+func (o *AppendValueMapper) GetValueJSON() string {
+	if o == nil {
+		return ""
+	}
+	return o.ValueJSON
 }

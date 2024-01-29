@@ -5,6 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type ActivityTrigger struct {
-	Configuration ActivityTriggerConfiguration `tfsdk:"configuration"`
-	Type          types.String                 `tfsdk:"type"`
+	Configuration Configuration `tfsdk:"configuration"`
+	Type          types.String  `tfsdk:"type"`
 }

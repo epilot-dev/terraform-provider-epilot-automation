@@ -8,5 +8,5 @@ type TriggerWorkflowConditionValue struct {
 	Str           types.String   `tfsdk:"str"`
 	Number        types.Number   `tfsdk:"number"`
 	ArrayOfstr    []types.String `tfsdk:"array_ofstr"`
-	ArrayOfnumber []types.Number `tfsdk:"array_ofnumber"`
+	ArrayOfNumber []types.Number `tfsdk:"array_of_number"`
 }

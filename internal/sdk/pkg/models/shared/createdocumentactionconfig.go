@@ -7,6 +7,27 @@ import (
 	"fmt"
 )
 
+type CreateDocumentActionConfigReason struct {
+	// Why the action has to be skipped/failed
+	Message *string `json:"message,omitempty"`
+	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
+	Payload map[string]interface{} `json:"payload,omitempty"`
+}
+
+func (o *CreateDocumentActionConfigReason) GetMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Message
+}
+
+func (o *CreateDocumentActionConfigReason) GetPayload() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Payload
+}
+
 type CreateDocumentActionConfigType string
 
 const (
@@ -36,9 +57,66 @@ type CreateDocumentActionConfig struct {
 	AllowFailure *bool                 `json:"allow_failure,omitempty"`
 	Config       *CreateDocumentConfig `json:"config,omitempty"`
 	// Flag indicating whether the action was created automatically or manually
-	CreatedAutomatically *bool                           `json:"created_automatically,omitempty"`
-	FlowActionID         *string                         `json:"flow_action_id,omitempty"`
-	ID                   *string                         `json:"id,omitempty"`
-	Name                 *string                         `json:"name,omitempty"`
-	Type                 *CreateDocumentActionConfigType `json:"type,omitempty"`
+	CreatedAutomatically *bool                             `json:"created_automatically,omitempty"`
+	FlowActionID         *string                           `json:"flow_action_id,omitempty"`
+	ID                   *string                           `json:"id,omitempty"`
+	Name                 *string                           `json:"name,omitempty"`
+	Reason               *CreateDocumentActionConfigReason `json:"reason,omitempty"`
+	Type                 *CreateDocumentActionConfigType   `json:"type,omitempty"`
+}
+
+func (o *CreateDocumentActionConfig) GetAllowFailure() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AllowFailure
+}
+
+func (o *CreateDocumentActionConfig) GetConfig() *CreateDocumentConfig {
+	if o == nil {
+		return nil
+	}
+	return o.Config
+}
+
+func (o *CreateDocumentActionConfig) GetCreatedAutomatically() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAutomatically
+}
+
+func (o *CreateDocumentActionConfig) GetFlowActionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FlowActionID
+}
+
+func (o *CreateDocumentActionConfig) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *CreateDocumentActionConfig) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *CreateDocumentActionConfig) GetReason() *CreateDocumentActionConfigReason {
+	if o == nil {
+		return nil
+	}
+	return o.Reason
+}
+
+func (o *CreateDocumentActionConfig) GetType() *CreateDocumentActionConfigType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

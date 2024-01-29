@@ -5,3 +5,10 @@ package shared
 type Security struct {
 	EpilotAuth string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
 }
+
+func (o *Security) GetEpilotAuth() string {
+	if o == nil {
+		return ""
+	}
+	return o.EpilotAuth
+}

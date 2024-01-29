@@ -6,3 +6,17 @@ type CreateDocumentConfig struct {
 	Filename   *string `json:"filename,omitempty"`
 	TemplateID *string `json:"template_id,omitempty"`
 }
+
+func (o *CreateDocumentConfig) GetFilename() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Filename
+}
+
+func (o *CreateDocumentConfig) GetTemplateID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TemplateID
+}

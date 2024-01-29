@@ -10,3 +10,24 @@ type MappingConfigRef struct {
 	// Version of Entity Mapping Configuration to run for mapping.
 	Version *float64 `json:"version,omitempty"`
 }
+
+func (o *MappingConfigRef) GetConfigID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConfigID
+}
+
+func (o *MappingConfigRef) GetTargetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TargetID
+}
+
+func (o *MappingConfigRef) GetVersion() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Version
+}

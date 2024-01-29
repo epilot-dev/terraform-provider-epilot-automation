@@ -8,3 +8,17 @@ type MappingAttributeV2 struct {
 	// Target JSON path for the attribute to set
 	Target *string `json:"target,omitempty"`
 }
+
+func (o *MappingAttributeV2) GetOperation() OperationNode {
+	if o == nil {
+		return OperationNode{}
+	}
+	return o.Operation
+}
+
+func (o *MappingAttributeV2) GetTarget() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}

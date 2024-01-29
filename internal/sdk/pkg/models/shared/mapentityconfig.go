@@ -3,9 +3,8 @@
 package shared
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
 )
 
 type MapEntityConfigMappingAttributesType string
@@ -41,21 +40,16 @@ func CreateMapEntityConfigMappingAttributesMappingAttribute(mappingAttribute Map
 }
 
 func (u *MapEntityConfigMappingAttributes) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	mappingAttributeV2 := new(MappingAttributeV2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&mappingAttributeV2); err == nil {
+	if err := utils.UnmarshalJSON(data, &mappingAttributeV2, "", true, true); err == nil {
 		u.MappingAttributeV2 = mappingAttributeV2
 		u.Type = MapEntityConfigMappingAttributesTypeMappingAttributeV2
 		return nil
 	}
 
 	mappingAttribute := new(MappingAttribute)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&mappingAttribute); err == nil {
+	if err := utils.UnmarshalJSON(data, &mappingAttribute, "", true, true); err == nil {
 		u.MappingAttribute = mappingAttribute
 		u.Type = MapEntityConfigMappingAttributesTypeMappingAttribute
 		return nil
@@ -66,20 +60,20 @@ func (u *MapEntityConfigMappingAttributes) UnmarshalJSON(data []byte) error {
 
 func (u MapEntityConfigMappingAttributes) MarshalJSON() ([]byte, error) {
 	if u.MappingAttributeV2 != nil {
-		return json.Marshal(u.MappingAttributeV2)
+		return utils.MarshalJSON(u.MappingAttributeV2, "", true)
 	}
 
 	if u.MappingAttribute != nil {
-		return json.Marshal(u.MappingAttribute)
+		return utils.MarshalJSON(u.MappingAttribute, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type MapEntityConfig struct {
 	// Relation attribute on the main entity where the target entity will be linked. Set to false to disable linkback
 	//
-	LinkbackRelationAttribute *string `json:"linkback_relation_attribute,omitempty"`
+	LinkbackRelationAttribute *string `default:"mapped_entities" json:"linkback_relation_attribute"`
 	// Relation tags (labels) to include in main entity linkback relation attribute
 	LinkbackRelationTags []string `json:"linkback_relation_tags,omitempty"`
 	// Attribute mappings
@@ -91,4 +85,64 @@ type MapEntityConfig struct {
 	TargetSchema string `json:"target_schema"`
 	// Unique key for target entity (see upsertEntity of Entity API)
 	TargetUnique []string `json:"target_unique,omitempty"`
+}
+
+func (m MapEntityConfig) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(m, "", false)
+}
+
+func (m *MapEntityConfig) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &m, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *MapEntityConfig) GetLinkbackRelationAttribute() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LinkbackRelationAttribute
+}
+
+func (o *MapEntityConfig) GetLinkbackRelationTags() []string {
+	if o == nil {
+		return nil
+	}
+	return o.LinkbackRelationTags
+}
+
+func (o *MapEntityConfig) GetMappingAttributes() []MapEntityConfigMappingAttributes {
+	if o == nil {
+		return nil
+	}
+	return o.MappingAttributes
+}
+
+func (o *MapEntityConfig) GetMappingConfig() *MappingConfigRef {
+	if o == nil {
+		return nil
+	}
+	return o.MappingConfig
+}
+
+func (o *MapEntityConfig) GetRelationAttributes() []RelationAttribute {
+	if o == nil {
+		return nil
+	}
+	return o.RelationAttributes
+}
+
+func (o *MapEntityConfig) GetTargetSchema() string {
+	if o == nil {
+		return ""
+	}
+	return o.TargetSchema
+}
+
+func (o *MapEntityConfig) GetTargetUnique() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TargetUnique
 }

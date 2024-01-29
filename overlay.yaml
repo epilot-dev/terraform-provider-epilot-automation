@@ -1,0 +1,41 @@
+overlay: 1.0.0
+info:
+  title: Overlay epilot automation to make a automation resource
+  version: 0.0.1
+actions:
+  - target: $
+    update:
+      x-speakeasy-retries:
+        strategy: backoff
+        backoff:
+          initialInterval: 5000 # 5 seconds
+          maxInterval: 60000 # 60 seconds
+          maxElapsedTime: 3600000 # 5 minutes
+          exponent: 1.5
+        statusCodes:
+          - 5XX
+        retryConnectionErrors: true
+  - target: $["paths"]["/v1/automation/flows"]["post"]
+    update:
+      x-speakeasy-entity-operation: Flow#create
+  - target: $["paths"]["/v1/automation/flows/{flow_id}"]["get"]
+    update:
+      x-speakeasy-entity-operation: Flow#get
+  - target: $["paths"]["/v1/automation/flows/{flow_id}"]["put"]
+    update:
+      x-speakeasy-entity-operation: Flow#update
+  - target: $["paths"]["/v1/automation/flows/{flow_id}"]["delete"]
+    update:
+      x-speakeasy-entity-operation: Flow#delete
+  - target: $["paths"]["/v1/automation/flows/{flow_id}"]["get"]["parameters"][0]
+    update:
+      x-speakeasy-match: id
+  - target: $["paths"]["/v1/automation/flows/{flow_id}"]["put"]["parameters"][0]
+    update:
+      x-speakeasy-match: id
+  - target: $["paths"]["/v1/automation/flows/{flow_id}"]["delete"]["parameters"][0]
+    update:
+      x-speakeasy-match: id
+  - target: $["components"]["schemas"]["AutomationFlow"]
+    update:
+      x-speakeasy-entity: Flow

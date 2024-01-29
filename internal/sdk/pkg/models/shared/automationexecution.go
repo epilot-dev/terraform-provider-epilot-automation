@@ -3,10 +3,96 @@
 package shared
 
 import (
+	"errors"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
 	"time"
 )
 
-// AutomationExecution - The created execution
+type TriggerEventType string
+
+const (
+	TriggerEventTypeTriggerEventManual          TriggerEventType = "TriggerEventManual"
+	TriggerEventTypeTriggerEventEntityActivity  TriggerEventType = "TriggerEventEntityActivity"
+	TriggerEventTypeTriggerEventEntityOperation TriggerEventType = "TriggerEventEntityOperation"
+)
+
+type TriggerEvent struct {
+	TriggerEventManual          *TriggerEventManual
+	TriggerEventEntityActivity  *TriggerEventEntityActivity
+	TriggerEventEntityOperation *TriggerEventEntityOperation
+
+	Type TriggerEventType
+}
+
+func CreateTriggerEventTriggerEventManual(triggerEventManual TriggerEventManual) TriggerEvent {
+	typ := TriggerEventTypeTriggerEventManual
+
+	return TriggerEvent{
+		TriggerEventManual: &triggerEventManual,
+		Type:               typ,
+	}
+}
+
+func CreateTriggerEventTriggerEventEntityActivity(triggerEventEntityActivity TriggerEventEntityActivity) TriggerEvent {
+	typ := TriggerEventTypeTriggerEventEntityActivity
+
+	return TriggerEvent{
+		TriggerEventEntityActivity: &triggerEventEntityActivity,
+		Type:                       typ,
+	}
+}
+
+func CreateTriggerEventTriggerEventEntityOperation(triggerEventEntityOperation TriggerEventEntityOperation) TriggerEvent {
+	typ := TriggerEventTypeTriggerEventEntityOperation
+
+	return TriggerEvent{
+		TriggerEventEntityOperation: &triggerEventEntityOperation,
+		Type:                        typ,
+	}
+}
+
+func (u *TriggerEvent) UnmarshalJSON(data []byte) error {
+
+	triggerEventManual := new(TriggerEventManual)
+	if err := utils.UnmarshalJSON(data, &triggerEventManual, "", true, true); err == nil {
+		u.TriggerEventManual = triggerEventManual
+		u.Type = TriggerEventTypeTriggerEventManual
+		return nil
+	}
+
+	triggerEventEntityActivity := new(TriggerEventEntityActivity)
+	if err := utils.UnmarshalJSON(data, &triggerEventEntityActivity, "", true, true); err == nil {
+		u.TriggerEventEntityActivity = triggerEventEntityActivity
+		u.Type = TriggerEventTypeTriggerEventEntityActivity
+		return nil
+	}
+
+	triggerEventEntityOperation := new(TriggerEventEntityOperation)
+	if err := utils.UnmarshalJSON(data, &triggerEventEntityOperation, "", true, true); err == nil {
+		u.TriggerEventEntityOperation = triggerEventEntityOperation
+		u.Type = TriggerEventTypeTriggerEventEntityOperation
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u TriggerEvent) MarshalJSON() ([]byte, error) {
+	if u.TriggerEventManual != nil {
+		return utils.MarshalJSON(u.TriggerEventManual, "", true)
+	}
+
+	if u.TriggerEventEntityActivity != nil {
+		return utils.MarshalJSON(u.TriggerEventEntityActivity, "", true)
+	}
+
+	if u.TriggerEventEntityOperation != nil {
+		return utils.MarshalJSON(u.TriggerEventEntityOperation, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type AutomationExecution struct {
 	Actions         []AnyAction         `json:"actions"`
 	ActivityID      *string             `json:"activity_id,omitempty"`
@@ -19,5 +105,108 @@ type AutomationExecution struct {
 	FlowName        *string             `json:"flow_name,omitempty"`
 	ID              string              `json:"id"`
 	OrgID           string              `json:"org_id"`
+	TriggerEvent    *TriggerEvent       `json:"trigger_event,omitempty"`
 	UpdatedAt       *time.Time          `json:"updated_at,omitempty"`
+}
+
+func (a AutomationExecution) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AutomationExecution) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AutomationExecution) GetActions() []AnyAction {
+	if o == nil {
+		return []AnyAction{}
+	}
+	return o.Actions
+}
+
+func (o *AutomationExecution) GetActivityID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ActivityID
+}
+
+func (o *AutomationExecution) GetCreatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AutomationExecution) GetCurrentActionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CurrentActionID
+}
+
+func (o *AutomationExecution) GetEntityID() string {
+	if o == nil {
+		return ""
+	}
+	return o.EntityID
+}
+
+func (o *AutomationExecution) GetEntitySnapshot() *EntityItemSnapshot {
+	if o == nil {
+		return nil
+	}
+	return o.EntitySnapshot
+}
+
+func (o *AutomationExecution) GetExecutionStatus() *ExecutionStatus {
+	if o == nil {
+		return nil
+	}
+	return o.ExecutionStatus
+}
+
+func (o *AutomationExecution) GetFlowID() string {
+	if o == nil {
+		return ""
+	}
+	return o.FlowID
+}
+
+func (o *AutomationExecution) GetFlowName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FlowName
+}
+
+func (o *AutomationExecution) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *AutomationExecution) GetOrgID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OrgID
+}
+
+func (o *AutomationExecution) GetTriggerEvent() *TriggerEvent {
+	if o == nil {
+		return nil
+	}
+	return o.TriggerEvent
+}
+
+func (o *AutomationExecution) GetUpdatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
 }

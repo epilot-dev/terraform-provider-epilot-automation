@@ -3,75 +3,170 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
-	"errors"
+	"fmt"
 )
+
+type CartCheckoutActionReason struct {
+	// Why the action has to be skipped/failed
+	Message *string `json:"message,omitempty"`
+	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
+	Payload map[string]interface{} `json:"payload,omitempty"`
+}
+
+func (o *CartCheckoutActionReason) GetMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Message
+}
+
+func (o *CartCheckoutActionReason) GetPayload() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Payload
+}
 
 type CartCheckoutActionType string
 
 const (
-	CartCheckoutActionTypeAutomationActionConfig          CartCheckoutActionType = "AutomationActionConfig"
-	CartCheckoutActionTypeAutomationActionExecutionState5 CartCheckoutActionType = "AutomationActionExecutionState5"
+	CartCheckoutActionTypeCartCheckout CartCheckoutActionType = "cart-checkout"
 )
 
+func (e CartCheckoutActionType) ToPointer() *CartCheckoutActionType {
+	return &e
+}
+
+func (e *CartCheckoutActionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "cart-checkout":
+		*e = CartCheckoutActionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CartCheckoutActionType: %v", v)
+	}
+}
+
+// CartCheckoutAction - Creates an order entity with prices from journey
 type CartCheckoutAction struct {
-	AutomationActionConfig          *AutomationActionConfig
-	AutomationActionExecutionState5 *AutomationActionExecutionState5
-
-	Type CartCheckoutActionType
+	// Whether to stop execution in a failed state if this action fails
+	AllowFailure *bool               `json:"allow_failure,omitempty"`
+	Config       *CartCheckoutConfig `json:"config,omitempty"`
+	// Flag indicating whether the action was created automatically or manually
+	CreatedAutomatically *bool                     `json:"created_automatically,omitempty"`
+	ErrorOutput          *ErrorOutput              `json:"error_output,omitempty"`
+	ExecutionStatus      *ExecutionStatus          `json:"execution_status,omitempty"`
+	FlowActionID         *string                   `json:"flow_action_id,omitempty"`
+	ID                   *string                   `json:"id,omitempty"`
+	Name                 *string                   `json:"name,omitempty"`
+	Outputs              map[string]interface{}    `json:"outputs,omitempty"`
+	Reason               *CartCheckoutActionReason `json:"reason,omitempty"`
+	// different behaviors for retrying failed execution actions.
+	RetryStrategy *RetryStrategy          `json:"retry_strategy,omitempty"`
+	StartedAt     *string                 `json:"started_at,omitempty"`
+	Type          *CartCheckoutActionType `json:"type,omitempty"`
+	UpdatedAt     *string                 `json:"updated_at,omitempty"`
 }
 
-func CreateCartCheckoutActionAutomationActionConfig(automationActionConfig AutomationActionConfig) CartCheckoutAction {
-	typ := CartCheckoutActionTypeAutomationActionConfig
-
-	return CartCheckoutAction{
-		AutomationActionConfig: &automationActionConfig,
-		Type:                   typ,
-	}
-}
-
-func CreateCartCheckoutActionAutomationActionExecutionState5(automationActionExecutionState5 AutomationActionExecutionState5) CartCheckoutAction {
-	typ := CartCheckoutActionTypeAutomationActionExecutionState5
-
-	return CartCheckoutAction{
-		AutomationActionExecutionState5: &automationActionExecutionState5,
-		Type:                            typ,
-	}
-}
-
-func (u *CartCheckoutAction) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	automationActionConfig := new(AutomationActionConfig)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&automationActionConfig); err == nil {
-		u.AutomationActionConfig = automationActionConfig
-		u.Type = CartCheckoutActionTypeAutomationActionConfig
+func (o *CartCheckoutAction) GetAllowFailure() *bool {
+	if o == nil {
 		return nil
 	}
-
-	automationActionExecutionState5 := new(AutomationActionExecutionState5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&automationActionExecutionState5); err == nil {
-		u.AutomationActionExecutionState5 = automationActionExecutionState5
-		u.Type = CartCheckoutActionTypeAutomationActionExecutionState5
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
+	return o.AllowFailure
 }
 
-func (u CartCheckoutAction) MarshalJSON() ([]byte, error) {
-	if u.AutomationActionConfig != nil {
-		return json.Marshal(u.AutomationActionConfig)
+func (o *CartCheckoutAction) GetConfig() *CartCheckoutConfig {
+	if o == nil {
+		return nil
 	}
+	return o.Config
+}
 
-	if u.AutomationActionExecutionState5 != nil {
-		return json.Marshal(u.AutomationActionExecutionState5)
+func (o *CartCheckoutAction) GetCreatedAutomatically() *bool {
+	if o == nil {
+		return nil
 	}
+	return o.CreatedAutomatically
+}
 
-	return nil, nil
+func (o *CartCheckoutAction) GetErrorOutput() *ErrorOutput {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorOutput
+}
+
+func (o *CartCheckoutAction) GetExecutionStatus() *ExecutionStatus {
+	if o == nil {
+		return nil
+	}
+	return o.ExecutionStatus
+}
+
+func (o *CartCheckoutAction) GetFlowActionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FlowActionID
+}
+
+func (o *CartCheckoutAction) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *CartCheckoutAction) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *CartCheckoutAction) GetOutputs() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Outputs
+}
+
+func (o *CartCheckoutAction) GetReason() *CartCheckoutActionReason {
+	if o == nil {
+		return nil
+	}
+	return o.Reason
+}
+
+func (o *CartCheckoutAction) GetRetryStrategy() *RetryStrategy {
+	if o == nil {
+		return nil
+	}
+	return o.RetryStrategy
+}
+
+func (o *CartCheckoutAction) GetStartedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartedAt
+}
+
+func (o *CartCheckoutAction) GetType() *CartCheckoutActionType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *CartCheckoutAction) GetUpdatedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
 }

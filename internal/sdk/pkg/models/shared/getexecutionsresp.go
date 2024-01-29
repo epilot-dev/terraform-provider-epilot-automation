@@ -2,8 +2,21 @@
 
 package shared
 
-// GetExecutionsResp - List of automation executions
 type GetExecutionsResp struct {
 	Results []AutomationExecution `json:"results"`
 	Total   float64               `json:"total"`
+}
+
+func (o *GetExecutionsResp) GetResults() []AutomationExecution {
+	if o == nil {
+		return []AutomationExecution{}
+	}
+	return o.Results
+}
+
+func (o *GetExecutionsResp) GetTotal() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Total
 }

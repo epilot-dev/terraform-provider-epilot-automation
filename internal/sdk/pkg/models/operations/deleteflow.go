@@ -3,6 +3,7 @@
 package operations
 
 import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/models/shared"
 	"net/http"
 )
 
@@ -11,8 +12,48 @@ type DeleteFlowRequest struct {
 	FlowID string `pathParam:"style=simple,explode=false,name=flow_id"`
 }
 
+func (o *DeleteFlowRequest) GetFlowID() string {
+	if o == nil {
+		return ""
+	}
+	return o.FlowID
+}
+
 type DeleteFlowResponse struct {
+	// The deleted automation flow
+	AutomationFlow *shared.AutomationFlow
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *DeleteFlowResponse) GetAutomationFlow() *shared.AutomationFlow {
+	if o == nil {
+		return nil
+	}
+	return o.AutomationFlow
+}
+
+func (o *DeleteFlowResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *DeleteFlowResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *DeleteFlowResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

@@ -5,11 +5,11 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type MapEntityConfig struct {
-	LinkbackRelationAttribute types.String                       `tfsdk:"linkback_relation_attribute"`
-	LinkbackRelationTags      []types.String                     `tfsdk:"linkback_relation_tags"`
-	MappingAttributes         []MapEntityConfigMappingAttributes `tfsdk:"mapping_attributes"`
-	MappingConfig             *MappingConfigRef                  `tfsdk:"mapping_config"`
-	RelationAttributes        []RelationAttribute                `tfsdk:"relation_attributes"`
-	TargetSchema              types.String                       `tfsdk:"target_schema"`
-	TargetUnique              []types.String                     `tfsdk:"target_unique"`
+	LinkbackRelationAttribute types.String        `tfsdk:"linkback_relation_attribute"`
+	LinkbackRelationTags      []types.String      `tfsdk:"linkback_relation_tags"`
+	MappingAttributes         []MappingAttributes `tfsdk:"mapping_attributes"`
+	MappingConfig             *MappingConfigRef   `tfsdk:"mapping_config"`
+	RelationAttributes        []RelationAttribute `tfsdk:"relation_attributes"`
+	TargetSchema              types.String        `tfsdk:"target_schema"`
+	TargetUnique              []types.String      `tfsdk:"target_unique"`
 }

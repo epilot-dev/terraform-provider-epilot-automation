@@ -2,7 +2,13 @@
 
 package shared
 
-// StartExecutionRequestInput - Execution parameters
-type StartExecutionRequestInput struct {
+type StartExecutionRequest struct {
 	EntityID *string `json:"entity_id,omitempty"`
+}
+
+func (o *StartExecutionRequest) GetEntityID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EntityID
 }

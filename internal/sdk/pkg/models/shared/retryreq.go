@@ -2,8 +2,14 @@
 
 package shared
 
-// RetryReq - Retry request details.
 type RetryReq struct {
 	// different behaviors for retrying failed execution actions.
 	RetryStrategy *RetryStrategy `json:"retry_strategy,omitempty"`
+}
+
+func (o *RetryReq) GetRetryStrategy() *RetryStrategy {
+	if o == nil {
+		return nil
+	}
+	return o.RetryStrategy
 }

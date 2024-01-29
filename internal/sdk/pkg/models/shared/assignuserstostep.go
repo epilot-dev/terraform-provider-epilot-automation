@@ -7,3 +7,24 @@ type AssignUsersToStep struct {
 	StepName *string   `json:"step_name,omitempty"`
 	UserIds  []float64 `json:"user_ids,omitempty"`
 }
+
+func (o *AssignUsersToStep) GetStepID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StepID
+}
+
+func (o *AssignUsersToStep) GetStepName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StepName
+}
+
+func (o *AssignUsersToStep) GetUserIds() []float64 {
+	if o == nil {
+		return nil
+	}
+	return o.UserIds
+}

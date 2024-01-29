@@ -11,6 +11,13 @@ type APISubmissionTriggerConfiguration struct {
 	SourceID *string `json:"source_id,omitempty"`
 }
 
+func (o *APISubmissionTriggerConfiguration) GetSourceID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SourceID
+}
+
 type APISubmissionTriggerType string
 
 const (
@@ -38,4 +45,18 @@ func (e *APISubmissionTriggerType) UnmarshalJSON(data []byte) error {
 type APISubmissionTrigger struct {
 	Configuration APISubmissionTriggerConfiguration `json:"configuration"`
 	Type          APISubmissionTriggerType          `json:"type"`
+}
+
+func (o *APISubmissionTrigger) GetConfiguration() APISubmissionTriggerConfiguration {
+	if o == nil {
+		return APISubmissionTriggerConfiguration{}
+	}
+	return o.Configuration
+}
+
+func (o *APISubmissionTrigger) GetType() APISubmissionTriggerType {
+	if o == nil {
+		return APISubmissionTriggerType("")
+	}
+	return o.Type
 }

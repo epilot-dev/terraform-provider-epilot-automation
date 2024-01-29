@@ -12,6 +12,13 @@ type EntityManualTriggerConfiguration struct {
 	Schema *string `json:"schema,omitempty"`
 }
 
+func (o *EntityManualTriggerConfiguration) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
 type EntityManualTriggerType string
 
 const (
@@ -39,4 +46,18 @@ func (e *EntityManualTriggerType) UnmarshalJSON(data []byte) error {
 type EntityManualTrigger struct {
 	Configuration EntityManualTriggerConfiguration `json:"configuration"`
 	Type          EntityManualTriggerType          `json:"type"`
+}
+
+func (o *EntityManualTrigger) GetConfiguration() EntityManualTriggerConfiguration {
+	if o == nil {
+		return EntityManualTriggerConfiguration{}
+	}
+	return o.Configuration
+}
+
+func (o *EntityManualTrigger) GetType() EntityManualTriggerType {
+	if o == nil {
+		return EntityManualTriggerType("")
+	}
+	return o.Type
 }

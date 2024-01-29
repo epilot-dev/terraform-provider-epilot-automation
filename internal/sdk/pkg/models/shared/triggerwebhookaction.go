@@ -3,75 +3,169 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
-	"errors"
+	"fmt"
 )
+
+type TriggerWebhookActionReason struct {
+	// Why the action has to be skipped/failed
+	Message *string `json:"message,omitempty"`
+	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
+	Payload map[string]interface{} `json:"payload,omitempty"`
+}
+
+func (o *TriggerWebhookActionReason) GetMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Message
+}
+
+func (o *TriggerWebhookActionReason) GetPayload() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Payload
+}
 
 type TriggerWebhookActionType string
 
 const (
-	TriggerWebhookActionTypeAutomationActionConfig          TriggerWebhookActionType = "AutomationActionConfig"
-	TriggerWebhookActionTypeAutomationActionExecutionState2 TriggerWebhookActionType = "AutomationActionExecutionState2"
+	TriggerWebhookActionTypeTriggerWebhook TriggerWebhookActionType = "trigger-webhook"
 )
 
+func (e TriggerWebhookActionType) ToPointer() *TriggerWebhookActionType {
+	return &e
+}
+
+func (e *TriggerWebhookActionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "trigger-webhook":
+		*e = TriggerWebhookActionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for TriggerWebhookActionType: %v", v)
+	}
+}
+
 type TriggerWebhookAction struct {
-	AutomationActionConfig          *AutomationActionConfig
-	AutomationActionExecutionState2 *AutomationActionExecutionState2
-
-	Type TriggerWebhookActionType
+	// Whether to stop execution in a failed state if this action fails
+	AllowFailure *bool                 `json:"allow_failure,omitempty"`
+	Config       *TriggerWebhookConfig `json:"config,omitempty"`
+	// Flag indicating whether the action was created automatically or manually
+	CreatedAutomatically *bool                       `json:"created_automatically,omitempty"`
+	ErrorOutput          *ErrorOutput                `json:"error_output,omitempty"`
+	ExecutionStatus      *ExecutionStatus            `json:"execution_status,omitempty"`
+	FlowActionID         *string                     `json:"flow_action_id,omitempty"`
+	ID                   *string                     `json:"id,omitempty"`
+	Name                 *string                     `json:"name,omitempty"`
+	Outputs              map[string]interface{}      `json:"outputs,omitempty"`
+	Reason               *TriggerWebhookActionReason `json:"reason,omitempty"`
+	// different behaviors for retrying failed execution actions.
+	RetryStrategy *RetryStrategy            `json:"retry_strategy,omitempty"`
+	StartedAt     *string                   `json:"started_at,omitempty"`
+	Type          *TriggerWebhookActionType `json:"type,omitempty"`
+	UpdatedAt     *string                   `json:"updated_at,omitempty"`
 }
 
-func CreateTriggerWebhookActionAutomationActionConfig(automationActionConfig AutomationActionConfig) TriggerWebhookAction {
-	typ := TriggerWebhookActionTypeAutomationActionConfig
-
-	return TriggerWebhookAction{
-		AutomationActionConfig: &automationActionConfig,
-		Type:                   typ,
-	}
-}
-
-func CreateTriggerWebhookActionAutomationActionExecutionState2(automationActionExecutionState2 AutomationActionExecutionState2) TriggerWebhookAction {
-	typ := TriggerWebhookActionTypeAutomationActionExecutionState2
-
-	return TriggerWebhookAction{
-		AutomationActionExecutionState2: &automationActionExecutionState2,
-		Type:                            typ,
-	}
-}
-
-func (u *TriggerWebhookAction) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	automationActionConfig := new(AutomationActionConfig)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&automationActionConfig); err == nil {
-		u.AutomationActionConfig = automationActionConfig
-		u.Type = TriggerWebhookActionTypeAutomationActionConfig
+func (o *TriggerWebhookAction) GetAllowFailure() *bool {
+	if o == nil {
 		return nil
 	}
-
-	automationActionExecutionState2 := new(AutomationActionExecutionState2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&automationActionExecutionState2); err == nil {
-		u.AutomationActionExecutionState2 = automationActionExecutionState2
-		u.Type = TriggerWebhookActionTypeAutomationActionExecutionState2
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
+	return o.AllowFailure
 }
 
-func (u TriggerWebhookAction) MarshalJSON() ([]byte, error) {
-	if u.AutomationActionConfig != nil {
-		return json.Marshal(u.AutomationActionConfig)
+func (o *TriggerWebhookAction) GetConfig() *TriggerWebhookConfig {
+	if o == nil {
+		return nil
 	}
+	return o.Config
+}
 
-	if u.AutomationActionExecutionState2 != nil {
-		return json.Marshal(u.AutomationActionExecutionState2)
+func (o *TriggerWebhookAction) GetCreatedAutomatically() *bool {
+	if o == nil {
+		return nil
 	}
+	return o.CreatedAutomatically
+}
 
-	return nil, nil
+func (o *TriggerWebhookAction) GetErrorOutput() *ErrorOutput {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorOutput
+}
+
+func (o *TriggerWebhookAction) GetExecutionStatus() *ExecutionStatus {
+	if o == nil {
+		return nil
+	}
+	return o.ExecutionStatus
+}
+
+func (o *TriggerWebhookAction) GetFlowActionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FlowActionID
+}
+
+func (o *TriggerWebhookAction) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *TriggerWebhookAction) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *TriggerWebhookAction) GetOutputs() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Outputs
+}
+
+func (o *TriggerWebhookAction) GetReason() *TriggerWebhookActionReason {
+	if o == nil {
+		return nil
+	}
+	return o.Reason
+}
+
+func (o *TriggerWebhookAction) GetRetryStrategy() *RetryStrategy {
+	if o == nil {
+		return nil
+	}
+	return o.RetryStrategy
+}
+
+func (o *TriggerWebhookAction) GetStartedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartedAt
+}
+
+func (o *TriggerWebhookAction) GetType() *TriggerWebhookActionType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *TriggerWebhookAction) GetUpdatedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
 }

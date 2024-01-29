@@ -7,20 +7,19 @@ import (
 	"fmt"
 )
 
-type ActivityTriggerConfigurationTypes string
+type Types string
 
 const (
-	ActivityTriggerConfigurationTypesCreateMeterReading ActivityTriggerConfigurationTypes = "CreateMeterReading"
-	ActivityTriggerConfigurationTypesUpdateMeterReading ActivityTriggerConfigurationTypes = "UpdateMeterReading"
-	ActivityTriggerConfigurationTypesMessageActivity    ActivityTriggerConfigurationTypes = "MessageActivity"
-	ActivityTriggerConfigurationTypesSyncActivity       ActivityTriggerConfigurationTypes = "SyncActivity"
+	TypesCreateMeterReading      Types = "CreateMeterReading"
+	TypesUpdateMeterReading      Types = "UpdateMeterReading"
+	TypesDocDownloadedFromPortal Types = "DocDownloadedFromPortal"
 )
 
-func (e ActivityTriggerConfigurationTypes) ToPointer() *ActivityTriggerConfigurationTypes {
+func (e Types) ToPointer() *Types {
 	return &e
 }
 
-func (e *ActivityTriggerConfigurationTypes) UnmarshalJSON(data []byte) error {
+func (e *Types) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -30,46 +29,72 @@ func (e *ActivityTriggerConfigurationTypes) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "UpdateMeterReading":
 		fallthrough
-	case "MessageActivity":
-		fallthrough
-	case "SyncActivity":
-		*e = ActivityTriggerConfigurationTypes(v)
+	case "DocDownloadedFromPortal":
+		*e = Types(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ActivityTriggerConfigurationTypes: %v", v)
+		return fmt.Errorf("invalid value for Types: %v", v)
 	}
 }
 
-type ActivityTriggerConfiguration struct {
-	Schema *string                             `json:"schema,omitempty"`
-	Types  []ActivityTriggerConfigurationTypes `json:"types,omitempty"`
+type Configuration struct {
+	Schema *string `json:"schema,omitempty"`
+	Types  []Types `json:"types,omitempty"`
 }
 
-type ActivityTriggerType string
+func (o *Configuration) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *Configuration) GetTypes() []Types {
+	if o == nil {
+		return nil
+	}
+	return o.Types
+}
+
+type Type string
 
 const (
-	ActivityTriggerTypeActivity ActivityTriggerType = "activity"
+	TypeActivity Type = "activity"
 )
 
-func (e ActivityTriggerType) ToPointer() *ActivityTriggerType {
+func (e Type) ToPointer() *Type {
 	return &e
 }
 
-func (e *ActivityTriggerType) UnmarshalJSON(data []byte) error {
+func (e *Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "activity":
-		*e = ActivityTriggerType(v)
+		*e = Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ActivityTriggerType: %v", v)
+		return fmt.Errorf("invalid value for Type: %v", v)
 	}
 }
 
 type ActivityTrigger struct {
-	Configuration ActivityTriggerConfiguration `json:"configuration"`
-	Type          ActivityTriggerType          `json:"type"`
+	Configuration Configuration `json:"configuration"`
+	Type          Type          `json:"type"`
+}
+
+func (o *ActivityTrigger) GetConfiguration() Configuration {
+	if o == nil {
+		return Configuration{}
+	}
+	return o.Configuration
+}
+
+func (o *ActivityTrigger) GetType() Type {
+	if o == nil {
+		return Type("")
+	}
+	return o.Type
 }

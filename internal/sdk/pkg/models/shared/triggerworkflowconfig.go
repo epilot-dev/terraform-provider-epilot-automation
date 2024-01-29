@@ -8,3 +8,31 @@ type TriggerWorkflowConfig struct {
 	Conditions     []TriggerWorkflowCondition `json:"conditions,omitempty"`
 	TargetWorkflow *string                    `json:"target_workflow,omitempty"`
 }
+
+func (o *TriggerWorkflowConfig) GetAssignSteps() []AssignUsersToStep {
+	if o == nil {
+		return nil
+	}
+	return o.AssignSteps
+}
+
+func (o *TriggerWorkflowConfig) GetAssignees() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Assignees
+}
+
+func (o *TriggerWorkflowConfig) GetConditions() []TriggerWorkflowCondition {
+	if o == nil {
+		return nil
+	}
+	return o.Conditions
+}
+
+func (o *TriggerWorkflowConfig) GetTargetWorkflow() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TargetWorkflow
+}

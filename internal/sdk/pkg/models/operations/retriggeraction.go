@@ -3,7 +3,7 @@
 package operations
 
 import (
-	"epilot-automation/internal/sdk/pkg/models/shared"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/models/shared"
 	"net/http"
 )
 
@@ -16,8 +16,53 @@ type RetriggerActionRequest struct {
 	ExecutionID string `pathParam:"style=simple,explode=false,name=execution_id"`
 }
 
+func (o *RetriggerActionRequest) GetRetryReq() *shared.RetryReq {
+	if o == nil {
+		return nil
+	}
+	return o.RetryReq
+}
+
+func (o *RetriggerActionRequest) GetActionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ActionID
+}
+
+func (o *RetriggerActionRequest) GetExecutionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ExecutionID
+}
+
 type RetriggerActionResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *RetriggerActionResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *RetriggerActionResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *RetriggerActionResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

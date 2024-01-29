@@ -3,7 +3,7 @@
 package operations
 
 import (
-	"epilot-automation/internal/sdk/pkg/models/shared"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/models/shared"
 	"net/http"
 )
 
@@ -12,10 +12,48 @@ type GetFlowRequest struct {
 	FlowID string `pathParam:"style=simple,explode=false,name=flow_id"`
 }
 
+func (o *GetFlowRequest) GetFlowID() string {
+	if o == nil {
+		return ""
+	}
+	return o.FlowID
+}
+
 type GetFlowResponse struct {
 	// The returned automation flow
 	AutomationFlow *shared.AutomationFlow
-	ContentType    string
-	StatusCode     int
-	RawResponse    *http.Response
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
+}
+
+func (o *GetFlowResponse) GetAutomationFlow() *shared.AutomationFlow {
+	if o == nil {
+		return nil
+	}
+	return o.AutomationFlow
+}
+
+func (o *GetFlowResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetFlowResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetFlowResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

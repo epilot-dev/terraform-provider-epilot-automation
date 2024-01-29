@@ -7,32 +7,39 @@ import (
 	"fmt"
 )
 
-type ReceivedEmailTriggerConfigurationMessageType string
+type MessageType string
 
 const (
-	ReceivedEmailTriggerConfigurationMessageTypeReceived ReceivedEmailTriggerConfigurationMessageType = "RECEIVED"
+	MessageTypeReceived MessageType = "RECEIVED"
 )
 
-func (e ReceivedEmailTriggerConfigurationMessageType) ToPointer() *ReceivedEmailTriggerConfigurationMessageType {
+func (e MessageType) ToPointer() *MessageType {
 	return &e
 }
 
-func (e *ReceivedEmailTriggerConfigurationMessageType) UnmarshalJSON(data []byte) error {
+func (e *MessageType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "RECEIVED":
-		*e = ReceivedEmailTriggerConfigurationMessageType(v)
+		*e = MessageType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ReceivedEmailTriggerConfigurationMessageType: %v", v)
+		return fmt.Errorf("invalid value for MessageType: %v", v)
 	}
 }
 
 type ReceivedEmailTriggerConfiguration struct {
-	MessageType *ReceivedEmailTriggerConfigurationMessageType `json:"message_type,omitempty"`
+	MessageType *MessageType `json:"message_type,omitempty"`
+}
+
+func (o *ReceivedEmailTriggerConfiguration) GetMessageType() *MessageType {
+	if o == nil {
+		return nil
+	}
+	return o.MessageType
 }
 
 type ReceivedEmailTriggerType string
@@ -62,4 +69,18 @@ func (e *ReceivedEmailTriggerType) UnmarshalJSON(data []byte) error {
 type ReceivedEmailTrigger struct {
 	Configuration ReceivedEmailTriggerConfiguration `json:"configuration"`
 	Type          ReceivedEmailTriggerType          `json:"type"`
+}
+
+func (o *ReceivedEmailTrigger) GetConfiguration() ReceivedEmailTriggerConfiguration {
+	if o == nil {
+		return ReceivedEmailTriggerConfiguration{}
+	}
+	return o.Configuration
+}
+
+func (o *ReceivedEmailTrigger) GetType() ReceivedEmailTriggerType {
+	if o == nil {
+		return ReceivedEmailTriggerType("")
+	}
+	return o.Type
 }

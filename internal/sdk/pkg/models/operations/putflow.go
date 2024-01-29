@@ -3,21 +3,66 @@
 package operations
 
 import (
-	"epilot-automation/internal/sdk/pkg/models/shared"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/models/shared"
 	"net/http"
 )
 
 type PutFlowRequest struct {
 	// Automation flow to create
-	AutomationFlowInput *shared.AutomationFlowInput `request:"mediaType=application/json"`
+	AutomationFlow *shared.AutomationFlowInput `request:"mediaType=application/json"`
 	// Automation Workflow ID
 	FlowID string `pathParam:"style=simple,explode=false,name=flow_id"`
+}
+
+func (o *PutFlowRequest) GetAutomationFlow() *shared.AutomationFlowInput {
+	if o == nil {
+		return nil
+	}
+	return o.AutomationFlow
+}
+
+func (o *PutFlowRequest) GetFlowID() string {
+	if o == nil {
+		return ""
+	}
+	return o.FlowID
 }
 
 type PutFlowResponse struct {
 	// The updated automation flow
 	AutomationFlow *shared.AutomationFlow
-	ContentType    string
-	StatusCode     int
-	RawResponse    *http.Response
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
+}
+
+func (o *PutFlowResponse) GetAutomationFlow() *shared.AutomationFlow {
+	if o == nil {
+		return nil
+	}
+	return o.AutomationFlow
+}
+
+func (o *PutFlowResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PutFlowResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PutFlowResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

@@ -3,68 +3,84 @@
 package shared
 
 import (
-	"encoding/json"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
 	"time"
 )
 
 type EntityItemSnapshot struct {
-	CreatedAt time.Time `json:"_created_at"`
-	ID        string    `json:"_id"`
-	Org       string    `json:"_org"`
-	Schema    string    `json:"_schema"`
-	Tags      []string  `json:"_tags,omitempty"`
-	Title     string    `json:"_title"`
-	UpdatedAt time.Time `json:"_updated_at"`
-
-	AdditionalProperties interface{} `json:"-"`
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
+	CreatedAt            time.Time   `json:"_created_at"`
+	ID                   string      `json:"_id"`
+	Org                  string      `json:"_org"`
+	Schema               string      `json:"_schema"`
+	Tags                 []string    `json:"_tags,omitempty"`
+	Title                string      `json:"_title"`
+	UpdatedAt            time.Time   `json:"_updated_at"`
 }
-type _EntityItemSnapshot EntityItemSnapshot
 
-func (c *EntityItemSnapshot) UnmarshalJSON(bs []byte) error {
-	data := _EntityItemSnapshot{}
+func (e EntityItemSnapshot) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (e *EntityItemSnapshot) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, false); err != nil {
 		return err
 	}
-	*c = EntityItemSnapshot(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "_created_at")
-	delete(additionalFields, "_id")
-	delete(additionalFields, "_org")
-	delete(additionalFields, "_schema")
-	delete(additionalFields, "_tags")
-	delete(additionalFields, "_title")
-	delete(additionalFields, "_updated_at")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c EntityItemSnapshot) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_EntityItemSnapshot(c))
-	if err != nil {
-		return nil, err
+func (o *EntityItemSnapshot) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *EntityItemSnapshot) GetCreatedAt() time.Time {
+	if o == nil {
+		return time.Time{}
 	}
+	return o.CreatedAt
+}
 
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
+func (o *EntityItemSnapshot) GetID() string {
+	if o == nil {
+		return ""
 	}
+	return o.ID
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *EntityItemSnapshot) GetOrg() string {
+	if o == nil {
+		return ""
 	}
+	return o.Org
+}
 
-	return json.Marshal(out)
+func (o *EntityItemSnapshot) GetSchema() string {
+	if o == nil {
+		return ""
+	}
+	return o.Schema
+}
+
+func (o *EntityItemSnapshot) GetTags() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Tags
+}
+
+func (o *EntityItemSnapshot) GetTitle() string {
+	if o == nil {
+		return ""
+	}
+	return o.Title
+}
+
+func (o *EntityItemSnapshot) GetUpdatedAt() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.UpdatedAt
 }

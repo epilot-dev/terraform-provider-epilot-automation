@@ -11,6 +11,13 @@ type JourneySubmitTriggerConfiguration struct {
 	SourceID string `json:"source_id"`
 }
 
+func (o *JourneySubmitTriggerConfiguration) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type JourneySubmitTriggerType string
 
 const (
@@ -38,4 +45,18 @@ func (e *JourneySubmitTriggerType) UnmarshalJSON(data []byte) error {
 type JourneySubmitTrigger struct {
 	Configuration JourneySubmitTriggerConfiguration `json:"configuration"`
 	Type          JourneySubmitTriggerType          `json:"type"`
+}
+
+func (o *JourneySubmitTrigger) GetConfiguration() JourneySubmitTriggerConfiguration {
+	if o == nil {
+		return JourneySubmitTriggerConfiguration{}
+	}
+	return o.Configuration
+}
+
+func (o *JourneySubmitTrigger) GetType() JourneySubmitTriggerType {
+	if o == nil {
+		return JourneySubmitTriggerType("")
+	}
+	return o.Type
 }
