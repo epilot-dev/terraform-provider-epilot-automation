@@ -5,7 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type Operation struct {
-	Diff      *Diff                   `tfsdk:"diff"`
-	Operation []types.String          `tfsdk:"operation"`
-	Payload   *FilterConditionOnEvent `tfsdk:"payload"`
+	Diff      *Diff          `tfsdk:"diff"`
+	Operation []types.String `tfsdk:"operation"`
+	Payload   types.String   `tfsdk:"payload"`
 }

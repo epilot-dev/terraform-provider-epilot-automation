@@ -39,3 +39,28 @@ actions:
   - target: $["components"]["schemas"]["AutomationFlow"]
     update:
       x-speakeasy-entity: Flow
+  - target: $["components"]["schemas"]["FilterConditionOnEvent"]
+    remove: true
+  - target: $["components"]["schemas"]["TriggerWorkflowCondition"]
+    remove: true
+  - target: $["components"]["schemas"]["TriggerCondition"]
+    remove: true
+  - target: $["components"]["schemas"]["OrCondition"]
+    remove: true
+  - target: $["components"]["schemas"]["OrConditionForDiff"]
+    remove: true
+  - target: $["components"]["schemas"]
+    update:
+      FilterConditionOnEvent: {}
+      TriggerWorkflowCondition: {}
+      TriggerCondition: {}
+      OrCondition: {}
+      OrConditionForDiff: {}
+  - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["actions"]["readOnly"]
+    remove: true
+  - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["actions"]["items"]
+    remove: true
+  - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["actions"]
+    update: 
+      items: {}
+  

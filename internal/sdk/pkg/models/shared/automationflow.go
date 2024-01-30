@@ -8,8 +8,8 @@ import (
 )
 
 type AutomationFlow struct {
-	Actions   []AnyActionConfig `json:"actions"`
-	CreatedAt *time.Time        `json:"created_at,omitempty"`
+	Actions   []interface{} `json:"actions"`
+	CreatedAt *time.Time    `json:"created_at,omitempty"`
 	// User / service who created automation flow
 	CreatedBy *string `json:"created_by,omitempty"`
 	// Whether the automation is enabled or not
@@ -26,10 +26,10 @@ type AutomationFlow struct {
 	// Number of automation executions that ran
 	Runs *float64 `json:"runs,omitempty"`
 	// Determines if the flow is a system generated flow
-	SystemFlow        *bool              `json:"system_flow,omitempty"`
-	TriggerConditions []TriggerCondition `json:"trigger_conditions,omitempty"`
-	Triggers          []AnyTrigger       `json:"triggers"`
-	UpdatedAt         *time.Time         `json:"updated_at,omitempty"`
+	SystemFlow        *bool         `json:"system_flow,omitempty"`
+	TriggerConditions []interface{} `json:"trigger_conditions,omitempty"`
+	Triggers          []AnyTrigger  `json:"triggers"`
+	UpdatedAt         *time.Time    `json:"updated_at,omitempty"`
 }
 
 func (a AutomationFlow) MarshalJSON() ([]byte, error) {
@@ -43,9 +43,9 @@ func (a *AutomationFlow) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *AutomationFlow) GetActions() []AnyActionConfig {
+func (o *AutomationFlow) GetActions() []interface{} {
 	if o == nil {
-		return []AnyActionConfig{}
+		return []interface{}{}
 	}
 	return o.Actions
 }
@@ -120,7 +120,7 @@ func (o *AutomationFlow) GetSystemFlow() *bool {
 	return o.SystemFlow
 }
 
-func (o *AutomationFlow) GetTriggerConditions() []TriggerCondition {
+func (o *AutomationFlow) GetTriggerConditions() []interface{} {
 	if o == nil {
 		return nil
 	}

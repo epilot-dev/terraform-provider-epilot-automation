@@ -18,7 +18,7 @@ terraform {
   required_providers {
     epilot-automation = {
       source  = "epilot-dev/epilot-automation"
-      version = "0.2.5"
+      version = "0.2.15"
     }
   }
 }

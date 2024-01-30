@@ -8,7 +8,7 @@ generation:
   sdkFlattening: true
   telemetryEnabled: false
 terraform:
-  version: 0.2.5
+  version: 0.2.15
   author: epilot-dev
   imports:
     option: openapi

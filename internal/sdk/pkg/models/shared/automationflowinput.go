@@ -7,6 +7,7 @@ import (
 )
 
 type AutomationFlowInput struct {
+	Actions []interface{} `json:"actions"`
 	// Whether the automation is enabled or not
 	Enabled *bool `default:"true" json:"enabled"`
 	// The triggering entity schema
@@ -16,9 +17,9 @@ type AutomationFlowInput struct {
 	// Number of automation executions that ran
 	Runs *float64 `json:"runs,omitempty"`
 	// Determines if the flow is a system generated flow
-	SystemFlow        *bool              `json:"system_flow,omitempty"`
-	TriggerConditions []TriggerCondition `json:"trigger_conditions,omitempty"`
-	Triggers          []AnyTriggerInput  `json:"triggers"`
+	SystemFlow        *bool         `json:"system_flow,omitempty"`
+	TriggerConditions []interface{} `json:"trigger_conditions,omitempty"`
+	Triggers          []AnyTrigger  `json:"triggers"`
 }
 
 func (a AutomationFlowInput) MarshalJSON() ([]byte, error) {
@@ -30,6 +31,13 @@ func (a *AutomationFlowInput) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *AutomationFlowInput) GetActions() []interface{} {
+	if o == nil {
+		return []interface{}{}
+	}
+	return o.Actions
 }
 
 func (o *AutomationFlowInput) GetEnabled() *bool {
@@ -67,16 +75,16 @@ func (o *AutomationFlowInput) GetSystemFlow() *bool {
 	return o.SystemFlow
 }
 
-func (o *AutomationFlowInput) GetTriggerConditions() []TriggerCondition {
+func (o *AutomationFlowInput) GetTriggerConditions() []interface{} {
 	if o == nil {
 		return nil
 	}
 	return o.TriggerConditions
 }
 
-func (o *AutomationFlowInput) GetTriggers() []AnyTriggerInput {
+func (o *AutomationFlowInput) GetTriggers() []AnyTrigger {
 	if o == nil {
-		return []AnyTriggerInput{}
+		return []AnyTrigger{}
 	}
 	return o.Triggers
 }

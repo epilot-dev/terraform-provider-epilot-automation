@@ -2,7 +2,9 @@
 
 package provider
 
+import "github.com/hashicorp/terraform-plugin-framework/types"
+
 type Diff struct {
-	Two                *EntityOperationTrigger2 `tfsdk:"two"`
-	OrConditionForDiff *OrConditionForDiff      `tfsdk:"or_condition_for_diff"`
+	Any types.String `tfsdk:"any"`
+	Two *Two         `tfsdk:"two"`
 }

@@ -3,10 +3,10 @@
 package shared
 
 type TriggerWorkflowConfig struct {
-	AssignSteps    []AssignUsersToStep        `json:"assign_steps,omitempty"`
-	Assignees      []string                   `json:"assignees,omitempty"`
-	Conditions     []TriggerWorkflowCondition `json:"conditions,omitempty"`
-	TargetWorkflow *string                    `json:"target_workflow,omitempty"`
+	AssignSteps    []AssignUsersToStep `json:"assign_steps,omitempty"`
+	Assignees      []string            `json:"assignees,omitempty"`
+	Conditions     []interface{}       `json:"conditions,omitempty"`
+	TargetWorkflow *string             `json:"target_workflow,omitempty"`
 }
 
 func (o *TriggerWorkflowConfig) GetAssignSteps() []AssignUsersToStep {
@@ -23,7 +23,7 @@ func (o *TriggerWorkflowConfig) GetAssignees() []string {
 	return o.Assignees
 }
 
-func (o *TriggerWorkflowConfig) GetConditions() []TriggerWorkflowCondition {
+func (o *TriggerWorkflowConfig) GetConditions() []interface{} {
 	if o == nil {
 		return nil
 	}

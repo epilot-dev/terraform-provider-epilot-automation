@@ -212,28 +212,28 @@ func (o *Activity) GetType() []EntityOperationTriggerSchemasType {
 	return o.Type
 }
 
-// EntityOperationTrigger2 - Diff to it's prior state when an entity is updated
-type EntityOperationTrigger2 struct {
-	Added   *DiffAdded   `json:"added,omitempty"`
-	Deleted *DiffDeleted `json:"deleted,omitempty"`
-	Updated *DiffUpdated `json:"updated,omitempty"`
+// Two - Diff to it's prior state when an entity is updated
+type Two struct {
+	Added   interface{} `json:"added,omitempty"`
+	Deleted interface{} `json:"deleted,omitempty"`
+	Updated interface{} `json:"updated,omitempty"`
 }
 
-func (o *EntityOperationTrigger2) GetAdded() *DiffAdded {
+func (o *Two) GetAdded() interface{} {
 	if o == nil {
 		return nil
 	}
 	return o.Added
 }
 
-func (o *EntityOperationTrigger2) GetDeleted() *DiffDeleted {
+func (o *Two) GetDeleted() interface{} {
 	if o == nil {
 		return nil
 	}
 	return o.Deleted
 }
 
-func (o *EntityOperationTrigger2) GetUpdated() *DiffUpdated {
+func (o *Two) GetUpdated() interface{} {
 	if o == nil {
 		return nil
 	}
@@ -243,48 +243,48 @@ func (o *EntityOperationTrigger2) GetUpdated() *DiffUpdated {
 type DiffType string
 
 const (
-	DiffTypeOrConditionForDiff      DiffType = "OrConditionForDiff"
-	DiffTypeEntityOperationTrigger2 DiffType = "EntityOperationTrigger_2"
+	DiffTypeAny DiffType = "any"
+	DiffTypeTwo DiffType = "2"
 )
 
 type Diff struct {
-	OrConditionForDiff      *OrConditionForDiff
-	EntityOperationTrigger2 *EntityOperationTrigger2
+	Any interface{}
+	Two *Two
 
 	Type DiffType
 }
 
-func CreateDiffOrConditionForDiff(orConditionForDiff OrConditionForDiff) Diff {
-	typ := DiffTypeOrConditionForDiff
+func CreateDiffAny(any interface{}) Diff {
+	typ := DiffTypeAny
 
 	return Diff{
-		OrConditionForDiff: &orConditionForDiff,
-		Type:               typ,
+		Any:  &any,
+		Type: typ,
 	}
 }
 
-func CreateDiffEntityOperationTrigger2(entityOperationTrigger2 EntityOperationTrigger2) Diff {
-	typ := DiffTypeEntityOperationTrigger2
+func CreateDiffTwo(two Two) Diff {
+	typ := DiffTypeTwo
 
 	return Diff{
-		EntityOperationTrigger2: &entityOperationTrigger2,
-		Type:                    typ,
+		Two:  &two,
+		Type: typ,
 	}
 }
 
 func (u *Diff) UnmarshalJSON(data []byte) error {
 
-	orConditionForDiff := new(OrConditionForDiff)
-	if err := utils.UnmarshalJSON(data, &orConditionForDiff, "", true, true); err == nil {
-		u.OrConditionForDiff = orConditionForDiff
-		u.Type = DiffTypeOrConditionForDiff
+	two := new(Two)
+	if err := utils.UnmarshalJSON(data, &two, "", true, true); err == nil {
+		u.Two = two
+		u.Type = DiffTypeTwo
 		return nil
 	}
 
-	entityOperationTrigger2 := new(EntityOperationTrigger2)
-	if err := utils.UnmarshalJSON(data, &entityOperationTrigger2, "", true, true); err == nil {
-		u.EntityOperationTrigger2 = entityOperationTrigger2
-		u.Type = DiffTypeEntityOperationTrigger2
+	any := new(interface{})
+	if err := utils.UnmarshalJSON(data, &any, "", true, true); err == nil {
+		u.Any = any
+		u.Type = DiffTypeAny
 		return nil
 	}
 
@@ -292,12 +292,12 @@ func (u *Diff) UnmarshalJSON(data []byte) error {
 }
 
 func (u Diff) MarshalJSON() ([]byte, error) {
-	if u.OrConditionForDiff != nil {
-		return utils.MarshalJSON(u.OrConditionForDiff, "", true)
+	if u.Any != nil {
+		return utils.MarshalJSON(u.Any, "", true)
 	}
 
-	if u.EntityOperationTrigger2 != nil {
-		return utils.MarshalJSON(u.EntityOperationTrigger2, "", true)
+	if u.Two != nil {
+		return utils.MarshalJSON(u.Two, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -316,8 +316,8 @@ type Operation struct {
 	//     }
 	//   ```
 	//
-	Operation []EntityOperation       `json:"operation,omitempty"`
-	Payload   *FilterConditionOnEvent `json:"payload,omitempty"`
+	Operation []EntityOperation `json:"operation,omitempty"`
+	Payload   interface{}       `json:"payload,omitempty"`
 }
 
 func (o *Operation) GetDiff() *Diff {
@@ -334,7 +334,7 @@ func (o *Operation) GetOperation() []EntityOperation {
 	return o.Operation
 }
 
-func (o *Operation) GetPayload() *FilterConditionOnEvent {
+func (o *Operation) GetPayload() interface{} {
 	if o == nil {
 		return nil
 	}

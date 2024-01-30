@@ -5,12 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type Two struct {
-	Str                       types.String               `tfsdk:"str"`
-	AnythingButCondition      *AnythingButCondition      `tfsdk:"anything_but_condition"`
-	EqualsIgnoreCaseCondition *EqualsIgnoreCaseCondition `tfsdk:"equals_ignore_case_condition"`
-	ExistsCondition           *ExistsCondition           `tfsdk:"exists_condition"`
-	NumericCondition          *NumericCondition          `tfsdk:"numeric_condition"`
-	PrefixCondition           *PrefixCondition           `tfsdk:"prefix_condition"`
-	SuffixCondition           *SuffixCondition           `tfsdk:"suffix_condition"`
-	WildcardCondition         *WildcardCondition         `tfsdk:"wildcard_condition"`
+	Added   types.String `tfsdk:"added"`
+	Deleted types.String `tfsdk:"deleted"`
+	Updated types.String `tfsdk:"updated"`
 }
