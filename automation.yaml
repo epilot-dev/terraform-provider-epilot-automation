@@ -742,6 +742,7 @@ components:
           description: Append to array
           items:
             $ref: '#/components/schemas/PrimitiveJSONValue'
+          type: array
         _uniq:
           description: Unique array
           oneOf:
