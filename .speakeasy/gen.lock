@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 6df5dec4-6d34-4c07-99f4-b36e64bbb781
 management:
-  docChecksum: ea2e0bd371f8e328211a3e8906d7b373
+  docChecksum: 89cdc222f20fdd86fd3eab395a4c9881
   docVersion: 1.0.0
   speakeasyVersion: internal
   generationVersion: 2.230.1
-  releaseVersion: 0.2.15
-  configChecksum: 95f2f265157f300f6080e1d4575d62c4
+  releaseVersion: 0.2.16
+  configChecksum: fc3985b42faadb150643b4defbb090d1
 features:
   terraform:
     additionalProperties: 0.1.2
@@ -104,6 +104,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/mapentityaction.go
   - internal/sdk/pkg/models/shared/retrystrategy.go
   - internal/sdk/pkg/models/shared/erroroutput.go
+  - internal/sdk/pkg/models/shared/errordetail.go
   - internal/sdk/pkg/models/shared/errorcode.go
   - internal/sdk/pkg/models/shared/mapentityconfig.go
   - internal/sdk/pkg/models/shared/relationattribute.go

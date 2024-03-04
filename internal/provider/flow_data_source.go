@@ -29,19 +29,13 @@ type FlowDataSource struct {
 // FlowDataSourceModel describes the data model.
 type FlowDataSourceModel struct {
 	Actions           []types.String `tfsdk:"actions"`
-	CreatedAt         types.String   `tfsdk:"created_at"`
-	CreatedBy         types.String   `tfsdk:"created_by"`
 	Enabled           types.Bool     `tfsdk:"enabled"`
 	EntitySchema      types.String   `tfsdk:"entity_schema"`
 	FlowName          types.String   `tfsdk:"flow_name"`
 	ID                types.String   `tfsdk:"id"`
-	LastUpdatedBy     types.String   `tfsdk:"last_updated_by"`
-	OrgID             types.String   `tfsdk:"org_id"`
-	Runs              types.Number   `tfsdk:"runs"`
 	SystemFlow        types.Bool     `tfsdk:"system_flow"`
 	TriggerConditions []types.String `tfsdk:"trigger_conditions"`
 	Triggers          []AnyTrigger   `tfsdk:"triggers"`
-	UpdatedAt         types.String   `tfsdk:"updated_at"`
 }
 
 // Metadata returns the data source type name.
@@ -59,13 +53,6 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 				Computed:    true,
 				ElementType: types.StringType,
 			},
-			"created_at": schema.StringAttribute{
-				Computed: true,
-			},
-			"created_by": schema.StringAttribute{
-				Computed:    true,
-				Description: `User / service who created automation flow`,
-			},
 			"enabled": schema.BoolAttribute{
 				Computed:    true,
 				Description: `Whether the automation is enabled or not. Default: true`,
@@ -81,18 +68,6 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 			"id": schema.StringAttribute{
 				Required:    true,
 				Description: `Automation Workflow ID`,
-			},
-			"last_updated_by": schema.StringAttribute{
-				Computed:    true,
-				Description: `User / service who last updated automation flow`,
-			},
-			"org_id": schema.StringAttribute{
-				Computed:    true,
-				Description: `Organization the automation flow belongs to`,
-			},
-			"runs": schema.NumberAttribute{
-				Computed:    true,
-				Description: `Number of automation executions that ran`,
 			},
 			"system_flow": schema.BoolAttribute{
 				Computed:    true,
@@ -498,9 +473,6 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 						},
 					},
 				},
-			},
-			"updated_at": schema.StringAttribute{
-				Computed: true,
 			},
 		},
 	}

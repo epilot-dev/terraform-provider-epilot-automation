@@ -2,10 +2,44 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
+)
+
+type ErrorInfo struct {
+	AdditionalProperties interface{}   `additionalProperties:"true" json:"-"`
+	Details              []ErrorDetail `json:"details,omitempty"`
+}
+
+func (e ErrorInfo) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *ErrorInfo) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ErrorInfo) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+func (o *ErrorInfo) GetDetails() []ErrorDetail {
+	if o == nil {
+		return nil
+	}
+	return o.Details
+}
+
 type ErrorOutput struct {
-	ErrorCode   ErrorCode              `json:"error_code"`
-	ErrorInfo   map[string]interface{} `json:"error_info,omitempty"`
-	ErrorReason string                 `json:"error_reason"`
+	ErrorCode   ErrorCode  `json:"error_code"`
+	ErrorInfo   *ErrorInfo `json:"error_info,omitempty"`
+	ErrorReason string     `json:"error_reason"`
 }
 
 func (o *ErrorOutput) GetErrorCode() ErrorCode {
@@ -15,7 +49,7 @@ func (o *ErrorOutput) GetErrorCode() ErrorCode {
 	return o.ErrorCode
 }
 
-func (o *ErrorOutput) GetErrorInfo() map[string]interface{} {
+func (o *ErrorOutput) GetErrorInfo() *ErrorInfo {
 	if o == nil {
 		return nil
 	}

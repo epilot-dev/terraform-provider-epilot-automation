@@ -14,8 +14,6 @@ type AutomationFlowInput struct {
 	EntitySchema *string `json:"entity_schema,omitempty"`
 	// A descriptive name for the Automation
 	FlowName string `json:"flow_name"`
-	// Number of automation executions that ran
-	Runs *float64 `json:"runs,omitempty"`
 	// Determines if the flow is a system generated flow
 	SystemFlow        *bool         `json:"system_flow,omitempty"`
 	TriggerConditions []interface{} `json:"trigger_conditions,omitempty"`
@@ -59,13 +57,6 @@ func (o *AutomationFlowInput) GetFlowName() string {
 		return ""
 	}
 	return o.FlowName
-}
-
-func (o *AutomationFlowInput) GetRuns() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Runs
 }
 
 func (o *AutomationFlowInput) GetSystemFlow() *bool {

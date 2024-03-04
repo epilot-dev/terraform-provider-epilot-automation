@@ -4,14 +4,10 @@ package shared
 
 import (
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/utils"
-	"time"
 )
 
 type AutomationFlow struct {
-	Actions   []interface{} `json:"actions"`
-	CreatedAt *time.Time    `json:"created_at,omitempty"`
-	// User / service who created automation flow
-	CreatedBy *string `json:"created_by,omitempty"`
+	Actions []interface{} `json:"actions"`
 	// Whether the automation is enabled or not
 	Enabled *bool `default:"true" json:"enabled"`
 	// The triggering entity schema
@@ -19,17 +15,10 @@ type AutomationFlow struct {
 	// A descriptive name for the Automation
 	FlowName string  `json:"flow_name"`
 	ID       *string `json:"id,omitempty"`
-	// User / service who last updated automation flow
-	LastUpdatedBy *string `json:"last_updated_by,omitempty"`
-	// Organization the automation flow belongs to
-	OrgID *string `json:"org_id,omitempty"`
-	// Number of automation executions that ran
-	Runs *float64 `json:"runs,omitempty"`
 	// Determines if the flow is a system generated flow
 	SystemFlow        *bool         `json:"system_flow,omitempty"`
 	TriggerConditions []interface{} `json:"trigger_conditions,omitempty"`
 	Triggers          []AnyTrigger  `json:"triggers"`
-	UpdatedAt         *time.Time    `json:"updated_at,omitempty"`
 }
 
 func (a AutomationFlow) MarshalJSON() ([]byte, error) {
@@ -48,20 +37,6 @@ func (o *AutomationFlow) GetActions() []interface{} {
 		return []interface{}{}
 	}
 	return o.Actions
-}
-
-func (o *AutomationFlow) GetCreatedAt() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.CreatedAt
-}
-
-func (o *AutomationFlow) GetCreatedBy() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CreatedBy
 }
 
 func (o *AutomationFlow) GetEnabled() *bool {
@@ -92,27 +67,6 @@ func (o *AutomationFlow) GetID() *string {
 	return o.ID
 }
 
-func (o *AutomationFlow) GetLastUpdatedBy() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LastUpdatedBy
-}
-
-func (o *AutomationFlow) GetOrgID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.OrgID
-}
-
-func (o *AutomationFlow) GetRuns() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Runs
-}
-
 func (o *AutomationFlow) GetSystemFlow() *bool {
 	if o == nil {
 		return nil
@@ -132,11 +86,4 @@ func (o *AutomationFlow) GetTriggers() []AnyTrigger {
 		return []AnyTrigger{}
 	}
 	return o.Triggers
-}
-
-func (o *AutomationFlow) GetUpdatedAt() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.UpdatedAt
 }

@@ -20,15 +20,14 @@ resource "epilot-automation_flow" "my_flow" {
   enabled       = false
   entity_schema = "submission"
   flow_name     = "Handle contact form"
-  runs          = 7
-  system_flow   = true
+  system_flow   = false
   triggers = [
     {
       activity_trigger = {
         configuration = {
           schema = "submission"
           types = [
-            "UpdateMeterReading",
+            "{ \"see\": \"documentation\" }",
           ]
         }
         type = "activity"
@@ -51,18 +50,12 @@ resource "epilot-automation_flow" "my_flow" {
 
 - `enabled` (Boolean) Whether the automation is enabled or not. Default: true
 - `entity_schema` (String) The triggering entity schema
-- `runs` (Number) Number of automation executions that ran
 - `system_flow` (Boolean) Determines if the flow is a system generated flow
 - `trigger_conditions` (List of String)
 
 ### Read-Only
 
-- `created_at` (String)
-- `created_by` (String) User / service who created automation flow
 - `id` (String) Automation Workflow ID
-- `last_updated_by` (String) User / service who last updated automation flow
-- `org_id` (String) Organization the automation flow belongs to
-- `updated_at` (String)
 
 <a id="nestedatt--triggers"></a>
 ### Nested Schema for `triggers`

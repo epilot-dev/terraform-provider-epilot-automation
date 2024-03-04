@@ -6,8 +6,6 @@ import (
 	"encoding/json"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"math/big"
-	"time"
 )
 
 func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.AutomationFlow) {
@@ -18,23 +16,10 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.Autom
 		actions1 = types.StringValue(string(actions1Result))
 		r.Actions = append(r.Actions, actions1)
 	}
-	if resp.CreatedAt != nil {
-		r.CreatedAt = types.StringValue(resp.CreatedAt.Format(time.RFC3339Nano))
-	} else {
-		r.CreatedAt = types.StringNull()
-	}
-	r.CreatedBy = types.StringPointerValue(resp.CreatedBy)
 	r.Enabled = types.BoolPointerValue(resp.Enabled)
 	r.EntitySchema = types.StringPointerValue(resp.EntitySchema)
 	r.FlowName = types.StringValue(resp.FlowName)
 	r.ID = types.StringPointerValue(resp.ID)
-	r.LastUpdatedBy = types.StringPointerValue(resp.LastUpdatedBy)
-	r.OrgID = types.StringPointerValue(resp.OrgID)
-	if resp.Runs != nil {
-		r.Runs = types.NumberValue(big.NewFloat(float64(*resp.Runs)))
-	} else {
-		r.Runs = types.NumberNull()
-	}
 	r.SystemFlow = types.BoolPointerValue(resp.SystemFlow)
 	r.TriggerConditions = nil
 	for _, triggerConditionsItem := range resp.TriggerConditions {
@@ -52,8 +37,11 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.Autom
 			triggers1.ActivityTrigger = &ActivityTrigger{}
 			triggers1.ActivityTrigger.Configuration.Schema = types.StringPointerValue(triggersItem.ActivityTrigger.Configuration.Schema)
 			triggers1.ActivityTrigger.Configuration.Types = nil
-			for _, v := range triggersItem.ActivityTrigger.Configuration.Types {
-				triggers1.ActivityTrigger.Configuration.Types = append(triggers1.ActivityTrigger.Configuration.Types, types.StringValue(string(v)))
+			for _, typesItem := range triggersItem.ActivityTrigger.Configuration.Types {
+				var types1 types.String
+				types1Result, _ := json.Marshal(typesItem)
+				types1 = types.StringValue(string(types1Result))
+				triggers1.ActivityTrigger.Configuration.Types = append(triggers1.ActivityTrigger.Configuration.Types, types1)
 			}
 			triggers1.ActivityTrigger.Type = types.StringValue(string(triggersItem.ActivityTrigger.Type))
 		}
@@ -199,10 +187,5 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.Autom
 			r.Triggers = append(r.Triggers, triggers1)
 		} else {
 		}
-	}
-	if resp.UpdatedAt != nil {
-		r.UpdatedAt = types.StringValue(resp.UpdatedAt.Format(time.RFC3339Nano))
-	} else {
-		r.UpdatedAt = types.StringNull()
 	}
 }

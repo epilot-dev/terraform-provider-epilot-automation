@@ -36,19 +36,13 @@ type FlowResource struct {
 // FlowResourceModel describes the resource data model.
 type FlowResourceModel struct {
 	Actions           []types.String `tfsdk:"actions"`
-	CreatedAt         types.String   `tfsdk:"created_at"`
-	CreatedBy         types.String   `tfsdk:"created_by"`
 	Enabled           types.Bool     `tfsdk:"enabled"`
 	EntitySchema      types.String   `tfsdk:"entity_schema"`
 	FlowName          types.String   `tfsdk:"flow_name"`
 	ID                types.String   `tfsdk:"id"`
-	LastUpdatedBy     types.String   `tfsdk:"last_updated_by"`
-	OrgID             types.String   `tfsdk:"org_id"`
-	Runs              types.Number   `tfsdk:"runs"`
 	SystemFlow        types.Bool     `tfsdk:"system_flow"`
 	TriggerConditions []types.String `tfsdk:"trigger_conditions"`
 	Triggers          []AnyTrigger   `tfsdk:"triggers"`
-	UpdatedAt         types.String   `tfsdk:"updated_at"`
 }
 
 func (r *FlowResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -67,16 +61,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 					listvalidator.ValueStringsAre(validators.IsValidJSON()),
 				},
 			},
-			"created_at": schema.StringAttribute{
-				Computed: true,
-				Validators: []validator.String{
-					validators.IsRFC3339(),
-				},
-			},
-			"created_by": schema.StringAttribute{
-				Computed:    true,
-				Description: `User / service who created automation flow`,
-			},
 			"enabled": schema.BoolAttribute{
 				Computed:    true,
 				Optional:    true,
@@ -94,19 +78,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 			"id": schema.StringAttribute{
 				Computed:    true,
 				Description: `Automation Workflow ID`,
-			},
-			"last_updated_by": schema.StringAttribute{
-				Computed:    true,
-				Description: `User / service who last updated automation flow`,
-			},
-			"org_id": schema.StringAttribute{
-				Computed:    true,
-				Description: `Organization the automation flow belongs to`,
-			},
-			"runs": schema.NumberAttribute{
-				Computed:    true,
-				Optional:    true,
-				Description: `Number of automation executions that ran`,
 			},
 			"system_flow": schema.BoolAttribute{
 				Computed:    true,
@@ -141,6 +112,9 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											Computed:    true,
 											Optional:    true,
 											ElementType: types.StringType,
+											Validators: []validator.List{
+												listvalidator.ValueStringsAre(validators.IsValidJSON()),
+											},
 										},
 									},
 									Description: `Not Null`,
@@ -679,12 +653,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 					Validators: []validator.Object{
 						validators.ExactlyOneChild(),
 					},
-				},
-			},
-			"updated_at": schema.StringAttribute{
-				Computed: true,
-				Validators: []validator.String{
-					validators.IsRFC3339(),
 				},
 			},
 		},

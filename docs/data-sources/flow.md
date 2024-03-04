@@ -28,18 +28,12 @@ data "epilot-automation_flow" "my_flow" {
 ### Read-Only
 
 - `actions` (List of String)
-- `created_at` (String)
-- `created_by` (String) User / service who created automation flow
 - `enabled` (Boolean) Whether the automation is enabled or not. Default: true
 - `entity_schema` (String) The triggering entity schema
 - `flow_name` (String) A descriptive name for the Automation
-- `last_updated_by` (String) User / service who last updated automation flow
-- `org_id` (String) Organization the automation flow belongs to
-- `runs` (Number) Number of automation executions that ran
 - `system_flow` (Boolean) Determines if the flow is a system generated flow
 - `trigger_conditions` (List of String)
 - `triggers` (Attributes List) (see [below for nested schema](#nestedatt--triggers))
-- `updated_at` (String)
 
 <a id="nestedatt--triggers"></a>
 ### Nested Schema for `triggers`

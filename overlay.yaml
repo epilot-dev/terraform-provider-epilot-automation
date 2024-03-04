@@ -63,4 +63,21 @@ actions:
   - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["actions"]
     update: 
       items: {}
+  - target: $["components"]["schemas"]["ActivityTrigger"]["properties"]["configuration"]["properties"]["types"]["items"]
+    remove: true
+  - target: $["components"]["schemas"]["ActivityTrigger"]["properties"]["configuration"]["properties"]["types"]
+    update: 
+      items: {}
+  - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["created_at"]
+    remove: true
+  - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["updated_at"]
+    remove: true
+  - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["created_by"]
+    remove: true
+  - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["last_updated_by"]
+    remove: true
+  - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["org_id"]
+    remove: true
+  - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["runs"]
+    remove: true
   

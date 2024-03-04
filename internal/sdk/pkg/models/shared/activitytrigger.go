@@ -7,39 +7,9 @@ import (
 	"fmt"
 )
 
-type Types string
-
-const (
-	TypesCreateMeterReading      Types = "CreateMeterReading"
-	TypesUpdateMeterReading      Types = "UpdateMeterReading"
-	TypesDocDownloadedFromPortal Types = "DocDownloadedFromPortal"
-)
-
-func (e Types) ToPointer() *Types {
-	return &e
-}
-
-func (e *Types) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "CreateMeterReading":
-		fallthrough
-	case "UpdateMeterReading":
-		fallthrough
-	case "DocDownloadedFromPortal":
-		*e = Types(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Types: %v", v)
-	}
-}
-
 type Configuration struct {
-	Schema *string `json:"schema,omitempty"`
-	Types  []Types `json:"types,omitempty"`
+	Schema *string       `json:"schema,omitempty"`
+	Types  []interface{} `json:"types,omitempty"`
 }
 
 func (o *Configuration) GetSchema() *string {
@@ -49,7 +19,7 @@ func (o *Configuration) GetSchema() *string {
 	return o.Schema
 }
 
-func (o *Configuration) GetTypes() []Types {
+func (o *Configuration) GetTypes() []interface{} {
 	if o == nil {
 		return nil
 	}
