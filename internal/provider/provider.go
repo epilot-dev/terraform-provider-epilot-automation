@@ -5,12 +5,13 @@ package provider
 import (
 	"context"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk"
-	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/models/shared"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"net/http"
 )
 
 var _ provider.Provider = &EpilotAutomationProvider{}
@@ -73,6 +74,7 @@ func (p *EpilotAutomationProvider) Configure(ctx context.Context, req provider.C
 	opts := []sdk.SDKOption{
 		sdk.WithServerURL(ServerURL),
 		sdk.WithSecurity(security),
+		sdk.WithClient(http.DefaultClient),
 	}
 	client := sdk.New(opts...)
 

@@ -5,16 +5,19 @@ package provider
 import (
 	"context"
 	"fmt"
+	tfTypes "github.com/epilot-dev/terraform-provider-epilot-automation/internal/provider/types"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk"
-	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/models/operations"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/operations"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/validators"
 	speakeasy_objectvalidators "github.com/epilot-dev/terraform-provider-epilot-automation/internal/validators/objectvalidators"
 	speakeasy_stringvalidators "github.com/epilot-dev/terraform-provider-epilot-automation/internal/validators/stringvalidators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -35,14 +38,16 @@ type FlowResource struct {
 
 // FlowResourceModel describes the resource data model.
 type FlowResourceModel struct {
-	Actions           []types.String `tfsdk:"actions"`
-	Enabled           types.Bool     `tfsdk:"enabled"`
-	EntitySchema      types.String   `tfsdk:"entity_schema"`
-	FlowName          types.String   `tfsdk:"flow_name"`
-	ID                types.String   `tfsdk:"id"`
-	SystemFlow        types.Bool     `tfsdk:"system_flow"`
-	TriggerConditions []types.String `tfsdk:"trigger_conditions"`
-	Triggers          []AnyTrigger   `tfsdk:"triggers"`
+	Actions           []types.String            `tfsdk:"actions"`
+	Conditions        []tfTypes.ActionCondition `tfsdk:"conditions"`
+	Enabled           types.Bool                `tfsdk:"enabled"`
+	EntitySchema      types.String              `tfsdk:"entity_schema"`
+	FlowName          types.String              `tfsdk:"flow_name"`
+	ID                types.String              `tfsdk:"id"`
+	SystemFlow        types.Bool                `tfsdk:"system_flow"`
+	TriggerConditions []types.String            `tfsdk:"trigger_conditions"`
+	Triggers          []tfTypes.AnyTrigger      `tfsdk:"triggers"`
+	Version           types.Number              `tfsdk:"version"`
 }
 
 func (r *FlowResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,18 +57,144 @@ func (r *FlowResource) Metadata(ctx context.Context, req resource.MetadataReques
 func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Flow Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"actions": schema.ListAttribute{
 				Required:    true,
 				ElementType: types.StringType,
+				Description: `The actions (nodes) of the automation flow`,
 				Validators: []validator.List{
 					listvalidator.ValueStringsAre(validators.IsValidJSON()),
+				},
+			},
+			"conditions": schema.ListNestedAttribute{
+				Computed: true,
+				Optional: true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"conditions": schema.ListNestedAttribute{
+							Computed: true,
+							Optional: true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"id": schema.StringAttribute{
+										Computed: true,
+										Optional: true,
+									},
+									"operation": schema.StringAttribute{
+										Computed:    true,
+										Optional:    true,
+										Description: `must be one of ["equals", "not_equals", "any_of", "none_of", "contains", "not_contains", "starts_with", "ends_with", "greater_than", "less_than", "greater_than_or_equals", "less_than_or_equals", "is_empty", "is_not_empty"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"equals",
+												"not_equals",
+												"any_of",
+												"none_of",
+												"contains",
+												"not_contains",
+												"starts_with",
+												"ends_with",
+												"greater_than",
+												"less_than",
+												"greater_than_or_equals",
+												"less_than_or_equals",
+												"is_empty",
+												"is_not_empty",
+											),
+										},
+									},
+									"source": schema.SingleNestedAttribute{
+										Computed: true,
+										Optional: true,
+										Attributes: map[string]schema.Attribute{
+											"attribute": schema.StringAttribute{
+												Computed: true,
+												Optional: true,
+											},
+											"attribute_type": schema.StringAttribute{
+												Computed:    true,
+												Optional:    true,
+												Description: `must be one of ["string", "text", "number", "boolean", "date", "datetime", "tag", "country", "email", "phone", "product", "price", "status", "relation", "multiselect", "select", "radio", "relation_user"]`,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"string",
+														"text",
+														"number",
+														"boolean",
+														"date",
+														"datetime",
+														"tag",
+														"country",
+														"email",
+														"phone",
+														"product",
+														"price",
+														"status",
+														"relation",
+														"multiselect",
+														"select",
+														"radio",
+														"relation_user",
+													),
+												},
+											},
+											"id": schema.StringAttribute{
+												Computed: true,
+												Optional: true,
+											},
+											"origin": schema.StringAttribute{
+												Computed:    true,
+												Optional:    true,
+												Description: `must be one of ["trigger", "action"]`,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"trigger",
+														"action",
+													),
+												},
+											},
+											"origin_type": schema.StringAttribute{
+												Computed:    true,
+												Optional:    true,
+												Description: `must be one of ["entity", "workflow", "journey_block"]`,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"entity",
+														"workflow",
+														"journey_block",
+													),
+												},
+											},
+											"schema": schema.StringAttribute{
+												Computed: true,
+												Optional: true,
+											},
+										},
+									},
+									"values": schema.ListAttribute{
+										Computed:    true,
+										Optional:    true,
+										ElementType: types.StringType,
+									},
+								},
+							},
+						},
+						"evaluation_result": schema.BoolAttribute{
+							Computed:    true,
+							Optional:    true,
+							Description: `Result of the condition evaluation`,
+						},
+						"id": schema.StringAttribute{
+							Computed: true,
+							Optional: true,
+						},
+					},
 				},
 			},
 			"enabled": schema.BoolAttribute{
 				Computed:    true,
 				Optional:    true,
+				Default:     booldefault.StaticBool(true),
 				Description: `Whether the automation is enabled or not. Default: true`,
 			},
 			"entity_schema": schema.StringAttribute{
@@ -122,6 +253,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 										speakeasy_objectvalidators.NotNull(),
 									},
 								},
+								"id": schema.StringAttribute{
+									Computed: true,
+									Optional: true,
+								},
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
@@ -133,6 +268,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 										),
 									},
 								},
+							},
+							Validators: []validator.Object{
+								objectvalidator.ConflictsWith(path.Expressions{
+									path.MatchRelative().AtParent().AtName("api_submission_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_manual_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_operation_trigger"),
+									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("received_email_trigger"),
+								}...),
 							},
 						},
 						"api_submission_trigger": schema.SingleNestedAttribute{
@@ -153,6 +298,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 										speakeasy_objectvalidators.NotNull(),
 									},
 								},
+								"id": schema.StringAttribute{
+									Computed: true,
+									Optional: true,
+								},
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
@@ -164,6 +313,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 										),
 									},
 								},
+							},
+							Validators: []validator.Object{
+								objectvalidator.ConflictsWith(path.Expressions{
+									path.MatchRelative().AtParent().AtName("activity_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_manual_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_operation_trigger"),
+									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("received_email_trigger"),
+								}...),
 							},
 						},
 						"entity_manual_trigger": schema.SingleNestedAttribute{
@@ -185,6 +344,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 										speakeasy_objectvalidators.NotNull(),
 									},
 								},
+								"id": schema.StringAttribute{
+									Computed: true,
+									Optional: true,
+								},
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
@@ -197,6 +360,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									},
 								},
 							},
+							Validators: []validator.Object{
+								objectvalidator.ConflictsWith(path.Expressions{
+									path.MatchRelative().AtParent().AtName("activity_trigger"),
+									path.MatchRelative().AtParent().AtName("api_submission_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_operation_trigger"),
+									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("received_email_trigger"),
+								}...),
+							},
 						},
 						"entity_operation_trigger": schema.SingleNestedAttribute{
 							Computed: true,
@@ -206,6 +379,26 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Computed: true,
 									Optional: true,
 									Attributes: map[string]schema.Attribute{
+										"ecp_config": schema.SingleNestedAttribute{
+											Computed: true,
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"file_config": schema.SingleNestedAttribute{
+													Computed: true,
+													Optional: true,
+													Attributes: map[string]schema.Attribute{
+														"shared_with_end_customer": schema.BoolAttribute{
+															Computed: true,
+															Optional: true,
+														},
+													},
+												},
+												"origin": schema.StringAttribute{
+													Computed: true,
+													Optional: true,
+												},
+											},
+										},
 										"exclude_activities": schema.ListAttribute{
 											Computed:    true,
 											Optional:    true,
@@ -227,6 +420,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																	"str": schema.StringAttribute{
 																		Computed: true,
 																		Optional: true,
+																		Validators: []validator.String{
+																			stringvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("anything_but_condition"),
+																				path.MatchRelative().AtParent().AtName("equals_ignore_case_condition"),
+																				path.MatchRelative().AtParent().AtName("exists_condition"),
+																				path.MatchRelative().AtParent().AtName("prefix_condition"),
+																				path.MatchRelative().AtParent().AtName("suffix_condition"),
+																				path.MatchRelative().AtParent().AtName("wildcard_condition"),
+																			}...),
+																		},
 																	},
 																	"anything_but_condition": schema.SingleNestedAttribute{
 																		Computed: true,
@@ -238,6 +441,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																				ElementType: types.StringType,
 																			},
 																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("str"),
+																				path.MatchRelative().AtParent().AtName("equals_ignore_case_condition"),
+																				path.MatchRelative().AtParent().AtName("exists_condition"),
+																				path.MatchRelative().AtParent().AtName("prefix_condition"),
+																				path.MatchRelative().AtParent().AtName("suffix_condition"),
+																				path.MatchRelative().AtParent().AtName("wildcard_condition"),
+																			}...),
+																		},
 																	},
 																	"equals_ignore_case_condition": schema.SingleNestedAttribute{
 																		Computed: true,
@@ -247,6 +460,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																				Computed: true,
 																				Optional: true,
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("str"),
+																				path.MatchRelative().AtParent().AtName("anything_but_condition"),
+																				path.MatchRelative().AtParent().AtName("exists_condition"),
+																				path.MatchRelative().AtParent().AtName("prefix_condition"),
+																				path.MatchRelative().AtParent().AtName("suffix_condition"),
+																				path.MatchRelative().AtParent().AtName("wildcard_condition"),
+																			}...),
 																		},
 																	},
 																	"exists_condition": schema.SingleNestedAttribute{
@@ -258,6 +481,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																				Optional: true,
 																			},
 																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("str"),
+																				path.MatchRelative().AtParent().AtName("anything_but_condition"),
+																				path.MatchRelative().AtParent().AtName("equals_ignore_case_condition"),
+																				path.MatchRelative().AtParent().AtName("prefix_condition"),
+																				path.MatchRelative().AtParent().AtName("suffix_condition"),
+																				path.MatchRelative().AtParent().AtName("wildcard_condition"),
+																			}...),
+																		},
 																	},
 																	"prefix_condition": schema.SingleNestedAttribute{
 																		Computed: true,
@@ -267,6 +500,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																				Computed: true,
 																				Optional: true,
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("str"),
+																				path.MatchRelative().AtParent().AtName("anything_but_condition"),
+																				path.MatchRelative().AtParent().AtName("equals_ignore_case_condition"),
+																				path.MatchRelative().AtParent().AtName("exists_condition"),
+																				path.MatchRelative().AtParent().AtName("suffix_condition"),
+																				path.MatchRelative().AtParent().AtName("wildcard_condition"),
+																			}...),
 																		},
 																	},
 																	"suffix_condition": schema.SingleNestedAttribute{
@@ -278,6 +521,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																				Optional: true,
 																			},
 																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("str"),
+																				path.MatchRelative().AtParent().AtName("anything_but_condition"),
+																				path.MatchRelative().AtParent().AtName("equals_ignore_case_condition"),
+																				path.MatchRelative().AtParent().AtName("exists_condition"),
+																				path.MatchRelative().AtParent().AtName("prefix_condition"),
+																				path.MatchRelative().AtParent().AtName("wildcard_condition"),
+																			}...),
+																		},
 																	},
 																	"wildcard_condition": schema.SingleNestedAttribute{
 																		Computed: true,
@@ -287,6 +540,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																				Computed: true,
 																				Optional: true,
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("str"),
+																				path.MatchRelative().AtParent().AtName("anything_but_condition"),
+																				path.MatchRelative().AtParent().AtName("equals_ignore_case_condition"),
+																				path.MatchRelative().AtParent().AtName("exists_condition"),
+																				path.MatchRelative().AtParent().AtName("prefix_condition"),
+																				path.MatchRelative().AtParent().AtName("suffix_condition"),
+																			}...),
 																		},
 																	},
 																},
@@ -329,6 +592,9 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																	Optional:    true,
 																	Description: `Parsed as JSON.`,
 																	Validators: []validator.String{
+																		stringvalidator.ConflictsWith(path.Expressions{
+																			path.MatchRelative().AtParent().AtName("two"),
+																		}...),
 																		validators.IsValidJSON(),
 																	},
 																},
@@ -362,6 +628,11 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																	Description: `Diff to it's prior state when an entity is updated`,
+																	Validators: []validator.Object{
+																		objectvalidator.ConflictsWith(path.Expressions{
+																			path.MatchRelative().AtParent().AtName("any"),
+																		}...),
+																	},
 																},
 															},
 															Validators: []validator.Object{
@@ -418,6 +689,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									Validators: []validator.Object{
 										speakeasy_objectvalidators.NotNull(),
 									},
+								},
+								"id": schema.StringAttribute{
+									Computed: true,
+									Optional: true,
 								},
 								"type": schema.StringAttribute{
 									Computed:    true,
@@ -545,6 +820,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 								`        }` + "\n" +
 								`      ` + "```" + `` + "\n" +
 								``,
+							Validators: []validator.Object{
+								objectvalidator.ConflictsWith(path.Expressions{
+									path.MatchRelative().AtParent().AtName("activity_trigger"),
+									path.MatchRelative().AtParent().AtName("api_submission_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_manual_trigger"),
+									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("received_email_trigger"),
+								}...),
+							},
 						},
 						"frontend_submit_trigger": schema.SingleNestedAttribute{
 							Computed: true,
@@ -564,6 +849,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 										speakeasy_objectvalidators.NotNull(),
 									},
 								},
+								"id": schema.StringAttribute{
+									Computed: true,
+									Optional: true,
+								},
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
@@ -575,6 +864,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 										),
 									},
 								},
+							},
+							Validators: []validator.Object{
+								objectvalidator.ConflictsWith(path.Expressions{
+									path.MatchRelative().AtParent().AtName("activity_trigger"),
+									path.MatchRelative().AtParent().AtName("api_submission_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_manual_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_operation_trigger"),
+									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("received_email_trigger"),
+								}...),
 							},
 						},
 						"journey_submit_trigger": schema.SingleNestedAttribute{
@@ -599,6 +898,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 										speakeasy_objectvalidators.NotNull(),
 									},
 								},
+								"id": schema.StringAttribute{
+									Computed: true,
+									Optional: true,
+								},
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
@@ -610,6 +913,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 										),
 									},
 								},
+							},
+							Validators: []validator.Object{
+								objectvalidator.ConflictsWith(path.Expressions{
+									path.MatchRelative().AtParent().AtName("activity_trigger"),
+									path.MatchRelative().AtParent().AtName("api_submission_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_manual_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_operation_trigger"),
+									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("received_email_trigger"),
+								}...),
 							},
 						},
 						"received_email_trigger": schema.SingleNestedAttribute{
@@ -636,6 +949,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 										speakeasy_objectvalidators.NotNull(),
 									},
 								},
+								"id": schema.StringAttribute{
+									Computed: true,
+									Optional: true,
+								},
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
@@ -648,12 +965,27 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									},
 								},
 							},
+							Validators: []validator.Object{
+								objectvalidator.ConflictsWith(path.Expressions{
+									path.MatchRelative().AtParent().AtName("activity_trigger"),
+									path.MatchRelative().AtParent().AtName("api_submission_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_manual_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_operation_trigger"),
+									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
+								}...),
+							},
 						},
 					},
 					Validators: []validator.Object{
 						validators.ExactlyOneChild(),
 					},
 				},
+			},
+			"version": schema.NumberAttribute{
+				Computed:    true,
+				Optional:    true,
+				Description: `Version of the flow`,
 			},
 		},
 	}
@@ -757,6 +1089,10 @@ func (r *FlowResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

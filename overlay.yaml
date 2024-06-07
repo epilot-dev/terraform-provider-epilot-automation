@@ -56,6 +56,7 @@ actions:
       TriggerCondition: {}
       OrCondition: {}
       OrConditionForDiff: {}
+      JourneySubmitTrigger: {} # @Todo: switch back to allOfs after speakeasy fixes a way to deal with unknown properties in anyOfs/allOfs 
   - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["actions"]["readOnly"]
     remove: true
   - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["actions"]["items"]

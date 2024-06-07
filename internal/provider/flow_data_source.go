@@ -5,8 +5,9 @@ package provider
 import (
 	"context"
 	"fmt"
+	tfTypes "github.com/epilot-dev/terraform-provider-epilot-automation/internal/provider/types"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk"
-	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/pkg/models/operations"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -28,14 +29,16 @@ type FlowDataSource struct {
 
 // FlowDataSourceModel describes the data model.
 type FlowDataSourceModel struct {
-	Actions           []types.String `tfsdk:"actions"`
-	Enabled           types.Bool     `tfsdk:"enabled"`
-	EntitySchema      types.String   `tfsdk:"entity_schema"`
-	FlowName          types.String   `tfsdk:"flow_name"`
-	ID                types.String   `tfsdk:"id"`
-	SystemFlow        types.Bool     `tfsdk:"system_flow"`
-	TriggerConditions []types.String `tfsdk:"trigger_conditions"`
-	Triggers          []AnyTrigger   `tfsdk:"triggers"`
+	Actions           []types.String            `tfsdk:"actions"`
+	Conditions        []tfTypes.ActionCondition `tfsdk:"conditions"`
+	Enabled           types.Bool                `tfsdk:"enabled"`
+	EntitySchema      types.String              `tfsdk:"entity_schema"`
+	FlowName          types.String              `tfsdk:"flow_name"`
+	ID                types.String              `tfsdk:"id"`
+	SystemFlow        types.Bool                `tfsdk:"system_flow"`
+	TriggerConditions []types.String            `tfsdk:"trigger_conditions"`
+	Triggers          []tfTypes.AnyTrigger      `tfsdk:"triggers"`
+	Version           types.Number              `tfsdk:"version"`
 }
 
 // Metadata returns the data source type name.
@@ -52,10 +55,69 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 			"actions": schema.ListAttribute{
 				Computed:    true,
 				ElementType: types.StringType,
+				Description: `The actions (nodes) of the automation flow`,
+			},
+			"conditions": schema.ListNestedAttribute{
+				Computed: true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"conditions": schema.ListNestedAttribute{
+							Computed: true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"id": schema.StringAttribute{
+										Computed: true,
+									},
+									"operation": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["equals", "not_equals", "any_of", "none_of", "contains", "not_contains", "starts_with", "ends_with", "greater_than", "less_than", "greater_than_or_equals", "less_than_or_equals", "is_empty", "is_not_empty"]`,
+									},
+									"source": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"attribute": schema.StringAttribute{
+												Computed: true,
+											},
+											"attribute_type": schema.StringAttribute{
+												Computed:    true,
+												Description: `must be one of ["string", "text", "number", "boolean", "date", "datetime", "tag", "country", "email", "phone", "product", "price", "status", "relation", "multiselect", "select", "radio", "relation_user"]`,
+											},
+											"id": schema.StringAttribute{
+												Computed: true,
+											},
+											"origin": schema.StringAttribute{
+												Computed:    true,
+												Description: `must be one of ["trigger", "action"]`,
+											},
+											"origin_type": schema.StringAttribute{
+												Computed:    true,
+												Description: `must be one of ["entity", "workflow", "journey_block"]`,
+											},
+											"schema": schema.StringAttribute{
+												Computed: true,
+											},
+										},
+									},
+									"values": schema.ListAttribute{
+										Computed:    true,
+										ElementType: types.StringType,
+									},
+								},
+							},
+						},
+						"evaluation_result": schema.BoolAttribute{
+							Computed:    true,
+							Description: `Result of the condition evaluation`,
+						},
+						"id": schema.StringAttribute{
+							Computed: true,
+						},
+					},
+				},
 			},
 			"enabled": schema.BoolAttribute{
 				Computed:    true,
-				Description: `Whether the automation is enabled or not. Default: true`,
+				Description: `Whether the automation is enabled or not`,
 			},
 			"entity_schema": schema.StringAttribute{
 				Computed:    true,
@@ -96,6 +158,9 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 										},
 									},
 								},
+								"id": schema.StringAttribute{
+									Computed: true,
+								},
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Description: `must be one of ["activity"]`,
@@ -112,6 +177,9 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											Computed: true,
 										},
 									},
+								},
+								"id": schema.StringAttribute{
+									Computed: true,
 								},
 								"type": schema.StringAttribute{
 									Computed:    true,
@@ -131,6 +199,9 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 										},
 									},
 								},
+								"id": schema.StringAttribute{
+									Computed: true,
+								},
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Description: `must be one of ["entity_manual"]`,
@@ -143,6 +214,22 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
 									Attributes: map[string]schema.Attribute{
+										"ecp_config": schema.SingleNestedAttribute{
+											Computed: true,
+											Attributes: map[string]schema.Attribute{
+												"file_config": schema.SingleNestedAttribute{
+													Computed: true,
+													Attributes: map[string]schema.Attribute{
+														"shared_with_end_customer": schema.BoolAttribute{
+															Computed: true,
+														},
+													},
+												},
+												"origin": schema.StringAttribute{
+													Computed: true,
+												},
+											},
+										},
 										"exclude_activities": schema.ListAttribute{
 											Computed:    true,
 											ElementType: types.StringType,
@@ -299,6 +386,9 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 										},
 									},
 								},
+								"id": schema.StringAttribute{
+									Computed: true,
+								},
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Description: `must be one of ["entity_operation"]`,
@@ -430,6 +520,9 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 										},
 									},
 								},
+								"id": schema.StringAttribute{
+									Computed: true,
+								},
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Description: `must be one of ["frontend_submission"]`,
@@ -446,6 +539,9 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 											Computed: true,
 										},
 									},
+								},
+								"id": schema.StringAttribute{
+									Computed: true,
 								},
 								"type": schema.StringAttribute{
 									Computed:    true,
@@ -465,6 +561,9 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 										},
 									},
 								},
+								"id": schema.StringAttribute{
+									Computed: true,
+								},
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Description: `must be one of ["received_email"]`,
@@ -473,6 +572,10 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 						},
 					},
 				},
+			},
+			"version": schema.NumberAttribute{
+				Computed:    true,
+				Description: `Version of the flow`,
 			},
 		},
 	}
@@ -530,6 +633,10 @@ func (r *FlowDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {
