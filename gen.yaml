@@ -16,7 +16,7 @@ terraform:
   additionalDataSources: []
   additionalDependencies: {}
   additionalResources: []
-  allowUnknownFieldsInWeakUnions: false
+  allowUnknownFieldsInWeakUnions: true
   author: epilot-dev
   environmentVariables: []
   imports:
