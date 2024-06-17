@@ -28,26 +28,26 @@ func (o *CartCheckoutActionReason) GetPayload() map[string]any {
 	return o.Payload
 }
 
-type CartCheckoutActionType string
+type Type string
 
 const (
-	CartCheckoutActionTypeCartCheckout CartCheckoutActionType = "cart-checkout"
+	TypeCartCheckout Type = "cart-checkout"
 )
 
-func (e CartCheckoutActionType) ToPointer() *CartCheckoutActionType {
+func (e Type) ToPointer() *Type {
 	return &e
 }
-func (e *CartCheckoutActionType) UnmarshalJSON(data []byte) error {
+func (e *Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "cart-checkout":
-		*e = CartCheckoutActionType(v)
+		*e = Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CartCheckoutActionType: %v", v)
+		return fmt.Errorf("invalid value for Type: %v", v)
 	}
 }
 
@@ -70,10 +70,10 @@ type CartCheckoutAction struct {
 	Outputs      map[string]any            `json:"outputs,omitempty"`
 	Reason       *CartCheckoutActionReason `json:"reason,omitempty"`
 	// different behaviors for retrying failed execution actions.
-	RetryStrategy *RetryStrategy          `json:"retry_strategy,omitempty"`
-	StartedAt     *string                 `json:"started_at,omitempty"`
-	Type          *CartCheckoutActionType `json:"type,omitempty"`
-	UpdatedAt     *string                 `json:"updated_at,omitempty"`
+	RetryStrategy *RetryStrategy `json:"retry_strategy,omitempty"`
+	StartedAt     *string        `json:"started_at,omitempty"`
+	Type          *Type          `json:"type,omitempty"`
+	UpdatedAt     *string        `json:"updated_at,omitempty"`
 }
 
 func (o *CartCheckoutAction) GetAllowFailure() *bool {
@@ -174,7 +174,7 @@ func (o *CartCheckoutAction) GetStartedAt() *string {
 	return o.StartedAt
 }
 
-func (o *CartCheckoutAction) GetType() *CartCheckoutActionType {
+func (o *CartCheckoutAction) GetType() *Type {
 	if o == nil {
 		return nil
 	}

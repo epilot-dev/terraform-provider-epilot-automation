@@ -12,7 +12,8 @@ overlay.yaml:
 
 speakeasy:
 	$(eval TMP := $(shell mktemp -d))
-	speakeasy overlay apply -s automation.yaml -o overlay.yaml > $(TMP)/final.yaml
+	curl https://docs.api.epilot.io/automation.yaml > $(TMP)/openapi.yaml
+	speakeasy overlay apply -s $(TMP)/openapi.yaml -o overlay.yaml > $(TMP)/final.yaml
 	speakeasy generate sdk --lang terraform -o . -s $(TMP)/final.yaml
 
 docs:

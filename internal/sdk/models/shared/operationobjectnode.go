@@ -44,14 +44,14 @@ func CreateUniqArrayOfStr(arrayOfStr []string) Uniq {
 func (u *Uniq) UnmarshalJSON(data []byte) error {
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = UniqTypeBoolean
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = UniqTypeArrayOfStr
 		return nil
@@ -88,7 +88,7 @@ func (o OperationObjectNode) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OperationObjectNode) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, false); err != nil {
 		return err
 	}
 	return nil

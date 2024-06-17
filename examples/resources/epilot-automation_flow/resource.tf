@@ -7,18 +7,7 @@ resource "epilot-automation_flow" "my_flow" {
   flow_name     = "Handle contact form"
   system_flow   = false
   triggers = [
-    {
-      activity_trigger = {
-        configuration = {
-          schema = "submission"
-          types = [
-            "{ \"see\": \"documentation\" }",
-          ]
-        }
-        id   = "12d4f45a-1883-4841-a94c-5928cb338a94"
-        type = "activity"
-      }
-    },
+    "{ \"see\": \"documentation\" }",
   ]
   version = 2
 }

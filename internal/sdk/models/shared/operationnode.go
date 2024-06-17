@@ -44,14 +44,14 @@ func CreateOperationNodeAny(any any) OperationNode {
 func (u *OperationNode) UnmarshalJSON(data []byte) error {
 
 	var operationObjectNode OperationObjectNode = OperationObjectNode{}
-	if err := utils.UnmarshalJSON(data, &operationObjectNode, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &operationObjectNode, "", true, false); err == nil {
 		u.OperationObjectNode = &operationObjectNode
 		u.Type = OperationNodeTypeOperationObjectNode
 		return nil
 	}
 
 	var any any = nil
-	if err := utils.UnmarshalJSON(data, &any, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &any, "", true, false); err == nil {
 		u.Any = any
 		u.Type = OperationNodeTypeAny
 		return nil

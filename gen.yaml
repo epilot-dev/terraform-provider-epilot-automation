@@ -12,7 +12,7 @@ generation:
   sdkFlattening: true
   telemetryEnabled: false
 terraform:
-  version: 0.3.1
+  version: 0.3.4
   additionalDataSources: []
   additionalDependencies: {}
   additionalResources: []

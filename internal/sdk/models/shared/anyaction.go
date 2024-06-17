@@ -98,49 +98,49 @@ func CreateAnyActionAutomationAction(automationAction AutomationAction) AnyActio
 func (u *AnyAction) UnmarshalJSON(data []byte) error {
 
 	var mapEntityAction MapEntityAction = MapEntityAction{}
-	if err := utils.UnmarshalJSON(data, &mapEntityAction, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &mapEntityAction, "", true, false); err == nil {
 		u.MapEntityAction = &mapEntityAction
 		u.Type = AnyActionTypeMapEntityAction
 		return nil
 	}
 
 	var triggerWorkflowAction TriggerWorkflowAction = TriggerWorkflowAction{}
-	if err := utils.UnmarshalJSON(data, &triggerWorkflowAction, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &triggerWorkflowAction, "", true, false); err == nil {
 		u.TriggerWorkflowAction = &triggerWorkflowAction
 		u.Type = AnyActionTypeTriggerWorkflowAction
 		return nil
 	}
 
 	var triggerWebhookAction TriggerWebhookAction = TriggerWebhookAction{}
-	if err := utils.UnmarshalJSON(data, &triggerWebhookAction, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &triggerWebhookAction, "", true, false); err == nil {
 		u.TriggerWebhookAction = &triggerWebhookAction
 		u.Type = AnyActionTypeTriggerWebhookAction
 		return nil
 	}
 
 	var createDocumentAction CreateDocumentAction = CreateDocumentAction{}
-	if err := utils.UnmarshalJSON(data, &createDocumentAction, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDocumentAction, "", true, false); err == nil {
 		u.CreateDocumentAction = &createDocumentAction
 		u.Type = AnyActionTypeCreateDocumentAction
 		return nil
 	}
 
 	var sendEmailAction SendEmailAction = SendEmailAction{}
-	if err := utils.UnmarshalJSON(data, &sendEmailAction, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &sendEmailAction, "", true, false); err == nil {
 		u.SendEmailAction = &sendEmailAction
 		u.Type = AnyActionTypeSendEmailAction
 		return nil
 	}
 
 	var cartCheckoutAction CartCheckoutAction = CartCheckoutAction{}
-	if err := utils.UnmarshalJSON(data, &cartCheckoutAction, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &cartCheckoutAction, "", true, false); err == nil {
 		u.CartCheckoutAction = &cartCheckoutAction
 		u.Type = AnyActionTypeCartCheckoutAction
 		return nil
 	}
 
 	var automationAction AutomationAction = AutomationAction{}
-	if err := utils.UnmarshalJSON(data, &automationAction, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &automationAction, "", true, false); err == nil {
 		u.AutomationAction = &automationAction
 		u.Type = AnyActionTypeAutomationAction
 		return nil

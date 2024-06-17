@@ -55,21 +55,21 @@ func CreateTriggerEventTriggerEventEntityOperation(triggerEventEntityOperation T
 func (u *TriggerEvent) UnmarshalJSON(data []byte) error {
 
 	var triggerEventManual TriggerEventManual = TriggerEventManual{}
-	if err := utils.UnmarshalJSON(data, &triggerEventManual, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &triggerEventManual, "", true, false); err == nil {
 		u.TriggerEventManual = &triggerEventManual
 		u.Type = TriggerEventTypeTriggerEventManual
 		return nil
 	}
 
 	var triggerEventEntityActivity TriggerEventEntityActivity = TriggerEventEntityActivity{}
-	if err := utils.UnmarshalJSON(data, &triggerEventEntityActivity, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &triggerEventEntityActivity, "", true, false); err == nil {
 		u.TriggerEventEntityActivity = &triggerEventEntityActivity
 		u.Type = TriggerEventTypeTriggerEventEntityActivity
 		return nil
 	}
 
 	var triggerEventEntityOperation TriggerEventEntityOperation = TriggerEventEntityOperation{}
-	if err := utils.UnmarshalJSON(data, &triggerEventEntityOperation, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &triggerEventEntityOperation, "", true, false); err == nil {
 		u.TriggerEventEntityOperation = &triggerEventEntityOperation
 		u.Type = TriggerEventTypeTriggerEventEntityOperation
 		return nil

@@ -43,14 +43,14 @@ func CreateMapEntityConfigMappingAttributesMappingAttribute(mappingAttribute Map
 func (u *MapEntityConfigMappingAttributes) UnmarshalJSON(data []byte) error {
 
 	var mappingAttributeV2 MappingAttributeV2 = MappingAttributeV2{}
-	if err := utils.UnmarshalJSON(data, &mappingAttributeV2, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &mappingAttributeV2, "", true, false); err == nil {
 		u.MappingAttributeV2 = &mappingAttributeV2
 		u.Type = MapEntityConfigMappingAttributesTypeMappingAttributeV2
 		return nil
 	}
 
 	var mappingAttribute MappingAttribute = MappingAttribute{}
-	if err := utils.UnmarshalJSON(data, &mappingAttribute, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &mappingAttribute, "", true, false); err == nil {
 		u.MappingAttribute = &mappingAttribute
 		u.Type = MapEntityConfigMappingAttributesTypeMappingAttribute
 		return nil
