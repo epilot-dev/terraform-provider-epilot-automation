@@ -199,12 +199,13 @@ func (e *OriginType) UnmarshalJSON(data []byte) error {
 }
 
 type Source struct {
-	Attribute     *string        `json:"attribute,omitempty"`
-	AttributeType *AttributeType `json:"attributeType,omitempty"`
-	ID            *string        `json:"id,omitempty"`
-	Origin        *Origin        `json:"origin,omitempty"`
-	OriginType    *OriginType    `json:"originType,omitempty"`
-	Schema        *string        `json:"schema,omitempty"`
+	Attribute           *string        `json:"attribute,omitempty"`
+	AttributeRepeatable *bool          `json:"attributeRepeatable,omitempty"`
+	AttributeType       *AttributeType `json:"attributeType,omitempty"`
+	ID                  *string        `json:"id,omitempty"`
+	Origin              *Origin        `json:"origin,omitempty"`
+	OriginType          *OriginType    `json:"originType,omitempty"`
+	Schema              *string        `json:"schema,omitempty"`
 }
 
 func (o *Source) GetAttribute() *string {
@@ -212,6 +213,13 @@ func (o *Source) GetAttribute() *string {
 		return nil
 	}
 	return o.Attribute
+}
+
+func (o *Source) GetAttributeRepeatable() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AttributeRepeatable
 }
 
 func (o *Source) GetAttributeType() *AttributeType {
@@ -249,35 +257,35 @@ func (o *Source) GetSchema() *string {
 	return o.Schema
 }
 
-type Condition struct {
+type ConditionStatement struct {
 	ID        *string    `json:"id,omitempty"`
 	Operation *Operation `json:"operation,omitempty"`
 	Source    *Source    `json:"source,omitempty"`
 	Values    []string   `json:"values,omitempty"`
 }
 
-func (o *Condition) GetID() *string {
+func (o *ConditionStatement) GetID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ID
 }
 
-func (o *Condition) GetOperation() *Operation {
+func (o *ConditionStatement) GetOperation() *Operation {
 	if o == nil {
 		return nil
 	}
 	return o.Operation
 }
 
-func (o *Condition) GetSource() *Source {
+func (o *ConditionStatement) GetSource() *Source {
 	if o == nil {
 		return nil
 	}
 	return o.Source
 }
 
-func (o *Condition) GetValues() []string {
+func (o *ConditionStatement) GetValues() []string {
 	if o == nil {
 		return nil
 	}

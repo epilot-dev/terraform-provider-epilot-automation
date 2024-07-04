@@ -5,7 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type ActionCondition struct {
-	Conditions       []Condition  `tfsdk:"conditions"`
-	EvaluationResult types.Bool   `tfsdk:"evaluation_result"`
-	ID               types.String `tfsdk:"id"`
+	EvaluationResult types.Bool           `tfsdk:"evaluation_result"`
+	ID               types.String         `tfsdk:"id"`
+	Statements       []ConditionStatement `tfsdk:"statements"`
 }

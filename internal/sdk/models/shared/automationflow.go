@@ -18,9 +18,9 @@ type AutomationFlow struct {
 	FlowName string  `json:"flow_name"`
 	ID       *string `json:"id,omitempty"`
 	// Determines if the flow is a system generated flow
-	SystemFlow        *bool `json:"system_flow,omitempty"`
-	TriggerConditions []any `json:"trigger_conditions,omitempty"`
-	Triggers          []any `json:"triggers"`
+	SystemFlow        *bool        `json:"system_flow,omitempty"`
+	TriggerConditions []any        `json:"trigger_conditions,omitempty"`
+	Triggers          []AnyTrigger `json:"triggers"`
 	// Version of the flow
 	Version *float64 `json:"version,omitempty"`
 }
@@ -92,9 +92,9 @@ func (o *AutomationFlow) GetTriggerConditions() []any {
 	return o.TriggerConditions
 }
 
-func (o *AutomationFlow) GetTriggers() []any {
+func (o *AutomationFlow) GetTriggers() []AnyTrigger {
 	if o == nil {
-		return []any{}
+		return []AnyTrigger{}
 	}
 	return o.Triggers
 }

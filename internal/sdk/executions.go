@@ -12,6 +12,7 @@ import (
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/errors"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/operations"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/shared"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/retry"
 	"io"
 	"net/http"
 	"net/url"
@@ -69,9 +70,9 @@ func (s *Executions) CancelExecution(ctx context.Context, request operations.Can
 	retryConfig := o.Retries
 	if retryConfig == nil {
 		if globalRetryConfig == nil {
-			retryConfig = &utils.RetryConfig{
+			retryConfig = &retry.Config{
 				Strategy: "backoff",
-				Backoff: &utils.BackoffStrategy{
+				Backoff: &retry.BackoffStrategy{
 					InitialInterval: 5000,
 					MaxInterval:     60000,
 					Exponent:        1.5,
@@ -199,9 +200,9 @@ func (s *Executions) GetExecution(ctx context.Context, request operations.GetExe
 	retryConfig := o.Retries
 	if retryConfig == nil {
 		if globalRetryConfig == nil {
-			retryConfig = &utils.RetryConfig{
+			retryConfig = &retry.Config{
 				Strategy: "backoff",
-				Backoff: &utils.BackoffStrategy{
+				Backoff: &retry.BackoffStrategy{
 					InitialInterval: 5000,
 					MaxInterval:     60000,
 					Exponent:        1.5,
@@ -333,9 +334,9 @@ func (s *Executions) GetExecutions(ctx context.Context, request operations.GetEx
 	retryConfig := o.Retries
 	if retryConfig == nil {
 		if globalRetryConfig == nil {
-			retryConfig = &utils.RetryConfig{
+			retryConfig = &retry.Config{
 				Strategy: "backoff",
-				Backoff: &utils.BackoffStrategy{
+				Backoff: &retry.BackoffStrategy{
 					InitialInterval: 5000,
 					MaxInterval:     60000,
 					Exponent:        1.5,
@@ -469,9 +470,9 @@ func (s *Executions) ResumeExecutionWithToken(ctx context.Context, request *shar
 	retryConfig := o.Retries
 	if retryConfig == nil {
 		if globalRetryConfig == nil {
-			retryConfig = &utils.RetryConfig{
+			retryConfig = &retry.Config{
 				Strategy: "backoff",
-				Backoff: &utils.BackoffStrategy{
+				Backoff: &retry.BackoffStrategy{
 					InitialInterval: 5000,
 					MaxInterval:     60000,
 					Exponent:        1.5,
@@ -596,9 +597,9 @@ func (s *Executions) RetriggerAction(ctx context.Context, request operations.Ret
 	retryConfig := o.Retries
 	if retryConfig == nil {
 		if globalRetryConfig == nil {
-			retryConfig = &utils.RetryConfig{
+			retryConfig = &retry.Config{
 				Strategy: "backoff",
-				Backoff: &utils.BackoffStrategy{
+				Backoff: &retry.BackoffStrategy{
 					InitialInterval: 5000,
 					MaxInterval:     60000,
 					Exponent:        1.5,
@@ -721,9 +722,9 @@ func (s *Executions) StartExecution(ctx context.Context, request *shared.StartEx
 	retryConfig := o.Retries
 	if retryConfig == nil {
 		if globalRetryConfig == nil {
-			retryConfig = &utils.RetryConfig{
+			retryConfig = &retry.Config{
 				Strategy: "backoff",
-				Backoff: &utils.BackoffStrategy{
+				Backoff: &retry.BackoffStrategy{
 					InitialInterval: 5000,
 					MaxInterval:     60000,
 					Exponent:        1.5,

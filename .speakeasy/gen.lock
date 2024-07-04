@@ -1,29 +1,30 @@
 lockVersion: 2.0.0
 id: 6df5dec4-6d34-4c07-99f4-b36e64bbb781
 management:
-  docChecksum: d792a8b25d8ed58499761d7eaf4a6284
+  docChecksum: e6854f76af70be3c0ef7d6a62c7407de
   docVersion: 1.0.0
-  speakeasyVersion: 1.303.4
-  generationVersion: 2.340.2
-  releaseVersion: 0.3.4
-  configChecksum: f724d8c3d33384cabeccff137d6299da
+  speakeasyVersion: 1.326.2
+  generationVersion: 2.359.1
+  releaseVersion: 0.4.0
+  configChecksum: 7f7ce5bb3f629638139d1c507f49e78b
 features:
   terraform:
     additionalDependencies: 0.1.0
     additionalProperties: 0.1.2
     constsAndDefaults: 0.1.4
-    core: 3.21.3
+    core: 3.23.1
     deprecations: 2.81.1
     globalSecurity: 2.81.6
     globalServerURLs: 2.82.1
     inputOutputModels: 2.83.0
     retries: 2.81.1
-    unions: 2.81.14
+    unions: 2.81.15
 generatedFiles:
   - internal/sdk/executions.go
   - internal/sdk/flows.go
   - internal/sdk/sdk.go
   - internal/sdk/models/errors/sdkerror.go
+  - internal/sdk/retry/config.go
   - internal/sdk/types/bigint.go
   - internal/sdk/types/date.go
   - internal/sdk/types/datetime.go
@@ -59,7 +60,7 @@ generatedFiles:
   - internal/sdk/models/shared/executionstatus.go
   - internal/sdk/models/shared/entityitemsnapshot.go
   - internal/sdk/models/shared/actioncondition.go
-  - internal/sdk/models/shared/condition.go
+  - internal/sdk/models/shared/conditionstatement.go
   - internal/sdk/models/shared/anyaction.go
   - internal/sdk/models/shared/mapentityaction.go
   - internal/sdk/models/shared/retrystrategy.go
@@ -94,6 +95,19 @@ generatedFiles:
   - internal/sdk/models/shared/retryreq.go
   - internal/sdk/models/shared/startexecutionrequest.go
   - internal/sdk/models/shared/automationflow.go
+  - internal/sdk/models/shared/anytrigger.go
+  - internal/sdk/models/shared/frontendsubmittrigger.go
+  - internal/sdk/models/shared/journeysubmittrigger.go
+  - internal/sdk/models/shared/apisubmissiontrigger.go
+  - internal/sdk/models/shared/entityoperationtrigger.go
+  - internal/sdk/models/shared/equalsignorecasecondition.go
+  - internal/sdk/models/shared/anythingbutcondition.go
+  - internal/sdk/models/shared/existscondition.go
+  - internal/sdk/models/shared/prefixcondition.go
+  - internal/sdk/models/shared/suffixcondition.go
+  - internal/sdk/models/shared/wildcardcondition.go
+  - internal/sdk/models/shared/entitymanualtrigger.go
+  - internal/sdk/models/shared/receivedemailtrigger.go
   - internal/sdk/models/shared/automationflowinput.go
   - internal/sdk/models/shared/searchautomationsresp.go
   - internal/sdk/models/shared/security.go
@@ -147,8 +161,34 @@ generatedFiles:
   - terraform-registry-manifest.json
   - tools/tools.go
   - internal/provider/types/source.go
-  - internal/provider/types/condition.go
+  - internal/provider/types/condition_statement.go
   - internal/provider/types/action_condition.go
+  - internal/provider/types/configuration.go
+  - internal/provider/types/api_submission_trigger.go
+  - internal/provider/types/entity_manual_trigger_configuration.go
+  - internal/provider/types/entity_manual_trigger.go
+  - internal/provider/types/file_config.go
+  - internal/provider/types/ecp_config.go
+  - internal/provider/types/anything_but_condition.go
+  - internal/provider/types/equals_ignore_case_condition.go
+  - internal/provider/types/exists_condition.go
+  - internal/provider/types/prefix_condition.go
+  - internal/provider/types/suffix_condition.go
+  - internal/provider/types/wildcard_condition.go
+  - internal/provider/types/entity_operation_trigger_schemas_type.go
+  - internal/provider/types/activity.go
+  - internal/provider/types/two.go
+  - internal/provider/types/diff.go
+  - internal/provider/types/entity_operation_trigger_operation.go
+  - internal/provider/types/filter_config.go
+  - internal/provider/types/entity_operation_trigger_configuration.go
+  - internal/provider/types/entity_operation_trigger.go
+  - internal/provider/types/frontend_submit_trigger.go
+  - internal/provider/types/journey_submit_trigger_configuration.go
+  - internal/provider/types/journey_submit_trigger.go
+  - internal/provider/types/received_email_trigger_configuration.go
+  - internal/provider/types/received_email_trigger.go
+  - internal/provider/types/any_trigger.go
   - USAGE.md
   - internal/provider/provider.go
   - examples/provider/provider.tf

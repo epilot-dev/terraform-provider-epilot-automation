@@ -51,8 +51,6 @@ actions:
     remove: true
   - target: $["components"]["schemas"]["ActivityTrigger"]
     remove: true
-  - target: $["components"]["schemas"]["AnyTrigger"]
-    remove: true
   - target: $["components"]["schemas"]
     update:
       FilterConditionOnEvent: {}
@@ -61,7 +59,6 @@ actions:
       OrCondition: {}
       OrConditionForDiff: {}
       ActivityTrigger: {} # @Todo: switch back to allOfs after speakeasy fixes a way to deal with unknown properties in anyOfs/allOfs 
-      AnyTrigger: {}
   - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["actions"]["readOnly"]
     remove: true
   - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["actions"]["items"]

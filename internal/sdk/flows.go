@@ -12,6 +12,7 @@ import (
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/errors"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/operations"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/shared"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/retry"
 	"io"
 	"net/http"
 	"net/url"
@@ -75,9 +76,9 @@ func (s *Flows) CreateFlow(ctx context.Context, request *shared.AutomationFlowIn
 	retryConfig := o.Retries
 	if retryConfig == nil {
 		if globalRetryConfig == nil {
-			retryConfig = &utils.RetryConfig{
+			retryConfig = &retry.Config{
 				Strategy: "backoff",
-				Backoff: &utils.BackoffStrategy{
+				Backoff: &retry.BackoffStrategy{
 					InitialInterval: 5000,
 					MaxInterval:     60000,
 					Exponent:        1.5,
@@ -205,9 +206,9 @@ func (s *Flows) DeleteFlow(ctx context.Context, request operations.DeleteFlowReq
 	retryConfig := o.Retries
 	if retryConfig == nil {
 		if globalRetryConfig == nil {
-			retryConfig = &utils.RetryConfig{
+			retryConfig = &retry.Config{
 				Strategy: "backoff",
-				Backoff: &utils.BackoffStrategy{
+				Backoff: &retry.BackoffStrategy{
 					InitialInterval: 5000,
 					MaxInterval:     60000,
 					Exponent:        1.5,
@@ -335,9 +336,9 @@ func (s *Flows) GetFlow(ctx context.Context, request operations.GetFlowRequest, 
 	retryConfig := o.Retries
 	if retryConfig == nil {
 		if globalRetryConfig == nil {
-			retryConfig = &utils.RetryConfig{
+			retryConfig = &retry.Config{
 				Strategy: "backoff",
-				Backoff: &utils.BackoffStrategy{
+				Backoff: &retry.BackoffStrategy{
 					InitialInterval: 5000,
 					MaxInterval:     60000,
 					Exponent:        1.5,
@@ -471,9 +472,9 @@ func (s *Flows) PutFlow(ctx context.Context, request operations.PutFlowRequest, 
 	retryConfig := o.Retries
 	if retryConfig == nil {
 		if globalRetryConfig == nil {
-			retryConfig = &utils.RetryConfig{
+			retryConfig = &retry.Config{
 				Strategy: "backoff",
-				Backoff: &utils.BackoffStrategy{
+				Backoff: &retry.BackoffStrategy{
 					InitialInterval: 5000,
 					MaxInterval:     60000,
 					Exponent:        1.5,
@@ -605,9 +606,9 @@ func (s *Flows) SearchFlows(ctx context.Context, request operations.SearchFlowsR
 	retryConfig := o.Retries
 	if retryConfig == nil {
 		if globalRetryConfig == nil {
-			retryConfig = &utils.RetryConfig{
+			retryConfig = &retry.Config{
 				Strategy: "backoff",
-				Backoff: &utils.BackoffStrategy{
+				Backoff: &retry.BackoffStrategy{
 					InitialInterval: 5000,
 					MaxInterval:     60000,
 					Exponent:        1.5,

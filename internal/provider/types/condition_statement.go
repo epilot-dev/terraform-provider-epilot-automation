@@ -4,7 +4,7 @@ package types
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type Condition struct {
+type ConditionStatement struct {
 	ID        types.String   `tfsdk:"id"`
 	Operation types.String   `tfsdk:"operation"`
 	Source    *Source        `tfsdk:"source"`

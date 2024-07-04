@@ -5,10 +5,11 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type Source struct {
-	Attribute     types.String `tfsdk:"attribute"`
-	AttributeType types.String `tfsdk:"attribute_type"`
-	ID            types.String `tfsdk:"id"`
-	Origin        types.String `tfsdk:"origin"`
-	OriginType    types.String `tfsdk:"origin_type"`
-	Schema        types.String `tfsdk:"schema"`
+	Attribute           types.String `tfsdk:"attribute"`
+	AttributeRepeatable types.Bool   `tfsdk:"attribute_repeatable"`
+	AttributeType       types.String `tfsdk:"attribute_type"`
+	ID                  types.String `tfsdk:"id"`
+	Origin              types.String `tfsdk:"origin"`
+	OriginType          types.String `tfsdk:"origin_type"`
+	Schema              types.String `tfsdk:"schema"`
 }
