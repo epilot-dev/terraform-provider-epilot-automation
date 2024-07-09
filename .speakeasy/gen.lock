@@ -1,18 +1,18 @@
 lockVersion: 2.0.0
 id: 6df5dec4-6d34-4c07-99f4-b36e64bbb781
 management:
-  docChecksum: e6854f76af70be3c0ef7d6a62c7407de
+  docChecksum: 0778df831846bbd1e212877224df3ab6
   docVersion: 1.0.0
-  speakeasyVersion: 1.326.2
-  generationVersion: 2.359.1
-  releaseVersion: 0.4.0
-  configChecksum: 7f7ce5bb3f629638139d1c507f49e78b
+  speakeasyVersion: 1.330.0
+  generationVersion: 2.361.10
+  releaseVersion: 0.4.1
+  configChecksum: 2e3adb05c5edba5c6de7f78c6f30bfd6
 features:
   terraform:
     additionalDependencies: 0.1.0
     additionalProperties: 0.1.2
     constsAndDefaults: 0.1.4
-    core: 3.23.1
+    core: 3.23.3
     deprecations: 2.81.1
     globalSecurity: 2.81.6
     globalServerURLs: 2.82.1

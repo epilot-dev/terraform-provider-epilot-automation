@@ -16,6 +16,6 @@ variable "epilot_auth" {
   type = string
 }
 
-resource "epilot-automation_flow" "new_automation_flow" {
+resource "epilot-automation_flow" "automation_flow_bla" {
 }
  
