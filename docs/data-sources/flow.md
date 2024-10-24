@@ -14,7 +14,6 @@ Flow DataSource
 
 ```terraform
 data "epilot-automation_flow" "my_flow" {
-  flow_id = "7791b04a-16d2-44a2-9af9-2d59c25c512f"
 }
 ```
 
@@ -29,6 +28,7 @@ data "epilot-automation_flow" "my_flow" {
 - `entity_schema` (String) The triggering entity schema
 - `flow_name` (String) A descriptive name for the Automation
 - `id` (String) The ID of this resource.
+- `schedules` (Attributes List) (see [below for nested schema](#nestedatt--schedules))
 - `system_flow` (Boolean) Determines if the flow is a system generated flow
 - `trigger_conditions` (List of String)
 - `triggers` (Attributes List) (see [below for nested schema](#nestedatt--triggers))
@@ -49,7 +49,7 @@ Read-Only:
 Read-Only:
 
 - `id` (String)
-- `operation` (String) must be one of ["equals", "not_equals", "any_of", "none_of", "contains", "not_contains", "starts_with", "ends_with", "greater_than", "less_than", "greater_than_or_equals", "less_than_or_equals", "is_empty", "is_not_empty"]
+- `operation` (String)
 - `source` (Attributes) (see [below for nested schema](#nestedatt--conditions--statements--source))
 - `values` (List of String)
 
@@ -59,13 +59,38 @@ Read-Only:
 Read-Only:
 
 - `attribute` (String)
+- `attribute_operation` (String)
 - `attribute_repeatable` (Boolean)
-- `attribute_type` (String) must be one of ["string", "text", "number", "boolean", "date", "datetime", "tag", "country", "email", "phone", "product", "price", "status", "relation", "multiselect", "select", "radio", "relation_user"]
-- `id` (String)
-- `origin` (String) must be one of ["trigger", "action"]
-- `origin_type` (String) must be one of ["entity", "workflow", "journey_block"]
+- `attribute_type` (String)
+- `id` (String) The id of the action or trigger
+- `origin` (String)
+- `origin_type` (String)
 - `schema` (String)
 
+
+
+
+<a id="nestedatt--schedules"></a>
+### Nested Schema for `schedules`
+
+Read-Only:
+
+- `configured_schedule_id` (String) The id of the configured scheduler which will be added on automation triggered
+- `id` (String) Schedule Id
+- `number_of_units` (Number)
+- `source` (Attributes) The source of the schedule_at timestamp that will be used to schedule the action (see [below for nested schema](#nestedatt--schedules--source))
+- `time_period` (String)
+- `time_relation` (String)
+
+<a id="nestedatt--schedules--source"></a>
+### Nested Schema for `schedules.source`
+
+Read-Only:
+
+- `attribute` (String)
+- `id` (String) The id of the action or trigger
+- `origin` (String)
+- `schema` (String)
 
 
 
@@ -201,7 +226,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--api_submission_trigger--configuration))
 - `id` (String)
-- `type` (String) must be one of ["api_submission"]
+- `type` (String)
 
 <a id="nestedatt--triggers--api_submission_trigger--configuration"></a>
 ### Nested Schema for `triggers.api_submission_trigger.configuration`
@@ -219,7 +244,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_manual_trigger--configuration))
 - `id` (String)
-- `type` (String) must be one of ["entity_manual"]
+- `type` (String)
 
 <a id="nestedatt--triggers--entity_manual_trigger--configuration"></a>
 ### Nested Schema for `triggers.entity_manual_trigger.configuration`
@@ -237,7 +262,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration))
 - `id` (String)
-- `type` (String) must be one of ["entity_operation"]
+- `type` (String)
 
 <a id="nestedatt--triggers--entity_operation_trigger--configuration"></a>
 ### Nested Schema for `triggers.entity_operation_trigger.configuration`
@@ -252,15 +277,15 @@ Read-Only:
 - `schema` (String)
 
 <a id="nestedatt--triggers--entity_operation_trigger--configuration--ecp_config"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema`
+### Nested Schema for `triggers.entity_operation_trigger.configuration.ecp_config`
 
 Read-Only:
 
-- `file_config` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--schema--file_config))
+- `file_config` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--ecp_config--file_config))
 - `origin` (String)
 
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--schema--file_config"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema.file_config`
+<a id="nestedatt--triggers--entity_operation_trigger--configuration--ecp_config--file_config"></a>
+### Nested Schema for `triggers.entity_operation_trigger.configuration.ecp_config.file_config`
 
 Read-Only:
 
@@ -269,15 +294,15 @@ Read-Only:
 
 
 <a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema`
+### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config`
 
 Read-Only:
 
-- `activity` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--schema--activity))
-- `operation` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--schema--operation))
+- `activity` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity))
+- `operation` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--filter_config--operation))
 
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--schema--activity"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema.activity`
+<a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity"></a>
+### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config.activity`
 
 Read-Only:
 
@@ -298,63 +323,63 @@ Example:
           "type": ["DocUploadedFromPortal", "DocRemovedFromPortal"]
         }
       }
-    ``` (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type))
+    ``` (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type))
 
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema.activity.type`
+<a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type"></a>
+### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config.activity.type`
 
 Read-Only:
 
-- `anything_but_condition` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type--anything_but_condition))
-- `equals_ignore_case_condition` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type--equals_ignore_case_condition))
-- `exists_condition` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type--exists_condition))
-- `prefix_condition` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type--prefix_condition))
+- `anything_but_condition` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type--anything_but_condition))
+- `equals_ignore_case_condition` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type--equals_ignore_case_condition))
+- `exists_condition` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type--exists_condition))
+- `prefix_condition` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type--prefix_condition))
 - `str` (String)
-- `suffix_condition` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type--suffix_condition))
-- `wildcard_condition` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type--wildcard_condition))
+- `suffix_condition` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type--suffix_condition))
+- `wildcard_condition` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type--wildcard_condition))
 
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type--anything_but_condition"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema.activity.type.wildcard_condition`
+<a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type--anything_but_condition"></a>
+### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config.activity.type.anything_but_condition`
 
 Read-Only:
 
 - `anything_but` (List of String)
 
 
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type--equals_ignore_case_condition"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema.activity.type.wildcard_condition`
+<a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type--equals_ignore_case_condition"></a>
+### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config.activity.type.equals_ignore_case_condition`
 
 Read-Only:
 
 - `equals_ignore_case` (String)
 
 
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type--exists_condition"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema.activity.type.wildcard_condition`
+<a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type--exists_condition"></a>
+### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config.activity.type.exists_condition`
 
 Read-Only:
 
 - `exists` (Boolean)
 
 
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type--prefix_condition"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema.activity.type.wildcard_condition`
+<a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type--prefix_condition"></a>
+### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config.activity.type.prefix_condition`
 
 Read-Only:
 
 - `prefix` (String)
 
 
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type--suffix_condition"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema.activity.type.wildcard_condition`
+<a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type--suffix_condition"></a>
+### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config.activity.type.suffix_condition`
 
 Read-Only:
 
 - `suffix` (String)
 
 
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--schema--activity--type--wildcard_condition"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema.activity.type.wildcard_condition`
+<a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config--activity--type--wildcard_condition"></a>
+### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config.activity.type.wildcard_condition`
 
 Read-Only:
 
@@ -363,12 +388,12 @@ Read-Only:
 
 
 
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--schema--operation"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema.operation`
+<a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config--operation"></a>
+### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config.operation`
 
 Read-Only:
 
-- `diff` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--schema--operation--diff))
+- `diff` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--filter_config--operation--diff))
 - `operation` (List of String) Filter on operation type. If not specified, all operations will be matched on execution.
 Example:
   1. Filter all the createEntity/updateEntity operations
@@ -381,16 +406,16 @@ Example:
   ```
 - `payload` (String) Parsed as JSON.
 
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--schema--operation--diff"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema.operation.payload`
+<a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config--operation--diff"></a>
+### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config.operation.diff`
 
 Read-Only:
 
 - `any` (String) Parsed as JSON.
-- `two` (Attributes) Diff to it's prior state when an entity is updated (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--schema--operation--payload--two))
+- `two` (Attributes) Diff to it's prior state when an entity is updated (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--filter_config--operation--diff--two))
 
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--schema--operation--payload--two"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.schema.operation.payload.two`
+<a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config--operation--diff--two"></a>
+### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config.operation.diff.two`
 
 Read-Only:
 
@@ -411,7 +436,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--frontend_submit_trigger--configuration))
 - `id` (String)
-- `type` (String) must be one of ["frontend_submission"]
+- `type` (String)
 
 <a id="nestedatt--triggers--frontend_submit_trigger--configuration"></a>
 ### Nested Schema for `triggers.frontend_submit_trigger.configuration`
@@ -429,7 +454,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--journey_submit_trigger--configuration))
 - `id` (String)
-- `type` (String) must be one of ["journey_submission"]
+- `type` (String)
 
 <a id="nestedatt--triggers--journey_submit_trigger--configuration"></a>
 ### Nested Schema for `triggers.journey_submit_trigger.configuration`
@@ -447,13 +472,11 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--received_email_trigger--configuration))
 - `id` (String)
-- `type` (String) must be one of ["received_email"]
+- `type` (String)
 
 <a id="nestedatt--triggers--received_email_trigger--configuration"></a>
 ### Nested Schema for `triggers.received_email_trigger.configuration`
 
 Read-Only:
 
-- `message_type` (String) must be one of ["RECEIVED"]
-
-
+- `message_type` (String)
