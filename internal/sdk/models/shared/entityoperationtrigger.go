@@ -242,99 +242,8 @@ func (o *Activity) GetType() []EntityOperationTriggerSchemasType {
 	return o.Type
 }
 
-// Two - Diff to it's prior state when an entity is updated
-type Two struct {
-	Added   any `json:"added,omitempty"`
-	Deleted any `json:"deleted,omitempty"`
-	Updated any `json:"updated,omitempty"`
-}
-
-func (o *Two) GetAdded() any {
-	if o == nil {
-		return nil
-	}
-	return o.Added
-}
-
-func (o *Two) GetDeleted() any {
-	if o == nil {
-		return nil
-	}
-	return o.Deleted
-}
-
-func (o *Two) GetUpdated() any {
-	if o == nil {
-		return nil
-	}
-	return o.Updated
-}
-
-type DiffType string
-
-const (
-	DiffTypeAny DiffType = "any"
-	DiffTypeTwo DiffType = "2"
-)
-
-type Diff struct {
-	Any any
-	Two *Two
-
-	Type DiffType
-}
-
-func CreateDiffAny(any any) Diff {
-	typ := DiffTypeAny
-
-	return Diff{
-		Any:  any,
-		Type: typ,
-	}
-}
-
-func CreateDiffTwo(two Two) Diff {
-	typ := DiffTypeTwo
-
-	return Diff{
-		Two:  &two,
-		Type: typ,
-	}
-}
-
-func (u *Diff) UnmarshalJSON(data []byte) error {
-
-	var two Two = Two{}
-	if err := utils.UnmarshalJSON(data, &two, "", true, false); err == nil {
-		u.Two = &two
-		u.Type = DiffTypeTwo
-		return nil
-	}
-
-	var any any = nil
-	if err := utils.UnmarshalJSON(data, &any, "", true, false); err == nil {
-		u.Any = any
-		u.Type = DiffTypeAny
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Diff", string(data))
-}
-
-func (u Diff) MarshalJSON() ([]byte, error) {
-	if u.Any != nil {
-		return utils.MarshalJSON(u.Any, "", true)
-	}
-
-	if u.Two != nil {
-		return utils.MarshalJSON(u.Two, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type Diff: all fields are null")
-}
-
 type EntityOperationTriggerOperation struct {
-	Diff *Diff `json:"diff,omitempty"`
+	Diff any `json:"diff,omitempty"`
 	// Filter on operation type. If not specified, all operations will be matched on execution.
 	// Example:
 	//   1. Filter all the createEntity/updateEntity operations
@@ -350,7 +259,7 @@ type EntityOperationTriggerOperation struct {
 	Payload   any               `json:"payload,omitempty"`
 }
 
-func (o *EntityOperationTriggerOperation) GetDiff() *Diff {
+func (o *EntityOperationTriggerOperation) GetDiff() any {
 	if o == nil {
 		return nil
 	}

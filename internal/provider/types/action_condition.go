@@ -7,5 +7,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type ActionCondition struct {
 	EvaluationResult types.Bool           `tfsdk:"evaluation_result"`
 	ID               types.String         `tfsdk:"id"`
+	ScheduleID       types.String         `tfsdk:"schedule_id"`
 	Statements       []ConditionStatement `tfsdk:"statements"`
 }

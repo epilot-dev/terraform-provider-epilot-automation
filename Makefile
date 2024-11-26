@@ -5,7 +5,7 @@ original.yaml:
 	curl https://docs.api.epilot.io/automation.yaml > original.yaml
 
 original_modified.yaml: original.yaml
-	cp original.yaml original_modified.yaml
+	speakeasy overlay apply -s original.yaml -o overlay.yaml > original_modified.yaml
 
 overlay.yaml:
 	speakeasy overlay compare -s original.yaml -s original_modified.yaml > overlay.yaml

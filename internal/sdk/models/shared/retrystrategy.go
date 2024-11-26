@@ -11,8 +11,9 @@ import (
 type RetryStrategy string
 
 const (
-	RetryStrategyRetryAndResume RetryStrategy = "RETRY_AND_RESUME"
-	RetryStrategyRetryAndStop   RetryStrategy = "RETRY_AND_STOP"
+	RetryStrategyRetryAndResume                 RetryStrategy = "RETRY_AND_RESUME"
+	RetryStrategyRetryAndStop                   RetryStrategy = "RETRY_AND_STOP"
+	RetryStrategyRetryAllParentConditionActions RetryStrategy = "RETRY_ALL_PARENT_CONDITION_ACTIONS"
 )
 
 func (e RetryStrategy) ToPointer() *RetryStrategy {
@@ -27,6 +28,8 @@ func (e *RetryStrategy) UnmarshalJSON(data []byte) error {
 	case "RETRY_AND_RESUME":
 		fallthrough
 	case "RETRY_AND_STOP":
+		fallthrough
+	case "RETRY_ALL_PARENT_CONDITION_ACTIONS":
 		*e = RetryStrategy(v)
 		return nil
 	default:

@@ -45,6 +45,11 @@ actions:
     remove: true
   - target: $["components"]["schemas"]["TriggerCondition"]
     remove: true
+  - target: $["components"]["schemas"]["EntityOperationTrigger"]["allOf"][1]["properties"]["configuration"]["properties"]["filter_config"]["properties"]["operation"]["properties"]["diff"]
+    remove: true
+  - target: $["components"]["schemas"]["EntityOperationTrigger"]["allOf"][1]["properties"]["configuration"]["properties"]["filter_config"]["properties"]["operation"]["properties"]
+    update:
+      diff: {}
   - target: $["components"]["schemas"]["OrCondition"]
     remove: true
   - target: $["components"]["schemas"]["OrConditionForDiff"]

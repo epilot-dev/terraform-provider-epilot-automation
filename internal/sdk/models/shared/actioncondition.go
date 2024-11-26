@@ -4,9 +4,11 @@ package shared
 
 type ActionCondition struct {
 	// Result of the condition evaluation
-	EvaluationResult *bool                `json:"evaluationResult,omitempty"`
-	ID               *string              `json:"id,omitempty"`
-	Statements       []ConditionStatement `json:"statements,omitempty"`
+	EvaluationResult *bool   `json:"evaluationResult,omitempty"`
+	ID               *string `json:"id,omitempty"`
+	// Schedule Id which indicates the schedule of the actions inside the condition
+	ScheduleID *string              `json:"schedule_id,omitempty"`
+	Statements []ConditionStatement `json:"statements,omitempty"`
 }
 
 func (o *ActionCondition) GetEvaluationResult() *bool {
@@ -21,6 +23,13 @@ func (o *ActionCondition) GetID() *string {
 		return nil
 	}
 	return o.ID
+}
+
+func (o *ActionCondition) GetScheduleID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ScheduleID
 }
 
 func (o *ActionCondition) GetStatements() []ConditionStatement {

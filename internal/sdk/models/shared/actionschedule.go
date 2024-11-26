@@ -69,22 +69,15 @@ func (e *TimeRelation) UnmarshalJSON(data []byte) error {
 }
 
 type ActionSchedule struct {
-	// The id of the configured scheduler which will be added on automation triggered
-	ConfiguredScheduleID *string `json:"configuredScheduleId,omitempty"`
 	// Schedule Id
 	ID            string   `json:"id"`
 	NumberOfUnits *float64 `json:"numberOfUnits,omitempty"`
+	// The id of the configured scheduler which will be added on automation triggered
+	ScheduleAPIID *string `json:"scheduleApiId,omitempty"`
 	// The source of the schedule_at timestamp that will be used to schedule the action
 	Source       ActionScheduleSource `json:"source"`
 	TimePeriod   *TimePeriod          `json:"timePeriod,omitempty"`
 	TimeRelation *TimeRelation        `json:"timeRelation,omitempty"`
-}
-
-func (o *ActionSchedule) GetConfiguredScheduleID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ConfiguredScheduleID
 }
 
 func (o *ActionSchedule) GetID() string {
@@ -99,6 +92,13 @@ func (o *ActionSchedule) GetNumberOfUnits() *float64 {
 		return nil
 	}
 	return o.NumberOfUnits
+}
+
+func (o *ActionSchedule) GetScheduleAPIID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ScheduleAPIID
 }
 
 func (o *ActionSchedule) GetSource() ActionScheduleSource {

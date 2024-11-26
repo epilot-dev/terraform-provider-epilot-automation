@@ -5,10 +5,10 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type ActionSchedule struct {
-	ConfiguredScheduleID types.String         `tfsdk:"configured_schedule_id"`
-	ID                   types.String         `tfsdk:"id"`
-	NumberOfUnits        types.Number         `tfsdk:"number_of_units"`
-	Source               ActionScheduleSource `tfsdk:"source"`
-	TimePeriod           types.String         `tfsdk:"time_period"`
-	TimeRelation         types.String         `tfsdk:"time_relation"`
+	ID            types.String         `tfsdk:"id"`
+	NumberOfUnits types.Number         `tfsdk:"number_of_units"`
+	ScheduleAPIID types.String         `tfsdk:"schedule_api_id"`
+	Source        ActionScheduleSource `tfsdk:"source"`
+	TimePeriod    types.String         `tfsdk:"time_period"`
+	TimeRelation  types.String         `tfsdk:"time_relation"`
 }

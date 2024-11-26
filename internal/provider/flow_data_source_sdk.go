@@ -27,6 +27,7 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.Autom
 			var conditions1 tfTypes.ActionCondition
 			conditions1.EvaluationResult = types.BoolPointerValue(conditionsItem.EvaluationResult)
 			conditions1.ID = types.StringPointerValue(conditionsItem.ID)
+			conditions1.ScheduleID = types.StringPointerValue(conditionsItem.ScheduleID)
 			conditions1.Statements = []tfTypes.ConditionStatement{}
 			for statementsCount, statementsItem := range conditionsItem.Statements {
 				var statements1 tfTypes.ConditionStatement
@@ -83,6 +84,7 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.Autom
 			} else {
 				r.Conditions[conditionsCount].EvaluationResult = conditions1.EvaluationResult
 				r.Conditions[conditionsCount].ID = conditions1.ID
+				r.Conditions[conditionsCount].ScheduleID = conditions1.ScheduleID
 				r.Conditions[conditionsCount].Statements = conditions1.Statements
 			}
 		}
@@ -96,13 +98,13 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.Autom
 		}
 		for schedulesCount, schedulesItem := range resp.Schedules {
 			var schedules1 tfTypes.ActionSchedule
-			schedules1.ConfiguredScheduleID = types.StringPointerValue(schedulesItem.ConfiguredScheduleID)
 			schedules1.ID = types.StringValue(schedulesItem.ID)
 			if schedulesItem.NumberOfUnits != nil {
 				schedules1.NumberOfUnits = types.NumberValue(big.NewFloat(float64(*schedulesItem.NumberOfUnits)))
 			} else {
 				schedules1.NumberOfUnits = types.NumberNull()
 			}
+			schedules1.ScheduleAPIID = types.StringPointerValue(schedulesItem.ScheduleAPIID)
 			schedules1.Source.Attribute = types.StringValue(schedulesItem.Source.Attribute)
 			schedules1.Source.ID = types.StringValue(schedulesItem.Source.ID)
 			schedules1.Source.Origin = types.StringValue(string(schedulesItem.Source.Origin))
@@ -120,9 +122,9 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.Autom
 			if schedulesCount+1 > len(r.Schedules) {
 				r.Schedules = append(r.Schedules, schedules1)
 			} else {
-				r.Schedules[schedulesCount].ConfiguredScheduleID = schedules1.ConfiguredScheduleID
 				r.Schedules[schedulesCount].ID = schedules1.ID
 				r.Schedules[schedulesCount].NumberOfUnits = schedules1.NumberOfUnits
+				r.Schedules[schedulesCount].ScheduleAPIID = schedules1.ScheduleAPIID
 				r.Schedules[schedulesCount].Source = schedules1.Source
 				r.Schedules[schedulesCount].TimePeriod = schedules1.TimePeriod
 				r.Schedules[schedulesCount].TimeRelation = schedules1.TimeRelation
@@ -235,34 +237,10 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.Autom
 					} else {
 						triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation = &tfTypes.EntityOperationTriggerOperation{}
 						if triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff == nil {
-							triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff = nil
+							triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff = types.StringNull()
 						} else {
-							triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff = &tfTypes.Diff{}
-							if triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Any != nil {
-								anyResult1, _ := json.Marshal(triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Any)
-								triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Any = types.StringValue(string(anyResult1))
-							}
-							if triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two != nil {
-								triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two = &tfTypes.Two{}
-								if triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two.Added == nil {
-									triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two.Added = types.StringNull()
-								} else {
-									addedResult, _ := json.Marshal(triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two.Added)
-									triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two.Added = types.StringValue(string(addedResult))
-								}
-								if triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two.Deleted == nil {
-									triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two.Deleted = types.StringNull()
-								} else {
-									deletedResult, _ := json.Marshal(triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two.Deleted)
-									triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two.Deleted = types.StringValue(string(deletedResult))
-								}
-								if triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two.Updated == nil {
-									triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two.Updated = types.StringNull()
-								} else {
-									updatedResult, _ := json.Marshal(triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two.Updated)
-									triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.Two.Updated = types.StringValue(string(updatedResult))
-								}
-							}
+							diffResult, _ := json.Marshal(triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff)
+							triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff = types.StringValue(string(diffResult))
 						}
 						triggers1.EntityOperationTrigger.Configuration.FilterConfig.Operation.Operation = []types.String{}
 						for _, v := range triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Operation {

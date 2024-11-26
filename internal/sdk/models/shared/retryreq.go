@@ -3,8 +3,17 @@
 package shared
 
 type RetryReq struct {
+	// The condition id to retry when retry strategy is RETRY_ALL_PARENT_CONDITION_ACTIONS
+	ConditionID *string `json:"condition_id,omitempty"`
 	// different behaviors for retrying failed execution actions.
 	RetryStrategy *RetryStrategy `json:"retry_strategy,omitempty"`
+}
+
+func (o *RetryReq) GetConditionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConditionID
 }
 
 func (o *RetryReq) GetRetryStrategy() *RetryStrategy {

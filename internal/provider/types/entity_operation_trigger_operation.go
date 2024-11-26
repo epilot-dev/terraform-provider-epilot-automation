@@ -5,7 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type EntityOperationTriggerOperation struct {
-	Diff      *Diff          `tfsdk:"diff"`
+	Diff      types.String   `tfsdk:"diff"`
 	Operation []types.String `tfsdk:"operation"`
 	Payload   types.String   `tfsdk:"payload"`
 }

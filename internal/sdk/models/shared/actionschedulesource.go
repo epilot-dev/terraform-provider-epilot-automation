@@ -10,8 +10,10 @@ import (
 type Origin string
 
 const (
-	OriginTrigger Origin = "trigger"
-	OriginAction  Origin = "action"
+	OriginTrigger    Origin = "trigger"
+	OriginAction     Origin = "action"
+	OriginActionTask Origin = "action_task"
+	OriginAutomation Origin = "automation"
 )
 
 func (e Origin) ToPointer() *Origin {
@@ -26,6 +28,10 @@ func (e *Origin) UnmarshalJSON(data []byte) error {
 	case "trigger":
 		fallthrough
 	case "action":
+		fallthrough
+	case "action_task":
+		fallthrough
+	case "automation":
 		*e = Origin(v)
 		return nil
 	default:
