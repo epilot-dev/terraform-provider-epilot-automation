@@ -14,6 +14,7 @@ Flow DataSource
 
 ```terraform
 data "epilot-automation_flow" "my_flow" {
+  flow_id = "7791b04a-16d2-44a2-9af9-2d59c25c512f"
 }
 ```
 
@@ -41,6 +42,7 @@ Read-Only:
 
 - `evaluation_result` (Boolean) Result of the condition evaluation
 - `id` (String)
+- `schedule_id` (String) Schedule Id which indicates the schedule of the actions inside the condition
 - `statements` (Attributes List) (see [below for nested schema](#nestedatt--conditions--statements))
 
 <a id="nestedatt--conditions--statements"></a>
@@ -49,7 +51,7 @@ Read-Only:
 Read-Only:
 
 - `id` (String)
-- `operation` (String)
+- `operation` (String) must be one of ["equals", "not_equals", "any_of", "none_of", "contains", "not_contains", "starts_with", "ends_with", "greater_than", "less_than", "greater_than_or_equals", "less_than_or_equals", "is_empty", "is_not_empty"]
 - `source` (Attributes) (see [below for nested schema](#nestedatt--conditions--statements--source))
 - `values` (List of String)
 
@@ -59,12 +61,12 @@ Read-Only:
 Read-Only:
 
 - `attribute` (String)
-- `attribute_operation` (String)
+- `attribute_operation` (String) must be one of ["all", "updated", "added", "deleted"]
 - `attribute_repeatable` (Boolean)
-- `attribute_type` (String)
+- `attribute_type` (String) must be one of ["string", "text", "number", "boolean", "date", "datetime", "tags", "country", "email", "phone", "product", "price", "status", "relation", "multiselect", "select", "radio", "relation_user", "purpose", "label"]
 - `id` (String) The id of the action or trigger
-- `origin` (String)
-- `origin_type` (String)
+- `origin` (String) must be one of ["trigger", "action"]
+- `origin_type` (String) must be one of ["entity", "workflow", "journey_block"]
 - `schema` (String)
 
 
@@ -75,12 +77,12 @@ Read-Only:
 
 Read-Only:
 
-- `configured_schedule_id` (String) The id of the configured scheduler which will be added on automation triggered
 - `id` (String) Schedule Id
 - `number_of_units` (Number)
+- `schedule_api_id` (String) The id of the configured scheduler which will be added on automation triggered
 - `source` (Attributes) The source of the schedule_at timestamp that will be used to schedule the action (see [below for nested schema](#nestedatt--schedules--source))
-- `time_period` (String)
-- `time_relation` (String)
+- `time_period` (String) must be one of ["minutes", "hours", "days", "weeks", "months"]
+- `time_relation` (String) must be one of ["after", "before"]
 
 <a id="nestedatt--schedules--source"></a>
 ### Nested Schema for `schedules.source`
@@ -89,7 +91,7 @@ Read-Only:
 
 - `attribute` (String)
 - `id` (String) The id of the action or trigger
-- `origin` (String)
+- `origin` (String) must be one of ["trigger", "action", "action_task", "automation"]
 - `schema` (String)
 
 
@@ -226,7 +228,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--api_submission_trigger--configuration))
 - `id` (String)
-- `type` (String)
+- `type` (String) must be one of ["api_submission"]
 
 <a id="nestedatt--triggers--api_submission_trigger--configuration"></a>
 ### Nested Schema for `triggers.api_submission_trigger.configuration`
@@ -244,7 +246,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_manual_trigger--configuration))
 - `id` (String)
-- `type` (String)
+- `type` (String) must be one of ["entity_manual"]
 
 <a id="nestedatt--triggers--entity_manual_trigger--configuration"></a>
 ### Nested Schema for `triggers.entity_manual_trigger.configuration`
@@ -262,7 +264,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration))
 - `id` (String)
-- `type` (String)
+- `type` (String) must be one of ["entity_operation"]
 
 <a id="nestedatt--triggers--entity_operation_trigger--configuration"></a>
 ### Nested Schema for `triggers.entity_operation_trigger.configuration`
@@ -393,7 +395,7 @@ Read-Only:
 
 Read-Only:
 
-- `diff` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--filter_config--operation--diff))
+- `diff` (String) Parsed as JSON.
 - `operation` (List of String) Filter on operation type. If not specified, all operations will be matched on execution.
 Example:
   1. Filter all the createEntity/updateEntity operations
@@ -406,25 +408,6 @@ Example:
   ```
 - `payload` (String) Parsed as JSON.
 
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config--operation--diff"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config.operation.diff`
-
-Read-Only:
-
-- `any` (String) Parsed as JSON.
-- `two` (Attributes) Diff to it's prior state when an entity is updated (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--filter_config--operation--diff--two))
-
-<a id="nestedatt--triggers--entity_operation_trigger--configuration--filter_config--operation--diff--two"></a>
-### Nested Schema for `triggers.entity_operation_trigger.configuration.filter_config.operation.diff.two`
-
-Read-Only:
-
-- `added` (String) Parsed as JSON.
-- `deleted` (String) Parsed as JSON.
-- `updated` (String) Parsed as JSON.
-
-
-
 
 
 
@@ -436,7 +419,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--frontend_submit_trigger--configuration))
 - `id` (String)
-- `type` (String)
+- `type` (String) must be one of ["frontend_submission"]
 
 <a id="nestedatt--triggers--frontend_submit_trigger--configuration"></a>
 ### Nested Schema for `triggers.frontend_submit_trigger.configuration`
@@ -454,7 +437,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--journey_submit_trigger--configuration))
 - `id` (String)
-- `type` (String)
+- `type` (String) must be one of ["journey_submission"]
 
 <a id="nestedatt--triggers--journey_submit_trigger--configuration"></a>
 ### Nested Schema for `triggers.journey_submit_trigger.configuration`
@@ -472,11 +455,11 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--received_email_trigger--configuration))
 - `id` (String)
-- `type` (String)
+- `type` (String) must be one of ["received_email"]
 
 <a id="nestedatt--triggers--received_email_trigger--configuration"></a>
 ### Nested Schema for `triggers.received_email_trigger.configuration`
 
 Read-Only:
 
-- `message_type` (String)
+- `message_type` (String) must be one of ["RECEIVED"]
