@@ -44,6 +44,7 @@ type FlowResourceModel struct {
 	EntitySchema      types.String              `tfsdk:"entity_schema"`
 	FlowName          types.String              `tfsdk:"flow_name"`
 	ID                types.String              `tfsdk:"id"`
+	Manifest          []types.String            `tfsdk:"manifest"`
 	Schedules         []tfTypes.ActionSchedule  `tfsdk:"schedules"`
 	SystemFlow        types.Bool                `tfsdk:"system_flow"`
 	TriggerConditions []types.String            `tfsdk:"trigger_conditions"`
@@ -71,6 +72,9 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Computed: true,
 				Optional: true,
 				NestedObject: schema.NestedAttributeObject{
+					Validators: []validator.Object{
+						speakeasy_objectvalidators.NotNull(),
+					},
 					Attributes: map[string]schema.Attribute{
 						"evaluation_result": schema.BoolAttribute{
 							Computed:    true,
@@ -90,6 +94,9 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 							Computed: true,
 							Optional: true,
 							NestedObject: schema.NestedAttributeObject{
+								Validators: []validator.Object{
+									speakeasy_objectvalidators.NotNull(),
+								},
 								Attributes: map[string]schema.Attribute{
 									"id": schema.StringAttribute{
 										Computed: true,
@@ -235,10 +242,19 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 			"id": schema.StringAttribute{
 				Computed: true,
 			},
+			"manifest": schema.ListAttribute{
+				Computed:    true,
+				Optional:    true,
+				ElementType: types.StringType,
+				Description: `Source blueprint/manifest ID used when automation is created via blueprints.`,
+			},
 			"schedules": schema.ListNestedAttribute{
 				Computed: true,
 				Optional: true,
 				NestedObject: schema.NestedAttributeObject{
+					Validators: []validator.Object{
+						speakeasy_objectvalidators.NotNull(),
+					},
 					Attributes: map[string]schema.Attribute{
 						"id": schema.StringAttribute{
 							Computed:    true,
@@ -349,6 +365,9 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 			"triggers": schema.ListNestedAttribute{
 				Required: true,
 				NestedObject: schema.NestedAttributeObject{
+					Validators: []validator.Object{
+						speakeasy_objectvalidators.NotNull(),
+					},
 					Attributes: map[string]schema.Attribute{
 						"any": schema.StringAttribute{
 							Computed:    true,
@@ -391,7 +410,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Description: `Not Null; must be one of ["api_submission"]`,
+									Description: `Not Null; must be "api_submission"`,
 									Validators: []validator.String{
 										speakeasy_stringvalidators.NotNull(),
 										stringvalidator.OneOf(
@@ -437,7 +456,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Description: `Not Null; must be one of ["entity_manual"]`,
+									Description: `Not Null; must be "entity_manual"`,
 									Validators: []validator.String{
 										speakeasy_stringvalidators.NotNull(),
 										stringvalidator.OneOf(
@@ -502,21 +521,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 															Computed: true,
 															Optional: true,
 															NestedObject: schema.NestedAttributeObject{
+																Validators: []validator.Object{
+																	speakeasy_objectvalidators.NotNull(),
+																},
 																Attributes: map[string]schema.Attribute{
-																	"str": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																		Validators: []validator.String{
-																			stringvalidator.ConflictsWith(path.Expressions{
-																				path.MatchRelative().AtParent().AtName("anything_but_condition"),
-																				path.MatchRelative().AtParent().AtName("equals_ignore_case_condition"),
-																				path.MatchRelative().AtParent().AtName("exists_condition"),
-																				path.MatchRelative().AtParent().AtName("prefix_condition"),
-																				path.MatchRelative().AtParent().AtName("suffix_condition"),
-																				path.MatchRelative().AtParent().AtName("wildcard_condition"),
-																			}...),
-																		},
-																	},
 																	"anything_but_condition": schema.SingleNestedAttribute{
 																		Computed: true,
 																		Optional: true,
@@ -598,6 +606,20 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																			}...),
 																		},
 																	},
+																	"str": schema.StringAttribute{
+																		Computed: true,
+																		Optional: true,
+																		Validators: []validator.String{
+																			stringvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("anything_but_condition"),
+																				path.MatchRelative().AtParent().AtName("equals_ignore_case_condition"),
+																				path.MatchRelative().AtParent().AtName("exists_condition"),
+																				path.MatchRelative().AtParent().AtName("prefix_condition"),
+																				path.MatchRelative().AtParent().AtName("suffix_condition"),
+																				path.MatchRelative().AtParent().AtName("wildcard_condition"),
+																			}...),
+																		},
+																	},
 																	"suffix_condition": schema.SingleNestedAttribute{
 																		Computed: true,
 																		Optional: true,
@@ -639,9 +661,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																},
-																Validators: []validator.Object{
-																	validators.ExactlyOneChild(),
-																},
 															},
 															MarkdownDescription: `Filter on activity type. If not specified, all activities will be matched on execution.` + "\n" +
 																`Example:` + "\n" +
@@ -660,8 +679,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																`          "type": ["DocUploadedFromPortal", "DocRemovedFromPortal"]` + "\n" +
 																`        }` + "\n" +
 																`      }` + "\n" +
-																`    ` + "```" + `` + "\n" +
-																``,
+																`    ` + "```" + ``,
 														},
 													},
 												},
@@ -690,8 +708,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																`        "operation": ["createEntity", "updateEntity"]` + "\n" +
 																`      }` + "\n" +
 																`    }` + "\n" +
-																`  ` + "```" + `` + "\n" +
-																``,
+																`  ` + "```" + ``,
 														},
 														"payload": schema.StringAttribute{
 															Computed:    true,
@@ -735,7 +752,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Description: `Not Null; must be one of ["entity_operation"]`,
+									Description: `Not Null; must be "entity_operation"`,
 									Validators: []validator.String{
 										speakeasy_stringvalidators.NotNull(),
 										stringvalidator.OneOf(
@@ -856,8 +873,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 								`            }` + "\n" +
 								`          }` + "\n" +
 								`        }` + "\n" +
-								`      ` + "```" + `` + "\n" +
-								``,
+								`      ` + "```" + ``,
 							Validators: []validator.Object{
 								objectvalidator.ConflictsWith(path.Expressions{
 									path.MatchRelative().AtParent().AtName("any"),
@@ -894,7 +910,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Description: `Not Null; must be one of ["frontend_submission"]`,
+									Description: `Not Null; must be "frontend_submission"`,
 									Validators: []validator.String{
 										speakeasy_stringvalidators.NotNull(),
 										stringvalidator.OneOf(
@@ -943,7 +959,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Description: `Not Null; must be one of ["journey_submission"]`,
+									Description: `Not Null; must be "journey_submission"`,
 									Validators: []validator.String{
 										speakeasy_stringvalidators.NotNull(),
 										stringvalidator.OneOf(
@@ -974,11 +990,9 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 										"message_type": schema.StringAttribute{
 											Computed:    true,
 											Optional:    true,
-											Description: `must be one of ["RECEIVED"]`,
+											Description: `must be "RECEIVED"`,
 											Validators: []validator.String{
-												stringvalidator.OneOf(
-													"RECEIVED",
-												),
+												stringvalidator.OneOf("RECEIVED"),
 											},
 										},
 									},
@@ -994,7 +1008,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 								"type": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Description: `Not Null; must be one of ["received_email"]`,
+									Description: `Not Null; must be "received_email"`,
 									Validators: []validator.String{
 										speakeasy_stringvalidators.NotNull(),
 										stringvalidator.OneOf(
@@ -1014,9 +1028,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 								}...),
 							},
 						},
-					},
-					Validators: []validator.Object{
-						validators.ExactlyOneChild(),
 					},
 				},
 			},

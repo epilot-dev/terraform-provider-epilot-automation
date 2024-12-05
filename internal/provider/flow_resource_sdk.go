@@ -11,6 +11,10 @@ import (
 )
 
 func (r *FlowResourceModel) ToSharedAutomationFlowInput() *shared.AutomationFlowInput {
+	var manifest []string = []string{}
+	for _, manifestItem := range r.Manifest {
+		manifest = append(manifest, manifestItem.ValueString())
+	}
 	var actions []interface{} = []interface{}{}
 	for _, actionsItem := range r.Actions {
 		var actionsTmp interface{}
@@ -549,6 +553,7 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput() *shared.AutomationFlow
 		version = nil
 	}
 	out := shared.AutomationFlowInput{
+		Manifest:          manifest,
 		Actions:           actions,
 		Conditions:        conditions,
 		Enabled:           enabled,
@@ -565,6 +570,10 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput() *shared.AutomationFlow
 
 func (r *FlowResourceModel) RefreshFromSharedAutomationFlow(resp *shared.AutomationFlow) {
 	if resp != nil {
+		r.Manifest = []types.String{}
+		for _, v := range resp.Manifest {
+			r.Manifest = append(r.Manifest, types.StringValue(v))
+		}
 		r.Actions = nil
 		for _, actionsItem := range resp.Actions {
 			var actions1 types.String

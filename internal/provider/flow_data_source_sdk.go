@@ -12,6 +12,10 @@ import (
 
 func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.AutomationFlow) {
 	if resp != nil {
+		r.Manifest = []types.String{}
+		for _, v := range resp.Manifest {
+			r.Manifest = append(r.Manifest, types.StringValue(v))
+		}
 		r.Actions = nil
 		for _, actionsItem := range resp.Actions {
 			var actions1 types.String

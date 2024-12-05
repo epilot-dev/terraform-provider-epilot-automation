@@ -15,17 +15,156 @@ Flow Resource
 ```terraform
 resource "epilot-automation_flow" "my_flow" {
   actions = [
-    "{ \"see\": \"documentation\" }",
+    "{ \"see\": \"documentation\" }"
   ]
-  enabled       = false
+  conditions = [
+    {
+      evaluation_result = true
+      id                = "...my_id..."
+      schedule_id       = "...my_schedule_id..."
+      statements = [
+        {
+          id        = "1c8d3d9c-6d4c-4a83-aa22-aa0d630cbc2d"
+          operation = "greater_than_or_equals"
+          source = {
+            attribute            = "...my_attribute..."
+            attribute_operation  = "deleted"
+            attribute_repeatable = true
+            attribute_type       = "email"
+            id                   = "...my_id..."
+            origin               = "action"
+            origin_type          = "journey_block"
+            schema               = "...my_schema..."
+          }
+          values = [
+            "..."
+          ]
+        }
+      ]
+    }
+  ]
+  enabled       = true
   entity_schema = "submission"
-  flow_id       = "7791b04a-16d2-44a2-9af9-2d59c25c512f"
   flow_name     = "Handle contact form"
-  system_flow   = false
+  manifest = [
+    "123e4567-e89b-12d3-a456-426614174000"
+  ]
+  schedules = [
+    {
+      id              = "...my_id..."
+      number_of_units = 1.88
+      schedule_api_id = "...my_schedule_api_id..."
+      source = {
+        attribute = "...my_attribute..."
+        id        = "...my_id..."
+        origin    = "action_task"
+        schema    = "...my_schema..."
+      }
+      time_period   = "weeks"
+      time_relation = "after"
+    }
+  ]
+  system_flow = true
+  trigger_conditions = [
+    "{ \"see\": \"documentation\" }"
+  ]
   triggers = [
     {
       any = "{ \"see\": \"documentation\" }"
-    },
+      api_submission_trigger = {
+        configuration = {
+          source_id = "...my_source_id..."
+        }
+        id   = "12d4f45a-1883-4841-a94c-5928cb338a94"
+        type = "api_submission"
+      }
+      entity_manual_trigger = {
+        configuration = {
+          schema = "submission"
+        }
+        id   = "12d4f45a-1883-4841-a94c-5928cb338a94"
+        type = "entity_manual"
+      }
+      entity_operation_trigger = {
+        configuration = {
+          ecp_config = {
+            file_config = {
+              shared_with_end_customer = true
+            }
+            origin = "END_CUSTOMER_PORTAL"
+          }
+          exclude_activities = [
+            ["SyncEntity"]
+          ]
+          filter_config = {
+            activity = {
+              type = [
+                {
+                  anything_but_condition = {
+                    anything_but = [
+                      "..."
+                    ]
+                  }
+                  equals_ignore_case_condition = {
+                    equals_ignore_case = "...my_equals_ignore_case..."
+                  }
+                  exists_condition = {
+                    exists = false
+                  }
+                  prefix_condition = {
+                    prefix = "...my_prefix..."
+                  }
+                  str = "...my_str..."
+                  suffix_condition = {
+                    suffix = "...my_suffix..."
+                  }
+                  wildcard_condition = {
+                    wildcard = "...my_wildcard..."
+                  }
+                }
+              ]
+            }
+            operation = {
+              diff = "{ \"see\": \"documentation\" }"
+              operation = [
+                "updateEntity"
+              ]
+              payload = "{ \"see\": \"documentation\" }"
+            }
+          }
+          include_activities = [
+            ["CreateEntity"]
+          ]
+          operations = [
+            "createEntity"
+          ]
+          schema = "submission"
+        }
+        id   = "12d4f45a-1883-4841-a94c-5928cb338a94"
+        type = "entity_operation"
+      }
+      frontend_submit_trigger = {
+        configuration = {
+          source_id = "99"
+        }
+        id   = "12d4f45a-1883-4841-a94c-5928cb338a94"
+        type = "frontend_submission"
+      }
+      journey_submit_trigger = {
+        configuration = {
+          source_id = "36ccf21c-051d-4bb7-84ad-d0eb26b2da79"
+        }
+        id   = "12d4f45a-1883-4841-a94c-5928cb338a94"
+        type = "journey_submission"
+      }
+      received_email_trigger = {
+        configuration = {
+          message_type = "RECEIVED"
+        }
+        id   = "12d4f45a-1883-4841-a94c-5928cb338a94"
+        type = "received_email"
+      }
+    }
   ]
   version = 2
 }
@@ -45,6 +184,7 @@ resource "epilot-automation_flow" "my_flow" {
 - `conditions` (Attributes List) (see [below for nested schema](#nestedatt--conditions))
 - `enabled` (Boolean) Whether the automation is enabled or not. Default: true
 - `entity_schema` (String) The triggering entity schema
+- `manifest` (List of String) Source blueprint/manifest ID used when automation is created via blueprints.
 - `schedules` (Attributes List) (see [below for nested schema](#nestedatt--schedules))
 - `system_flow` (Boolean) Determines if the flow is a system generated flow
 - `trigger_conditions` (List of String)
@@ -186,7 +326,7 @@ Optional:
 
 - `configuration` (Attributes) Not Null (see [below for nested schema](#nestedatt--triggers--api_submission_trigger--configuration))
 - `id` (String)
-- `type` (String) Not Null; must be one of ["api_submission"]
+- `type` (String) Not Null; must be "api_submission"
 
 <a id="nestedatt--triggers--api_submission_trigger--configuration"></a>
 ### Nested Schema for `triggers.api_submission_trigger.configuration`
@@ -204,7 +344,7 @@ Optional:
 
 - `configuration` (Attributes) Not Null (see [below for nested schema](#nestedatt--triggers--entity_manual_trigger--configuration))
 - `id` (String)
-- `type` (String) Not Null; must be one of ["entity_manual"]
+- `type` (String) Not Null; must be "entity_manual"
 
 <a id="nestedatt--triggers--entity_manual_trigger--configuration"></a>
 ### Nested Schema for `triggers.entity_manual_trigger.configuration`
@@ -222,7 +362,7 @@ Optional:
 
 - `configuration` (Attributes) Not Null (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration))
 - `id` (String)
-- `type` (String) Not Null; must be one of ["entity_operation"]
+- `type` (String) Not Null; must be "entity_operation"
 
 <a id="nestedatt--triggers--entity_operation_trigger--configuration"></a>
 ### Nested Schema for `triggers.entity_operation_trigger.configuration`
@@ -377,7 +517,7 @@ Optional:
 
 - `configuration` (Attributes) Not Null (see [below for nested schema](#nestedatt--triggers--frontend_submit_trigger--configuration))
 - `id` (String)
-- `type` (String) Not Null; must be one of ["frontend_submission"]
+- `type` (String) Not Null; must be "frontend_submission"
 
 <a id="nestedatt--triggers--frontend_submit_trigger--configuration"></a>
 ### Nested Schema for `triggers.frontend_submit_trigger.configuration`
@@ -395,7 +535,7 @@ Optional:
 
 - `configuration` (Attributes) Not Null (see [below for nested schema](#nestedatt--triggers--journey_submit_trigger--configuration))
 - `id` (String)
-- `type` (String) Not Null; must be one of ["journey_submission"]
+- `type` (String) Not Null; must be "journey_submission"
 
 <a id="nestedatt--triggers--journey_submit_trigger--configuration"></a>
 ### Nested Schema for `triggers.journey_submit_trigger.configuration`
@@ -413,14 +553,14 @@ Optional:
 
 - `configuration` (Attributes) Not Null (see [below for nested schema](#nestedatt--triggers--received_email_trigger--configuration))
 - `id` (String)
-- `type` (String) Not Null; must be one of ["received_email"]
+- `type` (String) Not Null; must be "received_email"
 
 <a id="nestedatt--triggers--received_email_trigger--configuration"></a>
 ### Nested Schema for `triggers.received_email_trigger.configuration`
 
 Optional:
 
-- `message_type` (String) must be one of ["RECEIVED"]
+- `message_type` (String) must be "RECEIVED"
 
 
 

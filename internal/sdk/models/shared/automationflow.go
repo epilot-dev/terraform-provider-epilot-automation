@@ -7,6 +7,8 @@ import (
 )
 
 type AutomationFlow struct {
+	// Source blueprint/manifest ID used when automation is created via blueprints.
+	Manifest []string `json:"_manifest,omitempty"`
 	// The actions (nodes) of the automation flow
 	Actions    []any             `json:"actions"`
 	Conditions []ActionCondition `json:"conditions,omitempty"`
@@ -35,6 +37,13 @@ func (a *AutomationFlow) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *AutomationFlow) GetManifest() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Manifest
 }
 
 func (o *AutomationFlow) GetActions() []any {
