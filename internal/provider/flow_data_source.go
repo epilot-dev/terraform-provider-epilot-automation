@@ -31,6 +31,7 @@ type FlowDataSource struct {
 type FlowDataSourceModel struct {
 	Actions           []types.String            `tfsdk:"actions"`
 	Conditions        []tfTypes.ActionCondition `tfsdk:"conditions"`
+	DisableDetails    *tfTypes.DisableDetails   `tfsdk:"disable_details"`
 	Enabled           types.Bool                `tfsdk:"enabled"`
 	EntitySchema      types.String              `tfsdk:"entity_schema"`
 	FlowName          types.String              `tfsdk:"flow_name"`
@@ -82,7 +83,8 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 										Computed: true,
 									},
 									"operation": schema.StringAttribute{
-										Computed: true,
+										Computed:    true,
+										Description: `must be one of ["equals", "not_equals", "any_of", "none_of", "contains", "not_contains", "starts_with", "ends_with", "greater_than", "less_than", "greater_than_or_equals", "less_than_or_equals", "is_empty", "is_not_empty"]`,
 									},
 									"source": schema.SingleNestedAttribute{
 										Computed: true,
@@ -91,23 +93,27 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 												Computed: true,
 											},
 											"attribute_operation": schema.StringAttribute{
-												Computed: true,
+												Computed:    true,
+												Description: `must be one of ["all", "updated", "added", "deleted"]`,
 											},
 											"attribute_repeatable": schema.BoolAttribute{
 												Computed: true,
 											},
 											"attribute_type": schema.StringAttribute{
-												Computed: true,
+												Computed:    true,
+												Description: `must be one of ["string", "text", "number", "boolean", "date", "datetime", "tags", "country", "email", "phone", "product", "price", "status", "relation", "multiselect", "select", "radio", "relation_user", "purpose", "label"]`,
 											},
 											"id": schema.StringAttribute{
 												Computed:    true,
 												Description: `The id of the action or trigger`,
 											},
 											"origin": schema.StringAttribute{
-												Computed: true,
+												Computed:    true,
+												Description: `must be one of ["trigger", "action"]`,
 											},
 											"origin_type": schema.StringAttribute{
-												Computed: true,
+												Computed:    true,
+												Description: `must be one of ["entity", "workflow", "journey_block"]`,
 											},
 											"schema": schema.StringAttribute{
 												Computed: true,
@@ -121,6 +127,19 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 								},
 							},
 						},
+					},
+				},
+			},
+			"disable_details": schema.SingleNestedAttribute{
+				Computed: true,
+				Attributes: map[string]schema.Attribute{
+					"disabled_at": schema.StringAttribute{
+						Computed:    true,
+						Description: `When the flow was disabled`,
+					},
+					"disabled_by": schema.StringAttribute{
+						Computed:    true,
+						Description: `Who disabled the flow (system or user). must be one of ["system", "user"]`,
 					},
 				},
 			},
@@ -170,7 +189,8 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 									Description: `The id of the action or trigger`,
 								},
 								"origin": schema.StringAttribute{
-									Computed: true,
+									Computed:    true,
+									Description: `must be one of ["trigger", "action", "action_task", "automation"]`,
 								},
 								"schema": schema.StringAttribute{
 									Computed: true,
@@ -179,10 +199,12 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 							Description: `The source of the schedule_at timestamp that will be used to schedule the action`,
 						},
 						"time_period": schema.StringAttribute{
-							Computed: true,
+							Computed:    true,
+							Description: `must be one of ["minutes", "hours", "days", "weeks", "months"]`,
 						},
 						"time_relation": schema.StringAttribute{
-							Computed: true,
+							Computed:    true,
+							Description: `must be one of ["after", "before"]`,
 						},
 					},
 				},
@@ -218,7 +240,8 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 									Computed: true,
 								},
 								"type": schema.StringAttribute{
-									Computed: true,
+									Computed:    true,
+									Description: `must be one of ["api_submission"]`,
 								},
 							},
 						},
@@ -238,7 +261,8 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 									Computed: true,
 								},
 								"type": schema.StringAttribute{
-									Computed: true,
+									Computed:    true,
+									Description: `must be one of ["entity_manual"]`,
 								},
 							},
 						},
@@ -278,6 +302,9 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 															Computed: true,
 															NestedObject: schema.NestedAttributeObject{
 																Attributes: map[string]schema.Attribute{
+																	"str": schema.StringAttribute{
+																		Computed: true,
+																	},
 																	"anything_but_condition": schema.SingleNestedAttribute{
 																		Computed: true,
 																		Attributes: map[string]schema.Attribute{
@@ -310,9 +337,6 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																				Computed: true,
 																			},
 																		},
-																	},
-																	"str": schema.StringAttribute{
-																		Computed: true,
 																	},
 																	"suffix_condition": schema.SingleNestedAttribute{
 																		Computed: true,
@@ -349,7 +373,8 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																`          "type": ["DocUploadedFromPortal", "DocRemovedFromPortal"]` + "\n" +
 																`        }` + "\n" +
 																`      }` + "\n" +
-																`    ` + "```" + ``,
+																`    ` + "```" + `` + "\n" +
+																``,
 														},
 													},
 												},
@@ -372,7 +397,8 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																`        "operation": ["createEntity", "updateEntity"]` + "\n" +
 																`      }` + "\n" +
 																`    }` + "\n" +
-																`  ` + "```" + ``,
+																`  ` + "```" + `` + "\n" +
+																``,
 														},
 														"payload": schema.StringAttribute{
 															Computed:    true,
@@ -399,7 +425,8 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 									Computed: true,
 								},
 								"type": schema.StringAttribute{
-									Computed: true,
+									Computed:    true,
+									Description: `must be one of ["entity_operation"]`,
 								},
 							},
 							MarkdownDescription: `- If provides filter_config, executes an automation based on the filtered configuration when an entity event occurs.` + "\n" +
@@ -514,7 +541,8 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 								`            }` + "\n" +
 								`          }` + "\n" +
 								`        }` + "\n" +
-								`      ` + "```" + ``,
+								`      ` + "```" + `` + "\n" +
+								``,
 						},
 						"frontend_submit_trigger": schema.SingleNestedAttribute{
 							Computed: true,
@@ -531,7 +559,8 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 									Computed: true,
 								},
 								"type": schema.StringAttribute{
-									Computed: true,
+									Computed:    true,
+									Description: `must be one of ["frontend_submission"]`,
 								},
 							},
 						},
@@ -550,7 +579,8 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 									Computed: true,
 								},
 								"type": schema.StringAttribute{
-									Computed: true,
+									Computed:    true,
+									Description: `must be one of ["journey_submission"]`,
 								},
 							},
 						},
@@ -561,7 +591,8 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 									Computed: true,
 									Attributes: map[string]schema.Attribute{
 										"message_type": schema.StringAttribute{
-											Computed: true,
+											Computed:    true,
+											Description: `must be one of ["RECEIVED"]`,
 										},
 									},
 								},
@@ -569,7 +600,8 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 									Computed: true,
 								},
 								"type": schema.StringAttribute{
-									Computed: true,
+									Computed:    true,
+									Description: `must be one of ["received_email"]`,
 								},
 							},
 						},

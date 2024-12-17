@@ -48,6 +48,28 @@ func (o *GetExecutionsRequest) GetSize() *int64 {
 	return o.Size
 }
 
+// GetExecutionsResponseBody - The requested resource is forbidden
+type GetExecutionsResponseBody struct {
+	// The error message
+	Error *string `json:"error,omitempty"`
+	// The HTTP status code of the error
+	Status *int64 `json:"status,omitempty"`
+}
+
+func (o *GetExecutionsResponseBody) GetError() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Error
+}
+
+func (o *GetExecutionsResponseBody) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
 type GetExecutionsResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -57,6 +79,8 @@ type GetExecutionsResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The requested resource is forbidden
+	Object *GetExecutionsResponseBody
 }
 
 func (o *GetExecutionsResponse) GetContentType() string {
@@ -85,4 +109,11 @@ func (o *GetExecutionsResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *GetExecutionsResponse) GetObject() *GetExecutionsResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.Object
 }

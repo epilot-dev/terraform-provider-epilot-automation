@@ -7,6 +7,28 @@ import (
 	"net/http"
 )
 
+// CreateFlowResponseBody - The requested resource is forbidden
+type CreateFlowResponseBody struct {
+	// The error message
+	Error *string `json:"error,omitempty"`
+	// The HTTP status code of the error
+	Status *int64 `json:"status,omitempty"`
+}
+
+func (o *CreateFlowResponseBody) GetError() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Error
+}
+
+func (o *CreateFlowResponseBody) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
 type CreateFlowResponse struct {
 	// The created automation flow
 	AutomationFlow *shared.AutomationFlow
@@ -16,6 +38,8 @@ type CreateFlowResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The requested resource is forbidden
+	Object *CreateFlowResponseBody
 }
 
 func (o *CreateFlowResponse) GetAutomationFlow() *shared.AutomationFlow {
@@ -44,4 +68,11 @@ func (o *CreateFlowResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *CreateFlowResponse) GetObject() *CreateFlowResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.Object
 }

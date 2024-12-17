@@ -8,6 +8,7 @@ import (
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"math/big"
+	"time"
 )
 
 func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.AutomationFlow) {
@@ -91,6 +92,13 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.Autom
 				r.Conditions[conditionsCount].ScheduleID = conditions1.ScheduleID
 				r.Conditions[conditionsCount].Statements = conditions1.Statements
 			}
+		}
+		if resp.DisableDetails == nil {
+			r.DisableDetails = nil
+		} else {
+			r.DisableDetails = &tfTypes.DisableDetails{}
+			r.DisableDetails.DisabledAt = types.StringValue(resp.DisableDetails.DisabledAt.Format(time.RFC3339Nano))
+			r.DisableDetails.DisabledBy = types.StringValue(string(resp.DisableDetails.DisabledBy))
 		}
 		r.Enabled = types.BoolPointerValue(resp.Enabled)
 		r.EntitySchema = types.StringPointerValue(resp.EntitySchema)

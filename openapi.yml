@@ -72,6 +72,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AutomationFlow"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
   "/v1/automation/flows/{flow_id}":
     get:
       operationId: getFlow
@@ -93,6 +95,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AutomationFlow"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
     put:
       operationId: putFlow
       summary: putFlow
@@ -119,6 +125,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AutomationFlow"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
     delete:
       operationId: deleteFlow
       summary: deleteFlow
@@ -134,11 +142,12 @@ paths:
             $ref: "#/components/schemas/AutomationFlowId"
       responses:
         "200":
-          description: The deleted automation flow
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AutomationFlow"
+          description: Flow deleted successfully
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
   "/v1/automation/executions":
     get:
       operationId: getExecutions
@@ -164,12 +173,14 @@ paths:
       tags:
         - executions
       responses:
-        200:
+        "200":
           description: List of automation executions
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetExecutionsResp"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
     post:
       operationId: startExecution
       summary: startExecution
@@ -183,12 +194,14 @@ paths:
       tags:
         - executions
       responses:
-        201:
+        "201":
           description: The created execution
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/AutomationExecution"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
   "/v1/automation/executions/bulk-jobs":
     post:
       operationId: bulkTriggerExecutions
@@ -208,12 +221,14 @@ paths:
       tags:
         - bulk
       responses:
-        202:
+        "202":
           description: Trigger Executions Job Info
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/BulkTriggerJob"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
   "/v1/automation/executions/bulk-jobs/{job_id}":
     get:
       operationId: getBulkJob
@@ -228,12 +243,16 @@ paths:
       tags:
         - bulk
       responses:
-        200:
+        "200":
           description: Bulk Job Info
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/BulkTriggerJob"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
     patch:
       operationId: patchBulkJob
       summary: patchBulkJob
@@ -255,12 +274,16 @@ paths:
       tags:
         - bulk
       responses:
-        200:
+        "200":
           description: Bulk Job Info
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/BulkTriggerJob"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
 
   "/v1/automation/executions/{execution_id}":
     get:
@@ -276,12 +299,16 @@ paths:
       tags:
         - executions
       responses:
-        200:
+        "200":
           description: The returned execution
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/AutomationExecution"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
     delete:
       operationId: cancelExecution
       summary: cancelExecution
@@ -295,12 +322,16 @@ paths:
       tags:
         - executions
       responses:
-        200:
+        "200":
           description: The cancelled execution
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/AutomationExecution"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
   /v1/automation/executions/{execution_id}/{action_id}/retrigger:
     post:
       operationId: retriggerAction
@@ -329,8 +360,12 @@ paths:
             schema:
               $ref: "#/components/schemas/RetryReq"
       responses:
-        200:
+        "200":
           description: action re-triggered with success
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
   /v1/automation/public/executions:resume:
     post:
       operationId: resumeExecutionWithToken
@@ -351,14 +386,18 @@ paths:
             schema:
               $ref: "#/components/schemas/ResumeReq"
       responses:
-        200:
+        "200":
           description: execution resumed with success
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResumeResp"
-        400:
+        "400":
           description: execution could not be resumed
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
 
 components:
   securitySchemes:
@@ -389,7 +428,20 @@ components:
         enabled:
           type: boolean
           description: Whether the automation is enabled or not
-          default: true
+        disable_details:
+          type: object
+          properties:
+            disabled_at:
+              type: string
+              format: date-time
+              description: When the flow was disabled
+            disabled_by:
+              type: string
+              enum: [system, user]
+              description: Who disabled the flow (system or user)
+          required:
+            - disabled_at
+            - disabled_by
         triggers:
           type: array
           items:
@@ -1209,7 +1261,7 @@ components:
           items:
             $ref: "#/components/schemas/AssignUsersToStep"
         filter_with_purposes:
-            type: boolean
+          type: boolean
 
     TriggerWorkflowCondition:
       allOf:
@@ -2385,5 +2437,39 @@ components:
       required:
         - execution
         - resumedAction
+      
+    ErrorObject:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: The HTTP status code of the error
+          example: 400
+        error:
+          type: string
+          description: The error message
+
+  responses:
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ErrorObject"
+              - example:
+                  status: 404
+                  error: Not Found
+    ForbiddenError:
+      description: The requested resource is forbidden
+      content:
+        application/json:
+          schema:
+            allOf: 
+              - $ref: "#/components/schemas/ErrorObject"
+              - example:
+                  status: 403
+                  error: Forbidden
+
 servers:
 - url: https://automation.sls.epilot.io

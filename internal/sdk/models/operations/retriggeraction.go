@@ -37,6 +37,28 @@ func (o *RetriggerActionRequest) GetExecutionID() string {
 	return o.ExecutionID
 }
 
+// RetriggerActionResponseBody - The requested resource is forbidden
+type RetriggerActionResponseBody struct {
+	// The error message
+	Error *string `json:"error,omitempty"`
+	// The HTTP status code of the error
+	Status *int64 `json:"status,omitempty"`
+}
+
+func (o *RetriggerActionResponseBody) GetError() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Error
+}
+
+func (o *RetriggerActionResponseBody) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
 type RetriggerActionResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -44,6 +66,8 @@ type RetriggerActionResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The requested resource is forbidden
+	Object *RetriggerActionResponseBody
 }
 
 func (o *RetriggerActionResponse) GetContentType() string {
@@ -65,4 +89,11 @@ func (o *RetriggerActionResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *RetriggerActionResponse) GetObject() *RetriggerActionResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.Object
 }

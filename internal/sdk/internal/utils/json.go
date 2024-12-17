@@ -487,29 +487,30 @@ func unmarshalValue(value json.RawMessage, v reflect.Value, tag reflect.StructTa
 		v.Set(m)
 		return nil
 	case reflect.Slice, reflect.Array:
-		var unmarshaled []json.RawMessage
+		if bytes.Equal(value, []byte("null")) || !isComplexValueType(dereferenceTypePointer(typ.Elem())) {
+			if v.CanAddr() {
+				return json.Unmarshal(value, v.Addr().Interface())
+			} else {
+				return json.Unmarshal(value, v.Interface())
+			}
+		}
 
-		if err := json.Unmarshal(value, &unmarshaled); err != nil {
+		var unmarhsaled []json.RawMessage
+
+		if err := json.Unmarshal(value, &unmarhsaled); err != nil {
 			return err
 		}
 
-		arrVal := reflect.MakeSlice(typ, len(unmarshaled), len(unmarshaled))
+		arrVal := v
 
-		for index, value := range unmarshaled {
+		for _, value := range unmarhsaled {
 			itemVal := reflect.New(typ.Elem())
 
 			if err := unmarshalValue(value, itemVal, tag, disallowUnknownFields); err != nil {
 				return err
 			}
 
-			arrVal.Index(index).Set(itemVal.Elem())
-		}
-
-		if v.Kind() == reflect.Pointer {
-			if v.IsNil() {
-				v.Set(reflect.New(typ))
-			}
-			v = v.Elem()
+			arrVal = reflect.Append(arrVal, itemVal.Elem())
 		}
 
 		v.Set(arrVal)

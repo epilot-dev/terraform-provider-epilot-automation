@@ -7,6 +7,28 @@ import (
 	"net/http"
 )
 
+// ResumeExecutionWithTokenResponseBody - The requested resource is forbidden
+type ResumeExecutionWithTokenResponseBody struct {
+	// The error message
+	Error *string `json:"error,omitempty"`
+	// The HTTP status code of the error
+	Status *int64 `json:"status,omitempty"`
+}
+
+func (o *ResumeExecutionWithTokenResponseBody) GetError() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Error
+}
+
+func (o *ResumeExecutionWithTokenResponseBody) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
 type ResumeExecutionWithTokenResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -16,6 +38,8 @@ type ResumeExecutionWithTokenResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The requested resource is forbidden
+	Object *ResumeExecutionWithTokenResponseBody
 }
 
 func (o *ResumeExecutionWithTokenResponse) GetContentType() string {
@@ -44,4 +68,11 @@ func (o *ResumeExecutionWithTokenResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *ResumeExecutionWithTokenResponse) GetObject() *ResumeExecutionWithTokenResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.Object
 }

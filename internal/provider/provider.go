@@ -76,13 +76,10 @@ func (p *EpilotAutomationProvider) Configure(ctx context.Context, req provider.C
 		EpilotAuth: epilotAuth,
 	}
 
-	httpClient := http.DefaultClient
-	httpClient.Transport = NewLoggingHTTPTransport(http.DefaultTransport)
-
 	opts := []sdk.SDKOption{
 		sdk.WithServerURL(ServerURL),
 		sdk.WithSecurity(security),
-		sdk.WithClient(httpClient),
+		sdk.WithClient(http.DefaultClient),
 	}
 	client := sdk.New(opts...)
 

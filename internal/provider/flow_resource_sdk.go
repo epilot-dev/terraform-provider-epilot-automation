@@ -8,6 +8,7 @@ import (
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"math/big"
+	"time"
 )
 
 func (r *FlowResourceModel) ToSharedAutomationFlowInput() *shared.AutomationFlowInput {
@@ -133,6 +134,15 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput() *shared.AutomationFlow
 			ScheduleID:       scheduleID,
 			Statements:       statements,
 		})
+	}
+	var disableDetails *shared.DisableDetails
+	if r.DisableDetails != nil {
+		disabledAt, _ := time.Parse(time.RFC3339Nano, r.DisableDetails.DisabledAt.ValueString())
+		disabledBy := shared.DisabledBy(r.DisableDetails.DisabledBy.ValueString())
+		disableDetails = &shared.DisableDetails{
+			DisabledAt: disabledAt,
+			DisabledBy: disabledBy,
+		}
 	}
 	enabled := new(bool)
 	if !r.Enabled.IsUnknown() && !r.Enabled.IsNull() {
@@ -556,6 +566,7 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput() *shared.AutomationFlow
 		Manifest:          manifest,
 		Actions:           actions,
 		Conditions:        conditions,
+		DisableDetails:    disableDetails,
 		Enabled:           enabled,
 		EntitySchema:      entitySchema,
 		FlowName:          flowName,
@@ -649,6 +660,13 @@ func (r *FlowResourceModel) RefreshFromSharedAutomationFlow(resp *shared.Automat
 				r.Conditions[conditionsCount].ScheduleID = conditions1.ScheduleID
 				r.Conditions[conditionsCount].Statements = conditions1.Statements
 			}
+		}
+		if resp.DisableDetails == nil {
+			r.DisableDetails = nil
+		} else {
+			r.DisableDetails = &tfTypes.DisableDetails{}
+			r.DisableDetails.DisabledAt = types.StringValue(resp.DisableDetails.DisabledAt.Format(time.RFC3339Nano))
+			r.DisableDetails.DisabledBy = types.StringValue(string(resp.DisableDetails.DisabledBy))
 		}
 		r.Enabled = types.BoolPointerValue(resp.Enabled)
 		r.EntitySchema = types.StringPointerValue(resp.EntitySchema)

@@ -119,14 +119,9 @@ func parseSecurityScheme(headers, queryParams map[string]string, schemeTag *secu
 	}
 
 	if schemeType.Kind() == reflect.Struct {
-		if schemeTag.Type == "http" {
-			switch schemeTag.SubType {
-			case "basic":
-				handleBasicAuthScheme(headers, schemeVal.Interface())
-				return
-			case "custom":
-				return
-			}
+		if schemeTag.Type == "http" && schemeTag.SubType == "basic" {
+			handleBasicAuthScheme(headers, schemeVal.Interface())
+			return
 		}
 
 		for i := 0; i < schemeType.NumField(); i++ {
@@ -176,7 +171,6 @@ func parseSecuritySchemeValue(headers, queryParams map[string]string, schemeTag 
 		switch schemeTag.SubType {
 		case "bearer":
 			headers[secTag.Name] = prefixBearer(valToString(val))
-		case "custom":
 		default:
 			panic("not supported")
 		}

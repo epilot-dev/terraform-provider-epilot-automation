@@ -19,6 +19,28 @@ func (o *GetFlowRequest) GetFlowID() string {
 	return o.FlowID
 }
 
+// GetFlowResponseBody - The requested resource is forbidden
+type GetFlowResponseBody struct {
+	// The error message
+	Error *string `json:"error,omitempty"`
+	// The HTTP status code of the error
+	Status *int64 `json:"status,omitempty"`
+}
+
+func (o *GetFlowResponseBody) GetError() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Error
+}
+
+func (o *GetFlowResponseBody) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
 type GetFlowResponse struct {
 	// The returned automation flow
 	AutomationFlow *shared.AutomationFlow
@@ -28,6 +50,8 @@ type GetFlowResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The requested resource is forbidden
+	Object *GetFlowResponseBody
 }
 
 func (o *GetFlowResponse) GetAutomationFlow() *shared.AutomationFlow {
@@ -56,4 +80,11 @@ func (o *GetFlowResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *GetFlowResponse) GetObject() *GetFlowResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.Object
 }

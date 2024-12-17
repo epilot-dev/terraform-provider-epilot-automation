@@ -18,6 +18,28 @@ func (o *CancelExecutionRequest) GetExecutionID() string {
 	return o.ExecutionID
 }
 
+// CancelExecutionResponseBody - The requested resource is forbidden
+type CancelExecutionResponseBody struct {
+	// The error message
+	Error *string `json:"error,omitempty"`
+	// The HTTP status code of the error
+	Status *int64 `json:"status,omitempty"`
+}
+
+func (o *CancelExecutionResponseBody) GetError() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Error
+}
+
+func (o *CancelExecutionResponseBody) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
 type CancelExecutionResponse struct {
 	// The cancelled execution
 	AutomationExecution *shared.AutomationExecution
@@ -27,6 +49,8 @@ type CancelExecutionResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The requested resource is forbidden
+	Object *CancelExecutionResponseBody
 }
 
 func (o *CancelExecutionResponse) GetAutomationExecution() *shared.AutomationExecution {
@@ -55,4 +79,11 @@ func (o *CancelExecutionResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *CancelExecutionResponse) GetObject() *CancelExecutionResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.Object
 }

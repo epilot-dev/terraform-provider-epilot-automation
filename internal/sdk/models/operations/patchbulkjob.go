@@ -26,6 +26,28 @@ func (o *PatchBulkJobRequest) GetJobID() string {
 	return o.JobID
 }
 
+// PatchBulkJobResponseBody - The requested resource is forbidden
+type PatchBulkJobResponseBody struct {
+	// The error message
+	Error *string `json:"error,omitempty"`
+	// The HTTP status code of the error
+	Status *int64 `json:"status,omitempty"`
+}
+
+func (o *PatchBulkJobResponseBody) GetError() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Error
+}
+
+func (o *PatchBulkJobResponseBody) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
 type PatchBulkJobResponse struct {
 	// Bulk Job Info
 	BulkTriggerJob *shared.BulkTriggerJob
@@ -35,6 +57,8 @@ type PatchBulkJobResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The requested resource is forbidden
+	Object *PatchBulkJobResponseBody
 }
 
 func (o *PatchBulkJobResponse) GetBulkTriggerJob() *shared.BulkTriggerJob {
@@ -63,4 +87,11 @@ func (o *PatchBulkJobResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *PatchBulkJobResponse) GetObject() *PatchBulkJobResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.Object
 }

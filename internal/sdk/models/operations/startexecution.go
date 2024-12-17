@@ -7,6 +7,28 @@ import (
 	"net/http"
 )
 
+// StartExecutionResponseBody - The requested resource is forbidden
+type StartExecutionResponseBody struct {
+	// The error message
+	Error *string `json:"error,omitempty"`
+	// The HTTP status code of the error
+	Status *int64 `json:"status,omitempty"`
+}
+
+func (o *StartExecutionResponseBody) GetError() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Error
+}
+
+func (o *StartExecutionResponseBody) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
 type StartExecutionResponse struct {
 	// The created execution
 	AutomationExecution *shared.AutomationExecution
@@ -16,6 +38,8 @@ type StartExecutionResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The requested resource is forbidden
+	Object *StartExecutionResponseBody
 }
 
 func (o *StartExecutionResponse) GetAutomationExecution() *shared.AutomationExecution {
@@ -44,4 +68,11 @@ func (o *StartExecutionResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *StartExecutionResponse) GetObject() *StartExecutionResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.Object
 }

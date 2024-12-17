@@ -7,6 +7,28 @@ import (
 	"net/http"
 )
 
+// BulkTriggerExecutionsResponseBody - The requested resource is forbidden
+type BulkTriggerExecutionsResponseBody struct {
+	// The error message
+	Error *string `json:"error,omitempty"`
+	// The HTTP status code of the error
+	Status *int64 `json:"status,omitempty"`
+}
+
+func (o *BulkTriggerExecutionsResponseBody) GetError() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Error
+}
+
+func (o *BulkTriggerExecutionsResponseBody) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
 type BulkTriggerExecutionsResponse struct {
 	// Trigger Executions Job Info
 	BulkTriggerJob *shared.BulkTriggerJob
@@ -16,6 +38,8 @@ type BulkTriggerExecutionsResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The requested resource is forbidden
+	Object *BulkTriggerExecutionsResponseBody
 }
 
 func (o *BulkTriggerExecutionsResponse) GetBulkTriggerJob() *shared.BulkTriggerJob {
@@ -44,4 +68,11 @@ func (o *BulkTriggerExecutionsResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *BulkTriggerExecutionsResponse) GetObject() *BulkTriggerExecutionsResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.Object
 }
