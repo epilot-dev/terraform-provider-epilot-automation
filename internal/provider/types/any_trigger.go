@@ -9,7 +9,7 @@ type AnyTrigger struct {
 	APISubmissionTrigger   *APISubmissionTrigger   `tfsdk:"api_submission_trigger" tfPlanOnly:"true"`
 	EntityManualTrigger    *EntityManualTrigger    `tfsdk:"entity_manual_trigger" tfPlanOnly:"true"`
 	EntityOperationTrigger *EntityOperationTrigger `tfsdk:"entity_operation_trigger" tfPlanOnly:"true"`
-	FrontendSubmitTrigger  *FrontendSubmitTrigger  `tfsdk:"frontend_submit_trigger" tfPlanOnly:"true"`
+	FrontendSubmitTrigger  *APISubmissionTrigger   `tfsdk:"frontend_submit_trigger" tfPlanOnly:"true"`
 	JourneySubmitTrigger   *JourneySubmitTrigger   `tfsdk:"journey_submit_trigger" tfPlanOnly:"true"`
 	ReceivedEmailTrigger   *ReceivedEmailTrigger   `tfsdk:"received_email_trigger" tfPlanOnly:"true"`
 }

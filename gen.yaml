@@ -9,16 +9,18 @@ generation:
     requestResponseComponentNamesFeb2024: false
   auth:
     oAuth2ClientCredentialsEnabled: false
+    oAuth2PasswordEnabled: false
   sdkFlattening: true
   telemetryEnabled: false
 terraform:
-  version: 0.6.1
+  version: 0.7.1
   additionalDataSources: []
   additionalDependencies: {}
   additionalResources: []
   allowUnknownFieldsInWeakUnions: true
   author: epilot-dev
   defaultErrorName: SDKError
+  enableTypeDeduplication: true
   environmentVariables: []
   imports:
     option: openapi

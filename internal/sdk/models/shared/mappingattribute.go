@@ -17,9 +17,9 @@ const (
 )
 
 type MappingAttribute struct {
-	SetValueMapper    *SetValueMapper
-	CopyValueMapper   *CopyValueMapper
-	AppendValueMapper *AppendValueMapper
+	SetValueMapper    *SetValueMapper    `queryParam:"inline"`
+	CopyValueMapper   *CopyValueMapper   `queryParam:"inline"`
+	AppendValueMapper *AppendValueMapper `queryParam:"inline"`
 
 	Type MappingAttributeType
 }

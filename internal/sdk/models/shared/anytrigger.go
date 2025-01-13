@@ -21,13 +21,13 @@ const (
 )
 
 type AnyTrigger struct {
-	FrontendSubmitTrigger  *FrontendSubmitTrigger
-	JourneySubmitTrigger   *JourneySubmitTrigger
-	APISubmissionTrigger   *APISubmissionTrigger
-	EntityOperationTrigger *EntityOperationTrigger
-	Any                    any
-	EntityManualTrigger    *EntityManualTrigger
-	ReceivedEmailTrigger   *ReceivedEmailTrigger
+	FrontendSubmitTrigger  *FrontendSubmitTrigger  `queryParam:"inline"`
+	JourneySubmitTrigger   *JourneySubmitTrigger   `queryParam:"inline"`
+	APISubmissionTrigger   *APISubmissionTrigger   `queryParam:"inline"`
+	EntityOperationTrigger *EntityOperationTrigger `queryParam:"inline"`
+	Any                    any                     `queryParam:"inline"`
+	EntityManualTrigger    *EntityManualTrigger    `queryParam:"inline"`
+	ReceivedEmailTrigger   *ReceivedEmailTrigger   `queryParam:"inline"`
 
 	Type AnyTriggerType
 }

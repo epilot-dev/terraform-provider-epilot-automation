@@ -17,8 +17,8 @@ const (
 
 // Uniq - Unique array
 type Uniq struct {
-	Boolean    *bool
-	ArrayOfStr []string
+	Boolean    *bool    `queryParam:"inline"`
+	ArrayOfStr []string `queryParam:"inline"`
 
 	Type UniqType
 }

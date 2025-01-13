@@ -18,6 +18,7 @@ const (
 	ExecutionStatusCancelled  ExecutionStatus = "cancelled"
 	ExecutionStatusSkipped    ExecutionStatus = "skipped"
 	ExecutionStatusScheduled  ExecutionStatus = "scheduled"
+	ExecutionStatusHot        ExecutionStatus = "hot"
 )
 
 func (e ExecutionStatus) ToPointer() *ExecutionStatus {
@@ -44,6 +45,8 @@ func (e *ExecutionStatus) UnmarshalJSON(data []byte) error {
 	case "skipped":
 		fallthrough
 	case "scheduled":
+		fallthrough
+	case "hot":
 		*e = ExecutionStatus(v)
 		return nil
 	default:

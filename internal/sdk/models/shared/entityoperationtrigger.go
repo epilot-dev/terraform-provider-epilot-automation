@@ -52,13 +52,13 @@ const (
 )
 
 type EntityOperationTriggerSchemasType struct {
-	Str                       *string
-	EqualsIgnoreCaseCondition *EqualsIgnoreCaseCondition
-	AnythingButCondition      *AnythingButCondition
-	ExistsCondition           *ExistsCondition
-	PrefixCondition           *PrefixCondition
-	SuffixCondition           *SuffixCondition
-	WildcardCondition         *WildcardCondition
+	Str                       *string                    `queryParam:"inline"`
+	EqualsIgnoreCaseCondition *EqualsIgnoreCaseCondition `queryParam:"inline"`
+	AnythingButCondition      *AnythingButCondition      `queryParam:"inline"`
+	ExistsCondition           *ExistsCondition           `queryParam:"inline"`
+	PrefixCondition           *PrefixCondition           `queryParam:"inline"`
+	SuffixCondition           *SuffixCondition           `queryParam:"inline"`
+	WildcardCondition         *WildcardCondition         `queryParam:"inline"`
 
 	Type EntityOperationTriggerSchemasTypeType
 }

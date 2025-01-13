@@ -14,7 +14,6 @@ Flow DataSource
 
 ```terraform
 data "epilot-automation_flow" "my_flow" {
-  flow_id = "7791b04a-16d2-44a2-9af9-2d59c25c512f"
 }
 ```
 
@@ -31,7 +30,7 @@ data "epilot-automation_flow" "my_flow" {
 - `flow_name` (String) A descriptive name for the Automation
 - `id` (String) The ID of this resource.
 - `manifest` (List of String) Source blueprint/manifest ID used when automation is created via blueprints.
-- `schedules` (Attributes List) (see [below for nested schema](#nestedatt--schedules))
+- `schedules` (String) Parsed as JSON.
 - `system_flow` (Boolean) Determines if the flow is a system generated flow
 - `trigger_conditions` (List of String)
 - `triggers` (Attributes List) (see [below for nested schema](#nestedatt--triggers))
@@ -53,7 +52,7 @@ Read-Only:
 Read-Only:
 
 - `id` (String)
-- `operation` (String) must be one of ["equals", "not_equals", "any_of", "none_of", "contains", "not_contains", "starts_with", "ends_with", "greater_than", "less_than", "greater_than_or_equals", "less_than_or_equals", "is_empty", "is_not_empty"]
+- `operation` (String)
 - `source` (Attributes) (see [below for nested schema](#nestedatt--conditions--statements--source))
 - `values` (List of String)
 
@@ -63,12 +62,12 @@ Read-Only:
 Read-Only:
 
 - `attribute` (String)
-- `attribute_operation` (String) must be one of ["all", "updated", "added", "deleted"]
+- `attribute_operation` (String)
 - `attribute_repeatable` (Boolean)
-- `attribute_type` (String) must be one of ["string", "text", "number", "boolean", "date", "datetime", "tags", "country", "email", "phone", "product", "price", "status", "relation", "multiselect", "select", "radio", "relation_user", "purpose", "label"]
+- `attribute_type` (String)
 - `id` (String) The id of the action or trigger
-- `origin` (String) must be one of ["trigger", "action"]
-- `origin_type` (String) must be one of ["entity", "workflow", "journey_block"]
+- `origin` (String)
+- `origin_type` (String)
 - `schema` (String)
 
 
@@ -80,31 +79,7 @@ Read-Only:
 Read-Only:
 
 - `disabled_at` (String) When the flow was disabled
-- `disabled_by` (String) Who disabled the flow (system or user). must be one of ["system", "user"]
-
-
-<a id="nestedatt--schedules"></a>
-### Nested Schema for `schedules`
-
-Read-Only:
-
-- `id` (String) Schedule Id
-- `number_of_units` (Number)
-- `schedule_api_id` (String) The id of the configured scheduler which will be added on automation triggered
-- `source` (Attributes) The source of the schedule_at timestamp that will be used to schedule the action (see [below for nested schema](#nestedatt--schedules--source))
-- `time_period` (String) must be one of ["minutes", "hours", "days", "weeks", "months"]
-- `time_relation` (String) must be one of ["after", "before"]
-
-<a id="nestedatt--schedules--source"></a>
-### Nested Schema for `schedules.source`
-
-Read-Only:
-
-- `attribute` (String)
-- `id` (String) The id of the action or trigger
-- `origin` (String) must be one of ["trigger", "action", "action_task", "automation"]
-- `schema` (String)
-
+- `disabled_by` (String) Who disabled the flow (system or user)
 
 
 <a id="nestedatt--triggers"></a>
@@ -239,7 +214,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--api_submission_trigger--configuration))
 - `id` (String)
-- `type` (String) must be one of ["api_submission"]
+- `type` (String)
 
 <a id="nestedatt--triggers--api_submission_trigger--configuration"></a>
 ### Nested Schema for `triggers.api_submission_trigger.configuration`
@@ -257,7 +232,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_manual_trigger--configuration))
 - `id` (String)
-- `type` (String) must be one of ["entity_manual"]
+- `type` (String)
 
 <a id="nestedatt--triggers--entity_manual_trigger--configuration"></a>
 ### Nested Schema for `triggers.entity_manual_trigger.configuration`
@@ -275,7 +250,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration))
 - `id` (String)
-- `type` (String) must be one of ["entity_operation"]
+- `type` (String)
 
 <a id="nestedatt--triggers--entity_operation_trigger--configuration"></a>
 ### Nested Schema for `triggers.entity_operation_trigger.configuration`
@@ -430,7 +405,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--frontend_submit_trigger--configuration))
 - `id` (String)
-- `type` (String) must be one of ["frontend_submission"]
+- `type` (String)
 
 <a id="nestedatt--triggers--frontend_submit_trigger--configuration"></a>
 ### Nested Schema for `triggers.frontend_submit_trigger.configuration`
@@ -448,7 +423,7 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--journey_submit_trigger--configuration))
 - `id` (String)
-- `type` (String) must be one of ["journey_submission"]
+- `type` (String)
 
 <a id="nestedatt--triggers--journey_submit_trigger--configuration"></a>
 ### Nested Schema for `triggers.journey_submit_trigger.configuration`
@@ -466,11 +441,11 @@ Read-Only:
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--received_email_trigger--configuration))
 - `id` (String)
-- `type` (String) must be one of ["received_email"]
+- `type` (String)
 
 <a id="nestedatt--triggers--received_email_trigger--configuration"></a>
 ### Nested Schema for `triggers.received_email_trigger.configuration`
 
 Read-Only:
 
-- `message_type` (String) must be one of ["RECEIVED"]
+- `message_type` (String)

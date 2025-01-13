@@ -21,13 +21,13 @@ const (
 )
 
 type AnyAction struct {
-	MapEntityAction       *MapEntityAction
-	TriggerWorkflowAction *TriggerWorkflowAction
-	TriggerWebhookAction  *TriggerWebhookAction
-	CreateDocumentAction  *CreateDocumentAction
-	SendEmailAction       *SendEmailAction
-	CartCheckoutAction    *CartCheckoutAction
-	AutomationAction      *AutomationAction
+	MapEntityAction       *MapEntityAction       `queryParam:"inline"`
+	TriggerWorkflowAction *TriggerWorkflowAction `queryParam:"inline"`
+	TriggerWebhookAction  *TriggerWebhookAction  `queryParam:"inline"`
+	CreateDocumentAction  *CreateDocumentAction  `queryParam:"inline"`
+	SendEmailAction       *SendEmailAction       `queryParam:"inline"`
+	CartCheckoutAction    *CartCheckoutAction    `queryParam:"inline"`
+	AutomationAction      *AutomationAction      `queryParam:"inline"`
 
 	Type AnyActionType
 }

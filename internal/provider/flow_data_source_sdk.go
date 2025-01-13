@@ -104,43 +104,11 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.Autom
 		r.EntitySchema = types.StringPointerValue(resp.EntitySchema)
 		r.FlowName = types.StringValue(resp.FlowName)
 		r.ID = types.StringPointerValue(resp.ID)
-		r.Schedules = []tfTypes.ActionSchedule{}
-		if len(r.Schedules) > len(resp.Schedules) {
-			r.Schedules = r.Schedules[:len(resp.Schedules)]
-		}
-		for schedulesCount, schedulesItem := range resp.Schedules {
-			var schedules1 tfTypes.ActionSchedule
-			schedules1.ID = types.StringValue(schedulesItem.ID)
-			if schedulesItem.NumberOfUnits != nil {
-				schedules1.NumberOfUnits = types.NumberValue(big.NewFloat(float64(*schedulesItem.NumberOfUnits)))
-			} else {
-				schedules1.NumberOfUnits = types.NumberNull()
-			}
-			schedules1.ScheduleAPIID = types.StringPointerValue(schedulesItem.ScheduleAPIID)
-			schedules1.Source.Attribute = types.StringValue(schedulesItem.Source.Attribute)
-			schedules1.Source.ID = types.StringValue(schedulesItem.Source.ID)
-			schedules1.Source.Origin = types.StringValue(string(schedulesItem.Source.Origin))
-			schedules1.Source.Schema = types.StringValue(schedulesItem.Source.Schema)
-			if schedulesItem.TimePeriod != nil {
-				schedules1.TimePeriod = types.StringValue(string(*schedulesItem.TimePeriod))
-			} else {
-				schedules1.TimePeriod = types.StringNull()
-			}
-			if schedulesItem.TimeRelation != nil {
-				schedules1.TimeRelation = types.StringValue(string(*schedulesItem.TimeRelation))
-			} else {
-				schedules1.TimeRelation = types.StringNull()
-			}
-			if schedulesCount+1 > len(r.Schedules) {
-				r.Schedules = append(r.Schedules, schedules1)
-			} else {
-				r.Schedules[schedulesCount].ID = schedules1.ID
-				r.Schedules[schedulesCount].NumberOfUnits = schedules1.NumberOfUnits
-				r.Schedules[schedulesCount].ScheduleAPIID = schedules1.ScheduleAPIID
-				r.Schedules[schedulesCount].Source = schedules1.Source
-				r.Schedules[schedulesCount].TimePeriod = schedules1.TimePeriod
-				r.Schedules[schedulesCount].TimeRelation = schedules1.TimeRelation
-			}
+		if resp.Schedules == nil {
+			r.Schedules = types.StringNull()
+		} else {
+			schedulesResult, _ := json.Marshal(resp.Schedules)
+			r.Schedules = types.StringValue(string(schedulesResult))
 		}
 		r.SystemFlow = types.BoolPointerValue(resp.SystemFlow)
 		r.TriggerConditions = nil
@@ -279,7 +247,7 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(resp *shared.Autom
 				triggers1.EntityOperationTrigger.Type = types.StringValue(string(triggersItem.EntityOperationTrigger.Type))
 			}
 			if triggersItem.FrontendSubmitTrigger != nil {
-				triggers1.FrontendSubmitTrigger = &tfTypes.FrontendSubmitTrigger{}
+				triggers1.FrontendSubmitTrigger = &tfTypes.APISubmissionTrigger{}
 				triggers1.FrontendSubmitTrigger.Configuration.SourceID = types.StringPointerValue(triggersItem.FrontendSubmitTrigger.Configuration.SourceID)
 				triggers1.FrontendSubmitTrigger.ID = types.StringPointerValue(triggersItem.FrontendSubmitTrigger.ID)
 				triggers1.FrontendSubmitTrigger.Type = types.StringValue(string(triggersItem.FrontendSubmitTrigger.Type))

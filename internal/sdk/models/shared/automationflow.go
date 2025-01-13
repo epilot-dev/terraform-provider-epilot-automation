@@ -80,9 +80,9 @@ type AutomationFlow struct {
 	// The triggering entity schema
 	EntitySchema *string `json:"entity_schema,omitempty"`
 	// A descriptive name for the Automation
-	FlowName  string           `json:"flow_name"`
-	ID        *string          `json:"id,omitempty"`
-	Schedules []ActionSchedule `json:"schedules,omitempty"`
+	FlowName  string  `json:"flow_name"`
+	ID        *string `json:"id,omitempty"`
+	Schedules any     `json:"schedules,omitempty"`
 	// Determines if the flow is a system generated flow
 	SystemFlow        *bool        `json:"system_flow,omitempty"`
 	TriggerConditions []any        `json:"trigger_conditions,omitempty"`
@@ -147,7 +147,7 @@ func (o *AutomationFlow) GetID() *string {
 	return o.ID
 }
 
-func (o *AutomationFlow) GetSchedules() []ActionSchedule {
+func (o *AutomationFlow) GetSchedules() any {
 	if o == nil {
 		return nil
 	}
@@ -194,8 +194,8 @@ type AutomationFlowInput struct {
 	// The triggering entity schema
 	EntitySchema *string `json:"entity_schema,omitempty"`
 	// A descriptive name for the Automation
-	FlowName  string           `json:"flow_name"`
-	Schedules []ActionSchedule `json:"schedules,omitempty"`
+	FlowName  string `json:"flow_name"`
+	Schedules any    `json:"schedules,omitempty"`
 	// Determines if the flow is a system generated flow
 	SystemFlow        *bool        `json:"system_flow,omitempty"`
 	TriggerConditions []any        `json:"trigger_conditions,omitempty"`
@@ -253,7 +253,7 @@ func (o *AutomationFlowInput) GetFlowName() string {
 	return o.FlowName
 }
 
-func (o *AutomationFlowInput) GetSchedules() []ActionSchedule {
+func (o *AutomationFlowInput) GetSchedules() any {
 	if o == nil {
 		return nil
 	}

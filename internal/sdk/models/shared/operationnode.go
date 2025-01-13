@@ -17,8 +17,8 @@ const (
 
 // OperationNode - Mapping operation nodes are either primitive values or operation node objects
 type OperationNode struct {
-	OperationObjectNode *OperationObjectNode
-	Any                 any
+	OperationObjectNode *OperationObjectNode `queryParam:"inline"`
+	Any                 any                  `queryParam:"inline"`
 
 	Type OperationNodeType
 }

@@ -1691,6 +1691,7 @@ components:
         - cancelled
         - skipped
         - scheduled
+        - hot
 
     GetExecutionsResp:
       type: object

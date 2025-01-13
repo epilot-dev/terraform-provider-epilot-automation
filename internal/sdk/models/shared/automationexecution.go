@@ -18,9 +18,9 @@ const (
 )
 
 type TriggerEvent struct {
-	TriggerEventManual          *TriggerEventManual
-	TriggerEventEntityActivity  *TriggerEventEntityActivity
-	TriggerEventEntityOperation *TriggerEventEntityOperation
+	TriggerEventManual          *TriggerEventManual          `queryParam:"inline"`
+	TriggerEventEntityActivity  *TriggerEventEntityActivity  `queryParam:"inline"`
+	TriggerEventEntityOperation *TriggerEventEntityOperation `queryParam:"inline"`
 
 	Type TriggerEventType
 }

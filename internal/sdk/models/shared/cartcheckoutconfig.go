@@ -16,8 +16,8 @@ const (
 )
 
 type MappingAttributes struct {
-	MappingAttributeV2 *MappingAttributeV2
-	MappingAttribute   *MappingAttribute
+	MappingAttributeV2 *MappingAttributeV2 `queryParam:"inline"`
+	MappingAttribute   *MappingAttribute   `queryParam:"inline"`
 
 	Type MappingAttributesType
 }

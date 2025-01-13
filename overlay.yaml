@@ -88,4 +88,8 @@ actions:
     remove: true
   - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["runs"]
     remove: true
-  
+  - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["schedules"]
+    remove: true
+  - target: $["components"]["schemas"]["AutomationFlow"]["properties"]
+    update: 
+      schedules: {}  
