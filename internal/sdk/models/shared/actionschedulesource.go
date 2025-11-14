@@ -41,16 +41,16 @@ func (e *Origin) UnmarshalJSON(data []byte) error {
 
 // ActionScheduleSource - The source of the schedule_at timestamp that will be used to schedule the action
 type ActionScheduleSource struct {
-	Attribute string `json:"attribute"`
+	Attribute *string `json:"attribute,omitempty"`
 	// The id of the action or trigger
-	ID     string `json:"id"`
-	Origin Origin `json:"origin"`
-	Schema string `json:"schema"`
+	ID     string  `json:"id"`
+	Origin Origin  `json:"origin"`
+	Schema *string `json:"schema,omitempty"`
 }
 
-func (o *ActionScheduleSource) GetAttribute() string {
+func (o *ActionScheduleSource) GetAttribute() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Attribute
 }
@@ -69,9 +69,9 @@ func (o *ActionScheduleSource) GetOrigin() Origin {
 	return o.Origin
 }
 
-func (o *ActionScheduleSource) GetSchema() string {
+func (o *ActionScheduleSource) GetSchema() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Schema
 }

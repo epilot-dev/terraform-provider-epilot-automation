@@ -58,7 +58,7 @@ func (s SourceFilter) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SourceFilter) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -108,7 +108,7 @@ func (o *SourceFilter) GetTag() *string {
 
 type RelationAttribute struct {
 	Mode Mode `json:"mode"`
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	RelatedTo map[string]any `json:"related_to,omitempty"`
 	// A filter to identify which source entities to pick as relations from main entity
 	SourceFilter *SourceFilter `json:"source_filter,omitempty"`
@@ -125,7 +125,7 @@ func (r RelationAttribute) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RelationAttribute) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &r, "", false, []string{"mode", "target"}); err != nil {
 		return err
 	}
 	return nil

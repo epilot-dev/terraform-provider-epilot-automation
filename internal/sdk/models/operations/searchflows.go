@@ -11,6 +11,8 @@ import (
 type SearchFlowsRequest struct {
 	// Pagination: starting for results
 	From *int64 `default:"0" queryParam:"style=form,explode=true,name=from"`
+	// Include flow automations in the response
+	IncludeFlows *bool `default:"false" queryParam:"style=form,explode=true,name=include_flows"`
 	// Entity Schema
 	Schema *string `queryParam:"style=form,explode=true,name=schema"`
 	// Pagination: max number of results to return
@@ -24,7 +26,7 @@ func (s SearchFlowsRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SearchFlowsRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -35,6 +37,13 @@ func (o *SearchFlowsRequest) GetFrom() *int64 {
 		return nil
 	}
 	return o.From
+}
+
+func (o *SearchFlowsRequest) GetIncludeFlows() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeFlows
 }
 
 func (o *SearchFlowsRequest) GetSchema() *string {

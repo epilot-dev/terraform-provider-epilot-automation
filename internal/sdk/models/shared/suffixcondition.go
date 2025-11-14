@@ -2,8 +2,23 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 type SuffixCondition struct {
 	Suffix *string `json:"suffix,omitempty"`
+}
+
+func (s SuffixCondition) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SuffixCondition) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SuffixCondition) GetSuffix() *string {

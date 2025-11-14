@@ -2,12 +2,27 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 type TriggerWorkflowConfig struct {
 	AssignSteps        []AssignUsersToStep `json:"assign_steps,omitempty"`
 	Assignees          []string            `json:"assignees,omitempty"`
 	Conditions         []any               `json:"conditions,omitempty"`
 	FilterWithPurposes *bool               `json:"filter_with_purposes,omitempty"`
 	TargetWorkflow     *string             `json:"target_workflow,omitempty"`
+}
+
+func (t TriggerWorkflowConfig) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TriggerWorkflowConfig) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *TriggerWorkflowConfig) GetAssignSteps() []AssignUsersToStep {

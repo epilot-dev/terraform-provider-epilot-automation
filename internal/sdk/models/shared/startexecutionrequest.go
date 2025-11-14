@@ -4,6 +4,15 @@ package shared
 
 type StartExecutionRequest struct {
 	EntityID string `json:"entity_id"`
+	// Use workflow_context.workflow_exec_task_id instead
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	FlowAutomationTaskID *string `json:"flow_automation_task_id,omitempty"`
+	// Use workflow_context.workflow_exec_id instead
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	FlowExecutionID *string                   `json:"flow_execution_id,omitempty"`
+	WorkflowContext *WorkflowExecutionContext `json:"workflow_context,omitempty"`
 }
 
 func (o *StartExecutionRequest) GetEntityID() string {
@@ -11,4 +20,25 @@ func (o *StartExecutionRequest) GetEntityID() string {
 		return ""
 	}
 	return o.EntityID
+}
+
+func (o *StartExecutionRequest) GetFlowAutomationTaskID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FlowAutomationTaskID
+}
+
+func (o *StartExecutionRequest) GetFlowExecutionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FlowExecutionID
+}
+
+func (o *StartExecutionRequest) GetWorkflowContext() *WorkflowExecutionContext {
+	if o == nil {
+		return nil
+	}
+	return o.WorkflowContext
 }

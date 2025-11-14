@@ -2,14 +2,17 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
+)
 
 type AnyTrigger struct {
-	Any                    types.String            `tfsdk:"any" tfPlanOnly:"true"`
-	APISubmissionTrigger   *APISubmissionTrigger   `tfsdk:"api_submission_trigger" tfPlanOnly:"true"`
-	EntityManualTrigger    *EntityManualTrigger    `tfsdk:"entity_manual_trigger" tfPlanOnly:"true"`
-	EntityOperationTrigger *EntityOperationTrigger `tfsdk:"entity_operation_trigger" tfPlanOnly:"true"`
-	FrontendSubmitTrigger  *APISubmissionTrigger   `tfsdk:"frontend_submit_trigger" tfPlanOnly:"true"`
-	JourneySubmitTrigger   *JourneySubmitTrigger   `tfsdk:"journey_submit_trigger" tfPlanOnly:"true"`
-	ReceivedEmailTrigger   *ReceivedEmailTrigger   `tfsdk:"received_email_trigger" tfPlanOnly:"true"`
+	Any                    jsontypes.Normalized    `queryParam:"inline" tfsdk:"any" tfPlanOnly:"true"`
+	APISubmissionTrigger   *APISubmissionTrigger   `queryParam:"inline" tfsdk:"api_submission_trigger" tfPlanOnly:"true"`
+	EntityManualTrigger    *EntityManualTrigger    `queryParam:"inline" tfsdk:"entity_manual_trigger" tfPlanOnly:"true"`
+	EntityOperationTrigger *EntityOperationTrigger `queryParam:"inline" tfsdk:"entity_operation_trigger" tfPlanOnly:"true"`
+	FlowsTrigger           *FlowsTrigger           `queryParam:"inline" tfsdk:"flows_trigger" tfPlanOnly:"true"`
+	FrontendSubmitTrigger  *APISubmissionTrigger   `queryParam:"inline" tfsdk:"frontend_submit_trigger" tfPlanOnly:"true"`
+	JourneySubmitTrigger   *JourneySubmitTrigger   `queryParam:"inline" tfsdk:"journey_submit_trigger" tfPlanOnly:"true"`
+	ReceivedEmailTrigger   *ReceivedEmailTrigger   `queryParam:"inline" tfsdk:"received_email_trigger" tfPlanOnly:"true"`
 }

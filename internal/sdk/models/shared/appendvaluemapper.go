@@ -2,9 +2,13 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 // AppendValueMapper
 //
-// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
+// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 type AppendValueMapper struct {
 	// - copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
 	//
@@ -20,6 +24,17 @@ type AppendValueMapper struct {
 	// To be provided only when mapping json objects into a target attribute. Eg array of addresses.
 	//
 	ValueJSON string `json:"value_json"`
+}
+
+func (a AppendValueMapper) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AppendValueMapper) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"mode", "target", "value_json"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *AppendValueMapper) GetMode() MappingAttributeMode {

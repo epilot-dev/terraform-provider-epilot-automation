@@ -2,10 +2,13 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type EntityOperationTriggerOperation struct {
-	Diff      types.String   `tfsdk:"diff"`
-	Operation []types.String `tfsdk:"operation"`
-	Payload   types.String   `tfsdk:"payload"`
+	Diff      jsontypes.Normalized `tfsdk:"diff"`
+	Operation []types.String       `tfsdk:"operation"`
+	Payload   jsontypes.Normalized `tfsdk:"payload"`
 }

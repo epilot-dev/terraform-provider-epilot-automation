@@ -2,9 +2,24 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 type EntityRef struct {
 	EntityID     string `json:"entity_id"`
 	EntitySchema string `json:"entity_schema"`
+}
+
+func (e EntityRef) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *EntityRef) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"entity_id", "entity_schema"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *EntityRef) GetEntityID() string {

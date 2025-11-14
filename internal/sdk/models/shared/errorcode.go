@@ -10,17 +10,25 @@ import (
 type ErrorCode string
 
 const (
-	ErrorCodeMappingError          ErrorCode = "MAPPING_ERROR"
-	ErrorCodeRefreshRelationsError ErrorCode = "REFRESH_RELATIONS_ERROR"
-	ErrorCodeDuplicateEntityError  ErrorCode = "DUPLICATE_ENTITY_ERROR"
-	ErrorCodeTriggerWorkflowError  ErrorCode = "TRIGGER_WORKFLOW_ERROR"
-	ErrorCodeTimeoutError          ErrorCode = "TIMEOUT_ERROR"
-	ErrorCodeBadConfig             ErrorCode = "BAD_CONFIG"
-	ErrorCodeInternalError         ErrorCode = "INTERNAL_ERROR"
-	ErrorCodeTriggerWebhookError   ErrorCode = "TRIGGER_WEBHOOK_ERROR"
-	ErrorCodeTemplateError         ErrorCode = "TEMPLATE_ERROR"
-	ErrorCodeInvalidPayload        ErrorCode = "INVALID_PAYLOAD"
-	ErrorCodeInvalidScheduleConfig ErrorCode = "INVALID_SCHEDULE_CONFIG"
+	ErrorCodeMappingError             ErrorCode = "MAPPING_ERROR"
+	ErrorCodeRefreshRelationsError    ErrorCode = "REFRESH_RELATIONS_ERROR"
+	ErrorCodeDuplicateEntityError     ErrorCode = "DUPLICATE_ENTITY_ERROR"
+	ErrorCodeTriggerWorkflowError     ErrorCode = "TRIGGER_WORKFLOW_ERROR"
+	ErrorCodeTimeoutError             ErrorCode = "TIMEOUT_ERROR"
+	ErrorCodeBadConfig                ErrorCode = "BAD_CONFIG"
+	ErrorCodeInternalError            ErrorCode = "INTERNAL_ERROR"
+	ErrorCodeTriggerWebhookError      ErrorCode = "TRIGGER_WEBHOOK_ERROR"
+	ErrorCodeTemplateError            ErrorCode = "TEMPLATE_ERROR"
+	ErrorCodeInvalidPayload           ErrorCode = "INVALID_PAYLOAD"
+	ErrorCodeInvalidScheduleConfig    ErrorCode = "INVALID_SCHEDULE_CONFIG"
+	ErrorCodeCustomActionError        ErrorCode = "CUSTOM_ACTION_ERROR"
+	ErrorCodeOrderCreationError       ErrorCode = "ORDER_CREATION_ERROR"
+	ErrorCodeDocumentGenerationError  ErrorCode = "DOCUMENT_GENERATION_ERROR"
+	ErrorCodeBulkEmailError           ErrorCode = "BULK_EMAIL_ERROR"
+	ErrorCodeSharingError             ErrorCode = "SHARING_ERROR"
+	ErrorCodeCancelFlowExecutionError ErrorCode = "CANCEL_FLOW_EXECUTION_ERROR"
+	ErrorCodeMeterReadingNotFound     ErrorCode = "METER_READING_NOT_FOUND"
+	ErrorCodeEntityNotFound           ErrorCode = "ENTITY_NOT_FOUND"
 )
 
 func (e ErrorCode) ToPointer() *ErrorCode {
@@ -53,6 +61,22 @@ func (e *ErrorCode) UnmarshalJSON(data []byte) error {
 	case "INVALID_PAYLOAD":
 		fallthrough
 	case "INVALID_SCHEDULE_CONFIG":
+		fallthrough
+	case "CUSTOM_ACTION_ERROR":
+		fallthrough
+	case "ORDER_CREATION_ERROR":
+		fallthrough
+	case "DOCUMENT_GENERATION_ERROR":
+		fallthrough
+	case "BULK_EMAIL_ERROR":
+		fallthrough
+	case "SHARING_ERROR":
+		fallthrough
+	case "CANCEL_FLOW_EXECUTION_ERROR":
+		fallthrough
+	case "METER_READING_NOT_FOUND":
+		fallthrough
+	case "ENTITY_NOT_FOUND":
 		*e = ErrorCode(v)
 		return nil
 	default:

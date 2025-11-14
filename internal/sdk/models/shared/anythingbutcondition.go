@@ -2,8 +2,23 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 type AnythingButCondition struct {
 	AnythingBut []string `json:"anything-but,omitempty"`
+}
+
+func (a AnythingButCondition) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AnythingButCondition) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *AnythingButCondition) GetAnythingBut() []string {

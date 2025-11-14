@@ -7,7 +7,7 @@ import (
 	"fmt"
 	tfTypes "github.com/epilot-dev/terraform-provider-epilot-automation/internal/provider/types"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk"
-	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/operations"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -24,24 +24,27 @@ func NewFlowDataSource() datasource.DataSource {
 
 // FlowDataSource is the data source implementation.
 type FlowDataSource struct {
+	// Provider configured SDK client.
 	client *sdk.SDK
 }
 
 // FlowDataSourceModel describes the data model.
 type FlowDataSourceModel struct {
-	Actions           []types.String            `tfsdk:"actions"`
-	Conditions        []tfTypes.ActionCondition `tfsdk:"conditions"`
-	DisableDetails    *tfTypes.DisableDetails   `tfsdk:"disable_details"`
-	Enabled           types.Bool                `tfsdk:"enabled"`
-	EntitySchema      types.String              `tfsdk:"entity_schema"`
-	FlowName          types.String              `tfsdk:"flow_name"`
-	ID                types.String              `tfsdk:"id"`
-	Manifest          []types.String            `tfsdk:"manifest"`
-	Schedules         types.String              `tfsdk:"schedules"`
-	SystemFlow        types.Bool                `tfsdk:"system_flow"`
-	TriggerConditions []types.String            `tfsdk:"trigger_conditions"`
-	Triggers          []tfTypes.AnyTrigger      `tfsdk:"triggers"`
-	Version           types.Number              `tfsdk:"version"`
+	Actions           []jsontypes.Normalized   `tfsdk:"actions"`
+	Conditions        jsontypes.Normalized     `tfsdk:"conditions"`
+	DisableDetails    *tfTypes.DisableDetails  `tfsdk:"disable_details"`
+	Enabled           types.Bool               `tfsdk:"enabled"`
+	EntitySchema      types.String             `tfsdk:"entity_schema"`
+	FlowName          types.String             `tfsdk:"flow_name"`
+	ID                types.String             `tfsdk:"id"`
+	Manifest          []types.String           `tfsdk:"manifest"`
+	MaxExecutions     *tfTypes.MaxExecutions   `tfsdk:"max_executions"`
+	Schedules         jsontypes.Normalized     `tfsdk:"schedules"`
+	SystemFlow        types.Bool               `tfsdk:"system_flow"`
+	TriggerConditions []jsontypes.Normalized   `tfsdk:"trigger_conditions"`
+	Triggers          []tfTypes.AnyTrigger     `tfsdk:"triggers"`
+	Version           types.Float64            `tfsdk:"version"`
+	WorkflowContext   *tfTypes.WorkflowContext `tfsdk:"workflow_context"`
 }
 
 // Metadata returns the data source type name.
@@ -57,77 +60,21 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 		Attributes: map[string]schema.Attribute{
 			"actions": schema.ListAttribute{
 				Computed:    true,
-				ElementType: types.StringType,
+				ElementType: jsontypes.NormalizedType{},
 				Description: `The actions (nodes) of the automation flow`,
 			},
-			"conditions": schema.ListNestedAttribute{
-				Computed: true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"evaluation_result": schema.BoolAttribute{
-							Computed:    true,
-							Description: `Result of the condition evaluation`,
-						},
-						"id": schema.StringAttribute{
-							Computed: true,
-						},
-						"schedule_id": schema.StringAttribute{
-							Computed:    true,
-							Description: `Schedule Id which indicates the schedule of the actions inside the condition`,
-						},
-						"statements": schema.ListNestedAttribute{
-							Computed: true,
-							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"id": schema.StringAttribute{
-										Computed: true,
-									},
-									"operation": schema.StringAttribute{
-										Computed: true,
-									},
-									"source": schema.SingleNestedAttribute{
-										Computed: true,
-										Attributes: map[string]schema.Attribute{
-											"attribute": schema.StringAttribute{
-												Computed: true,
-											},
-											"attribute_operation": schema.StringAttribute{
-												Computed: true,
-											},
-											"attribute_repeatable": schema.BoolAttribute{
-												Computed: true,
-											},
-											"attribute_type": schema.StringAttribute{
-												Computed: true,
-											},
-											"id": schema.StringAttribute{
-												Computed:    true,
-												Description: `The id of the action or trigger`,
-											},
-											"origin": schema.StringAttribute{
-												Computed: true,
-											},
-											"origin_type": schema.StringAttribute{
-												Computed: true,
-											},
-											"schema": schema.StringAttribute{
-												Computed: true,
-											},
-										},
-									},
-									"values": schema.ListAttribute{
-										Computed:    true,
-										ElementType: types.StringType,
-									},
-								},
-							},
-						},
-					},
-				},
+			"conditions": schema.StringAttribute{
+				CustomType:  jsontypes.NormalizedType{},
+				Computed:    true,
+				Description: `Parsed as JSON.`,
 			},
 			"disable_details": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
+					"blame": schema.StringAttribute{
+						Computed:    true,
+						Description: `The 360 user email that disabled the flow`,
+					},
 					"disabled_at": schema.StringAttribute{
 						Computed:    true,
 						Description: `When the flow was disabled`,
@@ -151,14 +98,30 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 				Description: `A descriptive name for the Automation`,
 			},
 			"id": schema.StringAttribute{
-				Computed: true,
+				Computed:    true,
+				Description: `ID of the Automation Flow`,
 			},
 			"manifest": schema.ListAttribute{
 				Computed:    true,
 				ElementType: types.StringType,
 				Description: `Source blueprint/manifest ID used when automation is created via blueprints.`,
 			},
+			"max_executions": schema.SingleNestedAttribute{
+				Computed: true,
+				Attributes: map[string]schema.Attribute{
+					"count": schema.Float64Attribute{
+						Computed:    true,
+						Description: `Maximum number of executions per time window`,
+					},
+					"window": schema.StringAttribute{
+						Computed:    true,
+						Description: `ISO 8601 duration time window for the threshold`,
+					},
+				},
+				Description: `Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified.`,
+			},
 			"schedules": schema.StringAttribute{
+				CustomType:  jsontypes.NormalizedType{},
 				Computed:    true,
 				Description: `Parsed as JSON.`,
 			},
@@ -168,13 +131,14 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 			},
 			"trigger_conditions": schema.ListAttribute{
 				Computed:    true,
-				ElementType: types.StringType,
+				ElementType: jsontypes.NormalizedType{},
 			},
 			"triggers": schema.ListNestedAttribute{
 				Computed: true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"any": schema.StringAttribute{
+							CustomType:  jsontypes.NormalizedType{},
 							Computed:    true,
 							Description: `Parsed as JSON.`,
 						},
@@ -235,6 +199,9 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 													},
 												},
 												"origin": schema.StringAttribute{
+													Computed: true,
+												},
+												"portal_id": schema.StringAttribute{
 													Computed: true,
 												},
 											},
@@ -332,6 +299,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 													Computed: true,
 													Attributes: map[string]schema.Attribute{
 														"diff": schema.StringAttribute{
+															CustomType:  jsontypes.NormalizedType{},
 															Computed:    true,
 															Description: `Parsed as JSON.`,
 														},
@@ -350,6 +318,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 																`  ` + "```" + ``,
 														},
 														"payload": schema.StringAttribute{
+															CustomType:  jsontypes.NormalizedType{},
 															Computed:    true,
 															Description: `Parsed as JSON.`,
 														},
@@ -491,6 +460,30 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 								`        }` + "\n" +
 								`      ` + "```" + ``,
 						},
+						"flows_trigger": schema.SingleNestedAttribute{
+							Computed: true,
+							Attributes: map[string]schema.Attribute{
+								"configuration": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"journey_id": schema.StringAttribute{
+											Computed:    true,
+											Description: `When Journeys are linked to Workflows V2 as Journey Automations, this field will contain the ID of the Journey`,
+										},
+										"source_id": schema.StringAttribute{
+											Computed:    true,
+											Description: `The ID of the workflow v2 that triggers this automation`,
+										},
+									},
+								},
+								"id": schema.StringAttribute{
+									Computed: true,
+								},
+								"type": schema.StringAttribute{
+									Computed: true,
+								},
+							},
+						},
 						"frontend_submit_trigger": schema.SingleNestedAttribute{
 							Computed: true,
 							Attributes: map[string]schema.Attribute{
@@ -551,9 +544,27 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 					},
 				},
 			},
-			"version": schema.NumberAttribute{
+			"version": schema.Float64Attribute{
 				Computed:    true,
 				Description: `Version of the flow`,
+			},
+			"workflow_context": schema.SingleNestedAttribute{
+				Computed: true,
+				Attributes: map[string]schema.Attribute{
+					"task_id": schema.StringAttribute{
+						Computed:    true,
+						Description: `The ID of the task in the workflow that this automation is connected to`,
+					},
+					"workflow_id": schema.StringAttribute{
+						Computed:    true,
+						Description: `The ID of the workflow this automation is connected to`,
+					},
+					"workflow_role": schema.StringAttribute{
+						Computed:    true,
+						Description: `The role this automation plays in the workflow.`,
+					},
+				},
+				Description: `For automation that are connected to workflows V2, this field tracks various information about the workflow.`,
 			},
 		},
 	}
@@ -597,13 +608,13 @@ func (r *FlowDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 		return
 	}
 
-	var flowID string
-	flowID = data.ID.ValueString()
+	request, requestDiags := data.ToOperationsGetFlowRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetFlowRequest{
-		FlowID: flowID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Flows.GetFlow(ctx, request)
+	res, err := r.client.Flows.GetFlow(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -615,10 +626,6 @@ func (r *FlowDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode == 404 {
-		resp.State.RemoveResource(ctx)
-		return
-	}
 	if res.StatusCode != 200 {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
@@ -627,7 +634,11 @@ func (r *FlowDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedAutomationFlow(res.AutomationFlow)
+	resp.Diagnostics.Append(data.RefreshFromSharedAutomationFlow(ctx, res.AutomationFlow)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

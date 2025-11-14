@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
 )
 
 type TriggerEventManualType string
@@ -35,6 +36,17 @@ type TriggerEventManual struct {
 	EntityID string                  `json:"entity_id"`
 	OrgID    string                  `json:"org_id"`
 	Type     *TriggerEventManualType `json:"type,omitempty"`
+}
+
+func (t TriggerEventManual) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TriggerEventManual) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, []string{"entity_id", "org_id"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *TriggerEventManual) GetCaller() *APICallerContext {

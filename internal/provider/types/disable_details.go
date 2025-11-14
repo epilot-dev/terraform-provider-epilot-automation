@@ -2,9 +2,12 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type DisableDetails struct {
+	Blame      types.String `tfsdk:"blame"`
 	DisabledAt types.String `tfsdk:"disabled_at"`
 	DisabledBy types.String `tfsdk:"disabled_by"`
 }

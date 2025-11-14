@@ -16,7 +16,7 @@ func (e ErrorInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (e *ErrorInfo) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -40,6 +40,17 @@ type ErrorOutput struct {
 	ErrorCode   ErrorCode  `json:"error_code"`
 	ErrorInfo   *ErrorInfo `json:"error_info,omitempty"`
 	ErrorReason string     `json:"error_reason"`
+}
+
+func (e ErrorOutput) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *ErrorOutput) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"error_code", "error_reason"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ErrorOutput) GetErrorCode() ErrorCode {

@@ -13,6 +13,17 @@ type FileConfig struct {
 	SharedWithEndCustomer *bool `json:"shared_with_end_customer,omitempty"`
 }
 
+func (f FileConfig) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(f, "", false)
+}
+
+func (f *FileConfig) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (o *FileConfig) GetSharedWithEndCustomer() *bool {
 	if o == nil {
 		return nil
@@ -23,6 +34,18 @@ func (o *FileConfig) GetSharedWithEndCustomer() *bool {
 type EcpConfig struct {
 	FileConfig *FileConfig `json:"file_config,omitempty"`
 	Origin     *string     `json:"origin,omitempty"`
+	PortalID   *string     `json:"portal_id,omitempty"`
+}
+
+func (e EcpConfig) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *EcpConfig) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *EcpConfig) GetFileConfig() *FileConfig {
@@ -39,6 +62,13 @@ func (o *EcpConfig) GetOrigin() *string {
 	return o.Origin
 }
 
+func (o *EcpConfig) GetPortalID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PortalID
+}
+
 type EntityOperationTriggerSchemasTypeType string
 
 const (
@@ -52,13 +82,13 @@ const (
 )
 
 type EntityOperationTriggerSchemasType struct {
-	Str                       *string                    `queryParam:"inline"`
-	EqualsIgnoreCaseCondition *EqualsIgnoreCaseCondition `queryParam:"inline"`
-	AnythingButCondition      *AnythingButCondition      `queryParam:"inline"`
-	ExistsCondition           *ExistsCondition           `queryParam:"inline"`
-	PrefixCondition           *PrefixCondition           `queryParam:"inline"`
-	SuffixCondition           *SuffixCondition           `queryParam:"inline"`
-	WildcardCondition         *WildcardCondition         `queryParam:"inline"`
+	Str                       *string                    `queryParam:"inline" name:"type"`
+	EqualsIgnoreCaseCondition *EqualsIgnoreCaseCondition `queryParam:"inline" name:"type"`
+	AnythingButCondition      *AnythingButCondition      `queryParam:"inline" name:"type"`
+	ExistsCondition           *ExistsCondition           `queryParam:"inline" name:"type"`
+	PrefixCondition           *PrefixCondition           `queryParam:"inline" name:"type"`
+	SuffixCondition           *SuffixCondition           `queryParam:"inline" name:"type"`
+	WildcardCondition         *WildcardCondition         `queryParam:"inline" name:"type"`
 
 	Type EntityOperationTriggerSchemasTypeType
 }
@@ -129,49 +159,49 @@ func CreateEntityOperationTriggerSchemasTypeWildcardCondition(wildcardCondition 
 func (u *EntityOperationTriggerSchemasType) UnmarshalJSON(data []byte) error {
 
 	var equalsIgnoreCaseCondition EqualsIgnoreCaseCondition = EqualsIgnoreCaseCondition{}
-	if err := utils.UnmarshalJSON(data, &equalsIgnoreCaseCondition, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &equalsIgnoreCaseCondition, "", true, nil); err == nil {
 		u.EqualsIgnoreCaseCondition = &equalsIgnoreCaseCondition
 		u.Type = EntityOperationTriggerSchemasTypeTypeEqualsIgnoreCaseCondition
 		return nil
 	}
 
 	var anythingButCondition AnythingButCondition = AnythingButCondition{}
-	if err := utils.UnmarshalJSON(data, &anythingButCondition, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &anythingButCondition, "", true, nil); err == nil {
 		u.AnythingButCondition = &anythingButCondition
 		u.Type = EntityOperationTriggerSchemasTypeTypeAnythingButCondition
 		return nil
 	}
 
 	var existsCondition ExistsCondition = ExistsCondition{}
-	if err := utils.UnmarshalJSON(data, &existsCondition, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &existsCondition, "", true, nil); err == nil {
 		u.ExistsCondition = &existsCondition
 		u.Type = EntityOperationTriggerSchemasTypeTypeExistsCondition
 		return nil
 	}
 
 	var prefixCondition PrefixCondition = PrefixCondition{}
-	if err := utils.UnmarshalJSON(data, &prefixCondition, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &prefixCondition, "", true, nil); err == nil {
 		u.PrefixCondition = &prefixCondition
 		u.Type = EntityOperationTriggerSchemasTypeTypePrefixCondition
 		return nil
 	}
 
 	var suffixCondition SuffixCondition = SuffixCondition{}
-	if err := utils.UnmarshalJSON(data, &suffixCondition, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &suffixCondition, "", true, nil); err == nil {
 		u.SuffixCondition = &suffixCondition
 		u.Type = EntityOperationTriggerSchemasTypeTypeSuffixCondition
 		return nil
 	}
 
 	var wildcardCondition WildcardCondition = WildcardCondition{}
-	if err := utils.UnmarshalJSON(data, &wildcardCondition, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &wildcardCondition, "", true, nil); err == nil {
 		u.WildcardCondition = &wildcardCondition
 		u.Type = EntityOperationTriggerSchemasTypeTypeWildcardCondition
 		return nil
 	}
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = EntityOperationTriggerSchemasTypeTypeStr
 		return nil
@@ -235,6 +265,17 @@ type Activity struct {
 	Type []EntityOperationTriggerSchemasType `json:"type,omitempty"`
 }
 
+func (a Activity) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *Activity) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (o *Activity) GetType() []EntityOperationTriggerSchemasType {
 	if o == nil {
 		return nil
@@ -257,6 +298,17 @@ type EntityOperationTriggerOperation struct {
 	//
 	Operation []EntityOperation `json:"operation,omitempty"`
 	Payload   any               `json:"payload,omitempty"`
+}
+
+func (e EntityOperationTriggerOperation) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *EntityOperationTriggerOperation) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *EntityOperationTriggerOperation) GetDiff() any {
@@ -285,6 +337,17 @@ type FilterConfig struct {
 	Operation *EntityOperationTriggerOperation `json:"operation,omitempty"`
 }
 
+func (f FilterConfig) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(f, "", false)
+}
+
+func (f *FilterConfig) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (o *FilterConfig) GetActivity() *Activity {
 	if o == nil {
 		return nil
@@ -306,6 +369,17 @@ type EntityOperationTriggerConfiguration struct {
 	IncludeActivities []string          `json:"include_activities,omitempty"`
 	Operations        []EntityOperation `json:"operations,omitempty"`
 	Schema            *string           `json:"schema,omitempty"`
+}
+
+func (e EntityOperationTriggerConfiguration) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *EntityOperationTriggerConfiguration) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *EntityOperationTriggerConfiguration) GetEcpConfig() *EcpConfig {
@@ -490,6 +564,17 @@ type EntityOperationTrigger struct {
 	Configuration EntityOperationTriggerConfiguration `json:"configuration"`
 	ID            *string                             `json:"id,omitempty"`
 	Type          EntityOperationTriggerType          `json:"type"`
+}
+
+func (e EntityOperationTrigger) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *EntityOperationTrigger) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"configuration", "type"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *EntityOperationTrigger) GetConfiguration() EntityOperationTriggerConfiguration {

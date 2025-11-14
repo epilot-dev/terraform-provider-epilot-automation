@@ -2,8 +2,23 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 type EqualsIgnoreCaseCondition struct {
 	EqualsIgnoreCase *string `json:"equals-ignore-case,omitempty"`
+}
+
+func (e EqualsIgnoreCaseCondition) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *EqualsIgnoreCaseCondition) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *EqualsIgnoreCaseCondition) GetEqualsIgnoreCase() *string {

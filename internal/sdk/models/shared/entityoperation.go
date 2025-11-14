@@ -10,9 +10,11 @@ import (
 type EntityOperation string
 
 const (
-	EntityOperationCreateEntity EntityOperation = "createEntity"
-	EntityOperationUpdateEntity EntityOperation = "updateEntity"
-	EntityOperationDeleteEntity EntityOperation = "deleteEntity"
+	EntityOperationCreateEntity     EntityOperation = "createEntity"
+	EntityOperationUpdateEntity     EntityOperation = "updateEntity"
+	EntityOperationDeleteEntity     EntityOperation = "deleteEntity"
+	EntityOperationSoftDeleteEntity EntityOperation = "softDeleteEntity"
+	EntityOperationRestoreEntity    EntityOperation = "restoreEntity"
 )
 
 func (e EntityOperation) ToPointer() *EntityOperation {
@@ -29,6 +31,10 @@ func (e *EntityOperation) UnmarshalJSON(data []byte) error {
 	case "updateEntity":
 		fallthrough
 	case "deleteEntity":
+		fallthrough
+	case "softDeleteEntity":
+		fallthrough
+	case "restoreEntity":
 		*e = EntityOperation(v)
 		return nil
 	default:

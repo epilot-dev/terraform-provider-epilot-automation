@@ -7,6 +7,7 @@ import (
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
+	"github.com/hashicorp/terraform-plugin-framework/ephemeral"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -14,7 +15,8 @@ import (
 	"net/http"
 )
 
-var _ provider.Provider = &EpilotAutomationProvider{}
+var _ provider.Provider = (*EpilotAutomationProvider)(nil)
+var _ provider.ProviderWithEphemeralResources = (*EpilotAutomationProvider)(nil)
 
 type EpilotAutomationProvider struct {
 	// version is set to the provider version on release, "dev" when the
@@ -25,8 +27,8 @@ type EpilotAutomationProvider struct {
 
 // EpilotAutomationProviderModel describes the provider data model.
 type EpilotAutomationProviderModel struct {
-	ServerURL  types.String `tfsdk:"server_url"`
 	EpilotAuth types.String `tfsdk:"epilot_auth"`
+	ServerURL  types.String `tfsdk:"server_url"`
 }
 
 func (p *EpilotAutomationProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -36,18 +38,18 @@ func (p *EpilotAutomationProvider) Metadata(ctx context.Context, req provider.Me
 
 func (p *EpilotAutomationProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: `Automation API: API Backend for epilot Automation Workflows feature`,
 		Attributes: map[string]schema.Attribute{
-			"server_url": schema.StringAttribute{
-				MarkdownDescription: "Server URL (defaults to https://automation.sls.epilot.io)",
-				Optional:            true,
-				Required:            false,
-			},
 			"epilot_auth": schema.StringAttribute{
-				Sensitive: true,
-				Optional:  true,
+				MarkdownDescription: `Epilot Bearer Token.`,
+				Optional:            true,
+				Sensitive:           true,
+			},
+			"server_url": schema.StringAttribute{
+				Description: `Server URL (defaults to https://automation.sls.epilot.io)`,
+				Optional:    true,
 			},
 		},
+		MarkdownDescription: `Automation API: API Backend for epilot Automation Workflows feature`,
 	}
 }
 
@@ -60,33 +62,35 @@ func (p *EpilotAutomationProvider) Configure(ctx context.Context, req provider.C
 		return
 	}
 
-	ServerURL := data.ServerURL.ValueString()
+	serverUrl := data.ServerURL.ValueString()
 
-	if ServerURL == "" {
-		ServerURL = "https://automation.sls.epilot.io"
+	if serverUrl == "" {
+		serverUrl = "https://automation.sls.epilot.io"
 	}
 
-	epilotAuth := new(string)
-	if !data.EpilotAuth.IsUnknown() && !data.EpilotAuth.IsNull() {
-		*epilotAuth = data.EpilotAuth.ValueString()
-	} else {
-		epilotAuth = nil
+	security := shared.Security{}
+
+	if !data.EpilotAuth.IsUnknown() {
+		security.EpilotAuth = data.EpilotAuth.ValueStringPointer()
 	}
-	security := shared.Security{
-		EpilotAuth: epilotAuth,
+
+	providerHTTPTransportOpts := ProviderHTTPTransportOpts{
+		SetHeaders: make(map[string]string),
+		Transport:  http.DefaultTransport,
 	}
 
 	httpClient := http.DefaultClient
-	httpClient.Transport = NewLoggingHTTPTransport(http.DefaultTransport)
+	httpClient.Transport = NewProviderHTTPTransport(providerHTTPTransportOpts)
 
 	opts := []sdk.SDKOption{
-		sdk.WithServerURL(ServerURL),
+		sdk.WithServerURL(serverUrl),
 		sdk.WithSecurity(security),
 		sdk.WithClient(httpClient),
 	}
-	client := sdk.New(opts...)
 
+	client := sdk.New(opts...)
 	resp.DataSourceData = client
+	resp.EphemeralResourceData = client
 	resp.ResourceData = client
 }
 
@@ -100,6 +104,10 @@ func (p *EpilotAutomationProvider) DataSources(ctx context.Context) []func() dat
 	return []func() datasource.DataSource{
 		NewFlowDataSource,
 	}
+}
+
+func (p *EpilotAutomationProvider) EphemeralResources(ctx context.Context) []func() ephemeral.EphemeralResource {
+	return []func() ephemeral.EphemeralResource{}
 }
 
 func New(version string) func() provider.Provider {

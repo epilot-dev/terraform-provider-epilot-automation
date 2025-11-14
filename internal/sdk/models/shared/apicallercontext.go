@@ -14,6 +14,17 @@ type Claims struct {
 	UserID          *string `json:"userId,omitempty"`
 }
 
+func (c Claims) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *Claims) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (o *Claims) GetCognitoUsername() *string {
 	if o == nil {
 		return nil
@@ -56,6 +67,17 @@ type EpilotAuth struct {
 	UserID         *string `json:"userId,omitempty"`
 }
 
+func (e EpilotAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *EpilotAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (o *EpilotAuth) GetClaims() *Claims {
 	if o == nil {
 		return nil
@@ -94,7 +116,7 @@ func (a APICallerContext) MarshalJSON() ([]byte, error) {
 }
 
 func (a *APICallerContext) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil

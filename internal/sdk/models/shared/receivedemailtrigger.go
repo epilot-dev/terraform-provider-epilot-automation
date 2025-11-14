@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
 )
 
 type MessageType string
@@ -32,6 +33,17 @@ func (e *MessageType) UnmarshalJSON(data []byte) error {
 
 type ReceivedEmailTriggerConfiguration struct {
 	MessageType *MessageType `json:"message_type,omitempty"`
+}
+
+func (r ReceivedEmailTriggerConfiguration) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *ReceivedEmailTriggerConfiguration) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ReceivedEmailTriggerConfiguration) GetMessageType() *MessageType {
@@ -68,6 +80,17 @@ type ReceivedEmailTrigger struct {
 	Configuration ReceivedEmailTriggerConfiguration `json:"configuration"`
 	ID            *string                           `json:"id,omitempty"`
 	Type          ReceivedEmailTriggerType          `json:"type"`
+}
+
+func (r ReceivedEmailTrigger) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *ReceivedEmailTrigger) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, []string{"configuration", "type"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ReceivedEmailTrigger) GetConfiguration() ReceivedEmailTriggerConfiguration {

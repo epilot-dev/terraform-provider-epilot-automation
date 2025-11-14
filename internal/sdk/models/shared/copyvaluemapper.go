@@ -2,9 +2,13 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 // CopyValueMapper
 //
-// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
+// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 type CopyValueMapper struct {
 	// - copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
 	//
@@ -14,6 +18,17 @@ type CopyValueMapper struct {
 	Source string `json:"source"`
 	// JSON like target path for the attribute. Eg. last_name
 	Target string `json:"target"`
+}
+
+func (c CopyValueMapper) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CopyValueMapper) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"mode", "source", "target"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CopyValueMapper) GetMode() MappingAttributeMode {

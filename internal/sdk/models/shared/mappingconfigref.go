@@ -2,6 +2,10 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 type MappingConfigRef struct {
 	// Id of Entity Mapping Configuration to run for mapping.
 	ConfigID string `json:"config_id"`
@@ -9,6 +13,17 @@ type MappingConfigRef struct {
 	TargetID string `json:"target_id"`
 	// Version of Entity Mapping Configuration to run for mapping.
 	Version *float64 `json:"version,omitempty"`
+}
+
+func (m MappingConfigRef) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(m, "", false)
+}
+
+func (m *MappingConfigRef) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"config_id", "target_id"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *MappingConfigRef) GetConfigID() string {

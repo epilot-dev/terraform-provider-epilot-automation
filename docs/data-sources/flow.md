@@ -23,63 +23,38 @@ data "epilot-automation_flow" "my_flow" {
 ### Read-Only
 
 - `actions` (List of String) The actions (nodes) of the automation flow
-- `conditions` (Attributes List) (see [below for nested schema](#nestedatt--conditions))
+- `conditions` (String) Parsed as JSON.
 - `disable_details` (Attributes) (see [below for nested schema](#nestedatt--disable_details))
 - `enabled` (Boolean) Whether the automation is enabled or not
 - `entity_schema` (String) The triggering entity schema
 - `flow_name` (String) A descriptive name for the Automation
-- `id` (String) The ID of this resource.
+- `id` (String) ID of the Automation Flow
 - `manifest` (List of String) Source blueprint/manifest ID used when automation is created via blueprints.
+- `max_executions` (Attributes) Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified. (see [below for nested schema](#nestedatt--max_executions))
 - `schedules` (String) Parsed as JSON.
 - `system_flow` (Boolean) Determines if the flow is a system generated flow
 - `trigger_conditions` (List of String)
 - `triggers` (Attributes List) (see [below for nested schema](#nestedatt--triggers))
 - `version` (Number) Version of the flow
-
-<a id="nestedatt--conditions"></a>
-### Nested Schema for `conditions`
-
-Read-Only:
-
-- `evaluation_result` (Boolean) Result of the condition evaluation
-- `id` (String)
-- `schedule_id` (String) Schedule Id which indicates the schedule of the actions inside the condition
-- `statements` (Attributes List) (see [below for nested schema](#nestedatt--conditions--statements))
-
-<a id="nestedatt--conditions--statements"></a>
-### Nested Schema for `conditions.statements`
-
-Read-Only:
-
-- `id` (String)
-- `operation` (String)
-- `source` (Attributes) (see [below for nested schema](#nestedatt--conditions--statements--source))
-- `values` (List of String)
-
-<a id="nestedatt--conditions--statements--source"></a>
-### Nested Schema for `conditions.statements.source`
-
-Read-Only:
-
-- `attribute` (String)
-- `attribute_operation` (String)
-- `attribute_repeatable` (Boolean)
-- `attribute_type` (String)
-- `id` (String) The id of the action or trigger
-- `origin` (String)
-- `origin_type` (String)
-- `schema` (String)
-
-
-
+- `workflow_context` (Attributes) For automation that are connected to workflows V2, this field tracks various information about the workflow. (see [below for nested schema](#nestedatt--workflow_context))
 
 <a id="nestedatt--disable_details"></a>
 ### Nested Schema for `disable_details`
 
 Read-Only:
 
+- `blame` (String) The 360 user email that disabled the flow
 - `disabled_at` (String) When the flow was disabled
 - `disabled_by` (String) Who disabled the flow (system or user)
+
+
+<a id="nestedatt--max_executions"></a>
+### Nested Schema for `max_executions`
+
+Read-Only:
+
+- `count` (Number) Maximum number of executions per time window
+- `window` (String) ISO 8601 duration time window for the threshold
 
 
 <a id="nestedatt--triggers"></a>
@@ -203,6 +178,7 @@ Read-Only:
           }
         }
       ``` (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger))
+- `flows_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--flows_trigger))
 - `frontend_submit_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--frontend_submit_trigger))
 - `journey_submit_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--journey_submit_trigger))
 - `received_email_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--received_email_trigger))
@@ -271,6 +247,7 @@ Read-Only:
 
 - `file_config` (Attributes) (see [below for nested schema](#nestedatt--triggers--entity_operation_trigger--configuration--ecp_config--file_config))
 - `origin` (String)
+- `portal_id` (String)
 
 <a id="nestedatt--triggers--entity_operation_trigger--configuration--ecp_config--file_config"></a>
 ### Nested Schema for `triggers.entity_operation_trigger.configuration.ecp_config.file_config`
@@ -398,6 +375,25 @@ Example:
 
 
 
+<a id="nestedatt--triggers--flows_trigger"></a>
+### Nested Schema for `triggers.flows_trigger`
+
+Read-Only:
+
+- `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--flows_trigger--configuration))
+- `id` (String)
+- `type` (String)
+
+<a id="nestedatt--triggers--flows_trigger--configuration"></a>
+### Nested Schema for `triggers.flows_trigger.configuration`
+
+Read-Only:
+
+- `journey_id` (String) When Journeys are linked to Workflows V2 as Journey Automations, this field will contain the ID of the Journey
+- `source_id` (String) The ID of the workflow v2 that triggers this automation
+
+
+
 <a id="nestedatt--triggers--frontend_submit_trigger"></a>
 ### Nested Schema for `triggers.frontend_submit_trigger`
 
@@ -449,3 +445,15 @@ Read-Only:
 Read-Only:
 
 - `message_type` (String)
+
+
+
+
+<a id="nestedatt--workflow_context"></a>
+### Nested Schema for `workflow_context`
+
+Read-Only:
+
+- `task_id` (String) The ID of the task in the workflow that this automation is connected to
+- `workflow_id` (String) The ID of the workflow this automation is connected to
+- `workflow_role` (String) The role this automation plays in the workflow.

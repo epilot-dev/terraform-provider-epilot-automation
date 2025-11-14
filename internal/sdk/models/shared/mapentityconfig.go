@@ -16,8 +16,8 @@ const (
 )
 
 type MapEntityConfigMappingAttributes struct {
-	MappingAttributeV2 *MappingAttributeV2 `queryParam:"inline"`
-	MappingAttribute   *MappingAttribute   `queryParam:"inline"`
+	MappingAttributeV2 *MappingAttributeV2 `queryParam:"inline" name:"mapping_attributes"`
+	MappingAttribute   *MappingAttribute   `queryParam:"inline" name:"mapping_attributes"`
 
 	Type MapEntityConfigMappingAttributesType
 }
@@ -43,14 +43,14 @@ func CreateMapEntityConfigMappingAttributesMappingAttribute(mappingAttribute Map
 func (u *MapEntityConfigMappingAttributes) UnmarshalJSON(data []byte) error {
 
 	var mappingAttributeV2 MappingAttributeV2 = MappingAttributeV2{}
-	if err := utils.UnmarshalJSON(data, &mappingAttributeV2, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &mappingAttributeV2, "", true, nil); err == nil {
 		u.MappingAttributeV2 = &mappingAttributeV2
 		u.Type = MapEntityConfigMappingAttributesTypeMappingAttributeV2
 		return nil
 	}
 
 	var mappingAttribute MappingAttribute = MappingAttribute{}
-	if err := utils.UnmarshalJSON(data, &mappingAttribute, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &mappingAttribute, "", true, nil); err == nil {
 		u.MappingAttribute = &mappingAttribute
 		u.Type = MapEntityConfigMappingAttributesTypeMappingAttribute
 		return nil
@@ -93,7 +93,7 @@ func (m MapEntityConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MapEntityConfig) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"target_schema"}); err != nil {
 		return err
 	}
 	return nil

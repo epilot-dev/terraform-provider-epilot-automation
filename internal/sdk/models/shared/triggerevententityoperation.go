@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
 )
 
 type TriggerEventEntityOperationType string
@@ -36,6 +37,17 @@ type TriggerEventEntityOperation struct {
 	OperationType EntityOperation                  `json:"operation_type"`
 	OrgID         string                           `json:"org_id"`
 	Type          *TriggerEventEntityOperationType `json:"type,omitempty"`
+}
+
+func (t TriggerEventEntityOperation) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TriggerEventEntityOperation) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, []string{"activity_id", "entity_id", "operation_type", "org_id"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *TriggerEventEntityOperation) GetActivityID() string {

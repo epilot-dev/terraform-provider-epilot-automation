@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
 )
 
 type CreateDocumentActionReason struct {
@@ -12,6 +13,17 @@ type CreateDocumentActionReason struct {
 	Message *string `json:"message,omitempty"`
 	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
 	Payload map[string]any `json:"payload,omitempty"`
+}
+
+func (c CreateDocumentActionReason) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CreateDocumentActionReason) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CreateDocumentActionReason) GetMessage() *string {
@@ -75,6 +87,17 @@ type CreateDocumentAction struct {
 	StartedAt  *string                   `json:"started_at,omitempty"`
 	Type       *CreateDocumentActionType `json:"type,omitempty"`
 	UpdatedAt  *string                   `json:"updated_at,omitempty"`
+}
+
+func (c CreateDocumentAction) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CreateDocumentAction) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CreateDocumentAction) GetAllowFailure() *bool {

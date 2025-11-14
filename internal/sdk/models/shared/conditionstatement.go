@@ -24,6 +24,8 @@ const (
 	OperationLessThanOrEquals    Operation = "less_than_or_equals"
 	OperationIsEmpty             Operation = "is_empty"
 	OperationIsNotEmpty          Operation = "is_not_empty"
+	OperationEntityExists        Operation = "entity_exists"
+	OperationEntityDoesNotExist  Operation = "entity_does_not_exist"
 )
 
 func (e Operation) ToPointer() *Operation {
@@ -62,6 +64,10 @@ func (e *Operation) UnmarshalJSON(data []byte) error {
 	case "is_empty":
 		fallthrough
 	case "is_not_empty":
+		fallthrough
+	case "entity_exists":
+		fallthrough
+	case "entity_does_not_exist":
 		*e = Operation(v)
 		return nil
 	default:
@@ -104,26 +110,28 @@ func (e *AttributeOperation) UnmarshalJSON(data []byte) error {
 type AttributeType string
 
 const (
-	AttributeTypeString       AttributeType = "string"
-	AttributeTypeText         AttributeType = "text"
-	AttributeTypeNumber       AttributeType = "number"
-	AttributeTypeBoolean      AttributeType = "boolean"
-	AttributeTypeDate         AttributeType = "date"
-	AttributeTypeDatetime     AttributeType = "datetime"
-	AttributeTypeTags         AttributeType = "tags"
-	AttributeTypeCountry      AttributeType = "country"
-	AttributeTypeEmail        AttributeType = "email"
-	AttributeTypePhone        AttributeType = "phone"
-	AttributeTypeProduct      AttributeType = "product"
-	AttributeTypePrice        AttributeType = "price"
-	AttributeTypeStatus       AttributeType = "status"
-	AttributeTypeRelation     AttributeType = "relation"
-	AttributeTypeMultiselect  AttributeType = "multiselect"
-	AttributeTypeSelect       AttributeType = "select"
-	AttributeTypeRadio        AttributeType = "radio"
-	AttributeTypeRelationUser AttributeType = "relation_user"
-	AttributeTypePurpose      AttributeType = "purpose"
-	AttributeTypeLabel        AttributeType = "label"
+	AttributeTypeString                AttributeType = "string"
+	AttributeTypeText                  AttributeType = "text"
+	AttributeTypeNumber                AttributeType = "number"
+	AttributeTypeBoolean               AttributeType = "boolean"
+	AttributeTypeDate                  AttributeType = "date"
+	AttributeTypeDatetime              AttributeType = "datetime"
+	AttributeTypeTags                  AttributeType = "tags"
+	AttributeTypeCountry               AttributeType = "country"
+	AttributeTypeEmail                 AttributeType = "email"
+	AttributeTypePhone                 AttributeType = "phone"
+	AttributeTypeProduct               AttributeType = "product"
+	AttributeTypePrice                 AttributeType = "price"
+	AttributeTypeStatus                AttributeType = "status"
+	AttributeTypeRelation              AttributeType = "relation"
+	AttributeTypeMultiselect           AttributeType = "multiselect"
+	AttributeTypeSelect                AttributeType = "select"
+	AttributeTypeRadio                 AttributeType = "radio"
+	AttributeTypeRelationUser          AttributeType = "relation_user"
+	AttributeTypePurpose               AttributeType = "purpose"
+	AttributeTypeLabel                 AttributeType = "label"
+	AttributeTypePayment               AttributeType = "payment"
+	AttributeTypeRelationPaymentMethod AttributeType = "relation_payment_method"
 )
 
 func (e AttributeType) ToPointer() *AttributeType {
@@ -174,6 +182,10 @@ func (e *AttributeType) UnmarshalJSON(data []byte) error {
 	case "purpose":
 		fallthrough
 	case "label":
+		fallthrough
+	case "payment":
+		fallthrough
+	case "relation_payment_method":
 		*e = AttributeType(v)
 		return nil
 	default:
@@ -245,7 +257,9 @@ type Source struct {
 	ID         *string                   `json:"id,omitempty"`
 	Origin     *ConditionStatementOrigin `json:"origin,omitempty"`
 	OriginType *OriginType               `json:"originType,omitempty"`
-	Schema     *string                   `json:"schema,omitempty"`
+	// Whether to apply the operation to each item of the repeatable attribute
+	RepeatableItemOp *bool   `json:"repeatableItemOp,omitempty"`
+	Schema           *string `json:"schema,omitempty"`
 }
 
 func (o *Source) GetAttribute() *string {
@@ -295,6 +309,13 @@ func (o *Source) GetOriginType() *OriginType {
 		return nil
 	}
 	return o.OriginType
+}
+
+func (o *Source) GetRepeatableItemOp() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RepeatableItemOp
 }
 
 func (o *Source) GetSchema() *string {

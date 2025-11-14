@@ -16,8 +16,8 @@ const (
 )
 
 type MappingAttributes struct {
-	MappingAttributeV2 *MappingAttributeV2 `queryParam:"inline"`
-	MappingAttribute   *MappingAttribute   `queryParam:"inline"`
+	MappingAttributeV2 *MappingAttributeV2 `queryParam:"inline" name:"mapping_attributes"`
+	MappingAttribute   *MappingAttribute   `queryParam:"inline" name:"mapping_attributes"`
 
 	Type MappingAttributesType
 }
@@ -43,14 +43,14 @@ func CreateMappingAttributesMappingAttribute(mappingAttribute MappingAttribute) 
 func (u *MappingAttributes) UnmarshalJSON(data []byte) error {
 
 	var mappingAttributeV2 MappingAttributeV2 = MappingAttributeV2{}
-	if err := utils.UnmarshalJSON(data, &mappingAttributeV2, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &mappingAttributeV2, "", true, nil); err == nil {
 		u.MappingAttributeV2 = &mappingAttributeV2
 		u.Type = MappingAttributesTypeMappingAttributeV2
 		return nil
 	}
 
 	var mappingAttribute MappingAttribute = MappingAttribute{}
-	if err := utils.UnmarshalJSON(data, &mappingAttribute, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &mappingAttribute, "", true, nil); err == nil {
 		u.MappingAttribute = &mappingAttribute
 		u.Type = MappingAttributesTypeMappingAttribute
 		return nil
@@ -91,7 +91,7 @@ func (c CartCheckoutConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CartCheckoutConfig) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil

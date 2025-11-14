@@ -2,9 +2,13 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 // SetValueMapper
 //
-// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
+// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 type SetValueMapper struct {
 	// - copy_if_exists - it replaces the target attribute with the source value - append_if_exists - it currently replaces target attribute with array like values. Useful when you have multiple values to be added into one attribute. - set_value - it sets a value to a predefined value. Must be used together with value property.
 	//
@@ -14,6 +18,17 @@ type SetValueMapper struct {
 	// Any value to be set: string, number, string[], number[], JSON object, etc. It will override existing values, if any.
 	//
 	Value any `json:"value"`
+}
+
+func (s SetValueMapper) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SetValueMapper) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, []string{"mode", "target", "value"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SetValueMapper) GetMode() MappingAttributeMode {

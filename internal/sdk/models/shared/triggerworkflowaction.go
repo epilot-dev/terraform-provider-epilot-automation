@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
 )
 
 type TriggerWorkflowActionReason struct {
@@ -12,6 +13,17 @@ type TriggerWorkflowActionReason struct {
 	Message *string `json:"message,omitempty"`
 	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
 	Payload map[string]any `json:"payload,omitempty"`
+}
+
+func (t TriggerWorkflowActionReason) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TriggerWorkflowActionReason) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *TriggerWorkflowActionReason) GetMessage() *string {
@@ -75,6 +87,17 @@ type TriggerWorkflowAction struct {
 	StartedAt  *string                    `json:"started_at,omitempty"`
 	Type       *TriggerWorkflowActionType `json:"type,omitempty"`
 	UpdatedAt  *string                    `json:"updated_at,omitempty"`
+}
+
+func (t TriggerWorkflowAction) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TriggerWorkflowAction) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *TriggerWorkflowAction) GetAllowFailure() *bool {

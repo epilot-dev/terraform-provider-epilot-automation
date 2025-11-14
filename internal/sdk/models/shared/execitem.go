@@ -2,6 +2,11 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+	"time"
+)
+
 // ExecItem - Execution item for bulk trigger automation. It maps each entity to its automation execution id & status
 type ExecItem struct {
 	EntityID     string  `json:"entity_id"`
@@ -10,6 +15,19 @@ type ExecItem struct {
 	Error           *string         `json:"error,omitempty"`
 	ExecutionID     *string         `json:"execution_id,omitempty"`
 	ExecutionStatus ExecutionStatus `json:"execution_status"`
+	// Timestamp in UTC ISO format
+	Timestamp *time.Time `json:"timestamp,omitempty"`
+}
+
+func (e ExecItem) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *ExecItem) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"entity_id", "execution_status"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ExecItem) GetEntityID() string {
@@ -45,4 +63,11 @@ func (o *ExecItem) GetExecutionStatus() ExecutionStatus {
 		return ExecutionStatus("")
 	}
 	return o.ExecutionStatus
+}
+
+func (o *ExecItem) GetTimestamp() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.Timestamp
 }

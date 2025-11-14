@@ -85,7 +85,7 @@ func (s SendEmailConfigSourceFilter) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SendEmailConfigSourceFilter) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -145,6 +145,17 @@ type Attachments struct {
 	SourceFilter *SendEmailConfigSourceFilter `json:"source_filter,omitempty"`
 }
 
+func (a Attachments) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *Attachments) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (o *Attachments) GetSourceFilter() *SendEmailConfigSourceFilter {
 	if o == nil {
 		return nil
@@ -182,9 +193,11 @@ type SendEmailConfig struct {
 	// Include extra file attachments in sent email.
 	// Attachments in email template will be sent regardless of this configuration.
 	//
-	Attachments     []Attachments `json:"attachments,omitempty"`
-	EmailTemplateID *string       `json:"email_template_id,omitempty"`
-	LanguageCode    *LanguageCode `json:"language_code,omitempty"`
+	Attachments []Attachments `json:"attachments,omitempty"`
+	// Conditions necessary to send out email. Otherwise it will be skipped
+	Conditions      []SendEmailCondition `json:"conditions,omitempty"`
+	EmailTemplateID *string              `json:"email_template_id,omitempty"`
+	LanguageCode    *LanguageCode        `json:"language_code,omitempty"`
 	// Send an email exclusively to the portal user if they are registered on the portal.
 	NotifyPortalUserOnly *bool `default:"false" json:"notify_portal_user_only"`
 	// When true, it lets to send only the email by skip creating the thread & message entities.
@@ -201,7 +214,7 @@ func (s SendEmailConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SendEmailConfig) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -212,6 +225,13 @@ func (o *SendEmailConfig) GetAttachments() []Attachments {
 		return nil
 	}
 	return o.Attachments
+}
+
+func (o *SendEmailConfig) GetConditions() []SendEmailCondition {
+	if o == nil {
+		return nil
+	}
+	return o.Conditions
 }
 
 func (o *SendEmailConfig) GetEmailTemplateID() *string {

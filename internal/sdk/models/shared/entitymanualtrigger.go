@@ -5,11 +5,23 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
 )
 
 type EntityManualTriggerConfiguration struct {
 	// Which entity type can this automation be triggered from
 	Schema *string `json:"schema,omitempty"`
+}
+
+func (e EntityManualTriggerConfiguration) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *EntityManualTriggerConfiguration) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *EntityManualTriggerConfiguration) GetSchema() *string {
@@ -46,6 +58,17 @@ type EntityManualTrigger struct {
 	Configuration EntityManualTriggerConfiguration `json:"configuration"`
 	ID            *string                          `json:"id,omitempty"`
 	Type          EntityManualTriggerType          `json:"type"`
+}
+
+func (e EntityManualTrigger) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *EntityManualTrigger) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"configuration", "type"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *EntityManualTrigger) GetConfiguration() EntityManualTriggerConfiguration {

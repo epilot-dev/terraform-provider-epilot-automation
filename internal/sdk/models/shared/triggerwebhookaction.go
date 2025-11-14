@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
 )
 
 type TriggerWebhookActionReason struct {
@@ -12,6 +13,17 @@ type TriggerWebhookActionReason struct {
 	Message *string `json:"message,omitempty"`
 	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
 	Payload map[string]any `json:"payload,omitempty"`
+}
+
+func (t TriggerWebhookActionReason) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TriggerWebhookActionReason) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *TriggerWebhookActionReason) GetMessage() *string {
@@ -75,6 +87,17 @@ type TriggerWebhookAction struct {
 	StartedAt  *string                   `json:"started_at,omitempty"`
 	Type       *TriggerWebhookActionType `json:"type,omitempty"`
 	UpdatedAt  *string                   `json:"updated_at,omitempty"`
+}
+
+func (t TriggerWebhookAction) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TriggerWebhookAction) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *TriggerWebhookAction) GetAllowFailure() *bool {

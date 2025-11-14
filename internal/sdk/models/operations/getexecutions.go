@@ -12,6 +12,8 @@ type GetExecutionsRequest struct {
 	EntityID *string `queryParam:"style=form,explode=true,name=entity_id"`
 	// Pagination: starting for results
 	From *int64 `default:"0" queryParam:"style=form,explode=true,name=from"`
+	// Include flow automations in the response
+	IncludeFlows *bool `default:"false" queryParam:"style=form,explode=true,name=include_flows"`
 	// Pagination: max number of results to return
 	Size *int64 `default:"25" queryParam:"style=form,explode=true,name=size"`
 }
@@ -21,7 +23,7 @@ func (g GetExecutionsRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetExecutionsRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &g, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &g, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -39,6 +41,13 @@ func (o *GetExecutionsRequest) GetFrom() *int64 {
 		return nil
 	}
 	return o.From
+}
+
+func (o *GetExecutionsRequest) GetIncludeFlows() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeFlows
 }
 
 func (o *GetExecutionsRequest) GetSize() *int64 {

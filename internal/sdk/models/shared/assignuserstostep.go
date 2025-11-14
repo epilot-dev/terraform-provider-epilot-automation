@@ -2,10 +2,25 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 type AssignUsersToStep struct {
 	StepID   *string   `json:"step_id,omitempty"`
 	StepName *string   `json:"step_name,omitempty"`
 	UserIds  []float64 `json:"user_ids,omitempty"`
+}
+
+func (a AssignUsersToStep) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AssignUsersToStep) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *AssignUsersToStep) GetStepID() *string {

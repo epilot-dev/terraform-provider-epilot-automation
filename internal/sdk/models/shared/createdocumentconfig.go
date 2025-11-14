@@ -2,9 +2,24 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 type CreateDocumentConfig struct {
 	Filename   *string `json:"filename,omitempty"`
 	TemplateID *string `json:"template_id,omitempty"`
+}
+
+func (c CreateDocumentConfig) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CreateDocumentConfig) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CreateDocumentConfig) GetFilename() *string {

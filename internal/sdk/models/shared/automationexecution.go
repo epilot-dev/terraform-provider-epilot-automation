@@ -12,15 +12,17 @@ import (
 type TriggerEventType string
 
 const (
-	TriggerEventTypeTriggerEventManual          TriggerEventType = "TriggerEventManual"
-	TriggerEventTypeTriggerEventEntityActivity  TriggerEventType = "TriggerEventEntityActivity"
-	TriggerEventTypeTriggerEventEntityOperation TriggerEventType = "TriggerEventEntityOperation"
+	TriggerEventTypeTriggerEventManual             TriggerEventType = "TriggerEventManual"
+	TriggerEventTypeTriggerEventEntityActivity     TriggerEventType = "TriggerEventEntityActivity"
+	TriggerEventTypeTriggerEventEntityOperation    TriggerEventType = "TriggerEventEntityOperation"
+	TriggerEventTypeTriggerEventFlowAutomationTask TriggerEventType = "TriggerEventFlowAutomationTask"
 )
 
 type TriggerEvent struct {
-	TriggerEventManual          *TriggerEventManual          `queryParam:"inline"`
-	TriggerEventEntityActivity  *TriggerEventEntityActivity  `queryParam:"inline"`
-	TriggerEventEntityOperation *TriggerEventEntityOperation `queryParam:"inline"`
+	TriggerEventManual             *TriggerEventManual             `queryParam:"inline" name:"trigger_event"`
+	TriggerEventEntityActivity     *TriggerEventEntityActivity     `queryParam:"inline" name:"trigger_event"`
+	TriggerEventEntityOperation    *TriggerEventEntityOperation    `queryParam:"inline" name:"trigger_event"`
+	TriggerEventFlowAutomationTask *TriggerEventFlowAutomationTask `queryParam:"inline" name:"trigger_event"`
 
 	Type TriggerEventType
 }
@@ -52,26 +54,42 @@ func CreateTriggerEventTriggerEventEntityOperation(triggerEventEntityOperation T
 	}
 }
 
+func CreateTriggerEventTriggerEventFlowAutomationTask(triggerEventFlowAutomationTask TriggerEventFlowAutomationTask) TriggerEvent {
+	typ := TriggerEventTypeTriggerEventFlowAutomationTask
+
+	return TriggerEvent{
+		TriggerEventFlowAutomationTask: &triggerEventFlowAutomationTask,
+		Type:                           typ,
+	}
+}
+
 func (u *TriggerEvent) UnmarshalJSON(data []byte) error {
 
-	var triggerEventManual TriggerEventManual = TriggerEventManual{}
-	if err := utils.UnmarshalJSON(data, &triggerEventManual, "", true, false); err == nil {
-		u.TriggerEventManual = &triggerEventManual
-		u.Type = TriggerEventTypeTriggerEventManual
+	var triggerEventEntityOperation TriggerEventEntityOperation = TriggerEventEntityOperation{}
+	if err := utils.UnmarshalJSON(data, &triggerEventEntityOperation, "", true, nil); err == nil {
+		u.TriggerEventEntityOperation = &triggerEventEntityOperation
+		u.Type = TriggerEventTypeTriggerEventEntityOperation
+		return nil
+	}
+
+	var triggerEventFlowAutomationTask TriggerEventFlowAutomationTask = TriggerEventFlowAutomationTask{}
+	if err := utils.UnmarshalJSON(data, &triggerEventFlowAutomationTask, "", true, nil); err == nil {
+		u.TriggerEventFlowAutomationTask = &triggerEventFlowAutomationTask
+		u.Type = TriggerEventTypeTriggerEventFlowAutomationTask
 		return nil
 	}
 
 	var triggerEventEntityActivity TriggerEventEntityActivity = TriggerEventEntityActivity{}
-	if err := utils.UnmarshalJSON(data, &triggerEventEntityActivity, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &triggerEventEntityActivity, "", true, nil); err == nil {
 		u.TriggerEventEntityActivity = &triggerEventEntityActivity
 		u.Type = TriggerEventTypeTriggerEventEntityActivity
 		return nil
 	}
 
-	var triggerEventEntityOperation TriggerEventEntityOperation = TriggerEventEntityOperation{}
-	if err := utils.UnmarshalJSON(data, &triggerEventEntityOperation, "", true, false); err == nil {
-		u.TriggerEventEntityOperation = &triggerEventEntityOperation
-		u.Type = TriggerEventTypeTriggerEventEntityOperation
+	var triggerEventManual TriggerEventManual = TriggerEventManual{}
+	if err := utils.UnmarshalJSON(data, &triggerEventManual, "", true, nil); err == nil {
+		u.TriggerEventManual = &triggerEventManual
+		u.Type = TriggerEventTypeTriggerEventManual
 		return nil
 	}
 
@@ -91,6 +109,10 @@ func (u TriggerEvent) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.TriggerEventEntityOperation, "", true)
 	}
 
+	if u.TriggerEventFlowAutomationTask != nil {
+		return utils.MarshalJSON(u.TriggerEventFlowAutomationTask, "", true)
+	}
+
 	return nil, errors.New("could not marshal union type TriggerEvent: all fields are null")
 }
 
@@ -103,17 +125,21 @@ type AutomationExecution struct {
 	EntityID        string              `json:"entity_id"`
 	EntitySnapshot  *EntityItemSnapshot `json:"entity_snapshot,omitempty"`
 	ExecutionStatus *ExecutionStatus    `json:"execution_status,omitempty"`
-	FlowID          string              `json:"flow_id"`
-	FlowName        *string             `json:"flow_name,omitempty"`
-	ID              string              `json:"id"`
-	OrgID           string              `json:"org_id"`
+	// ID of the Automation Flow
+	FlowID   string  `json:"flow_id"`
+	FlowName *string `json:"flow_name,omitempty"`
+	ID       string  `json:"id"`
+	OrgID    string  `json:"org_id"`
 	// A unique token to resume a paused automation execution
-	ResumeToken  *string          `json:"resume_token,omitempty"`
-	Schedules    []ActionSchedule `json:"schedules,omitempty"`
-	TriggerEvent *TriggerEvent    `json:"trigger_event,omitempty"`
-	UpdatedAt    *time.Time       `json:"updated_at,omitempty"`
+	ResumeToken *string          `json:"resume_token,omitempty"`
+	Schedules   []ActionSchedule `json:"schedules,omitempty"`
+	// Additional contextual data for a bulk trigger automation. This would normally include additional entity IDs you'd need after a listener picks up an event.
+	TriggerContext map[string]string `json:"trigger_context,omitempty"`
+	TriggerEvent   *TriggerEvent     `json:"trigger_event,omitempty"`
+	UpdatedAt      *time.Time        `json:"updated_at,omitempty"`
 	// Version of the flow
-	Version *float64 `json:"version,omitempty"`
+	Version         *float64                  `json:"version,omitempty"`
+	WorkflowContext *WorkflowExecutionContext `json:"workflow_context,omitempty"`
 }
 
 func (a AutomationExecution) MarshalJSON() ([]byte, error) {
@@ -121,7 +147,7 @@ func (a AutomationExecution) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AutomationExecution) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"actions", "entity_id", "flow_id", "id", "org_id"}); err != nil {
 		return err
 	}
 	return nil
@@ -225,6 +251,13 @@ func (o *AutomationExecution) GetSchedules() []ActionSchedule {
 	return o.Schedules
 }
 
+func (o *AutomationExecution) GetTriggerContext() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.TriggerContext
+}
+
 func (o *AutomationExecution) GetTriggerEvent() *TriggerEvent {
 	if o == nil {
 		return nil
@@ -244,4 +277,11 @@ func (o *AutomationExecution) GetVersion() *float64 {
 		return nil
 	}
 	return o.Version
+}
+
+func (o *AutomationExecution) GetWorkflowContext() *WorkflowExecutionContext {
+	if o == nil {
+		return nil
+	}
+	return o.WorkflowContext
 }

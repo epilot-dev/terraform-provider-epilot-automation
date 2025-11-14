@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
 )
 
 type SendEmailActionReason struct {
@@ -12,6 +13,17 @@ type SendEmailActionReason struct {
 	Message *string `json:"message,omitempty"`
 	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
 	Payload map[string]any `json:"payload,omitempty"`
+}
+
+func (s SendEmailActionReason) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SendEmailActionReason) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SendEmailActionReason) GetMessage() *string {
@@ -75,6 +87,17 @@ type SendEmailAction struct {
 	StartedAt  *string              `json:"started_at,omitempty"`
 	Type       *SendEmailActionType `json:"type,omitempty"`
 	UpdatedAt  *string              `json:"updated_at,omitempty"`
+}
+
+func (s SendEmailAction) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SendEmailAction) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SendEmailAction) GetAllowFailure() *bool {

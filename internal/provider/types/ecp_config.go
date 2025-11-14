@@ -2,9 +2,12 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type EcpConfig struct {
 	FileConfig *FileConfig  `tfsdk:"file_config"`
 	Origin     types.String `tfsdk:"origin"`
+	PortalID   types.String `tfsdk:"portal_id"`
 }

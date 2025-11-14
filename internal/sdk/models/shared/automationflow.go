@@ -37,6 +37,8 @@ func (e *DisabledBy) UnmarshalJSON(data []byte) error {
 }
 
 type DisableDetails struct {
+	// The 360 user email that disabled the flow
+	Blame *string `json:"blame,omitempty"`
 	// When the flow was disabled
 	DisabledAt time.Time `json:"disabled_at"`
 	// Who disabled the flow (system or user)
@@ -48,10 +50,17 @@ func (d DisableDetails) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DisableDetails) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"disabled_at", "disabled_by"}); err != nil {
 		return err
 	}
 	return nil
+}
+
+func (o *DisableDetails) GetBlame() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Blame
 }
 
 func (o *DisableDetails) GetDisabledAt() time.Time {
@@ -68,27 +77,54 @@ func (o *DisableDetails) GetDisabledBy() DisabledBy {
 	return o.DisabledBy
 }
 
+// MaxExecutions - Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified.
+type MaxExecutions struct {
+	// Maximum number of executions per time window
+	Count *float64 `json:"count,omitempty"`
+	// ISO 8601 duration time window for the threshold
+	Window *string `json:"window,omitempty"`
+}
+
+func (o *MaxExecutions) GetCount() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Count
+}
+
+func (o *MaxExecutions) GetWindow() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Window
+}
+
 type AutomationFlow struct {
 	// Source blueprint/manifest ID used when automation is created via blueprints.
 	Manifest []string `json:"_manifest,omitempty"`
 	// The actions (nodes) of the automation flow
-	Actions        []any             `json:"actions"`
-	Conditions     []ActionCondition `json:"conditions,omitempty"`
-	DisableDetails *DisableDetails   `json:"disable_details,omitempty"`
+	Actions        []any           `json:"actions"`
+	Conditions     any             `json:"conditions,omitempty"`
+	DisableDetails *DisableDetails `json:"disable_details,omitempty"`
 	// Whether the automation is enabled or not
 	Enabled *bool `json:"enabled,omitempty"`
 	// The triggering entity schema
 	EntitySchema *string `json:"entity_schema,omitempty"`
 	// A descriptive name for the Automation
-	FlowName  string  `json:"flow_name"`
-	ID        *string `json:"id,omitempty"`
-	Schedules any     `json:"schedules,omitempty"`
+	FlowName string `json:"flow_name"`
+	// ID of the Automation Flow
+	ID *string `json:"id,omitempty"`
+	// Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified.
+	MaxExecutions *MaxExecutions `json:"max_executions,omitempty"`
+	Schedules     any            `json:"schedules,omitempty"`
 	// Determines if the flow is a system generated flow
 	SystemFlow        *bool        `json:"system_flow,omitempty"`
 	TriggerConditions []any        `json:"trigger_conditions,omitempty"`
 	Triggers          []AnyTrigger `json:"triggers"`
 	// Version of the flow
 	Version *float64 `json:"version,omitempty"`
+	// For automation that are connected to workflows V2, this field tracks various information about the workflow.
+	WorkflowContext *WorkflowContext `json:"workflow_context,omitempty"`
 }
 
 func (o *AutomationFlow) GetManifest() []string {
@@ -105,7 +141,7 @@ func (o *AutomationFlow) GetActions() []any {
 	return o.Actions
 }
 
-func (o *AutomationFlow) GetConditions() []ActionCondition {
+func (o *AutomationFlow) GetConditions() any {
 	if o == nil {
 		return nil
 	}
@@ -147,6 +183,13 @@ func (o *AutomationFlow) GetID() *string {
 	return o.ID
 }
 
+func (o *AutomationFlow) GetMaxExecutions() *MaxExecutions {
+	if o == nil {
+		return nil
+	}
+	return o.MaxExecutions
+}
+
 func (o *AutomationFlow) GetSchedules() any {
 	if o == nil {
 		return nil
@@ -182,26 +225,37 @@ func (o *AutomationFlow) GetVersion() *float64 {
 	return o.Version
 }
 
+func (o *AutomationFlow) GetWorkflowContext() *WorkflowContext {
+	if o == nil {
+		return nil
+	}
+	return o.WorkflowContext
+}
+
 type AutomationFlowInput struct {
 	// Source blueprint/manifest ID used when automation is created via blueprints.
 	Manifest []string `json:"_manifest,omitempty"`
 	// The actions (nodes) of the automation flow
-	Actions        []any             `json:"actions"`
-	Conditions     []ActionCondition `json:"conditions,omitempty"`
-	DisableDetails *DisableDetails   `json:"disable_details,omitempty"`
+	Actions        []any           `json:"actions"`
+	Conditions     any             `json:"conditions,omitempty"`
+	DisableDetails *DisableDetails `json:"disable_details,omitempty"`
 	// Whether the automation is enabled or not
 	Enabled *bool `json:"enabled,omitempty"`
 	// The triggering entity schema
 	EntitySchema *string `json:"entity_schema,omitempty"`
 	// A descriptive name for the Automation
-	FlowName  string `json:"flow_name"`
-	Schedules any    `json:"schedules,omitempty"`
+	FlowName string `json:"flow_name"`
+	// Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified.
+	MaxExecutions *MaxExecutions `json:"max_executions,omitempty"`
+	Schedules     any            `json:"schedules,omitempty"`
 	// Determines if the flow is a system generated flow
 	SystemFlow        *bool        `json:"system_flow,omitempty"`
 	TriggerConditions []any        `json:"trigger_conditions,omitempty"`
 	Triggers          []AnyTrigger `json:"triggers"`
 	// Version of the flow
 	Version *float64 `json:"version,omitempty"`
+	// For automation that are connected to workflows V2, this field tracks various information about the workflow.
+	WorkflowContext *WorkflowContext `json:"workflow_context,omitempty"`
 }
 
 func (o *AutomationFlowInput) GetManifest() []string {
@@ -218,7 +272,7 @@ func (o *AutomationFlowInput) GetActions() []any {
 	return o.Actions
 }
 
-func (o *AutomationFlowInput) GetConditions() []ActionCondition {
+func (o *AutomationFlowInput) GetConditions() any {
 	if o == nil {
 		return nil
 	}
@@ -251,6 +305,13 @@ func (o *AutomationFlowInput) GetFlowName() string {
 		return ""
 	}
 	return o.FlowName
+}
+
+func (o *AutomationFlowInput) GetMaxExecutions() *MaxExecutions {
+	if o == nil {
+		return nil
+	}
+	return o.MaxExecutions
 }
 
 func (o *AutomationFlowInput) GetSchedules() any {
@@ -286,4 +347,11 @@ func (o *AutomationFlowInput) GetVersion() *float64 {
 		return nil
 	}
 	return o.Version
+}
+
+func (o *AutomationFlowInput) GetWorkflowContext() *WorkflowContext {
+	if o == nil {
+		return nil
+	}
+	return o.WorkflowContext
 }

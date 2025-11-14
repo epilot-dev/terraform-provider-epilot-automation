@@ -2,8 +2,23 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 type WildcardCondition struct {
 	Wildcard *string `json:"wildcard,omitempty"`
+}
+
+func (w WildcardCondition) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(w, "", false)
+}
+
+func (w *WildcardCondition) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &w, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *WildcardCondition) GetWildcard() *string {

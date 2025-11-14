@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
 )
 
 type MapEntityActionReason struct {
@@ -12,6 +13,17 @@ type MapEntityActionReason struct {
 	Message *string `json:"message,omitempty"`
 	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
 	Payload map[string]any `json:"payload,omitempty"`
+}
+
+func (m MapEntityActionReason) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(m, "", false)
+}
+
+func (m *MapEntityActionReason) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &m, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *MapEntityActionReason) GetMessage() *string {
@@ -75,6 +87,17 @@ type MapEntityAction struct {
 	StartedAt  *string              `json:"started_at,omitempty"`
 	Type       *MapEntityActionType `json:"type,omitempty"`
 	UpdatedAt  *string              `json:"updated_at,omitempty"`
+}
+
+func (m MapEntityAction) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(m, "", false)
+}
+
+func (m *MapEntityAction) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &m, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *MapEntityAction) GetAllowFailure() *bool {

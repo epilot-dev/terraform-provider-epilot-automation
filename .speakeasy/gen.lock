@@ -1,25 +1,25 @@
 lockVersion: 2.0.0
 id: 6df5dec4-6d34-4c07-99f4-b36e64bbb781
 management:
-  docChecksum: 1b1e2ac4d4f27a656b6e778641efff8b
+  docChecksum: 15055178a33949806277024d8d19e105
   docVersion: 1.0.0
-  speakeasyVersion: 1.465.1
-  generationVersion: 2.488.4
-  releaseVersion: 0.7.1
-  configChecksum: 1df6a6b53948fbcb8edad840722bf085
+  speakeasyVersion: 1.611.0
+  generationVersion: 2.694.1
+  releaseVersion: 0.9.0
+  configChecksum: 9b00dcb1c48bbdcd5df6667eb8d05d74
 features:
   terraform:
     additionalDependencies: 0.1.0
     additionalProperties: 0.1.2
-    constsAndDefaults: 0.2.0
-    core: 3.27.6
-    deprecations: 2.81.1
-    envVarSecurityUsage: 0.1.0
-    globalSecurity: 2.81.9
-    globalServerURLs: 2.82.1
+    constsAndDefaults: 0.2.1
+    core: 3.44.1
+    deprecations: 2.82.0
+    globalSecurity: 2.82.0
+    globalServerURLs: 2.83.0
     inputOutputModels: 2.83.0
     nullables: 0.0.0
-    retries: 2.81.2
+    retries: 2.81.4
+    typeOverrides: 2.81.1
     unions: 2.81.17
 generatedFiles:
   - .gitattributes
@@ -27,12 +27,15 @@ generatedFiles:
   - examples/README.md
   - examples/data-sources/epilot-automation_flow/data-source.tf
   - examples/provider/provider.tf
+  - examples/resources/epilot-automation_flow/import-by-string-id.tf
   - examples/resources/epilot-automation_flow/import.sh
   - examples/resources/epilot-automation_flow/resource.tf
   - go.mod
   - go.sum
   - internal/planmodifiers/boolplanmodifier/suppress_diff.go
+  - internal/planmodifiers/float32planmodifier/suppress_diff.go
   - internal/planmodifiers/float64planmodifier/suppress_diff.go
+  - internal/planmodifiers/int32planmodifier/suppress_diff.go
   - internal/planmodifiers/int64planmodifier/suppress_diff.go
   - internal/planmodifiers/listplanmodifier/suppress_diff.go
   - internal/planmodifiers/mapplanmodifier/suppress_diff.go
@@ -60,12 +63,13 @@ generatedFiles:
   - internal/provider/reflect/primitive.go
   - internal/provider/reflect/slice.go
   - internal/provider/reflect/struct.go
-  - internal/provider/types/action_condition.go
+  - internal/provider/typeconvert/date.go
+  - internal/provider/typeconvert/datetime.go
+  - internal/provider/typeconvert/int.go
   - internal/provider/types/activity.go
   - internal/provider/types/any_trigger.go
   - internal/provider/types/anything_but_condition.go
   - internal/provider/types/api_submission_trigger.go
-  - internal/provider/types/condition_statement.go
   - internal/provider/types/configuration.go
   - internal/provider/types/disable_details.go
   - internal/provider/types/ecp_config.go
@@ -79,20 +83,24 @@ generatedFiles:
   - internal/provider/types/exists_condition.go
   - internal/provider/types/file_config.go
   - internal/provider/types/filter_config.go
+  - internal/provider/types/flows_trigger.go
+  - internal/provider/types/flows_trigger_configuration.go
   - internal/provider/types/journey_submit_trigger.go
   - internal/provider/types/journey_submit_trigger_configuration.go
+  - internal/provider/types/max_executions.go
   - internal/provider/types/prefix_condition.go
   - internal/provider/types/received_email_trigger.go
   - internal/provider/types/received_email_trigger_configuration.go
-  - internal/provider/types/source.go
   - internal/provider/types/suffix_condition.go
   - internal/provider/types/wildcard_condition.go
+  - internal/provider/types/workflow_context.go
   - internal/provider/utils.go
   - internal/sdk/.gitattributes
-  - internal/sdk/.gitignore
   - internal/sdk/bulk.go
+  - internal/sdk/docs/models/operations/option.md
   - internal/sdk/executions.go
   - internal/sdk/flows.go
+  - internal/sdk/internal/config/sdkconfiguration.go
   - internal/sdk/internal/hooks/hooks.go
   - internal/sdk/internal/utils/contenttype.go
   - internal/sdk/internal/utils/env.go
@@ -106,8 +114,10 @@ generatedFiles:
   - internal/sdk/internal/utils/security.go
   - internal/sdk/internal/utils/utils.go
   - internal/sdk/models/errors/sdkerror.go
+  - internal/sdk/models/operations/batchgetflows.go
   - internal/sdk/models/operations/bulktriggerexecutions.go
   - internal/sdk/models/operations/cancelexecution.go
+  - internal/sdk/models/operations/cancelschedule.go
   - internal/sdk/models/operations/createflow.go
   - internal/sdk/models/operations/deleteflow.go
   - internal/sdk/models/operations/getbulkjob.go
@@ -136,17 +146,21 @@ generatedFiles:
   - internal/sdk/models/shared/automationflow.go
   - internal/sdk/models/shared/bulktriggerjob.go
   - internal/sdk/models/shared/bulktriggerrequest.go
+  - internal/sdk/models/shared/cancellationreason.go
   - internal/sdk/models/shared/cartcheckoutaction.go
   - internal/sdk/models/shared/cartcheckoutconfig.go
   - internal/sdk/models/shared/conditionstatement.go
   - internal/sdk/models/shared/copyvaluemapper.go
   - internal/sdk/models/shared/createdocumentaction.go
   - internal/sdk/models/shared/createdocumentconfig.go
+  - internal/sdk/models/shared/customaction.go
   - internal/sdk/models/shared/entityitemsnapshot.go
   - internal/sdk/models/shared/entitymanualtrigger.go
   - internal/sdk/models/shared/entityoperation.go
   - internal/sdk/models/shared/entityoperationtrigger.go
   - internal/sdk/models/shared/entityref.go
+  - internal/sdk/models/shared/entitysearchfilter.go
+  - internal/sdk/models/shared/entitysearchfiltervalue.go
   - internal/sdk/models/shared/equalsignorecasecondition.go
   - internal/sdk/models/shared/errorcode.go
   - internal/sdk/models/shared/errordetail.go
@@ -154,8 +168,13 @@ generatedFiles:
   - internal/sdk/models/shared/execitem.go
   - internal/sdk/models/shared/executionstatus.go
   - internal/sdk/models/shared/existscondition.go
+  - internal/sdk/models/shared/flowexecutioncancelaction.go
+  - internal/sdk/models/shared/flowexecutioncancelconfig.go
+  - internal/sdk/models/shared/flowstrigger.go
   - internal/sdk/models/shared/frontendsubmittrigger.go
   - internal/sdk/models/shared/getexecutionsresp.go
+  - internal/sdk/models/shared/informerpaction.go
+  - internal/sdk/models/shared/informerpconfig.go
   - internal/sdk/models/shared/journeysubmittrigger.go
   - internal/sdk/models/shared/mapentityaction.go
   - internal/sdk/models/shared/mapentityconfig.go
@@ -176,18 +195,25 @@ generatedFiles:
   - internal/sdk/models/shared/searchautomationsresp.go
   - internal/sdk/models/shared/security.go
   - internal/sdk/models/shared/sendemailaction.go
+  - internal/sdk/models/shared/sendemailcondition.go
   - internal/sdk/models/shared/sendemailconfig.go
   - internal/sdk/models/shared/setvaluemapper.go
   - internal/sdk/models/shared/startexecutionrequest.go
   - internal/sdk/models/shared/suffixcondition.go
   - internal/sdk/models/shared/triggerevententityactivity.go
   - internal/sdk/models/shared/triggerevententityoperation.go
+  - internal/sdk/models/shared/triggereventflowautomationtask.go
   - internal/sdk/models/shared/triggereventmanual.go
+  - internal/sdk/models/shared/triggershareentityaction.go
+  - internal/sdk/models/shared/triggershareentityconfig.go
   - internal/sdk/models/shared/triggerwebhookaction.go
   - internal/sdk/models/shared/triggerwebhookconfig.go
   - internal/sdk/models/shared/triggerworkflowaction.go
   - internal/sdk/models/shared/triggerworkflowconfig.go
   - internal/sdk/models/shared/wildcardcondition.go
+  - internal/sdk/models/shared/workflowcontext.go
+  - internal/sdk/models/shared/workflowcontextrole.go
+  - internal/sdk/models/shared/workflowexecutioncontext.go
   - internal/sdk/retry/config.go
   - internal/sdk/sdk.go
   - internal/sdk/types/bigint.go
@@ -200,7 +226,9 @@ generatedFiles:
   - internal/validators/JSONParseValidator.go
   - internal/validators/RFC3339Validator.go
   - internal/validators/boolvalidators/not_null.go
+  - internal/validators/float32validators/not_null.go
   - internal/validators/float64validators/not_null.go
+  - internal/validators/int32validators/not_null.go
   - internal/validators/int64validators/not_null.go
   - internal/validators/listvalidators/not_null.go
   - internal/validators/mapvalidators/not_null.go
@@ -212,15 +240,6 @@ generatedFiles:
   - terraform-registry-manifest.json
   - tools/tools.go
 examples:
-  bulkTriggerExecutions:
-    "":
-      requestBody:
-        application/json: {"entities_refs": [{"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_schema": "<value>"}, {"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_schema": "<value>"}]}
-      responses:
-        "202":
-          application/json: {"created_at": "2022-08-25T22:08:56.556Z", "created_by": "1234", "execution_summary": [], "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "job_id": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "status": "failed", "task_token": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "updated_at": "2022-11-13T20:13:52.960Z"}
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
   cancelExecution:
     speakeasy-default-cancel-execution:
       parameters:
@@ -228,79 +247,20 @@ examples:
           execution_id: "9baf184f-bc81-4128-bca3-d974c90a12c4"
       responses:
         "200":
-          application/json: {"actions": [{"config": {"mapping_attributes": [{"mode": "copy_if_exists", "source": "<value>", "target": "<value>"}, {"operation": {"_append": ["new", "tags"], "_copy": "contact.first_name", "_uniq": true}, "target": "_tags"}, {"operation": {"_append": ["new", "tags"], "_copy": "contact.first_name", "_uniq": true}, "target": "_tags"}], "target_schema": "<value>"}, "flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}, {"config": {"mapping_attributes": [{"operation": {"_append": ["new", "tags"], "_copy": "contact.first_name", "_uniq": true}, "target": "_tags"}, {"operation": {"_append": ["new", "tags"], "_copy": "contact.first_name", "_uniq": true}, "target": "_tags"}], "target_schema": "<value>"}, "flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}, {"config": {"attachments": [{"source_filter": {"attribute": "_files", "filename_regex": ".*", "limit": 1, "relation_tag": "contract"}}, {"source_filter": {"attribute": "_files", "filename_regex": ".*", "limit": 1, "relation_tag": "contract"}}, {"source_filter": {"attribute": "_files", "filename_regex": ".*", "limit": 1, "relation_tag": "contract"}}]}, "flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}, {"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}, {"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"0": "<", "1": "v", "2": "a", "3": "l", "4": "u", "5": "e", "6": ">", "_created_at": "2023-09-03T18:21:10.476Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-10-01T15:48:32.172Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_event": {"caller": {"0": "<", "1": "v", "2": "a", "3": "l", "4": "u", "5": "e", "6": ">", "EpilotAuth": {"claims": {"cognito:username": "example@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "example@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce", "userId": "10006129"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123"}, "version": 2}
+          application/json: {"actions": [], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"_created_at": "2025-06-19T20:56:44.249Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-09-08T10:33:58.807Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "trigger_event": {"caller": {"EpilotAuth": {"claims": {"cognito:username": "n.ahmad@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "n.ahmad@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123"}, "version": 2}
         "403":
-          application/json: {"error": "Forbidden", "status": 400}
-  createFlow:
-    speakeasy-default-create-flow:
-      requestBody:
-        application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": [], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "triggers": [{"id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "received_email"}, {"configuration": {"schema": "submission"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "entity_manual"}, {"configuration": {"source_id": "83bc4369-781d-433f-b28d-d336efe9a018"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "journey_submission"}], "version": 2}
-      responses:
-        "201":
-          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value>", "<value>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}, {"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}, {"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "triggers": [], "version": 2}
-        "403":
-          application/json: {"error": "Forbidden", "status": 400}
-  deleteFlow:
-    speakeasy-default-delete-flow:
+          application/json: {"error": "Forbidden", "status": 403}
+  cancelSchedule:
+    speakeasy-default-cancel-schedule:
       parameters:
         path:
-          flow_id: "7791b04a-16d2-44a2-9af9-2d59c25c512f"
+          execution_id: "9baf184f-bc81-4128-bca3-d974c90a12c4"
+          schedule_id: "<id>"
       responses:
         "200":
-          application/json:
-            _manifest:
-              - 123e4567-e89b-12d3-a456-426614174000
-            actions:
-              - <value>
-              - <value>
-            conditions:
-              - statements:
-                  - id: 1c8d3d9c-6d4c-4a83-aa22-aa0d630cbc2d
-                    operation: equals
-                    source:
-                      attribute: email
-                      attributeType: text
-                      id: trigger-id
-                      origin: trigger
-                      originType: entity
-                      schema: contact
-                    values:
-                      - hello@epilot.cloud
-              - statements:
-                  - id: 1c8d3d9c-6d4c-4a83-aa22-aa0d630cbc2d
-                    operation: equals
-                    source:
-                      attribute: email
-                      attributeType: text
-                      id: trigger-id
-                      origin: trigger
-                      originType: entity
-                      schema: contact
-                    values:
-                      - hello@epilot.cloud
-            entity_schema: submission
-            flow_name: Handle contact form
-            id: 7791b04a-16d2-44a2-9af9-2d59c25c512f
-            triggers:
-              - configuration:
-                  source_id: "99"
-                id: 12d4f45a-1883-4841-a94c-5928cb338a94
-                type: frontend_submission
-              - id: 12d4f45a-1883-4841-a94c-5928cb338a94
-                type: received_email
-            version: 2
+          application/json: {"id": "<id>", "source": {"id": "<id>", "origin": "automation"}}
         "403":
-          application/json: {"error": "Forbidden", "status": 400}
-  getBulkJob:
-    speakeasy-default-get-bulk-job:
-      parameters:
-        path:
-          job_id: "8c086140-f33e-4bb7-a993-50c0f2402c7b"
-      responses:
-        "200":
-          application/json: {"created_at": "2022-10-20T07:12:52.689Z", "created_by": "1234", "execution_summary": [{"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "execution_status": "in_progress"}, {"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "execution_status": "scheduled"}], "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "job_id": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "status": "cancelled", "task_token": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "updated_at": "2022-12-07T03:34:02.948Z"}
-        "403":
-          application/json: {"error": "Forbidden", "status": 400}
+          application/json: {"error": "Forbidden", "status": 403}
   getExecution:
     speakeasy-default-get-execution:
       parameters:
@@ -308,19 +268,142 @@ examples:
           execution_id: "9baf184f-bc81-4128-bca3-d974c90a12c4"
       responses:
         "200":
-          application/json: {"actions": [{"config": {}, "flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}, {"config": {"attachments": [{"source_filter": {"attribute": "_files", "filename_regex": ".*", "limit": 1, "relation_tag": "contract"}}]}, "flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"0": "<", "1": "v", "2": "a", "3": "l", "4": "u", "5": "e", "6": ">", "_created_at": "2022-07-06T20:33:41.402Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2023-08-07T20:59:34.519Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_event": {"activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "operation_type": "deleteEntity", "org_id": "123"}, "version": 2}
+          application/json: {"actions": [], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"_created_at": "2025-09-19T20:38:02.071Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-05-08T17:14:29.270Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "trigger_event": {"caller": {"EpilotAuth": {"claims": {"cognito:username": "n.ahmad@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "n.ahmad@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123"}, "version": 2}
         "403":
-          application/json: {"error": "Forbidden", "status": 400}
+          application/json: {"error": "Forbidden", "status": 403}
   getExecutions:
-    speakeasy-default-get-executions:
+    manual_trigger:
       parameters:
         query:
           entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
+          size: 25
+          from: 0
+          include_flows: false
       responses:
         "200":
-          application/json: {"results": [{"actions": [{"config": {"mapping_attributes": [{"mode": "set_value", "source": "<value>", "target": "<value>"}, {"operation": {"_append": ["new", "tags"], "_copy": "contact.first_name", "_uniq": true}, "target": "_tags"}, {"operation": {"_append": ["new", "tags"], "_copy": "contact.first_name", "_uniq": true}, "target": "_tags"}], "target_schema": "<value>"}, "flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}, {"config": {"mapping_attributes": [], "target_schema": "<value>"}, "flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"0": "<", "1": "v", "2": "a", "3": "l", "4": "u", "5": "e", "6": ">", "_created_at": "2022-07-18T20:33:24.247Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2022-01-28T09:12:23.189Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_event": {"caller": {"0": "<", "1": "v", "2": "a", "3": "l", "4": "u", "5": "e", "6": ">", "EpilotAuth": {"claims": {"cognito:username": "example@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "example@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce", "userId": "10006129"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123"}, "version": 2}, {"actions": [{"config": {}, "flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}, {"config": {"mapping_attributes": [{"operation": {"_append": ["new", "tags"], "_uniq": true}, "target": "_tags"}], "target_schema": "<value>"}, "flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}, {"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"0": "<", "1": "v", "2": "a", "3": "l", "4": "u", "5": "e", "6": ">", "_created_at": "2023-11-08T11:03:18.230Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2022-06-28T23:51:46.186Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_event": {"activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "activity_type": "<value>", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123"}, "version": 2}, {"actions": [], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"0": "<", "1": "v", "2": "a", "3": "l", "4": "u", "5": "e", "6": ">", "_created_at": "2022-06-13T00:14:35.579Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-05-25T16:51:41.394Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_event": {"caller": {"0": "<", "1": "v", "2": "a", "3": "l", "4": "u", "5": "e", "6": ">", "EpilotAuth": {"claims": {"cognito:username": "example@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "example@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce", "userId": "10006129"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123"}, "version": 2}], "total": "9816.03"}
+          application/json: {"results": [{"actions": [], "created_at": "2023-01-01T10:00:00Z", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_status": "success", "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "123", "trigger_event": {"caller": {"EpilotAuth": {"claims": {"email": "user@epilot.cloud", "userId": "10006129"}, "organizationId": "123", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123", "type": "manual"}, "updated_at": "2023-01-01T10:05:00Z", "version": 1}], "total": 1}
+    entity_operation_trigger:
+      parameters:
+        query:
+          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
+          size: 25
+          from: 0
+          include_flows: false
+      responses:
+        "200":
+          application/json: {"results": [{"actions": [], "activity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef", "created_at": "2023-01-01T12:00:00Z", "entity_id": "f4e4fcbd-cbcc-4496-bf5f-60c6ce2c621e", "execution_status": "in_progress", "flow_id": "8e2e067e-3c63-4b1a-8e02-6150a3d1fd89", "flow_name": "Contact updated automation", "id": "8cdf274e-ab70-4029-9ca2-c863b80a11c3", "org_id": "123", "trigger_event": {"activity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef", "entity_id": "f4e4fcbd-cbcc-4496-bf5f-60c6ce2c621e", "operation_type": "updateEntity", "org_id": "123", "type": "entity_operation"}, "updated_at": "2023-01-01T12:02:00Z", "version": 1}], "total": 1}
+    entity_activity_trigger:
+      parameters:
+        query:
+          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
+          size: 25
+          from: 0
+          include_flows: false
+      responses:
+        "200":
+          application/json: {"results": [{"actions": [], "activity_id": "b3c4d5e6-f7a8-9012-3456-789012bcdef0", "created_at": "2023-01-01T14:00:00Z", "entity_id": "c2b1a9d8-7e6f-5040-3029-180716253f4e", "execution_status": "failed", "flow_id": "6d1d956d-2b52-4a0a-9e01-5049a2c0ee78", "flow_name": "Document upload handler", "id": "7bde163d-9a5f-3f18-8b92-d752a79a10b2", "org_id": "123", "trigger_event": {"activity_id": "b3c4d5e6-f7a8-9012-3456-789012bcdef0", "activity_type": "DocUploadedFromPortal", "entity_id": "c2b1a9d8-7e6f-5040-3029-180716253f4e", "org_id": "123", "type": "entity_activity"}, "updated_at": "2023-01-01T14:01:30Z", "version": 1}], "total": 1}
+    flow_automation_task_trigger:
+      parameters:
+        query:
+          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
+          size: 25
+          from: 0
+          include_flows: false
+      responses:
+        "200":
+          application/json: {"results": [{"actions": [], "created_at": "2023-01-01T16:00:00Z", "entity_id": "d3c2b1a0-8f7e-6d5c-4b3a-291807364e5f", "execution_status": "paused", "flow_id": "9f0f178f-4c74-5b2b-af12-6160b3d1ee89", "flow_name": "Journey completion follow-up", "id": "5ade051c-8a4e-2e07-7a81-c641968a0fa1", "org_id": "123", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_event": {"caller": {"EpilotAuth": {"claims": {"email": "user@epilot.cloud", "userId": "10006129"}, "organizationId": "123", "userId": "10006129"}}, "entity_id": "d3c2b1a0-8f7e-6d5c-4b3a-291807364e5f", "flow_automation_task_id": "2fa221ec-3aac-4655-ab8f-c062eca44a3", "flow_execution_id": "wfwAJoT_cK", "org_id": "123", "type": "flow_automation_task"}, "updated_at": "2023-01-01T16:03:00Z", "version": 1}], "total": 1}
+    mixed_execution_statuses:
+      parameters:
+        query:
+          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
+          size: 25
+          from: 0
+          include_flows: false
+      responses:
+        "200":
+          application/json: {"results": [{"actions": [], "created_at": "2023-01-01T09:00:00Z", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_status": "success", "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Send welcome email", "id": "1aef262e-9b5f-4f29-8c93-e763b90b21d3", "org_id": "123", "trigger_event": {"caller": {"EpilotAuth": {"claims": {"email": "admin@epilot.cloud", "userId": "10006129"}, "organizationId": "123", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123", "type": "manual"}, "updated_at": "2023-01-01T09:02:00Z", "version": 2}, {"actions": [], "activity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef", "created_at": "2023-01-01T10:30:00Z", "entity_id": "f4e4fcbd-cbcc-4496-bf5f-60c6ce2c621e", "execution_status": "in_progress", "flow_id": "8e2e067e-3c63-4b1a-8e02-6150a3d1fd89", "flow_name": "Update CRM system", "id": "2bef373f-ac60-5039-9da4-f874ca1c32e4", "org_id": "123", "trigger_event": {"activity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef", "entity_id": "f4e4fcbd-cbcc-4496-bf5f-60c6ce2c621e", "operation_type": "createEntity", "org_id": "123", "type": "entity_operation"}, "updated_at": "2023-01-01T10:31:00Z", "version": 1}, {"actions": [], "activity_id": "b3c4d5e6-f7a8-9012-3456-789012bcdef0", "created_at": "2023-01-01T11:15:00Z", "entity_id": "c2b1a9d8-7e6f-5040-3029-180716253f4e", "execution_status": "failed", "flow_id": "6d1d956d-2b52-4a0a-9e01-5049a2c0ee78", "flow_name": "Generate invoice", "id": "3cef484g-bd71-6149-ae04-0985db2d43f5", "org_id": "123", "trigger_event": {"activity_id": "b3c4d5e6-f7a8-9012-3456-789012bcdef0", "activity_type": "CreateMeterReading", "entity_id": "c2b1a9d8-7e6f-5040-3029-180716253f4e", "org_id": "123", "type": "entity_activity"}, "updated_at": "2023-01-01T11:16:30Z", "version": 1}, {"actions": [], "created_at": "2023-01-01T12:45:00Z", "entity_id": "d3c2b1a0-8f7e-6d5c-4b3a-291807364e5f", "execution_status": "scheduled", "flow_id": "9f0f178f-4c74-5b2b-af12-6160b3d1ee89", "flow_name": "Scheduled reminder", "id": "4def595h-ce82-7259-bf15-1a96ec3e54g6", "org_id": "123", "trigger_event": {"caller": {"EpilotAuth": {"claims": {"email": "scheduler@epilot.cloud", "userId": "10006130"}, "organizationId": "123", "userId": "10006130"}}, "entity_id": "d3c2b1a0-8f7e-6d5c-4b3a-291807364e5f", "flow_automation_task_id": "3gb332fd-4bbd-5766-bc9g-d173fdb55b4", "flow_execution_id": "xgxBKpU_dL", "org_id": "123", "type": "flow_automation_task"}, "updated_at": "2023-01-01T12:45:00Z", "version": 1}], "total": 4}
+  resumeExecutionWithToken:
+    speakeasy-default-resume-execution-with-token:
+      requestBody:
+        application/json: {"resume_token": "eyJraWQiOiJrZXkifQ=="}
+      responses:
+        "200":
+          application/json: {"execution": {"actions": [{"config": {"linkback_relation_attribute": "mapped_entities", "mapping_attributes": [{"operation": {"_append": ["new", "tags"], "_uniq": true}, "target": "_tags"}], "target_schema": "<value>"}, "flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"_created_at": "2024-03-21T04:41:04.652Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-10-26T21:50:45.416Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "trigger_event": {"caller": {"EpilotAuth": {"claims": {"cognito:username": "n.ahmad@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "n.ahmad@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123"}, "version": 2}, "resumedAction": {"flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}}
         "403":
-          application/json: {"error": "Forbidden", "status": 400}
+          application/json: {"error": "Forbidden", "status": 403}
+  retriggerAction:
+    speakeasy-default-retrigger-action:
+      parameters:
+        path:
+          execution_id: "9baf184f-bc81-4128-bca3-d974c90a12c4"
+          action_id: "9ec3711b-db63-449c-b894-54d5bb622a8f"
+      responses:
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  startExecution:
+    speakeasy-default-start-execution:
+      requestBody:
+        application/json: {"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"}
+      responses:
+        "201":
+          application/json: {"actions": [], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"_created_at": "2023-04-10T03:07:51.548Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-08-06T16:07:13.759Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "trigger_event": {"caller": {"EpilotAuth": {"claims": {"cognito:username": "n.ahmad@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "n.ahmad@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "flow_automation_task_id": "2fa221ec-3aac-4655-ab8f-c062eca44a3", "flow_execution_id": "wfwAJoT_cK", "org_id": "123"}, "version": 2}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  bulkTriggerExecutions:
+    speakeasy-default-bulk-trigger-executions:
+      requestBody:
+        application/json: {"entities_filter": [{"term": {"_schema": "contact"}}, {"terms": {"status": ["active"]}}], "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}}
+      responses:
+        "202":
+          application/json: {"created_at": "2024-05-29T17:28:00.502Z", "created_by": "1234", "entity_query": {"data": [{"term": {"_schema": "contact"}}, {"terms": {"status": ["active"]}}], "type": "filter"}, "execution_summary": [{"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "execution_status": "scheduled", "timestamp": "2025-10-30T15:56:47.842Z"}], "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "job_id": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "status": "cancelled", "task_token": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "updated_at": "2025-09-20T03:08:25.923Z"}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  getBulkJob:
+    speakeasy-default-get-bulk-job:
+      parameters:
+        path:
+          job_id: "8c086140-f33e-4bb7-a993-50c0f2402c7b"
+      responses:
+        "200":
+          application/json: {"created_at": "2025-05-10T13:07:43.096Z", "created_by": "1234", "entity_query": {"data": [{"term": {"_schema": "contact"}}, {"terms": {"status": ["active"]}}], "type": "filter"}, "execution_summary": [{"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "execution_status": "hot", "timestamp": "2025-10-30T15:56:47.842Z"}], "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "job_id": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "status": "cancelled", "task_token": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "updated_at": "2025-08-06T03:26:59.317Z"}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  patchBulkJob:
+    speakeasy-default-patch-bulk-job:
+      parameters:
+        path:
+          job_id: "8c086140-f33e-4bb7-a993-50c0f2402c7b"
+      responses:
+        "200":
+          application/json: {"created_at": "2023-02-05T18:57:32.351Z", "created_by": "1234", "entity_query": {"data": [{"term": {"_schema": "contact"}}, {"terms": {"status": ["active"]}}], "type": "query"}, "execution_summary": [{"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "execution_status": "failed", "timestamp": "2025-10-30T15:56:47.842Z"}], "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "job_id": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "status": "querying_entities", "task_token": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "updated_at": "2025-02-19T10:53:21.653Z"}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  batchGetFlows:
+    speakeasy-default-batch-get-flows:
+      requestBody:
+        application/json: {"ids": ["7791b04a-16d2-44a2-9af9-2d59c25c512f"]}
+      responses:
+        "200":
+          application/json: {"results": [{"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": [], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [{"configuration": {"schema": "submission"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "entity_manual"}], "version": 2}], "total": 3031.1}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  createFlow:
+    speakeasy-default-create-flow:
+      requestBody:
+        application/json: {"_manifest": null, "actions": ["<value 1>", "<value 2>"], "entity_schema": "submission", "flow_name": "Handle contact form", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [{"configuration": {}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "received_email"}], "version": 2}
+      responses:
+        "201":
+          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>", "<value 3>"], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  deleteFlow:
+    speakeasy-default-delete-flow:
+      parameters:
+        path:
+          flow_id: "7791b04a-16d2-44a2-9af9-2d59c25c512f"
+      responses:
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
   getFlow:
     speakeasy-default-get-flow:
       parameters:
@@ -328,19 +411,7 @@ examples:
           flow_id: "7791b04a-16d2-44a2-9af9-2d59c25c512f"
       responses:
         "200":
-          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}, {"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}, {"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "triggers": [{"configuration": {"ecp_config": {"file_config": {"shared_with_end_customer": true}, "origin": "END_CUSTOMER_PORTAL"}, "exclude_activities": ["[\"SyncEntity\"]"], "filter_config": {"activity": {"type": ["EntityUpdatedFromPortal", "EntityUpdated", "DocUploadedFromPortal"]}}, "include_activities": ["[\"CreateEntity\"]"], "schema": "submission"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "entity_operation"}, {"configuration": {"ecp_config": {"file_config": {"shared_with_end_customer": true}, "origin": "END_CUSTOMER_PORTAL"}, "exclude_activities": ["[\"SyncEntity\"]"], "filter_config": {"activity": {"type": ["EntityUpdatedFromPortal", "EntityUpdated", "DocUploadedFromPortal"]}}, "include_activities": ["[\"CreateEntity\"]"], "schema": "submission"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "entity_operation"}, {"configuration": {"source_id": "c56064b6-a744-424c-9cbf-0f49e353dd8a"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "journey_submission"}], "version": 2}
-        "403":
-          application/json: {"error": "Forbidden", "status": 400}
-  patchBulkJob:
-    "":
-      parameters:
-        path:
-          job_id: "8c086140-f33e-4bb7-a993-50c0f2402c7b"
-      requestBody:
-        application/json: {"action": "APPROVE", "task_token": "b35a6c51-2a15-4ef1-9623-20db37b0744f"}
-      responses:
-        "200":
-          application/json: {"created_at": "2023-07-22T04:56:17.349Z", "created_by": "1234", "execution_summary": [{"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "execution_status": "in_progress"}], "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "job_id": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "status": "approval", "task_token": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "updated_at": "2023-09-11T13:29:03.417Z"}
+          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>", "<value 3>"], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
         "403":
           application/json: {"error": "Forbidden", "status": 403}
   putFlow:
@@ -349,46 +420,23 @@ examples:
         path:
           flow_id: "7791b04a-16d2-44a2-9af9-2d59c25c512f"
       requestBody:
-        application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value>", "<value>"], "conditions": [], "entity_schema": "submission", "flow_name": "Handle contact form", "triggers": [], "version": 2}
+        application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>"], "entity_schema": "submission", "flow_name": "Handle contact form", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [{"configuration": {"source_id": "99"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "frontend_submission"}], "version": 2}
       responses:
         "200":
-          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}, {"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}, {"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "triggers": [{"configuration": {"ecp_config": {"file_config": {"shared_with_end_customer": true}, "origin": "END_CUSTOMER_PORTAL"}, "exclude_activities": ["[\"SyncEntity\"]"], "filter_config": {"activity": {"type": ["EntityUpdatedFromPortal", "EntityUpdated", "DocUploadedFromPortal"]}}, "include_activities": ["[\"CreateEntity\"]"], "schema": "submission"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "entity_operation"}, {"configuration": {"schema": "submission"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "entity_manual"}], "version": 2}
+          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>"], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
         "403":
-          application/json: {"error": "Forbidden", "status": 400}
-  resumeExecutionWithToken:
-    speakeasy-default-resume-execution-with-token:
-      requestBody:
-        application/json: {"resume_token": "eyJraWQiOiJrZXkifQ=="}
-      responses:
-        "200":
-          application/json: {"execution": {"actions": [], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"0": "<", "1": "v", "2": "a", "3": "l", "4": "u", "5": "e", "6": ">", "_created_at": "2022-08-17T01:44:25.239Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-07-29T22:57:28.447Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_event": {"activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "operation_type": "createEntity", "org_id": "123"}, "version": 2}, "resumedAction": {"config": {"mapping_attributes": [], "target_schema": "<value>"}, "flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}}
-        "403":
-          application/json: {"error": "Forbidden", "status": 400}
-  retriggerAction:
-    speakeasy-default-retrigger-action:
-      parameters:
-        path:
-          action_id: "9ec3711b-db63-449c-b894-54d5bb622a8f"
-          execution_id: "9baf184f-bc81-4128-bca3-d974c90a12c4"
-      responses:
-        "403":
-          application/json: {"error": "Forbidden", "status": 400}
+          application/json: {"error": "Forbidden", "status": 403}
   searchFlows:
     speakeasy-default-search-flows:
       parameters:
         query:
           schema: "submission"
+          size: 25
+          from: 0
           trigger_source_id: "600945fe-212e-4b97-acf7-391d64648384"
+          include_flows: false
       responses:
         "200":
-          application/json: {"results": [{"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value>"], "conditions": [], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "triggers": [], "version": 2}], "total": "9940.16"}
-  startExecution:
-    speakeasy-default-start-execution:
-      requestBody:
-        application/json: {"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"}
-      responses:
-        "201":
-          application/json: {"actions": [], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}, {"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}, {"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"0": "<", "1": "v", "2": "a", "3": "l", "4": "u", "5": "e", "6": ">", "_created_at": "2023-07-13T03:06:46.168Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2022-02-10T03:00:29.598Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_event": {"activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "operation_type": "createEntity", "org_id": "123"}, "version": 2}
-        "403":
-          application/json: {"error": "Forbidden", "status": 400}
+          application/json: {"results": [{"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": [], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}], "total": 2438.26}
+examplesVersion: 1.0.2
 generatedTests: {}

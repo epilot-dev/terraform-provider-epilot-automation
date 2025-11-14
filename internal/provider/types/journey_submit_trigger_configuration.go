@@ -2,7 +2,9 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type JourneySubmitTriggerConfiguration struct {
 	SourceID types.String `tfsdk:"source_id"`

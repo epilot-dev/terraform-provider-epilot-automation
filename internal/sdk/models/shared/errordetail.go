@@ -2,10 +2,25 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 type ErrorDetail struct {
 	Context     *string `json:"context,omitempty"`
 	Explanation string  `json:"explanation"`
 	ID          *string `json:"id,omitempty"`
+}
+
+func (e ErrorDetail) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *ErrorDetail) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"explanation"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ErrorDetail) GetContext() *string {

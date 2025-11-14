@@ -18,16 +18,18 @@ const (
 	AnyTriggerTypeAny                    AnyTriggerType = "any"
 	AnyTriggerTypeEntityManualTrigger    AnyTriggerType = "EntityManualTrigger"
 	AnyTriggerTypeReceivedEmailTrigger   AnyTriggerType = "ReceivedEmailTrigger"
+	AnyTriggerTypeFlowsTrigger           AnyTriggerType = "FlowsTrigger"
 )
 
 type AnyTrigger struct {
-	FrontendSubmitTrigger  *FrontendSubmitTrigger  `queryParam:"inline"`
-	JourneySubmitTrigger   *JourneySubmitTrigger   `queryParam:"inline"`
-	APISubmissionTrigger   *APISubmissionTrigger   `queryParam:"inline"`
-	EntityOperationTrigger *EntityOperationTrigger `queryParam:"inline"`
-	Any                    any                     `queryParam:"inline"`
-	EntityManualTrigger    *EntityManualTrigger    `queryParam:"inline"`
-	ReceivedEmailTrigger   *ReceivedEmailTrigger   `queryParam:"inline"`
+	FrontendSubmitTrigger  *FrontendSubmitTrigger  `queryParam:"inline" name:"AnyTrigger"`
+	JourneySubmitTrigger   *JourneySubmitTrigger   `queryParam:"inline" name:"AnyTrigger"`
+	APISubmissionTrigger   *APISubmissionTrigger   `queryParam:"inline" name:"AnyTrigger"`
+	EntityOperationTrigger *EntityOperationTrigger `queryParam:"inline" name:"AnyTrigger"`
+	Any                    any                     `queryParam:"inline" name:"AnyTrigger"`
+	EntityManualTrigger    *EntityManualTrigger    `queryParam:"inline" name:"AnyTrigger"`
+	ReceivedEmailTrigger   *ReceivedEmailTrigger   `queryParam:"inline" name:"AnyTrigger"`
+	FlowsTrigger           *FlowsTrigger           `queryParam:"inline" name:"AnyTrigger"`
 
 	Type AnyTriggerType
 }
@@ -68,11 +70,11 @@ func CreateAnyTriggerEntityOperationTrigger(entityOperationTrigger EntityOperati
 	}
 }
 
-func CreateAnyTriggerAny(any any) AnyTrigger {
+func CreateAnyTriggerAny(anyT any) AnyTrigger {
 	typ := AnyTriggerTypeAny
 
 	return AnyTrigger{
-		Any:  any,
+		Any:  anyT,
 		Type: typ,
 	}
 }
@@ -95,53 +97,69 @@ func CreateAnyTriggerReceivedEmailTrigger(receivedEmailTrigger ReceivedEmailTrig
 	}
 }
 
+func CreateAnyTriggerFlowsTrigger(flowsTrigger FlowsTrigger) AnyTrigger {
+	typ := AnyTriggerTypeFlowsTrigger
+
+	return AnyTrigger{
+		FlowsTrigger: &flowsTrigger,
+		Type:         typ,
+	}
+}
+
 func (u *AnyTrigger) UnmarshalJSON(data []byte) error {
 
 	var frontendSubmitTrigger FrontendSubmitTrigger = FrontendSubmitTrigger{}
-	if err := utils.UnmarshalJSON(data, &frontendSubmitTrigger, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &frontendSubmitTrigger, "", true, nil); err == nil {
 		u.FrontendSubmitTrigger = &frontendSubmitTrigger
 		u.Type = AnyTriggerTypeFrontendSubmitTrigger
 		return nil
 	}
 
 	var journeySubmitTrigger JourneySubmitTrigger = JourneySubmitTrigger{}
-	if err := utils.UnmarshalJSON(data, &journeySubmitTrigger, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &journeySubmitTrigger, "", true, nil); err == nil {
 		u.JourneySubmitTrigger = &journeySubmitTrigger
 		u.Type = AnyTriggerTypeJourneySubmitTrigger
 		return nil
 	}
 
 	var apiSubmissionTrigger APISubmissionTrigger = APISubmissionTrigger{}
-	if err := utils.UnmarshalJSON(data, &apiSubmissionTrigger, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &apiSubmissionTrigger, "", true, nil); err == nil {
 		u.APISubmissionTrigger = &apiSubmissionTrigger
 		u.Type = AnyTriggerTypeAPISubmissionTrigger
 		return nil
 	}
 
 	var entityOperationTrigger EntityOperationTrigger = EntityOperationTrigger{}
-	if err := utils.UnmarshalJSON(data, &entityOperationTrigger, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &entityOperationTrigger, "", true, nil); err == nil {
 		u.EntityOperationTrigger = &entityOperationTrigger
 		u.Type = AnyTriggerTypeEntityOperationTrigger
 		return nil
 	}
 
 	var entityManualTrigger EntityManualTrigger = EntityManualTrigger{}
-	if err := utils.UnmarshalJSON(data, &entityManualTrigger, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &entityManualTrigger, "", true, nil); err == nil {
 		u.EntityManualTrigger = &entityManualTrigger
 		u.Type = AnyTriggerTypeEntityManualTrigger
 		return nil
 	}
 
 	var receivedEmailTrigger ReceivedEmailTrigger = ReceivedEmailTrigger{}
-	if err := utils.UnmarshalJSON(data, &receivedEmailTrigger, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &receivedEmailTrigger, "", true, nil); err == nil {
 		u.ReceivedEmailTrigger = &receivedEmailTrigger
 		u.Type = AnyTriggerTypeReceivedEmailTrigger
 		return nil
 	}
 
-	var any any = nil
-	if err := utils.UnmarshalJSON(data, &any, "", true, false); err == nil {
-		u.Any = any
+	var flowsTrigger FlowsTrigger = FlowsTrigger{}
+	if err := utils.UnmarshalJSON(data, &flowsTrigger, "", true, nil); err == nil {
+		u.FlowsTrigger = &flowsTrigger
+		u.Type = AnyTriggerTypeFlowsTrigger
+		return nil
+	}
+
+	var anyVar any = nil
+	if err := utils.UnmarshalJSON(data, &anyVar, "", true, nil); err == nil {
+		u.Any = anyVar
 		u.Type = AnyTriggerTypeAny
 		return nil
 	}
@@ -176,6 +194,10 @@ func (u AnyTrigger) MarshalJSON() ([]byte, error) {
 
 	if u.ReceivedEmailTrigger != nil {
 		return utils.MarshalJSON(u.ReceivedEmailTrigger, "", true)
+	}
+
+	if u.FlowsTrigger != nil {
+		return utils.MarshalJSON(u.FlowsTrigger, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type AnyTrigger: all fields are null")

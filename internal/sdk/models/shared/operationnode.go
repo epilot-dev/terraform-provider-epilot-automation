@@ -17,8 +17,8 @@ const (
 
 // OperationNode - Mapping operation nodes are either primitive values or operation node objects
 type OperationNode struct {
-	OperationObjectNode *OperationObjectNode `queryParam:"inline"`
-	Any                 any                  `queryParam:"inline"`
+	OperationObjectNode *OperationObjectNode `queryParam:"inline" name:"OperationNode"`
+	Any                 any                  `queryParam:"inline" name:"OperationNode"`
 
 	Type OperationNodeType
 }
@@ -32,11 +32,11 @@ func CreateOperationNodeOperationObjectNode(operationObjectNode OperationObjectN
 	}
 }
 
-func CreateOperationNodeAny(any any) OperationNode {
+func CreateOperationNodeAny(anyT any) OperationNode {
 	typ := OperationNodeTypeAny
 
 	return OperationNode{
-		Any:  any,
+		Any:  anyT,
 		Type: typ,
 	}
 }
@@ -44,15 +44,15 @@ func CreateOperationNodeAny(any any) OperationNode {
 func (u *OperationNode) UnmarshalJSON(data []byte) error {
 
 	var operationObjectNode OperationObjectNode = OperationObjectNode{}
-	if err := utils.UnmarshalJSON(data, &operationObjectNode, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &operationObjectNode, "", true, nil); err == nil {
 		u.OperationObjectNode = &operationObjectNode
 		u.Type = OperationNodeTypeOperationObjectNode
 		return nil
 	}
 
-	var any any = nil
-	if err := utils.UnmarshalJSON(data, &any, "", true, false); err == nil {
-		u.Any = any
+	var anyVar any = nil
+	if err := utils.UnmarshalJSON(data, &anyVar, "", true, nil); err == nil {
+		u.Any = anyVar
 		u.Type = OperationNodeTypeAny
 		return nil
 	}

@@ -5,10 +5,22 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
 )
 
 type JourneySubmitTriggerConfiguration struct {
 	SourceID string `json:"source_id"`
+}
+
+func (j JourneySubmitTriggerConfiguration) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(j, "", false)
+}
+
+func (j *JourneySubmitTriggerConfiguration) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &j, "", false, []string{"source_id"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *JourneySubmitTriggerConfiguration) GetSourceID() string {
@@ -45,6 +57,17 @@ type JourneySubmitTrigger struct {
 	Configuration JourneySubmitTriggerConfiguration `json:"configuration"`
 	ID            *string                           `json:"id,omitempty"`
 	Type          JourneySubmitTriggerType          `json:"type"`
+}
+
+func (j JourneySubmitTrigger) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(j, "", false)
+}
+
+func (j *JourneySubmitTrigger) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &j, "", false, []string{"configuration", "type"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *JourneySubmitTrigger) GetConfiguration() JourneySubmitTriggerConfiguration {

@@ -17,9 +17,9 @@ const (
 )
 
 type MappingAttribute struct {
-	SetValueMapper    *SetValueMapper    `queryParam:"inline"`
-	CopyValueMapper   *CopyValueMapper   `queryParam:"inline"`
-	AppendValueMapper *AppendValueMapper `queryParam:"inline"`
+	SetValueMapper    *SetValueMapper    `queryParam:"inline" name:"MappingAttribute"`
+	CopyValueMapper   *CopyValueMapper   `queryParam:"inline" name:"MappingAttribute"`
+	AppendValueMapper *AppendValueMapper `queryParam:"inline" name:"MappingAttribute"`
 
 	Type MappingAttributeType
 }
@@ -54,21 +54,21 @@ func CreateMappingAttributeAppendValueMapper(appendValueMapper AppendValueMapper
 func (u *MappingAttribute) UnmarshalJSON(data []byte) error {
 
 	var setValueMapper SetValueMapper = SetValueMapper{}
-	if err := utils.UnmarshalJSON(data, &setValueMapper, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &setValueMapper, "", true, nil); err == nil {
 		u.SetValueMapper = &setValueMapper
 		u.Type = MappingAttributeTypeSetValueMapper
 		return nil
 	}
 
 	var copyValueMapper CopyValueMapper = CopyValueMapper{}
-	if err := utils.UnmarshalJSON(data, &copyValueMapper, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &copyValueMapper, "", true, nil); err == nil {
 		u.CopyValueMapper = &copyValueMapper
 		u.Type = MappingAttributeTypeCopyValueMapper
 		return nil
 	}
 
 	var appendValueMapper AppendValueMapper = AppendValueMapper{}
-	if err := utils.UnmarshalJSON(data, &appendValueMapper, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &appendValueMapper, "", true, nil); err == nil {
 		u.AppendValueMapper = &appendValueMapper
 		u.Type = MappingAttributeTypeAppendValueMapper
 		return nil

@@ -5,10 +5,22 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
 )
 
 type Configuration struct {
 	SourceID *string `json:"source_id,omitempty"`
+}
+
+func (c Configuration) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *Configuration) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *Configuration) GetSourceID() *string {
@@ -45,6 +57,17 @@ type APISubmissionTrigger struct {
 	Configuration Configuration `json:"configuration"`
 	ID            *string       `json:"id,omitempty"`
 	Type          Type          `json:"type"`
+}
+
+func (a APISubmissionTrigger) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *APISubmissionTrigger) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"configuration", "type"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *APISubmissionTrigger) GetConfiguration() Configuration {

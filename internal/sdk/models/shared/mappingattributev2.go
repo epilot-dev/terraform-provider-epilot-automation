@@ -2,11 +2,26 @@
 
 package shared
 
+import (
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
 type MappingAttributeV2 struct {
 	// Mapping operation nodes are either primitive values or operation node objects
 	Operation OperationNode `json:"operation"`
 	// Target JSON path for the attribute to set
 	Target *string `json:"target,omitempty"`
+}
+
+func (m MappingAttributeV2) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(m, "", false)
+}
+
+func (m *MappingAttributeV2) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"operation"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *MappingAttributeV2) GetOperation() OperationNode {

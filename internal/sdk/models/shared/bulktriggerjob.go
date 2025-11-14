@@ -4,15 +4,273 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
 	"time"
 )
 
+type DataType string
+
+const (
+	DataTypeArrayOfEntityRef          DataType = "arrayOfEntityRef"
+	DataTypeStr                       DataType = "str"
+	DataTypeArrayOfEntitySearchFilter DataType = "arrayOfEntitySearchFilter"
+)
+
+type Data struct {
+	ArrayOfEntityRef          []EntityRef          `queryParam:"inline" name:"data"`
+	Str                       *string              `queryParam:"inline" name:"data"`
+	ArrayOfEntitySearchFilter []EntitySearchFilter `queryParam:"inline" name:"data"`
+
+	Type DataType
+}
+
+func CreateDataArrayOfEntityRef(arrayOfEntityRef []EntityRef) Data {
+	typ := DataTypeArrayOfEntityRef
+
+	return Data{
+		ArrayOfEntityRef: arrayOfEntityRef,
+		Type:             typ,
+	}
+}
+
+func CreateDataStr(str string) Data {
+	typ := DataTypeStr
+
+	return Data{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateDataArrayOfEntitySearchFilter(arrayOfEntitySearchFilter []EntitySearchFilter) Data {
+	typ := DataTypeArrayOfEntitySearchFilter
+
+	return Data{
+		ArrayOfEntitySearchFilter: arrayOfEntitySearchFilter,
+		Type:                      typ,
+	}
+}
+
+func (u *Data) UnmarshalJSON(data []byte) error {
+
+	var arrayOfEntityRef []EntityRef = []EntityRef{}
+	if err := utils.UnmarshalJSON(data, &arrayOfEntityRef, "", true, nil); err == nil {
+		u.ArrayOfEntityRef = arrayOfEntityRef
+		u.Type = DataTypeArrayOfEntityRef
+		return nil
+	}
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
+		u.Str = &str
+		u.Type = DataTypeStr
+		return nil
+	}
+
+	var arrayOfEntitySearchFilter []EntitySearchFilter = []EntitySearchFilter{}
+	if err := utils.UnmarshalJSON(data, &arrayOfEntitySearchFilter, "", true, nil); err == nil {
+		u.ArrayOfEntitySearchFilter = arrayOfEntitySearchFilter
+		u.Type = DataTypeArrayOfEntitySearchFilter
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Data", string(data))
+}
+
+func (u Data) MarshalJSON() ([]byte, error) {
+	if u.ArrayOfEntityRef != nil {
+		return utils.MarshalJSON(u.ArrayOfEntityRef, "", true)
+	}
+
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfEntitySearchFilter != nil {
+		return utils.MarshalJSON(u.ArrayOfEntitySearchFilter, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type Data: all fields are null")
+}
+
+type BulkTriggerJobType string
+
+const (
+	BulkTriggerJobTypeRefs   BulkTriggerJobType = "refs"
+	BulkTriggerJobTypeQuery  BulkTriggerJobType = "query"
+	BulkTriggerJobTypeFilter BulkTriggerJobType = "filter"
+)
+
+func (e BulkTriggerJobType) ToPointer() *BulkTriggerJobType {
+	return &e
+}
+func (e *BulkTriggerJobType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "refs":
+		fallthrough
+	case "query":
+		fallthrough
+	case "filter":
+		*e = BulkTriggerJobType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for BulkTriggerJobType: %v", v)
+	}
+}
+
+// EntityQuery - Query configuration for loading entities
+type EntityQuery struct {
+	Data Data               `json:"data"`
+	Type BulkTriggerJobType `json:"type"`
+}
+
+func (o *EntityQuery) GetData() Data {
+	if o == nil {
+		return Data{}
+	}
+	return o.Data
+}
+
+func (o *EntityQuery) GetType() BulkTriggerJobType {
+	if o == nil {
+		return BulkTriggerJobType("")
+	}
+	return o.Type
+}
+
+type SearchAfterType string
+
+const (
+	SearchAfterTypeStr    SearchAfterType = "str"
+	SearchAfterTypeNumber SearchAfterType = "number"
+)
+
+type SearchAfter struct {
+	Str    *string  `queryParam:"inline" name:"search_after"`
+	Number *float64 `queryParam:"inline" name:"search_after"`
+
+	Type SearchAfterType
+}
+
+func CreateSearchAfterStr(str string) SearchAfter {
+	typ := SearchAfterTypeStr
+
+	return SearchAfter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateSearchAfterNumber(number float64) SearchAfter {
+	typ := SearchAfterTypeNumber
+
+	return SearchAfter{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *SearchAfter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
+		u.Str = &str
+		u.Type = SearchAfterTypeStr
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = SearchAfterTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SearchAfter", string(data))
+}
+
+func (u SearchAfter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SearchAfter: all fields are null")
+}
+
+// PaginationState - Pagination state for entity loading
+type PaginationState struct {
+	// Whether there are more entities to load
+	HasMore *bool `json:"has_more,omitempty"`
+	// Number of entities per page
+	PageSize *int64 `json:"page_size,omitempty"`
+	// Number of pages processed so far
+	PagesProcessed *int64 `json:"pages_processed,omitempty"`
+	// Last sort value used for pagination
+	SearchAfter []SearchAfter `json:"search_after,omitempty"`
+	// Stable query ID for pagination
+	StableQueryID *string `json:"stable_query_id,omitempty"`
+	// Total number of entities processed so far
+	TotalProcessed *int64 `json:"total_processed,omitempty"`
+}
+
+func (o *PaginationState) GetHasMore() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.HasMore
+}
+
+func (o *PaginationState) GetPageSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *PaginationState) GetPagesProcessed() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PagesProcessed
+}
+
+func (o *PaginationState) GetSearchAfter() []SearchAfter {
+	if o == nil {
+		return nil
+	}
+	return o.SearchAfter
+}
+
+func (o *PaginationState) GetStableQueryID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StableQueryID
+}
+
+func (o *PaginationState) GetTotalProcessed() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TotalProcessed
+}
+
 // Status of the bulk trigger automation job
 // * approval: Waiting for user approval to start the bulk trigger automation
-// * starting: Starting automation executions
-// * in_progress: Automation execution are currently running
+// * querying_entities: Loading entities in batches
+// * entities_loaded: All entities have been loaded and stored
+// * executing: Automation execution are currently running
+// * monitoring: All executions have been started, now monitoring their completion
 // * send_report: Automation executions finished running. Report is being created & sent to the user who initiated the bulk trigger automation
 // * finished: Automation executions finished running. Some may have failed. Check the status of each entity.
 // * failed: Bulk trigger automation execution failed. Some executions might have started. Check the status of each entity.
@@ -20,13 +278,15 @@ import (
 type Status string
 
 const (
-	StatusApproval   Status = "approval"
-	StatusStarting   Status = "starting"
-	StatusInProgress Status = "in_progress"
-	StatusSendReport Status = "send_report"
-	StatusFinished   Status = "finished"
-	StatusFailed     Status = "failed"
-	StatusCancelled  Status = "cancelled"
+	StatusApproval         Status = "approval"
+	StatusQueryingEntities Status = "querying_entities"
+	StatusEntitiesLoaded   Status = "entities_loaded"
+	StatusExecuting        Status = "executing"
+	StatusMonitoring       Status = "monitoring"
+	StatusSendReport       Status = "send_report"
+	StatusFinished         Status = "finished"
+	StatusFailed           Status = "failed"
+	StatusCancelled        Status = "cancelled"
 )
 
 func (e Status) ToPointer() *Status {
@@ -40,9 +300,13 @@ func (e *Status) UnmarshalJSON(data []byte) error {
 	switch v {
 	case "approval":
 		fallthrough
-	case "starting":
+	case "querying_entities":
 		fallthrough
-	case "in_progress":
+	case "entities_loaded":
+		fallthrough
+	case "executing":
+		fallthrough
+	case "monitoring":
 		fallthrough
 	case "send_report":
 		fallthrough
@@ -64,18 +328,25 @@ type BulkTriggerJob struct {
 	CreatedAt  time.Time  `json:"created_at"`
 	// User ID who created the bulk trigger automation job
 	CreatedBy string `json:"created_by"`
+	// Query configuration for loading entities
+	EntityQuery *EntityQuery `json:"entity_query,omitempty"`
 	// List of entities & their automation execution id & status
-	ExecutionSummary []ExecItem `json:"execution_summary"`
-	FlowID           string     `json:"flow_id"`
+	ExecutionSummary []ExecItem `json:"execution_summary,omitempty"`
+	// ID of the Automation Flow
+	FlowID string `json:"flow_id"`
 	// Job ID for tracking the status of bulk trigger automation executions
 	JobID string `json:"job_id"`
 	OrgID string `json:"org_id"`
+	// Pagination state for entity loading
+	PaginationState *PaginationState `json:"pagination_state,omitempty"`
 	// Entity ID of the report file entity
 	ReportFileEntityID *string `json:"report_file_entity_id,omitempty"`
 	// Status of the bulk trigger automation job
 	// * approval: Waiting for user approval to start the bulk trigger automation
-	// * starting: Starting automation executions
-	// * in_progress: Automation execution are currently running
+	// * querying_entities: Loading entities in batches
+	// * entities_loaded: All entities have been loaded and stored
+	// * executing: Automation execution are currently running
+	// * monitoring: All executions have been started, now monitoring their completion
 	// * send_report: Automation executions finished running. Report is being created & sent to the user who initiated the bulk trigger automation
 	// * finished: Automation executions finished running. Some may have failed. Check the status of each entity.
 	// * failed: Bulk trigger automation execution failed. Some executions might have started. Check the status of each entity.
@@ -83,8 +354,10 @@ type BulkTriggerJob struct {
 	//
 	Status Status `json:"status"`
 	// Task token to approve/cancel the bulk automation job
-	TaskToken *string   `json:"task_token,omitempty"`
-	UpdatedAt time.Time `json:"updated_at"`
+	TaskToken *string `json:"task_token,omitempty"`
+	// Additional contextual data for a bulk trigger automation. This would normally include additional entity IDs you'd need after a listener picks up an event.
+	TriggerContext map[string]string `json:"trigger_context,omitempty"`
+	UpdatedAt      time.Time         `json:"updated_at"`
 }
 
 func (b BulkTriggerJob) MarshalJSON() ([]byte, error) {
@@ -92,7 +365,7 @@ func (b BulkTriggerJob) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BulkTriggerJob) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"created_at", "created_by", "flow_id", "job_id", "org_id", "status", "updated_at"}); err != nil {
 		return err
 	}
 	return nil
@@ -119,9 +392,16 @@ func (o *BulkTriggerJob) GetCreatedBy() string {
 	return o.CreatedBy
 }
 
+func (o *BulkTriggerJob) GetEntityQuery() *EntityQuery {
+	if o == nil {
+		return nil
+	}
+	return o.EntityQuery
+}
+
 func (o *BulkTriggerJob) GetExecutionSummary() []ExecItem {
 	if o == nil {
-		return []ExecItem{}
+		return nil
 	}
 	return o.ExecutionSummary
 }
@@ -147,6 +427,13 @@ func (o *BulkTriggerJob) GetOrgID() string {
 	return o.OrgID
 }
 
+func (o *BulkTriggerJob) GetPaginationState() *PaginationState {
+	if o == nil {
+		return nil
+	}
+	return o.PaginationState
+}
+
 func (o *BulkTriggerJob) GetReportFileEntityID() *string {
 	if o == nil {
 		return nil
@@ -166,6 +453,13 @@ func (o *BulkTriggerJob) GetTaskToken() *string {
 		return nil
 	}
 	return o.TaskToken
+}
+
+func (o *BulkTriggerJob) GetTriggerContext() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.TriggerContext
 }
 
 func (o *BulkTriggerJob) GetUpdatedAt() time.Time {

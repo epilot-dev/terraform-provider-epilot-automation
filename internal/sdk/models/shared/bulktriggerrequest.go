@@ -2,21 +2,187 @@
 
 package shared
 
-type BulkTriggerRequest struct {
-	EntitiesQuery *string     `json:"entities_query,omitempty"`
-	EntitiesRefs  []EntityRef `json:"entities_refs,omitempty"`
+import (
+	"errors"
+	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
+)
+
+type Three struct {
+	// A subset of simplified Elasticsearch query clauses. The default operator is a logical AND. Use nested $and, $or, $not to combine filters using different logical operators.
+	EntitiesFilter []EntitySearchFilter `json:"entities_filter"`
+	// Additional contextual data for a bulk trigger automation. This would normally include additional entity IDs you'd need after a listener picks up an event.
+	TriggerContext map[string]string `json:"trigger_context,omitempty"`
 }
 
-func (o *BulkTriggerRequest) GetEntitiesQuery() *string {
+func (t Three) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *Three) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, []string{"entities_filter"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Three) GetEntitiesFilter() []EntitySearchFilter {
+	if o == nil {
+		return []EntitySearchFilter{}
+	}
+	return o.EntitiesFilter
+}
+
+func (o *Three) GetTriggerContext() map[string]string {
 	if o == nil {
 		return nil
+	}
+	return o.TriggerContext
+}
+
+type Two struct {
+	EntitiesQuery string `json:"entities_query"`
+	// Additional contextual data for a bulk trigger automation. This would normally include additional entity IDs you'd need after a listener picks up an event.
+	TriggerContext map[string]string `json:"trigger_context,omitempty"`
+}
+
+func (t Two) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *Two) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, []string{"entities_query"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Two) GetEntitiesQuery() string {
+	if o == nil {
+		return ""
 	}
 	return o.EntitiesQuery
 }
 
-func (o *BulkTriggerRequest) GetEntitiesRefs() []EntityRef {
+func (o *Two) GetTriggerContext() map[string]string {
 	if o == nil {
 		return nil
 	}
+	return o.TriggerContext
+}
+
+type One struct {
+	EntitiesRefs []EntityRef `json:"entities_refs"`
+	// Additional contextual data for a bulk trigger automation. This would normally include additional entity IDs you'd need after a listener picks up an event.
+	TriggerContext map[string]string `json:"trigger_context,omitempty"`
+}
+
+func (o One) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(o, "", false)
+}
+
+func (o *One) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"entities_refs"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *One) GetEntitiesRefs() []EntityRef {
+	if o == nil {
+		return []EntityRef{}
+	}
 	return o.EntitiesRefs
+}
+
+func (o *One) GetTriggerContext() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.TriggerContext
+}
+
+type BulkTriggerRequestType string
+
+const (
+	BulkTriggerRequestTypeOne   BulkTriggerRequestType = "1"
+	BulkTriggerRequestTypeTwo   BulkTriggerRequestType = "2"
+	BulkTriggerRequestTypeThree BulkTriggerRequestType = "3"
+)
+
+type BulkTriggerRequest struct {
+	One   *One   `queryParam:"inline" name:"BulkTriggerRequest"`
+	Two   *Two   `queryParam:"inline" name:"BulkTriggerRequest"`
+	Three *Three `queryParam:"inline" name:"BulkTriggerRequest"`
+
+	Type BulkTriggerRequestType
+}
+
+func CreateBulkTriggerRequestOne(one One) BulkTriggerRequest {
+	typ := BulkTriggerRequestTypeOne
+
+	return BulkTriggerRequest{
+		One:  &one,
+		Type: typ,
+	}
+}
+
+func CreateBulkTriggerRequestTwo(two Two) BulkTriggerRequest {
+	typ := BulkTriggerRequestTypeTwo
+
+	return BulkTriggerRequest{
+		Two:  &two,
+		Type: typ,
+	}
+}
+
+func CreateBulkTriggerRequestThree(three Three) BulkTriggerRequest {
+	typ := BulkTriggerRequestTypeThree
+
+	return BulkTriggerRequest{
+		Three: &three,
+		Type:  typ,
+	}
+}
+
+func (u *BulkTriggerRequest) UnmarshalJSON(data []byte) error {
+
+	var one One = One{}
+	if err := utils.UnmarshalJSON(data, &one, "", true, nil); err == nil {
+		u.One = &one
+		u.Type = BulkTriggerRequestTypeOne
+		return nil
+	}
+
+	var two Two = Two{}
+	if err := utils.UnmarshalJSON(data, &two, "", true, nil); err == nil {
+		u.Two = &two
+		u.Type = BulkTriggerRequestTypeTwo
+		return nil
+	}
+
+	var three Three = Three{}
+	if err := utils.UnmarshalJSON(data, &three, "", true, nil); err == nil {
+		u.Three = &three
+		u.Type = BulkTriggerRequestTypeThree
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BulkTriggerRequest", string(data))
+}
+
+func (u BulkTriggerRequest) MarshalJSON() ([]byte, error) {
+	if u.One != nil {
+		return utils.MarshalJSON(u.One, "", true)
+	}
+
+	if u.Two != nil {
+		return utils.MarshalJSON(u.Two, "", true)
+	}
+
+	if u.Three != nil {
+		return utils.MarshalJSON(u.Three, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type BulkTriggerRequest: all fields are null")
 }

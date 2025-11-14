@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/internal/utils"
 )
 
 type CartCheckoutActionReason struct {
@@ -12,6 +13,17 @@ type CartCheckoutActionReason struct {
 	Message *string `json:"message,omitempty"`
 	// Extra metadata about the skipping reason - such as a certain condition not met, etc.
 	Payload map[string]any `json:"payload,omitempty"`
+}
+
+func (c CartCheckoutActionReason) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CartCheckoutActionReason) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CartCheckoutActionReason) GetMessage() *string {
@@ -76,6 +88,17 @@ type CartCheckoutAction struct {
 	StartedAt  *string                 `json:"started_at,omitempty"`
 	Type       *CartCheckoutActionType `json:"type,omitempty"`
 	UpdatedAt  *string                 `json:"updated_at,omitempty"`
+}
+
+func (c CartCheckoutAction) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CartCheckoutAction) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CartCheckoutAction) GetAllowFailure() *bool {

@@ -11,6 +11,7 @@ type ExecutionStatus string
 
 const (
 	ExecutionStatusPending    ExecutionStatus = "pending"
+	ExecutionStatusStarting   ExecutionStatus = "starting"
 	ExecutionStatusInProgress ExecutionStatus = "in_progress"
 	ExecutionStatusPaused     ExecutionStatus = "paused"
 	ExecutionStatusSuccess    ExecutionStatus = "success"
@@ -31,6 +32,8 @@ func (e *ExecutionStatus) UnmarshalJSON(data []byte) error {
 	}
 	switch v {
 	case "pending":
+		fallthrough
+	case "starting":
 		fallthrough
 	case "in_progress":
 		fallthrough

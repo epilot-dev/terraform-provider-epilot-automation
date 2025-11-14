@@ -2,7 +2,9 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type EntityOperationTrigger struct {
 	Configuration EntityOperationTriggerConfiguration `tfsdk:"configuration"`
