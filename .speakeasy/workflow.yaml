@@ -1,0 +1,14 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    my-source:
+        inputs:
+            - location: https://docs.api.epilot.io/automation.yaml
+        overlays:
+            - location: overlay.yaml
+        registry:
+            location: registry.speakeasyapi.dev/epilot/epilot/my-source
+targets:
+    terraform:
+        target: terraform
+        source: my-source

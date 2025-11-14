@@ -1,0 +1,74 @@
+name: Autorelease
+
+# On each main branch push, bump version and publish a release
+"on":
+  push:
+    branches:
+      - main
+
+# Releases need permissions to read and write the repository contents.
+# GitHub considers creating releases and uploading assets as writing contents.
+permissions:
+  contents: write
+
+jobs:
+  autorelease:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      # Semver
+      - name: Get Next Version
+        id: semver
+        uses: ietf-tools/semver-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          skipInvalidTags: true
+          patchList: ci,fix,bugfix,perf,refactor,test,tests
+      - name: Create Release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          allowUpdates: true
+          draft: false
+          makeLatest: true
+          name: ${{ steps.semver.outputs.next }}
+          tag: ${{ steps.semver.outputs.next }}
+          body: Update Terraform Provider with latest API changes
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+
+      # Re-run checkout to load the updated release tag
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Goreleaser
+      - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4.0.0
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@111c56156bcc6918c056dbef52164cfa583dc549 # v5.2.0
+        id: import_gpg
+        with:
+          gpg_private_key: ${{ secrets.TERRAFORM_GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.TERRAFORM_GPG_PASSPHRASE }}
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@f82d6c1c344bcacabba2c841718984797f664a6b # v4.2.0
+        with:
+          args: release --clean
+        env:
+          # GitHub sets the GITHUB_TOKEN secret automatically.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
+
+      # Trigger gitlab pipeline
+      - name: Trigger gitlab pipeline
+        uses: appleboy/gitlab-ci-action@v1.3.0
+        with:
+          host: "https://gitlab.com"
+          token: ${{ secrets.GITLAB_PROVIDERS_TOKEN }}
+          project_id: 54648643
+          ref: providers
+
