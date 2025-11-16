@@ -22,18 +22,18 @@ func (e *ErrorInfo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ErrorInfo) GetAdditionalProperties() any {
-	if o == nil {
+func (e *ErrorInfo) GetAdditionalProperties() any {
+	if e == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return e.AdditionalProperties
 }
 
-func (o *ErrorInfo) GetDetails() []ErrorDetail {
-	if o == nil {
+func (e *ErrorInfo) GetDetails() []ErrorDetail {
+	if e == nil {
 		return nil
 	}
-	return o.Details
+	return e.Details
 }
 
 type ErrorOutput struct {
@@ -53,23 +53,23 @@ func (e *ErrorOutput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ErrorOutput) GetErrorCode() ErrorCode {
-	if o == nil {
+func (e *ErrorOutput) GetErrorCode() ErrorCode {
+	if e == nil {
 		return ErrorCode("")
 	}
-	return o.ErrorCode
+	return e.ErrorCode
 }
 
-func (o *ErrorOutput) GetErrorInfo() *ErrorInfo {
-	if o == nil {
+func (e *ErrorOutput) GetErrorInfo() *ErrorInfo {
+	if e == nil {
 		return nil
 	}
-	return o.ErrorInfo
+	return e.ErrorInfo
 }
 
-func (o *ErrorOutput) GetErrorReason() string {
-	if o == nil {
+func (e *ErrorOutput) GetErrorReason() string {
+	if e == nil {
 		return ""
 	}
-	return o.ErrorReason
+	return e.ErrorReason
 }

@@ -50,37 +50,37 @@ func (t *TriggerEventEntityActivity) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TriggerEventEntityActivity) GetActivityID() string {
-	if o == nil {
+func (t *TriggerEventEntityActivity) GetActivityID() string {
+	if t == nil {
 		return ""
 	}
-	return o.ActivityID
+	return t.ActivityID
 }
 
-func (o *TriggerEventEntityActivity) GetActivityType() string {
-	if o == nil {
+func (t *TriggerEventEntityActivity) GetActivityType() string {
+	if t == nil {
 		return ""
 	}
-	return o.ActivityType
+	return t.ActivityType
 }
 
-func (o *TriggerEventEntityActivity) GetEntityID() *string {
-	if o == nil {
+func (t *TriggerEventEntityActivity) GetEntityID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.EntityID
+	return t.EntityID
 }
 
-func (o *TriggerEventEntityActivity) GetOrgID() string {
-	if o == nil {
+func (t *TriggerEventEntityActivity) GetOrgID() string {
+	if t == nil {
 		return ""
 	}
-	return o.OrgID
+	return t.OrgID
 }
 
-func (o *TriggerEventEntityActivity) GetType() *TriggerEventEntityActivityType {
-	if o == nil {
+func (t *TriggerEventEntityActivity) GetType() *TriggerEventEntityActivityType {
+	if t == nil {
 		return nil
 	}
-	return o.Type
+	return t.Type
 }

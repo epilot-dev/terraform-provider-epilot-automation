@@ -29,32 +29,32 @@ func (g *GetExecutionsRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *GetExecutionsRequest) GetEntityID() *string {
-	if o == nil {
+func (g *GetExecutionsRequest) GetEntityID() *string {
+	if g == nil {
 		return nil
 	}
-	return o.EntityID
+	return g.EntityID
 }
 
-func (o *GetExecutionsRequest) GetFrom() *int64 {
-	if o == nil {
+func (g *GetExecutionsRequest) GetFrom() *int64 {
+	if g == nil {
 		return nil
 	}
-	return o.From
+	return g.From
 }
 
-func (o *GetExecutionsRequest) GetIncludeFlows() *bool {
-	if o == nil {
+func (g *GetExecutionsRequest) GetIncludeFlows() *bool {
+	if g == nil {
 		return nil
 	}
-	return o.IncludeFlows
+	return g.IncludeFlows
 }
 
-func (o *GetExecutionsRequest) GetSize() *int64 {
-	if o == nil {
+func (g *GetExecutionsRequest) GetSize() *int64 {
+	if g == nil {
 		return nil
 	}
-	return o.Size
+	return g.Size
 }
 
 // GetExecutionsResponseBody - The requested resource is forbidden
@@ -65,18 +65,18 @@ type GetExecutionsResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *GetExecutionsResponseBody) GetError() *string {
-	if o == nil {
+func (g *GetExecutionsResponseBody) GetError() *string {
+	if g == nil {
 		return nil
 	}
-	return o.Error
+	return g.Error
 }
 
-func (o *GetExecutionsResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (g *GetExecutionsResponseBody) GetStatus() *int64 {
+	if g == nil {
 		return nil
 	}
-	return o.Status
+	return g.Status
 }
 
 type GetExecutionsResponse struct {
@@ -92,37 +92,37 @@ type GetExecutionsResponse struct {
 	Object *GetExecutionsResponseBody
 }
 
-func (o *GetExecutionsResponse) GetContentType() string {
-	if o == nil {
+func (g *GetExecutionsResponse) GetContentType() string {
+	if g == nil {
 		return ""
 	}
-	return o.ContentType
+	return g.ContentType
 }
 
-func (o *GetExecutionsResponse) GetGetExecutionsResp() *shared.GetExecutionsResp {
-	if o == nil {
+func (g *GetExecutionsResponse) GetGetExecutionsResp() *shared.GetExecutionsResp {
+	if g == nil {
 		return nil
 	}
-	return o.GetExecutionsResp
+	return g.GetExecutionsResp
 }
 
-func (o *GetExecutionsResponse) GetStatusCode() int {
-	if o == nil {
+func (g *GetExecutionsResponse) GetStatusCode() int {
+	if g == nil {
 		return 0
 	}
-	return o.StatusCode
+	return g.StatusCode
 }
 
-func (o *GetExecutionsResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (g *GetExecutionsResponse) GetRawResponse() *http.Response {
+	if g == nil {
 		return nil
 	}
-	return o.RawResponse
+	return g.RawResponse
 }
 
-func (o *GetExecutionsResponse) GetObject() *GetExecutionsResponseBody {
-	if o == nil {
+func (g *GetExecutionsResponse) GetObject() *GetExecutionsResponseBody {
+	if g == nil {
 		return nil
 	}
-	return o.Object
+	return g.Object
 }

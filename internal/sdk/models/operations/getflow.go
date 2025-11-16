@@ -12,11 +12,11 @@ type GetFlowRequest struct {
 	FlowID string `pathParam:"style=simple,explode=false,name=flow_id"`
 }
 
-func (o *GetFlowRequest) GetFlowID() string {
-	if o == nil {
+func (g *GetFlowRequest) GetFlowID() string {
+	if g == nil {
 		return ""
 	}
-	return o.FlowID
+	return g.FlowID
 }
 
 // GetFlowResponseBody - The requested resource is forbidden
@@ -27,18 +27,18 @@ type GetFlowResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *GetFlowResponseBody) GetError() *string {
-	if o == nil {
+func (g *GetFlowResponseBody) GetError() *string {
+	if g == nil {
 		return nil
 	}
-	return o.Error
+	return g.Error
 }
 
-func (o *GetFlowResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (g *GetFlowResponseBody) GetStatus() *int64 {
+	if g == nil {
 		return nil
 	}
-	return o.Status
+	return g.Status
 }
 
 type GetFlowResponse struct {
@@ -54,37 +54,37 @@ type GetFlowResponse struct {
 	Object *GetFlowResponseBody
 }
 
-func (o *GetFlowResponse) GetAutomationFlow() *shared.AutomationFlow {
-	if o == nil {
+func (g *GetFlowResponse) GetAutomationFlow() *shared.AutomationFlow {
+	if g == nil {
 		return nil
 	}
-	return o.AutomationFlow
+	return g.AutomationFlow
 }
 
-func (o *GetFlowResponse) GetContentType() string {
-	if o == nil {
+func (g *GetFlowResponse) GetContentType() string {
+	if g == nil {
 		return ""
 	}
-	return o.ContentType
+	return g.ContentType
 }
 
-func (o *GetFlowResponse) GetStatusCode() int {
-	if o == nil {
+func (g *GetFlowResponse) GetStatusCode() int {
+	if g == nil {
 		return 0
 	}
-	return o.StatusCode
+	return g.StatusCode
 }
 
-func (o *GetFlowResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (g *GetFlowResponse) GetRawResponse() *http.Response {
+	if g == nil {
 		return nil
 	}
-	return o.RawResponse
+	return g.RawResponse
 }
 
-func (o *GetFlowResponse) GetObject() *GetFlowResponseBody {
-	if o == nil {
+func (g *GetFlowResponse) GetObject() *GetFlowResponseBody {
+	if g == nil {
 		return nil
 	}
-	return o.Object
+	return g.Object
 }

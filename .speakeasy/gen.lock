@@ -3,28 +3,28 @@ id: 6df5dec4-6d34-4c07-99f4-b36e64bbb781
 management:
   docChecksum: 15055178a33949806277024d8d19e105
   docVersion: 1.0.0
-  speakeasyVersion: 1.611.0
-  generationVersion: 2.694.1
-  releaseVersion: 0.9.0
-  configChecksum: 9b00dcb1c48bbdcd5df6667eb8d05d74
+  speakeasyVersion: 1.658.1
+  generationVersion: 2.755.6
+  releaseVersion: 0.10.0
+  configChecksum: 7b424f842e7a3b4bd67fff3eefa5610d
+  repoURL: https://github.com/epilot-dev/terraform-provider-epilot-automation.git
 features:
   terraform:
     additionalDependencies: 0.1.0
-    additionalProperties: 0.1.2
-    constsAndDefaults: 0.2.1
-    core: 3.44.1
+    additionalProperties: 0.1.3
+    constsAndDefaults: 0.3.0
+    core: 3.46.16
     deprecations: 2.82.0
-    globalSecurity: 2.82.0
+    globalSecurity: 2.82.1
     globalServerURLs: 2.83.0
     inputOutputModels: 2.83.0
     nullables: 0.0.0
     retries: 2.81.4
     typeOverrides: 2.81.1
-    unions: 2.81.17
+    unions: 2.82.2
 generatedFiles:
   - .gitattributes
   - USAGE.md
-  - examples/README.md
   - examples/data-sources/epilot-automation_flow/data-source.tf
   - examples/provider/provider.tf
   - examples/resources/epilot-automation_flow/import-by-string-id.tf
@@ -214,12 +214,13 @@ generatedFiles:
   - internal/sdk/models/shared/workflowcontext.go
   - internal/sdk/models/shared/workflowcontextrole.go
   - internal/sdk/models/shared/workflowexecutioncontext.go
+  - internal/sdk/optionalnullable/optionalnullable.go
+  - internal/sdk/optionalnullable/optionalnullable_test.go
   - internal/sdk/retry/config.go
   - internal/sdk/sdk.go
   - internal/sdk/types/bigint.go
   - internal/sdk/types/date.go
   - internal/sdk/types/datetime.go
-  - internal/sdk/types/decimal.go
   - internal/sdk/types/pointers.go
   - internal/validators/DateValidator.go
   - internal/validators/ExactlyOneChild.go
