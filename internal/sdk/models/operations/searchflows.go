@@ -32,39 +32,39 @@ func (s *SearchFlowsRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SearchFlowsRequest) GetFrom() *int64 {
-	if o == nil {
+func (s *SearchFlowsRequest) GetFrom() *int64 {
+	if s == nil {
 		return nil
 	}
-	return o.From
+	return s.From
 }
 
-func (o *SearchFlowsRequest) GetIncludeFlows() *bool {
-	if o == nil {
+func (s *SearchFlowsRequest) GetIncludeFlows() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.IncludeFlows
+	return s.IncludeFlows
 }
 
-func (o *SearchFlowsRequest) GetSchema() *string {
-	if o == nil {
+func (s *SearchFlowsRequest) GetSchema() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Schema
+	return s.Schema
 }
 
-func (o *SearchFlowsRequest) GetSize() *int64 {
-	if o == nil {
+func (s *SearchFlowsRequest) GetSize() *int64 {
+	if s == nil {
 		return nil
 	}
-	return o.Size
+	return s.Size
 }
 
-func (o *SearchFlowsRequest) GetTriggerSourceID() *string {
-	if o == nil {
+func (s *SearchFlowsRequest) GetTriggerSourceID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.TriggerSourceID
+	return s.TriggerSourceID
 }
 
 type SearchFlowsResponse struct {
@@ -78,30 +78,30 @@ type SearchFlowsResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *SearchFlowsResponse) GetContentType() string {
-	if o == nil {
+func (s *SearchFlowsResponse) GetContentType() string {
+	if s == nil {
 		return ""
 	}
-	return o.ContentType
+	return s.ContentType
 }
 
-func (o *SearchFlowsResponse) GetSearchAutomationsResp() *shared.SearchAutomationsResp {
-	if o == nil {
+func (s *SearchFlowsResponse) GetSearchAutomationsResp() *shared.SearchAutomationsResp {
+	if s == nil {
 		return nil
 	}
-	return o.SearchAutomationsResp
+	return s.SearchAutomationsResp
 }
 
-func (o *SearchFlowsResponse) GetStatusCode() int {
-	if o == nil {
+func (s *SearchFlowsResponse) GetStatusCode() int {
+	if s == nil {
 		return 0
 	}
-	return o.StatusCode
+	return s.StatusCode
 }
 
-func (o *SearchFlowsResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (s *SearchFlowsResponse) GetRawResponse() *http.Response {
+	if s == nil {
 		return nil
 	}
-	return o.RawResponse
+	return s.RawResponse
 }

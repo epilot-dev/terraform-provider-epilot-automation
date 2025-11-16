@@ -31,23 +31,23 @@ func (c *CopyValueMapper) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CopyValueMapper) GetMode() MappingAttributeMode {
-	if o == nil {
+func (c *CopyValueMapper) GetMode() MappingAttributeMode {
+	if c == nil {
 		return MappingAttributeMode("")
 	}
-	return o.Mode
+	return c.Mode
 }
 
-func (o *CopyValueMapper) GetSource() string {
-	if o == nil {
+func (c *CopyValueMapper) GetSource() string {
+	if c == nil {
 		return ""
 	}
-	return o.Source
+	return c.Source
 }
 
-func (o *CopyValueMapper) GetTarget() string {
-	if o == nil {
+func (c *CopyValueMapper) GetTarget() string {
+	if c == nil {
 		return ""
 	}
-	return o.Target
+	return c.Target
 }

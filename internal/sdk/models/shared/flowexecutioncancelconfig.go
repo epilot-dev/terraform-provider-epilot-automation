@@ -25,16 +25,16 @@ func (f *FlowExecutionCancelConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *FlowExecutionCancelConfig) GetExtraDescription() *string {
-	if o == nil {
+func (f *FlowExecutionCancelConfig) GetExtraDescription() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ExtraDescription
+	return f.ExtraDescription
 }
 
-func (o *FlowExecutionCancelConfig) GetSelectedReasons() []CancellationReason {
-	if o == nil {
+func (f *FlowExecutionCancelConfig) GetSelectedReasons() []CancellationReason {
+	if f == nil {
 		return nil
 	}
-	return o.SelectedReasons
+	return f.SelectedReasons
 }

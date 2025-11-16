@@ -7,16 +7,16 @@ type GetExecutionsResp struct {
 	Total   float64               `json:"total"`
 }
 
-func (o *GetExecutionsResp) GetResults() []AutomationExecution {
-	if o == nil {
+func (g *GetExecutionsResp) GetResults() []AutomationExecution {
+	if g == nil {
 		return []AutomationExecution{}
 	}
-	return o.Results
+	return g.Results
 }
 
-func (o *GetExecutionsResp) GetTotal() float64 {
-	if o == nil {
+func (g *GetExecutionsResp) GetTotal() float64 {
+	if g == nil {
 		return 0.0
 	}
-	return o.Total
+	return g.Total
 }

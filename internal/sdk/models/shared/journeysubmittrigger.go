@@ -23,11 +23,11 @@ func (j *JourneySubmitTriggerConfiguration) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *JourneySubmitTriggerConfiguration) GetSourceID() string {
-	if o == nil {
+func (j *JourneySubmitTriggerConfiguration) GetSourceID() string {
+	if j == nil {
 		return ""
 	}
-	return o.SourceID
+	return j.SourceID
 }
 
 type JourneySubmitTriggerType string
@@ -70,23 +70,23 @@ func (j *JourneySubmitTrigger) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *JourneySubmitTrigger) GetConfiguration() JourneySubmitTriggerConfiguration {
-	if o == nil {
+func (j *JourneySubmitTrigger) GetConfiguration() JourneySubmitTriggerConfiguration {
+	if j == nil {
 		return JourneySubmitTriggerConfiguration{}
 	}
-	return o.Configuration
+	return j.Configuration
 }
 
-func (o *JourneySubmitTrigger) GetID() *string {
-	if o == nil {
+func (j *JourneySubmitTrigger) GetID() *string {
+	if j == nil {
 		return nil
 	}
-	return o.ID
+	return j.ID
 }
 
-func (o *JourneySubmitTrigger) GetType() JourneySubmitTriggerType {
-	if o == nil {
+func (j *JourneySubmitTrigger) GetType() JourneySubmitTriggerType {
+	if j == nil {
 		return JourneySubmitTriggerType("")
 	}
-	return o.Type
+	return j.Type
 }
