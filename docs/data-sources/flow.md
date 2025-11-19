@@ -23,7 +23,7 @@ data "epilot-automation_flow" "my_flow" {
 ### Read-Only
 
 - `actions` (List of String) The actions (nodes) of the automation flow
-- `conditions` (String) Parsed as JSON.
+- `conditions` (Attributes List) (see [below for nested schema](#nestedatt--conditions))
 - `disable_details` (Attributes) (see [below for nested schema](#nestedatt--disable_details))
 - `enabled` (Boolean) Whether the automation is enabled or not
 - `entity_schema` (String) The triggering entity schema
@@ -37,6 +37,44 @@ data "epilot-automation_flow" "my_flow" {
 - `triggers` (Attributes List) (see [below for nested schema](#nestedatt--triggers))
 - `version` (Number) Version of the flow
 - `workflow_context` (Attributes) For automation that are connected to workflows V2, this field tracks various information about the workflow. (see [below for nested schema](#nestedatt--workflow_context))
+
+<a id="nestedatt--conditions"></a>
+### Nested Schema for `conditions`
+
+Read-Only:
+
+- `evaluation_result` (Boolean) Result of the condition evaluation
+- `id` (String)
+- `schedule_id` (String) Schedule Id which indicates the schedule of the actions inside the condition
+- `statements` (Attributes List) (see [below for nested schema](#nestedatt--conditions--statements))
+
+<a id="nestedatt--conditions--statements"></a>
+### Nested Schema for `conditions.statements`
+
+Read-Only:
+
+- `id` (String)
+- `operation` (String)
+- `source` (Attributes) (see [below for nested schema](#nestedatt--conditions--statements--source))
+- `values` (List of String)
+
+<a id="nestedatt--conditions--statements--source"></a>
+### Nested Schema for `conditions.statements.source`
+
+Read-Only:
+
+- `attribute` (String)
+- `attribute_operation` (String)
+- `attribute_repeatable` (Boolean)
+- `attribute_type` (String)
+- `id` (String) The id of the action or trigger
+- `origin` (String)
+- `origin_type` (String)
+- `repeatable_item_op` (Boolean) Whether to apply the operation to each item of the repeatable attribute
+- `schema` (String)
+
+
+
 
 <a id="nestedatt--disable_details"></a>
 ### Nested Schema for `disable_details`

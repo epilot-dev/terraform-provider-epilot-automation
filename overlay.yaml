@@ -93,6 +93,8 @@ actions:
   - target: $["components"]["schemas"]["AutomationFlow"]["properties"]
     update: 
       schedules: {}  
-  - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["conditions"]
-    update:
-      x-speakeasy-type-override: any
+
+  # remove this due to failing backwards compatibility
+  # - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["conditions"]
+  #   update:
+  #     x-speakeasy-type-override: any

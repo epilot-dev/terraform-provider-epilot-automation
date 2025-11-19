@@ -39,21 +39,21 @@ type FlowResource struct {
 
 // FlowResourceModel describes the resource data model.
 type FlowResourceModel struct {
-	Actions           []jsontypes.Normalized   `tfsdk:"actions"`
-	Conditions        jsontypes.Normalized     `tfsdk:"conditions"`
-	DisableDetails    *tfTypes.DisableDetails  `tfsdk:"disable_details"`
-	Enabled           types.Bool               `tfsdk:"enabled"`
-	EntitySchema      types.String             `tfsdk:"entity_schema"`
-	FlowName          types.String             `tfsdk:"flow_name"`
-	ID                types.String             `tfsdk:"id"`
-	Manifest          []types.String           `tfsdk:"manifest"`
-	MaxExecutions     *tfTypes.MaxExecutions   `tfsdk:"max_executions"`
-	Schedules         jsontypes.Normalized     `tfsdk:"schedules"`
-	SystemFlow        types.Bool               `tfsdk:"system_flow"`
-	TriggerConditions []jsontypes.Normalized   `tfsdk:"trigger_conditions"`
-	Triggers          []tfTypes.AnyTrigger     `tfsdk:"triggers"`
-	Version           types.Float64            `tfsdk:"version"`
-	WorkflowContext   *tfTypes.WorkflowContext `tfsdk:"workflow_context"`
+	Actions           []jsontypes.Normalized    `tfsdk:"actions"`
+	Conditions        []tfTypes.ActionCondition `tfsdk:"conditions"`
+	DisableDetails    *tfTypes.DisableDetails   `tfsdk:"disable_details"`
+	Enabled           types.Bool                `tfsdk:"enabled"`
+	EntitySchema      types.String              `tfsdk:"entity_schema"`
+	FlowName          types.String              `tfsdk:"flow_name"`
+	ID                types.String              `tfsdk:"id"`
+	Manifest          []types.String            `tfsdk:"manifest"`
+	MaxExecutions     *tfTypes.MaxExecutions    `tfsdk:"max_executions"`
+	Schedules         jsontypes.Normalized      `tfsdk:"schedules"`
+	SystemFlow        types.Bool                `tfsdk:"system_flow"`
+	TriggerConditions []jsontypes.Normalized    `tfsdk:"trigger_conditions"`
+	Triggers          []tfTypes.AnyTrigger      `tfsdk:"triggers"`
+	Version           types.Float64             `tfsdk:"version"`
+	WorkflowContext   *tfTypes.WorkflowContext  `tfsdk:"workflow_context"`
 }
 
 func (r *FlowResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -72,11 +72,170 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 					listvalidator.ValueStringsAre(validators.IsValidJSON()),
 				},
 			},
-			"conditions": schema.StringAttribute{
-				CustomType:  jsontypes.NormalizedType{},
-				Computed:    true,
-				Optional:    true,
-				Description: `Parsed as JSON.`,
+			"conditions": schema.ListNestedAttribute{
+				Computed: true,
+				Optional: true,
+				NestedObject: schema.NestedAttributeObject{
+					Validators: []validator.Object{
+						speakeasy_objectvalidators.NotNull(),
+					},
+					Attributes: map[string]schema.Attribute{
+						"evaluation_result": schema.BoolAttribute{
+							Computed:    true,
+							Optional:    true,
+							Description: `Result of the condition evaluation`,
+						},
+						"id": schema.StringAttribute{
+							Computed: true,
+							Optional: true,
+						},
+						"schedule_id": schema.StringAttribute{
+							Computed:    true,
+							Optional:    true,
+							Description: `Schedule Id which indicates the schedule of the actions inside the condition`,
+						},
+						"statements": schema.ListNestedAttribute{
+							Computed: true,
+							Optional: true,
+							NestedObject: schema.NestedAttributeObject{
+								Validators: []validator.Object{
+									speakeasy_objectvalidators.NotNull(),
+								},
+								Attributes: map[string]schema.Attribute{
+									"id": schema.StringAttribute{
+										Computed: true,
+										Optional: true,
+									},
+									"operation": schema.StringAttribute{
+										Computed:    true,
+										Optional:    true,
+										Description: `must be one of ["equals", "not_equals", "any_of", "none_of", "contains", "not_contains", "starts_with", "ends_with", "greater_than", "less_than", "greater_than_or_equals", "less_than_or_equals", "is_empty", "is_not_empty", "entity_exists", "entity_does_not_exist"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"equals",
+												"not_equals",
+												"any_of",
+												"none_of",
+												"contains",
+												"not_contains",
+												"starts_with",
+												"ends_with",
+												"greater_than",
+												"less_than",
+												"greater_than_or_equals",
+												"less_than_or_equals",
+												"is_empty",
+												"is_not_empty",
+												"entity_exists",
+												"entity_does_not_exist",
+											),
+										},
+									},
+									"source": schema.SingleNestedAttribute{
+										Computed: true,
+										Optional: true,
+										Attributes: map[string]schema.Attribute{
+											"attribute": schema.StringAttribute{
+												Computed: true,
+												Optional: true,
+											},
+											"attribute_operation": schema.StringAttribute{
+												Computed:    true,
+												Optional:    true,
+												Description: `must be one of ["all", "updated", "added", "deleted"]`,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"all",
+														"updated",
+														"added",
+														"deleted",
+													),
+												},
+											},
+											"attribute_repeatable": schema.BoolAttribute{
+												Computed: true,
+												Optional: true,
+											},
+											"attribute_type": schema.StringAttribute{
+												Computed:    true,
+												Optional:    true,
+												Description: `must be one of ["string", "text", "number", "boolean", "date", "datetime", "tags", "country", "email", "phone", "product", "price", "status", "relation", "multiselect", "select", "radio", "relation_user", "purpose", "label", "payment", "relation_payment_method"]`,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"string",
+														"text",
+														"number",
+														"boolean",
+														"date",
+														"datetime",
+														"tags",
+														"country",
+														"email",
+														"phone",
+														"product",
+														"price",
+														"status",
+														"relation",
+														"multiselect",
+														"select",
+														"radio",
+														"relation_user",
+														"purpose",
+														"label",
+														"payment",
+														"relation_payment_method",
+													),
+												},
+											},
+											"id": schema.StringAttribute{
+												Computed:    true,
+												Optional:    true,
+												Description: `The id of the action or trigger`,
+											},
+											"origin": schema.StringAttribute{
+												Computed:    true,
+												Optional:    true,
+												Description: `must be one of ["trigger", "action"]`,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"trigger",
+														"action",
+													),
+												},
+											},
+											"origin_type": schema.StringAttribute{
+												Computed:    true,
+												Optional:    true,
+												Description: `must be one of ["entity", "workflow", "journey_block"]`,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"entity",
+														"workflow",
+														"journey_block",
+													),
+												},
+											},
+											"repeatable_item_op": schema.BoolAttribute{
+												Computed:    true,
+												Optional:    true,
+												Description: `Whether to apply the operation to each item of the repeatable attribute`,
+											},
+											"schema": schema.StringAttribute{
+												Computed: true,
+												Optional: true,
+											},
+										},
+									},
+									"values": schema.ListAttribute{
+										Computed:    true,
+										Optional:    true,
+										ElementType: types.StringType,
+									},
+								},
+							},
+						},
+					},
+				},
 			},
 			"disable_details": schema.SingleNestedAttribute{
 				Computed: true,

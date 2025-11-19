@@ -103,9 +103,9 @@ type AutomationFlow struct {
 	// Source blueprint/manifest ID used when automation is created via blueprints.
 	Manifest []string `json:"_manifest,omitempty"`
 	// The actions (nodes) of the automation flow
-	Actions        []any           `json:"actions"`
-	Conditions     any             `json:"conditions,omitempty"`
-	DisableDetails *DisableDetails `json:"disable_details,omitempty"`
+	Actions        []any             `json:"actions"`
+	Conditions     []ActionCondition `json:"conditions,omitempty"`
+	DisableDetails *DisableDetails   `json:"disable_details,omitempty"`
 	// Whether the automation is enabled or not
 	Enabled *bool `json:"enabled,omitempty"`
 	// The triggering entity schema
@@ -141,7 +141,7 @@ func (o *AutomationFlow) GetActions() []any {
 	return o.Actions
 }
 
-func (o *AutomationFlow) GetConditions() any {
+func (o *AutomationFlow) GetConditions() []ActionCondition {
 	if o == nil {
 		return nil
 	}
@@ -236,9 +236,9 @@ type AutomationFlowInput struct {
 	// Source blueprint/manifest ID used when automation is created via blueprints.
 	Manifest []string `json:"_manifest,omitempty"`
 	// The actions (nodes) of the automation flow
-	Actions        []any           `json:"actions"`
-	Conditions     any             `json:"conditions,omitempty"`
-	DisableDetails *DisableDetails `json:"disable_details,omitempty"`
+	Actions        []any             `json:"actions"`
+	Conditions     []ActionCondition `json:"conditions,omitempty"`
+	DisableDetails *DisableDetails   `json:"disable_details,omitempty"`
 	// Whether the automation is enabled or not
 	Enabled *bool `json:"enabled,omitempty"`
 	// The triggering entity schema
@@ -272,7 +272,7 @@ func (o *AutomationFlowInput) GetActions() []any {
 	return o.Actions
 }
 
-func (o *AutomationFlowInput) GetConditions() any {
+func (o *AutomationFlowInput) GetConditions() []ActionCondition {
 	if o == nil {
 		return nil
 	}

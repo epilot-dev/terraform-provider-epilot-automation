@@ -33,11 +33,64 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(ctx context.Contex
 
 			r.Actions = append(r.Actions, actions)
 		}
-		if resp.Conditions == nil {
-			r.Conditions = jsontypes.NewNormalizedNull()
-		} else {
-			conditionsResult, _ := json.Marshal(resp.Conditions)
-			r.Conditions = jsontypes.NewNormalizedValue(string(conditionsResult))
+		r.Conditions = []tfTypes.ActionCondition{}
+
+		for _, conditionsItem := range resp.Conditions {
+			var conditions tfTypes.ActionCondition
+
+			conditions.EvaluationResult = types.BoolPointerValue(conditionsItem.EvaluationResult)
+			conditions.ID = types.StringPointerValue(conditionsItem.ID)
+			conditions.ScheduleID = types.StringPointerValue(conditionsItem.ScheduleID)
+			conditions.Statements = []tfTypes.ConditionStatement{}
+
+			for _, statementsItem := range conditionsItem.Statements {
+				var statements tfTypes.ConditionStatement
+
+				statements.ID = types.StringPointerValue(statementsItem.ID)
+				if statementsItem.Operation != nil {
+					statements.Operation = types.StringValue(string(*statementsItem.Operation))
+				} else {
+					statements.Operation = types.StringNull()
+				}
+				if statementsItem.Source == nil {
+					statements.Source = nil
+				} else {
+					statements.Source = &tfTypes.Source{}
+					statements.Source.Attribute = types.StringPointerValue(statementsItem.Source.Attribute)
+					if statementsItem.Source.AttributeOperation != nil {
+						statements.Source.AttributeOperation = types.StringValue(string(*statementsItem.Source.AttributeOperation))
+					} else {
+						statements.Source.AttributeOperation = types.StringNull()
+					}
+					statements.Source.AttributeRepeatable = types.BoolPointerValue(statementsItem.Source.AttributeRepeatable)
+					if statementsItem.Source.AttributeType != nil {
+						statements.Source.AttributeType = types.StringValue(string(*statementsItem.Source.AttributeType))
+					} else {
+						statements.Source.AttributeType = types.StringNull()
+					}
+					statements.Source.ID = types.StringPointerValue(statementsItem.Source.ID)
+					if statementsItem.Source.Origin != nil {
+						statements.Source.Origin = types.StringValue(string(*statementsItem.Source.Origin))
+					} else {
+						statements.Source.Origin = types.StringNull()
+					}
+					if statementsItem.Source.OriginType != nil {
+						statements.Source.OriginType = types.StringValue(string(*statementsItem.Source.OriginType))
+					} else {
+						statements.Source.OriginType = types.StringNull()
+					}
+					statements.Source.RepeatableItemOp = types.BoolPointerValue(statementsItem.Source.RepeatableItemOp)
+					statements.Source.Schema = types.StringPointerValue(statementsItem.Source.Schema)
+				}
+				statements.Values = make([]types.String, 0, len(statementsItem.Values))
+				for _, v := range statementsItem.Values {
+					statements.Values = append(statements.Values, types.StringValue(v))
+				}
+
+				conditions.Statements = append(conditions.Statements, statements)
+			}
+
+			r.Conditions = append(r.Conditions, conditions)
 		}
 		if resp.DisableDetails == nil {
 			r.DisableDetails = nil

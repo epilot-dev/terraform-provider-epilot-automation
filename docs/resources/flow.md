@@ -17,7 +17,33 @@ resource "epilot-automation_flow" "my_flow" {
   actions = [
     "{ \"see\": \"documentation\" }"
   ]
-  conditions = "{ \"see\": \"documentation\" }"
+  conditions = [
+    {
+      evaluation_result = true
+      id                = "...my_id..."
+      schedule_id       = "...my_schedule_id..."
+      statements = [
+        {
+          id        = "1c8d3d9c-6d4c-4a83-aa22-aa0d630cbc2d"
+          operation = "is_empty"
+          source = {
+            attribute            = "...my_attribute..."
+            attribute_operation  = "deleted"
+            attribute_repeatable = true
+            attribute_type       = "phone"
+            id                   = "...my_id..."
+            origin               = "action"
+            origin_type          = "journey_block"
+            repeatable_item_op   = true
+            schema               = "...my_schema..."
+          }
+          values = [
+            "..."
+          ]
+        }
+      ]
+    }
+  ]
   disable_details = {
     blame       = "...my_blame..."
     disabled_at = "2020-11-06T17:41:34.866Z"
@@ -69,7 +95,7 @@ resource "epilot-automation_flow" "my_flow" {
 
 ### Optional
 
-- `conditions` (String) Parsed as JSON.
+- `conditions` (Attributes List) (see [below for nested schema](#nestedatt--conditions))
 - `disable_details` (Attributes) (see [below for nested schema](#nestedatt--disable_details))
 - `enabled` (Boolean) Whether the automation is enabled or not
 - `entity_schema` (String) The triggering entity schema
@@ -473,6 +499,44 @@ Optional:
 Optional:
 
 - `message_type` (String) must be "RECEIVED"
+
+
+
+
+<a id="nestedatt--conditions"></a>
+### Nested Schema for `conditions`
+
+Optional:
+
+- `evaluation_result` (Boolean) Result of the condition evaluation
+- `id` (String)
+- `schedule_id` (String) Schedule Id which indicates the schedule of the actions inside the condition
+- `statements` (Attributes List) (see [below for nested schema](#nestedatt--conditions--statements))
+
+<a id="nestedatt--conditions--statements"></a>
+### Nested Schema for `conditions.statements`
+
+Optional:
+
+- `id` (String)
+- `operation` (String) must be one of ["equals", "not_equals", "any_of", "none_of", "contains", "not_contains", "starts_with", "ends_with", "greater_than", "less_than", "greater_than_or_equals", "less_than_or_equals", "is_empty", "is_not_empty", "entity_exists", "entity_does_not_exist"]
+- `source` (Attributes) (see [below for nested schema](#nestedatt--conditions--statements--source))
+- `values` (List of String)
+
+<a id="nestedatt--conditions--statements--source"></a>
+### Nested Schema for `conditions.statements.source`
+
+Optional:
+
+- `attribute` (String)
+- `attribute_operation` (String) must be one of ["all", "updated", "added", "deleted"]
+- `attribute_repeatable` (Boolean)
+- `attribute_type` (String) must be one of ["string", "text", "number", "boolean", "date", "datetime", "tags", "country", "email", "phone", "product", "price", "status", "relation", "multiselect", "select", "radio", "relation_user", "purpose", "label", "payment", "relation_payment_method"]
+- `id` (String) The id of the action or trigger
+- `origin` (String) must be one of ["trigger", "action"]
+- `origin_type` (String) must be one of ["entity", "workflow", "journey_block"]
+- `repeatable_item_op` (Boolean) Whether to apply the operation to each item of the repeatable attribute
+- `schema` (String)
 
 
 

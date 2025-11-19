@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 6df5dec4-6d34-4c07-99f4-b36e64bbb781
 management:
-  docChecksum: 15055178a33949806277024d8d19e105
+  docChecksum: 64456dc9d7c1f8bdd4d7b2cbef7ab194
   docVersion: 1.0.0
   speakeasyVersion: 1.611.0
   generationVersion: 2.694.1
-  releaseVersion: 0.9.0
-  configChecksum: 9b00dcb1c48bbdcd5df6667eb8d05d74
+  releaseVersion: 0.10.0
+  configChecksum: e19814370fb300fecda714041e10c6d9
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -19,7 +19,6 @@ features:
     inputOutputModels: 2.83.0
     nullables: 0.0.0
     retries: 2.81.4
-    typeOverrides: 2.81.1
     unions: 2.81.17
 generatedFiles:
   - .gitattributes
@@ -66,10 +65,12 @@ generatedFiles:
   - internal/provider/typeconvert/date.go
   - internal/provider/typeconvert/datetime.go
   - internal/provider/typeconvert/int.go
+  - internal/provider/types/action_condition.go
   - internal/provider/types/activity.go
   - internal/provider/types/any_trigger.go
   - internal/provider/types/anything_but_condition.go
   - internal/provider/types/api_submission_trigger.go
+  - internal/provider/types/condition_statement.go
   - internal/provider/types/configuration.go
   - internal/provider/types/disable_details.go
   - internal/provider/types/ecp_config.go
@@ -91,6 +92,7 @@ generatedFiles:
   - internal/provider/types/prefix_condition.go
   - internal/provider/types/received_email_trigger.go
   - internal/provider/types/received_email_trigger_configuration.go
+  - internal/provider/types/source.go
   - internal/provider/types/suffix_condition.go
   - internal/provider/types/wildcard_condition.go
   - internal/provider/types/workflow_context.go
@@ -390,10 +392,10 @@ examples:
   createFlow:
     speakeasy-default-create-flow:
       requestBody:
-        application/json: {"_manifest": null, "actions": ["<value 1>", "<value 2>"], "entity_schema": "submission", "flow_name": "Handle contact form", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [{"configuration": {}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "received_email"}], "version": 2}
+        application/json: {"_manifest": null, "actions": ["<value 1>", "<value 2>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [{"configuration": {}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "received_email"}], "version": 2}
       responses:
         "201":
-          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>", "<value 3>"], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
+          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>", "<value 3>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
         "403":
           application/json: {"error": "Forbidden", "status": 403}
   deleteFlow:
@@ -411,7 +413,7 @@ examples:
           flow_id: "7791b04a-16d2-44a2-9af9-2d59c25c512f"
       responses:
         "200":
-          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>", "<value 3>"], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
+          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>", "<value 3>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
         "403":
           application/json: {"error": "Forbidden", "status": 403}
   putFlow:
@@ -420,10 +422,10 @@ examples:
         path:
           flow_id: "7791b04a-16d2-44a2-9af9-2d59c25c512f"
       requestBody:
-        application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>"], "entity_schema": "submission", "flow_name": "Handle contact form", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [{"configuration": {"source_id": "99"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "frontend_submission"}], "version": 2}
+        application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [{"configuration": {"source_id": "99"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "frontend_submission"}], "version": 2}
       responses:
         "200":
-          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>"], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
+          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
         "403":
           application/json: {"error": "Forbidden", "status": 403}
   searchFlows:

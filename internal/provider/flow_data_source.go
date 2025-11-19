@@ -30,21 +30,21 @@ type FlowDataSource struct {
 
 // FlowDataSourceModel describes the data model.
 type FlowDataSourceModel struct {
-	Actions           []jsontypes.Normalized   `tfsdk:"actions"`
-	Conditions        jsontypes.Normalized     `tfsdk:"conditions"`
-	DisableDetails    *tfTypes.DisableDetails  `tfsdk:"disable_details"`
-	Enabled           types.Bool               `tfsdk:"enabled"`
-	EntitySchema      types.String             `tfsdk:"entity_schema"`
-	FlowName          types.String             `tfsdk:"flow_name"`
-	ID                types.String             `tfsdk:"id"`
-	Manifest          []types.String           `tfsdk:"manifest"`
-	MaxExecutions     *tfTypes.MaxExecutions   `tfsdk:"max_executions"`
-	Schedules         jsontypes.Normalized     `tfsdk:"schedules"`
-	SystemFlow        types.Bool               `tfsdk:"system_flow"`
-	TriggerConditions []jsontypes.Normalized   `tfsdk:"trigger_conditions"`
-	Triggers          []tfTypes.AnyTrigger     `tfsdk:"triggers"`
-	Version           types.Float64            `tfsdk:"version"`
-	WorkflowContext   *tfTypes.WorkflowContext `tfsdk:"workflow_context"`
+	Actions           []jsontypes.Normalized    `tfsdk:"actions"`
+	Conditions        []tfTypes.ActionCondition `tfsdk:"conditions"`
+	DisableDetails    *tfTypes.DisableDetails   `tfsdk:"disable_details"`
+	Enabled           types.Bool                `tfsdk:"enabled"`
+	EntitySchema      types.String              `tfsdk:"entity_schema"`
+	FlowName          types.String              `tfsdk:"flow_name"`
+	ID                types.String              `tfsdk:"id"`
+	Manifest          []types.String            `tfsdk:"manifest"`
+	MaxExecutions     *tfTypes.MaxExecutions    `tfsdk:"max_executions"`
+	Schedules         jsontypes.Normalized      `tfsdk:"schedules"`
+	SystemFlow        types.Bool                `tfsdk:"system_flow"`
+	TriggerConditions []jsontypes.Normalized    `tfsdk:"trigger_conditions"`
+	Triggers          []tfTypes.AnyTrigger      `tfsdk:"triggers"`
+	Version           types.Float64             `tfsdk:"version"`
+	WorkflowContext   *tfTypes.WorkflowContext  `tfsdk:"workflow_context"`
 }
 
 // Metadata returns the data source type name.
@@ -63,10 +63,74 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 				ElementType: jsontypes.NormalizedType{},
 				Description: `The actions (nodes) of the automation flow`,
 			},
-			"conditions": schema.StringAttribute{
-				CustomType:  jsontypes.NormalizedType{},
-				Computed:    true,
-				Description: `Parsed as JSON.`,
+			"conditions": schema.ListNestedAttribute{
+				Computed: true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"evaluation_result": schema.BoolAttribute{
+							Computed:    true,
+							Description: `Result of the condition evaluation`,
+						},
+						"id": schema.StringAttribute{
+							Computed: true,
+						},
+						"schedule_id": schema.StringAttribute{
+							Computed:    true,
+							Description: `Schedule Id which indicates the schedule of the actions inside the condition`,
+						},
+						"statements": schema.ListNestedAttribute{
+							Computed: true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"id": schema.StringAttribute{
+										Computed: true,
+									},
+									"operation": schema.StringAttribute{
+										Computed: true,
+									},
+									"source": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"attribute": schema.StringAttribute{
+												Computed: true,
+											},
+											"attribute_operation": schema.StringAttribute{
+												Computed: true,
+											},
+											"attribute_repeatable": schema.BoolAttribute{
+												Computed: true,
+											},
+											"attribute_type": schema.StringAttribute{
+												Computed: true,
+											},
+											"id": schema.StringAttribute{
+												Computed:    true,
+												Description: `The id of the action or trigger`,
+											},
+											"origin": schema.StringAttribute{
+												Computed: true,
+											},
+											"origin_type": schema.StringAttribute{
+												Computed: true,
+											},
+											"repeatable_item_op": schema.BoolAttribute{
+												Computed:    true,
+												Description: `Whether to apply the operation to each item of the repeatable attribute`,
+											},
+											"schema": schema.StringAttribute{
+												Computed: true,
+											},
+										},
+									},
+									"values": schema.ListAttribute{
+										Computed:    true,
+										ElementType: types.StringType,
+									},
+								},
+							},
+						},
+					},
+				},
 			},
 			"disable_details": schema.SingleNestedAttribute{
 				Computed: true,
