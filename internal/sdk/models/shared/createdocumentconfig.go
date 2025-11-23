@@ -22,16 +22,16 @@ func (c *CreateDocumentConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CreateDocumentConfig) GetFilename() *string {
-	if o == nil {
+func (c *CreateDocumentConfig) GetFilename() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Filename
+	return c.Filename
 }
 
-func (o *CreateDocumentConfig) GetTemplateID() *string {
-	if o == nil {
+func (c *CreateDocumentConfig) GetTemplateID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.TemplateID
+	return c.TemplateID
 }

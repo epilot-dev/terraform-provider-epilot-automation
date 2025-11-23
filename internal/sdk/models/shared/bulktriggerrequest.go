@@ -26,18 +26,18 @@ func (t *Three) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Three) GetEntitiesFilter() []EntitySearchFilter {
-	if o == nil {
+func (t *Three) GetEntitiesFilter() []EntitySearchFilter {
+	if t == nil {
 		return []EntitySearchFilter{}
 	}
-	return o.EntitiesFilter
+	return t.EntitiesFilter
 }
 
-func (o *Three) GetTriggerContext() map[string]string {
-	if o == nil {
+func (t *Three) GetTriggerContext() map[string]string {
+	if t == nil {
 		return nil
 	}
-	return o.TriggerContext
+	return t.TriggerContext
 }
 
 type Two struct {
@@ -57,18 +57,18 @@ func (t *Two) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Two) GetEntitiesQuery() string {
-	if o == nil {
+func (t *Two) GetEntitiesQuery() string {
+	if t == nil {
 		return ""
 	}
-	return o.EntitiesQuery
+	return t.EntitiesQuery
 }
 
-func (o *Two) GetTriggerContext() map[string]string {
-	if o == nil {
+func (t *Two) GetTriggerContext() map[string]string {
+	if t == nil {
 		return nil
 	}
-	return o.TriggerContext
+	return t.TriggerContext
 }
 
 type One struct {
@@ -111,9 +111,9 @@ const (
 )
 
 type BulkTriggerRequest struct {
-	One   *One   `queryParam:"inline" name:"BulkTriggerRequest"`
-	Two   *Two   `queryParam:"inline" name:"BulkTriggerRequest"`
-	Three *Three `queryParam:"inline" name:"BulkTriggerRequest"`
+	One   *One   `queryParam:"inline,name=BulkTriggerRequest"`
+	Two   *Two   `queryParam:"inline,name=BulkTriggerRequest"`
+	Three *Three `queryParam:"inline,name=BulkTriggerRequest"`
 
 	Type BulkTriggerRequestType
 }
@@ -147,24 +147,54 @@ func CreateBulkTriggerRequestThree(three Three) BulkTriggerRequest {
 
 func (u *BulkTriggerRequest) UnmarshalJSON(data []byte) error {
 
+	var candidates []utils.UnionCandidate
+
+	// Collect all valid candidates
 	var one One = One{}
 	if err := utils.UnmarshalJSON(data, &one, "", true, nil); err == nil {
-		u.One = &one
-		u.Type = BulkTriggerRequestTypeOne
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  BulkTriggerRequestTypeOne,
+			Value: &one,
+		})
 	}
 
 	var two Two = Two{}
 	if err := utils.UnmarshalJSON(data, &two, "", true, nil); err == nil {
-		u.Two = &two
-		u.Type = BulkTriggerRequestTypeTwo
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  BulkTriggerRequestTypeTwo,
+			Value: &two,
+		})
 	}
 
 	var three Three = Three{}
 	if err := utils.UnmarshalJSON(data, &three, "", true, nil); err == nil {
-		u.Three = &three
-		u.Type = BulkTriggerRequestTypeThree
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  BulkTriggerRequestTypeThree,
+			Value: &three,
+		})
+	}
+
+	if len(candidates) == 0 {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for BulkTriggerRequest", string(data))
+	}
+
+	// Pick the best candidate using multi-stage filtering
+	best := utils.PickBestCandidate(candidates)
+	if best == nil {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for BulkTriggerRequest", string(data))
+	}
+
+	// Set the union type and value based on the best candidate
+	u.Type = best.Type.(BulkTriggerRequestType)
+	switch best.Type {
+	case BulkTriggerRequestTypeOne:
+		u.One = best.Value.(*One)
+		return nil
+	case BulkTriggerRequestTypeTwo:
+		u.Two = best.Value.(*Two)
+		return nil
+	case BulkTriggerRequestTypeThree:
+		u.Three = best.Value.(*Three)
 		return nil
 	}
 
