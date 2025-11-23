@@ -262,67 +262,67 @@ type Source struct {
 	Schema           *string `json:"schema,omitempty"`
 }
 
-func (o *Source) GetAttribute() *string {
-	if o == nil {
+func (s *Source) GetAttribute() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Attribute
+	return s.Attribute
 }
 
-func (o *Source) GetAttributeOperation() *AttributeOperation {
-	if o == nil {
+func (s *Source) GetAttributeOperation() *AttributeOperation {
+	if s == nil {
 		return nil
 	}
-	return o.AttributeOperation
+	return s.AttributeOperation
 }
 
-func (o *Source) GetAttributeRepeatable() *bool {
-	if o == nil {
+func (s *Source) GetAttributeRepeatable() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.AttributeRepeatable
+	return s.AttributeRepeatable
 }
 
-func (o *Source) GetAttributeType() *AttributeType {
-	if o == nil {
+func (s *Source) GetAttributeType() *AttributeType {
+	if s == nil {
 		return nil
 	}
-	return o.AttributeType
+	return s.AttributeType
 }
 
-func (o *Source) GetID() *string {
-	if o == nil {
+func (s *Source) GetID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ID
+	return s.ID
 }
 
-func (o *Source) GetOrigin() *ConditionStatementOrigin {
-	if o == nil {
+func (s *Source) GetOrigin() *ConditionStatementOrigin {
+	if s == nil {
 		return nil
 	}
-	return o.Origin
+	return s.Origin
 }
 
-func (o *Source) GetOriginType() *OriginType {
-	if o == nil {
+func (s *Source) GetOriginType() *OriginType {
+	if s == nil {
 		return nil
 	}
-	return o.OriginType
+	return s.OriginType
 }
 
-func (o *Source) GetRepeatableItemOp() *bool {
-	if o == nil {
+func (s *Source) GetRepeatableItemOp() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.RepeatableItemOp
+	return s.RepeatableItemOp
 }
 
-func (o *Source) GetSchema() *string {
-	if o == nil {
+func (s *Source) GetSchema() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Schema
+	return s.Schema
 }
 
 type ConditionStatement struct {
@@ -332,30 +332,30 @@ type ConditionStatement struct {
 	Values    []string   `json:"values,omitempty"`
 }
 
-func (o *ConditionStatement) GetID() *string {
-	if o == nil {
+func (c *ConditionStatement) GetID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *ConditionStatement) GetOperation() *Operation {
-	if o == nil {
+func (c *ConditionStatement) GetOperation() *Operation {
+	if c == nil {
 		return nil
 	}
-	return o.Operation
+	return c.Operation
 }
 
-func (o *ConditionStatement) GetSource() *Source {
-	if o == nil {
+func (c *ConditionStatement) GetSource() *Source {
+	if c == nil {
 		return nil
 	}
-	return o.Source
+	return c.Source
 }
 
-func (o *ConditionStatement) GetValues() []string {
-	if o == nil {
+func (c *ConditionStatement) GetValues() []string {
+	if c == nil {
 		return nil
 	}
-	return o.Values
+	return c.Values
 }

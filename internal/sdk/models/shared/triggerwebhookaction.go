@@ -26,18 +26,18 @@ func (t *TriggerWebhookActionReason) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TriggerWebhookActionReason) GetMessage() *string {
-	if o == nil {
+func (t *TriggerWebhookActionReason) GetMessage() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Message
+	return t.Message
 }
 
-func (o *TriggerWebhookActionReason) GetPayload() map[string]any {
-	if o == nil {
+func (t *TriggerWebhookActionReason) GetPayload() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.Payload
+	return t.Payload
 }
 
 type TriggerWebhookActionType string
@@ -100,121 +100,121 @@ func (t *TriggerWebhookAction) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TriggerWebhookAction) GetAllowFailure() *bool {
-	if o == nil {
+func (t *TriggerWebhookAction) GetAllowFailure() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.AllowFailure
+	return t.AllowFailure
 }
 
-func (o *TriggerWebhookAction) GetConditionID() *string {
-	if o == nil {
+func (t *TriggerWebhookAction) GetConditionID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.ConditionID
+	return t.ConditionID
 }
 
-func (o *TriggerWebhookAction) GetConfig() *TriggerWebhookConfig {
-	if o == nil {
+func (t *TriggerWebhookAction) GetConfig() *TriggerWebhookConfig {
+	if t == nil {
 		return nil
 	}
-	return o.Config
+	return t.Config
 }
 
-func (o *TriggerWebhookAction) GetCreatedAutomatically() *bool {
-	if o == nil {
+func (t *TriggerWebhookAction) GetCreatedAutomatically() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.CreatedAutomatically
+	return t.CreatedAutomatically
 }
 
-func (o *TriggerWebhookAction) GetErrorOutput() *ErrorOutput {
-	if o == nil {
+func (t *TriggerWebhookAction) GetErrorOutput() *ErrorOutput {
+	if t == nil {
 		return nil
 	}
-	return o.ErrorOutput
+	return t.ErrorOutput
 }
 
-func (o *TriggerWebhookAction) GetExecutionStatus() *ExecutionStatus {
-	if o == nil {
+func (t *TriggerWebhookAction) GetExecutionStatus() *ExecutionStatus {
+	if t == nil {
 		return nil
 	}
-	return o.ExecutionStatus
+	return t.ExecutionStatus
 }
 
-func (o *TriggerWebhookAction) GetFlowActionID() *string {
-	if o == nil {
+func (t *TriggerWebhookAction) GetFlowActionID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.FlowActionID
+	return t.FlowActionID
 }
 
-func (o *TriggerWebhookAction) GetID() *string {
-	if o == nil {
+func (t *TriggerWebhookAction) GetID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.ID
+	return t.ID
 }
 
-func (o *TriggerWebhookAction) GetIsBulkAction() *bool {
-	if o == nil {
+func (t *TriggerWebhookAction) GetIsBulkAction() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.IsBulkAction
+	return t.IsBulkAction
 }
 
-func (o *TriggerWebhookAction) GetName() *string {
-	if o == nil {
+func (t *TriggerWebhookAction) GetName() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Name
+	return t.Name
 }
 
-func (o *TriggerWebhookAction) GetOutputs() map[string]any {
-	if o == nil {
+func (t *TriggerWebhookAction) GetOutputs() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.Outputs
+	return t.Outputs
 }
 
-func (o *TriggerWebhookAction) GetReason() *TriggerWebhookActionReason {
-	if o == nil {
+func (t *TriggerWebhookAction) GetReason() *TriggerWebhookActionReason {
+	if t == nil {
 		return nil
 	}
-	return o.Reason
+	return t.Reason
 }
 
-func (o *TriggerWebhookAction) GetRetryStrategy() *RetryStrategy {
-	if o == nil {
+func (t *TriggerWebhookAction) GetRetryStrategy() *RetryStrategy {
+	if t == nil {
 		return nil
 	}
-	return o.RetryStrategy
+	return t.RetryStrategy
 }
 
-func (o *TriggerWebhookAction) GetScheduleID() *string {
-	if o == nil {
+func (t *TriggerWebhookAction) GetScheduleID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.ScheduleID
+	return t.ScheduleID
 }
 
-func (o *TriggerWebhookAction) GetStartedAt() *string {
-	if o == nil {
+func (t *TriggerWebhookAction) GetStartedAt() *string {
+	if t == nil {
 		return nil
 	}
-	return o.StartedAt
+	return t.StartedAt
 }
 
-func (o *TriggerWebhookAction) GetType() *TriggerWebhookActionType {
-	if o == nil {
+func (t *TriggerWebhookAction) GetType() *TriggerWebhookActionType {
+	if t == nil {
 		return nil
 	}
-	return o.Type
+	return t.Type
 }
 
-func (o *TriggerWebhookAction) GetUpdatedAt() *string {
-	if o == nil {
+func (t *TriggerWebhookAction) GetUpdatedAt() *string {
+	if t == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return t.UpdatedAt
 }

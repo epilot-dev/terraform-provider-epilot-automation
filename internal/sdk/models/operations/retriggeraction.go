@@ -16,25 +16,25 @@ type RetriggerActionRequest struct {
 	ExecutionID string `pathParam:"style=simple,explode=false,name=execution_id"`
 }
 
-func (o *RetriggerActionRequest) GetRetryReq() *shared.RetryReq {
-	if o == nil {
+func (r *RetriggerActionRequest) GetRetryReq() *shared.RetryReq {
+	if r == nil {
 		return nil
 	}
-	return o.RetryReq
+	return r.RetryReq
 }
 
-func (o *RetriggerActionRequest) GetActionID() string {
-	if o == nil {
+func (r *RetriggerActionRequest) GetActionID() string {
+	if r == nil {
 		return ""
 	}
-	return o.ActionID
+	return r.ActionID
 }
 
-func (o *RetriggerActionRequest) GetExecutionID() string {
-	if o == nil {
+func (r *RetriggerActionRequest) GetExecutionID() string {
+	if r == nil {
 		return ""
 	}
-	return o.ExecutionID
+	return r.ExecutionID
 }
 
 // RetriggerActionResponseBody - The requested resource is forbidden
@@ -45,18 +45,18 @@ type RetriggerActionResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *RetriggerActionResponseBody) GetError() *string {
-	if o == nil {
+func (r *RetriggerActionResponseBody) GetError() *string {
+	if r == nil {
 		return nil
 	}
-	return o.Error
+	return r.Error
 }
 
-func (o *RetriggerActionResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (r *RetriggerActionResponseBody) GetStatus() *int64 {
+	if r == nil {
 		return nil
 	}
-	return o.Status
+	return r.Status
 }
 
 type RetriggerActionResponse struct {
@@ -70,30 +70,30 @@ type RetriggerActionResponse struct {
 	Object *RetriggerActionResponseBody
 }
 
-func (o *RetriggerActionResponse) GetContentType() string {
-	if o == nil {
+func (r *RetriggerActionResponse) GetContentType() string {
+	if r == nil {
 		return ""
 	}
-	return o.ContentType
+	return r.ContentType
 }
 
-func (o *RetriggerActionResponse) GetStatusCode() int {
-	if o == nil {
+func (r *RetriggerActionResponse) GetStatusCode() int {
+	if r == nil {
 		return 0
 	}
-	return o.StatusCode
+	return r.StatusCode
 }
 
-func (o *RetriggerActionResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (r *RetriggerActionResponse) GetRawResponse() *http.Response {
+	if r == nil {
 		return nil
 	}
-	return o.RawResponse
+	return r.RawResponse
 }
 
-func (o *RetriggerActionResponse) GetObject() *RetriggerActionResponseBody {
-	if o == nil {
+func (r *RetriggerActionResponse) GetObject() *RetriggerActionResponseBody {
+	if r == nil {
 		return nil
 	}
-	return o.Object
+	return r.Object
 }

@@ -12,23 +12,23 @@ type WorkflowContext struct {
 	WorkflowRole WorkflowContextRole `json:"workflow_role"`
 }
 
-func (o *WorkflowContext) GetTaskID() *string {
-	if o == nil {
+func (w *WorkflowContext) GetTaskID() *string {
+	if w == nil {
 		return nil
 	}
-	return o.TaskID
+	return w.TaskID
 }
 
-func (o *WorkflowContext) GetWorkflowID() string {
-	if o == nil {
+func (w *WorkflowContext) GetWorkflowID() string {
+	if w == nil {
 		return ""
 	}
-	return o.WorkflowID
+	return w.WorkflowID
 }
 
-func (o *WorkflowContext) GetWorkflowRole() WorkflowContextRole {
-	if o == nil {
+func (w *WorkflowContext) GetWorkflowRole() WorkflowContextRole {
+	if w == nil {
 		return WorkflowContextRole("")
 	}
-	return o.WorkflowRole
+	return w.WorkflowRole
 }

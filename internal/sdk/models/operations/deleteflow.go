@@ -11,11 +11,11 @@ type DeleteFlowRequest struct {
 	FlowID string `pathParam:"style=simple,explode=false,name=flow_id"`
 }
 
-func (o *DeleteFlowRequest) GetFlowID() string {
-	if o == nil {
+func (d *DeleteFlowRequest) GetFlowID() string {
+	if d == nil {
 		return ""
 	}
-	return o.FlowID
+	return d.FlowID
 }
 
 // DeleteFlowResponseBody - The requested resource is forbidden
@@ -26,18 +26,18 @@ type DeleteFlowResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *DeleteFlowResponseBody) GetError() *string {
-	if o == nil {
+func (d *DeleteFlowResponseBody) GetError() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Error
+	return d.Error
 }
 
-func (o *DeleteFlowResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (d *DeleteFlowResponseBody) GetStatus() *int64 {
+	if d == nil {
 		return nil
 	}
-	return o.Status
+	return d.Status
 }
 
 type DeleteFlowResponse struct {
@@ -51,30 +51,30 @@ type DeleteFlowResponse struct {
 	Object *DeleteFlowResponseBody
 }
 
-func (o *DeleteFlowResponse) GetContentType() string {
-	if o == nil {
+func (d *DeleteFlowResponse) GetContentType() string {
+	if d == nil {
 		return ""
 	}
-	return o.ContentType
+	return d.ContentType
 }
 
-func (o *DeleteFlowResponse) GetStatusCode() int {
-	if o == nil {
+func (d *DeleteFlowResponse) GetStatusCode() int {
+	if d == nil {
 		return 0
 	}
-	return o.StatusCode
+	return d.StatusCode
 }
 
-func (o *DeleteFlowResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (d *DeleteFlowResponse) GetRawResponse() *http.Response {
+	if d == nil {
 		return nil
 	}
-	return o.RawResponse
+	return d.RawResponse
 }
 
-func (o *DeleteFlowResponse) GetObject() *DeleteFlowResponseBody {
-	if o == nil {
+func (d *DeleteFlowResponse) GetObject() *DeleteFlowResponseBody {
+	if d == nil {
 		return nil
 	}
-	return o.Object
+	return d.Object
 }

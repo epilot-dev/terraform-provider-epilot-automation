@@ -13,6 +13,10 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
     oAuth2PasswordEnabled: false
+    hoistGlobalSecurity: true
+  schemas:
+    allOfMergeStrategy: shallowMerge
+  requestBodyFieldName: ""
   tests:
     generateTests: true
     generateNewTests: false
@@ -20,7 +24,7 @@ generation:
   sdkFlattening: true
   telemetryEnabled: false
 terraform:
-  version: 0.10.0
+  version: 0.11.0
   additionalDataSources: []
   additionalDependencies: {}
   additionalEphemeralResources: []
@@ -32,8 +36,12 @@ terraform:
   author: epilot-dev
   baseErrorName: SDKBaseError
   defaultErrorName: SDKError
+  enableCustomCodeRegions: false
+  enableOperationSecurity: false
+  enableOperationServers: false
   enableTypeDeduplication: true
   environmentVariables: []
+  excludeEmptyObjectSchemas: false
   imports:
     option: openapi
     paths:
@@ -42,6 +50,8 @@ terraform:
       operations: operations
       shared: shared
       webhooks: webhooks
+  includeEmptyObjects: false
   inputModelSuffix: input
   outputModelSuffix: output
   packageName: epilot-automation
+  unionStrategy: populated-fields

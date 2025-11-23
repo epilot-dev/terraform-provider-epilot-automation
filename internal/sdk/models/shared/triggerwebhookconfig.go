@@ -26,30 +26,30 @@ func (t *TriggerWebhookConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TriggerWebhookConfig) GetEntitySources() []string {
-	if o == nil {
+func (t *TriggerWebhookConfig) GetEntitySources() []string {
+	if t == nil {
 		return nil
 	}
-	return o.EntitySources
+	return t.EntitySources
 }
 
-func (o *TriggerWebhookConfig) GetEventID() *string {
-	if o == nil {
+func (t *TriggerWebhookConfig) GetEventID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.EventID
+	return t.EventID
 }
 
-func (o *TriggerWebhookConfig) GetSync() *bool {
-	if o == nil {
+func (t *TriggerWebhookConfig) GetSync() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.Sync
+	return t.Sync
 }
 
-func (o *TriggerWebhookConfig) GetTargetWebhookID() *string {
-	if o == nil {
+func (t *TriggerWebhookConfig) GetTargetWebhookID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.TargetWebhookID
+	return t.TargetWebhookID
 }

@@ -26,23 +26,23 @@ func (m *MappingConfigRef) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *MappingConfigRef) GetConfigID() string {
-	if o == nil {
+func (m *MappingConfigRef) GetConfigID() string {
+	if m == nil {
 		return ""
 	}
-	return o.ConfigID
+	return m.ConfigID
 }
 
-func (o *MappingConfigRef) GetTargetID() string {
-	if o == nil {
+func (m *MappingConfigRef) GetTargetID() string {
+	if m == nil {
 		return ""
 	}
-	return o.TargetID
+	return m.TargetID
 }
 
-func (o *MappingConfigRef) GetVersion() *float64 {
-	if o == nil {
+func (m *MappingConfigRef) GetVersion() *float64 {
+	if m == nil {
 		return nil
 	}
-	return o.Version
+	return m.Version
 }
