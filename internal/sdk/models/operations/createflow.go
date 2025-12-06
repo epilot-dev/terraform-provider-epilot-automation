@@ -15,18 +15,18 @@ type CreateFlowResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *CreateFlowResponseBody) GetError() *string {
-	if o == nil {
+func (c *CreateFlowResponseBody) GetError() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Error
+	return c.Error
 }
 
-func (o *CreateFlowResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (c *CreateFlowResponseBody) GetStatus() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Status
+	return c.Status
 }
 
 type CreateFlowResponse struct {
@@ -42,37 +42,37 @@ type CreateFlowResponse struct {
 	Object *CreateFlowResponseBody
 }
 
-func (o *CreateFlowResponse) GetAutomationFlow() *shared.AutomationFlow {
-	if o == nil {
+func (c *CreateFlowResponse) GetAutomationFlow() *shared.AutomationFlow {
+	if c == nil {
 		return nil
 	}
-	return o.AutomationFlow
+	return c.AutomationFlow
 }
 
-func (o *CreateFlowResponse) GetContentType() string {
-	if o == nil {
+func (c *CreateFlowResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *CreateFlowResponse) GetStatusCode() int {
-	if o == nil {
+func (c *CreateFlowResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *CreateFlowResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *CreateFlowResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }
 
-func (o *CreateFlowResponse) GetObject() *CreateFlowResponseBody {
-	if o == nil {
+func (c *CreateFlowResponse) GetObject() *CreateFlowResponseBody {
+	if c == nil {
 		return nil
 	}
-	return o.Object
+	return c.Object
 }

@@ -26,18 +26,18 @@ func (m *MapEntityActionReason) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *MapEntityActionReason) GetMessage() *string {
-	if o == nil {
+func (m *MapEntityActionReason) GetMessage() *string {
+	if m == nil {
 		return nil
 	}
-	return o.Message
+	return m.Message
 }
 
-func (o *MapEntityActionReason) GetPayload() map[string]any {
-	if o == nil {
+func (m *MapEntityActionReason) GetPayload() map[string]any {
+	if m == nil {
 		return nil
 	}
-	return o.Payload
+	return m.Payload
 }
 
 type MapEntityActionType string
@@ -100,121 +100,121 @@ func (m *MapEntityAction) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *MapEntityAction) GetAllowFailure() *bool {
-	if o == nil {
+func (m *MapEntityAction) GetAllowFailure() *bool {
+	if m == nil {
 		return nil
 	}
-	return o.AllowFailure
+	return m.AllowFailure
 }
 
-func (o *MapEntityAction) GetConditionID() *string {
-	if o == nil {
+func (m *MapEntityAction) GetConditionID() *string {
+	if m == nil {
 		return nil
 	}
-	return o.ConditionID
+	return m.ConditionID
 }
 
-func (o *MapEntityAction) GetConfig() *MapEntityConfig {
-	if o == nil {
+func (m *MapEntityAction) GetConfig() *MapEntityConfig {
+	if m == nil {
 		return nil
 	}
-	return o.Config
+	return m.Config
 }
 
-func (o *MapEntityAction) GetCreatedAutomatically() *bool {
-	if o == nil {
+func (m *MapEntityAction) GetCreatedAutomatically() *bool {
+	if m == nil {
 		return nil
 	}
-	return o.CreatedAutomatically
+	return m.CreatedAutomatically
 }
 
-func (o *MapEntityAction) GetErrorOutput() *ErrorOutput {
-	if o == nil {
+func (m *MapEntityAction) GetErrorOutput() *ErrorOutput {
+	if m == nil {
 		return nil
 	}
-	return o.ErrorOutput
+	return m.ErrorOutput
 }
 
-func (o *MapEntityAction) GetExecutionStatus() *ExecutionStatus {
-	if o == nil {
+func (m *MapEntityAction) GetExecutionStatus() *ExecutionStatus {
+	if m == nil {
 		return nil
 	}
-	return o.ExecutionStatus
+	return m.ExecutionStatus
 }
 
-func (o *MapEntityAction) GetFlowActionID() *string {
-	if o == nil {
+func (m *MapEntityAction) GetFlowActionID() *string {
+	if m == nil {
 		return nil
 	}
-	return o.FlowActionID
+	return m.FlowActionID
 }
 
-func (o *MapEntityAction) GetID() *string {
-	if o == nil {
+func (m *MapEntityAction) GetID() *string {
+	if m == nil {
 		return nil
 	}
-	return o.ID
+	return m.ID
 }
 
-func (o *MapEntityAction) GetIsBulkAction() *bool {
-	if o == nil {
+func (m *MapEntityAction) GetIsBulkAction() *bool {
+	if m == nil {
 		return nil
 	}
-	return o.IsBulkAction
+	return m.IsBulkAction
 }
 
-func (o *MapEntityAction) GetName() *string {
-	if o == nil {
+func (m *MapEntityAction) GetName() *string {
+	if m == nil {
 		return nil
 	}
-	return o.Name
+	return m.Name
 }
 
-func (o *MapEntityAction) GetOutputs() map[string]any {
-	if o == nil {
+func (m *MapEntityAction) GetOutputs() map[string]any {
+	if m == nil {
 		return nil
 	}
-	return o.Outputs
+	return m.Outputs
 }
 
-func (o *MapEntityAction) GetReason() *MapEntityActionReason {
-	if o == nil {
+func (m *MapEntityAction) GetReason() *MapEntityActionReason {
+	if m == nil {
 		return nil
 	}
-	return o.Reason
+	return m.Reason
 }
 
-func (o *MapEntityAction) GetRetryStrategy() *RetryStrategy {
-	if o == nil {
+func (m *MapEntityAction) GetRetryStrategy() *RetryStrategy {
+	if m == nil {
 		return nil
 	}
-	return o.RetryStrategy
+	return m.RetryStrategy
 }
 
-func (o *MapEntityAction) GetScheduleID() *string {
-	if o == nil {
+func (m *MapEntityAction) GetScheduleID() *string {
+	if m == nil {
 		return nil
 	}
-	return o.ScheduleID
+	return m.ScheduleID
 }
 
-func (o *MapEntityAction) GetStartedAt() *string {
-	if o == nil {
+func (m *MapEntityAction) GetStartedAt() *string {
+	if m == nil {
 		return nil
 	}
-	return o.StartedAt
+	return m.StartedAt
 }
 
-func (o *MapEntityAction) GetType() *MapEntityActionType {
-	if o == nil {
+func (m *MapEntityAction) GetType() *MapEntityActionType {
+	if m == nil {
 		return nil
 	}
-	return o.Type
+	return m.Type
 }
 
-func (o *MapEntityAction) GetUpdatedAt() *string {
-	if o == nil {
+func (m *MapEntityAction) GetUpdatedAt() *string {
+	if m == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return m.UpdatedAt
 }

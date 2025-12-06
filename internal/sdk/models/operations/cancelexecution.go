@@ -11,11 +11,11 @@ type CancelExecutionRequest struct {
 	ExecutionID string `pathParam:"style=simple,explode=false,name=execution_id"`
 }
 
-func (o *CancelExecutionRequest) GetExecutionID() string {
-	if o == nil {
+func (c *CancelExecutionRequest) GetExecutionID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ExecutionID
+	return c.ExecutionID
 }
 
 // CancelExecutionResponseBody - The requested resource is forbidden
@@ -26,18 +26,18 @@ type CancelExecutionResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *CancelExecutionResponseBody) GetError() *string {
-	if o == nil {
+func (c *CancelExecutionResponseBody) GetError() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Error
+	return c.Error
 }
 
-func (o *CancelExecutionResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (c *CancelExecutionResponseBody) GetStatus() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Status
+	return c.Status
 }
 
 type CancelExecutionResponse struct {
@@ -53,37 +53,37 @@ type CancelExecutionResponse struct {
 	Object *CancelExecutionResponseBody
 }
 
-func (o *CancelExecutionResponse) GetAutomationExecution() *shared.AutomationExecution {
-	if o == nil {
+func (c *CancelExecutionResponse) GetAutomationExecution() *shared.AutomationExecution {
+	if c == nil {
 		return nil
 	}
-	return o.AutomationExecution
+	return c.AutomationExecution
 }
 
-func (o *CancelExecutionResponse) GetContentType() string {
-	if o == nil {
+func (c *CancelExecutionResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *CancelExecutionResponse) GetStatusCode() int {
-	if o == nil {
+func (c *CancelExecutionResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *CancelExecutionResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *CancelExecutionResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }
 
-func (o *CancelExecutionResponse) GetObject() *CancelExecutionResponseBody {
-	if o == nil {
+func (c *CancelExecutionResponse) GetObject() *CancelExecutionResponseBody {
+	if c == nil {
 		return nil
 	}
-	return o.Object
+	return c.Object
 }

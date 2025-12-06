@@ -51,44 +51,44 @@ func (t *TriggerEventFlowAutomationTask) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TriggerEventFlowAutomationTask) GetCaller() *APICallerContext {
-	if o == nil {
+func (t *TriggerEventFlowAutomationTask) GetCaller() *APICallerContext {
+	if t == nil {
 		return nil
 	}
-	return o.Caller
+	return t.Caller
 }
 
-func (o *TriggerEventFlowAutomationTask) GetEntityID() string {
-	if o == nil {
+func (t *TriggerEventFlowAutomationTask) GetEntityID() string {
+	if t == nil {
 		return ""
 	}
-	return o.EntityID
+	return t.EntityID
 }
 
-func (o *TriggerEventFlowAutomationTask) GetFlowAutomationTaskID() string {
-	if o == nil {
+func (t *TriggerEventFlowAutomationTask) GetFlowAutomationTaskID() string {
+	if t == nil {
 		return ""
 	}
-	return o.FlowAutomationTaskID
+	return t.FlowAutomationTaskID
 }
 
-func (o *TriggerEventFlowAutomationTask) GetFlowExecutionID() string {
-	if o == nil {
+func (t *TriggerEventFlowAutomationTask) GetFlowExecutionID() string {
+	if t == nil {
 		return ""
 	}
-	return o.FlowExecutionID
+	return t.FlowExecutionID
 }
 
-func (o *TriggerEventFlowAutomationTask) GetOrgID() string {
-	if o == nil {
+func (t *TriggerEventFlowAutomationTask) GetOrgID() string {
+	if t == nil {
 		return ""
 	}
-	return o.OrgID
+	return t.OrgID
 }
 
-func (o *TriggerEventFlowAutomationTask) GetType() *TriggerEventFlowAutomationTaskType {
-	if o == nil {
+func (t *TriggerEventFlowAutomationTask) GetType() *TriggerEventFlowAutomationTaskType {
+	if t == nil {
 		return nil
 	}
-	return o.Type
+	return t.Type
 }

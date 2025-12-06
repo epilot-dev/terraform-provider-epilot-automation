@@ -11,30 +11,30 @@ type ActionCondition struct {
 	Statements []ConditionStatement `json:"statements,omitempty"`
 }
 
-func (o *ActionCondition) GetEvaluationResult() *bool {
-	if o == nil {
+func (a *ActionCondition) GetEvaluationResult() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.EvaluationResult
+	return a.EvaluationResult
 }
 
-func (o *ActionCondition) GetID() *string {
-	if o == nil {
+func (a *ActionCondition) GetID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ID
+	return a.ID
 }
 
-func (o *ActionCondition) GetScheduleID() *string {
-	if o == nil {
+func (a *ActionCondition) GetScheduleID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ScheduleID
+	return a.ScheduleID
 }
 
-func (o *ActionCondition) GetStatements() []ConditionStatement {
-	if o == nil {
+func (a *ActionCondition) GetStatements() []ConditionStatement {
+	if a == nil {
 		return nil
 	}
-	return o.Statements
+	return a.Statements
 }
