@@ -25,16 +25,16 @@ func (c *CancellationReason) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CancellationReason) GetID() string {
-	if o == nil {
+func (c *CancellationReason) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CancellationReason) GetTitle() string {
-	if o == nil {
+func (c *CancellationReason) GetTitle() string {
+	if c == nil {
 		return ""
 	}
-	return o.Title
+	return c.Title
 }

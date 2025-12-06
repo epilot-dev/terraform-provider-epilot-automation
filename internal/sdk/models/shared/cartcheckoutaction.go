@@ -26,18 +26,18 @@ func (c *CartCheckoutActionReason) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CartCheckoutActionReason) GetMessage() *string {
-	if o == nil {
+func (c *CartCheckoutActionReason) GetMessage() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Message
+	return c.Message
 }
 
-func (o *CartCheckoutActionReason) GetPayload() map[string]any {
-	if o == nil {
+func (c *CartCheckoutActionReason) GetPayload() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.Payload
+	return c.Payload
 }
 
 type CartCheckoutActionType string
@@ -101,121 +101,121 @@ func (c *CartCheckoutAction) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CartCheckoutAction) GetAllowFailure() *bool {
-	if o == nil {
+func (c *CartCheckoutAction) GetAllowFailure() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.AllowFailure
+	return c.AllowFailure
 }
 
-func (o *CartCheckoutAction) GetConditionID() *string {
-	if o == nil {
+func (c *CartCheckoutAction) GetConditionID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ConditionID
+	return c.ConditionID
 }
 
-func (o *CartCheckoutAction) GetConfig() *CartCheckoutConfig {
-	if o == nil {
+func (c *CartCheckoutAction) GetConfig() *CartCheckoutConfig {
+	if c == nil {
 		return nil
 	}
-	return o.Config
+	return c.Config
 }
 
-func (o *CartCheckoutAction) GetCreatedAutomatically() *bool {
-	if o == nil {
+func (c *CartCheckoutAction) GetCreatedAutomatically() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.CreatedAutomatically
+	return c.CreatedAutomatically
 }
 
-func (o *CartCheckoutAction) GetErrorOutput() *ErrorOutput {
-	if o == nil {
+func (c *CartCheckoutAction) GetErrorOutput() *ErrorOutput {
+	if c == nil {
 		return nil
 	}
-	return o.ErrorOutput
+	return c.ErrorOutput
 }
 
-func (o *CartCheckoutAction) GetExecutionStatus() *ExecutionStatus {
-	if o == nil {
+func (c *CartCheckoutAction) GetExecutionStatus() *ExecutionStatus {
+	if c == nil {
 		return nil
 	}
-	return o.ExecutionStatus
+	return c.ExecutionStatus
 }
 
-func (o *CartCheckoutAction) GetFlowActionID() *string {
-	if o == nil {
+func (c *CartCheckoutAction) GetFlowActionID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FlowActionID
+	return c.FlowActionID
 }
 
-func (o *CartCheckoutAction) GetID() *string {
-	if o == nil {
+func (c *CartCheckoutAction) GetID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CartCheckoutAction) GetIsBulkAction() *bool {
-	if o == nil {
+func (c *CartCheckoutAction) GetIsBulkAction() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.IsBulkAction
+	return c.IsBulkAction
 }
 
-func (o *CartCheckoutAction) GetName() *string {
-	if o == nil {
+func (c *CartCheckoutAction) GetName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CartCheckoutAction) GetOutputs() map[string]any {
-	if o == nil {
+func (c *CartCheckoutAction) GetOutputs() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.Outputs
+	return c.Outputs
 }
 
-func (o *CartCheckoutAction) GetReason() *CartCheckoutActionReason {
-	if o == nil {
+func (c *CartCheckoutAction) GetReason() *CartCheckoutActionReason {
+	if c == nil {
 		return nil
 	}
-	return o.Reason
+	return c.Reason
 }
 
-func (o *CartCheckoutAction) GetRetryStrategy() *RetryStrategy {
-	if o == nil {
+func (c *CartCheckoutAction) GetRetryStrategy() *RetryStrategy {
+	if c == nil {
 		return nil
 	}
-	return o.RetryStrategy
+	return c.RetryStrategy
 }
 
-func (o *CartCheckoutAction) GetScheduleID() *string {
-	if o == nil {
+func (c *CartCheckoutAction) GetScheduleID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ScheduleID
+	return c.ScheduleID
 }
 
-func (o *CartCheckoutAction) GetStartedAt() *string {
-	if o == nil {
+func (c *CartCheckoutAction) GetStartedAt() *string {
+	if c == nil {
 		return nil
 	}
-	return o.StartedAt
+	return c.StartedAt
 }
 
-func (o *CartCheckoutAction) GetType() *CartCheckoutActionType {
-	if o == nil {
+func (c *CartCheckoutAction) GetType() *CartCheckoutActionType {
+	if c == nil {
 		return nil
 	}
-	return o.Type
+	return c.Type
 }
 
-func (o *CartCheckoutAction) GetUpdatedAt() *string {
-	if o == nil {
+func (c *CartCheckoutAction) GetUpdatedAt() *string {
+	if c == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return c.UpdatedAt
 }

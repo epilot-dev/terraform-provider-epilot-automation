@@ -64,7 +64,7 @@ func (s *Executions) CancelExecution(ctx context.Context, request operations.Can
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "cancelExecution",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -286,7 +286,7 @@ func (s *Executions) CancelSchedule(ctx context.Context, request operations.Canc
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "cancelSchedule",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -508,7 +508,7 @@ func (s *Executions) GetExecution(ctx context.Context, request operations.GetExe
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "getExecution",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -730,7 +730,7 @@ func (s *Executions) GetExecutions(ctx context.Context, request operations.GetEx
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "getExecutions",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -752,7 +752,7 @@ func (s *Executions) GetExecutions(ctx context.Context, request operations.GetEx
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -958,7 +958,7 @@ func (s *Executions) ResumeExecutionWithToken(ctx context.Context, request *shar
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "resumeExecutionWithToken",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   nil,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -1184,7 +1184,7 @@ func (s *Executions) RetriggerAction(ctx context.Context, request operations.Ret
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "retriggerAction",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "RetryReq", "json", `request:"mediaType=application/json"`)
@@ -1393,7 +1393,7 @@ func (s *Executions) StartExecution(ctx context.Context, request *shared.StartEx
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "startExecution",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)

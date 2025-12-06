@@ -22,16 +22,16 @@ func (e *EntityRef) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *EntityRef) GetEntityID() string {
-	if o == nil {
+func (e *EntityRef) GetEntityID() string {
+	if e == nil {
 		return ""
 	}
-	return o.EntityID
+	return e.EntityID
 }
 
-func (o *EntityRef) GetEntitySchema() string {
-	if o == nil {
+func (e *EntityRef) GetEntitySchema() string {
+	if e == nil {
 		return ""
 	}
-	return o.EntitySchema
+	return e.EntitySchema
 }
