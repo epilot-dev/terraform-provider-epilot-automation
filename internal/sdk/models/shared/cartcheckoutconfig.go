@@ -16,8 +16,8 @@ const (
 )
 
 type MappingAttributes struct {
-	MappingAttributeV2 *MappingAttributeV2 `queryParam:"inline" name:"mapping_attributes"`
-	MappingAttribute   *MappingAttribute   `queryParam:"inline" name:"mapping_attributes"`
+	MappingAttributeV2 *MappingAttributeV2 `queryParam:"inline,name=mapping_attributes" union:"member"`
+	MappingAttribute   *MappingAttribute   `queryParam:"inline,name=mapping_attributes" union:"member"`
 
 	Type MappingAttributesType
 }
@@ -42,17 +42,43 @@ func CreateMappingAttributesMappingAttribute(mappingAttribute MappingAttribute) 
 
 func (u *MappingAttributes) UnmarshalJSON(data []byte) error {
 
+	var candidates []utils.UnionCandidate
+
+	// Collect all valid candidates
 	var mappingAttributeV2 MappingAttributeV2 = MappingAttributeV2{}
 	if err := utils.UnmarshalJSON(data, &mappingAttributeV2, "", true, nil); err == nil {
-		u.MappingAttributeV2 = &mappingAttributeV2
-		u.Type = MappingAttributesTypeMappingAttributeV2
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  MappingAttributesTypeMappingAttributeV2,
+			Value: &mappingAttributeV2,
+		})
 	}
 
 	var mappingAttribute MappingAttribute = MappingAttribute{}
 	if err := utils.UnmarshalJSON(data, &mappingAttribute, "", true, nil); err == nil {
-		u.MappingAttribute = &mappingAttribute
-		u.Type = MappingAttributesTypeMappingAttribute
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  MappingAttributesTypeMappingAttribute,
+			Value: &mappingAttribute,
+		})
+	}
+
+	if len(candidates) == 0 {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for MappingAttributes", string(data))
+	}
+
+	// Pick the best candidate using multi-stage filtering
+	best := utils.PickBestUnionCandidate(candidates, data)
+	if best == nil {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for MappingAttributes", string(data))
+	}
+
+	// Set the union type and value based on the best candidate
+	u.Type = best.Type.(MappingAttributesType)
+	switch best.Type {
+	case MappingAttributesTypeMappingAttributeV2:
+		u.MappingAttributeV2 = best.Value.(*MappingAttributeV2)
+		return nil
+	case MappingAttributesTypeMappingAttribute:
+		u.MappingAttribute = best.Value.(*MappingAttribute)
 		return nil
 	}
 
@@ -97,51 +123,51 @@ func (c *CartCheckoutConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CartCheckoutConfig) GetLinkbackRelationAttribute() *string {
-	if o == nil {
+func (c *CartCheckoutConfig) GetLinkbackRelationAttribute() *string {
+	if c == nil {
 		return nil
 	}
-	return o.LinkbackRelationAttribute
+	return c.LinkbackRelationAttribute
 }
 
-func (o *CartCheckoutConfig) GetLinkbackRelationTags() []string {
-	if o == nil {
+func (c *CartCheckoutConfig) GetLinkbackRelationTags() []string {
+	if c == nil {
 		return nil
 	}
-	return o.LinkbackRelationTags
+	return c.LinkbackRelationTags
 }
 
-func (o *CartCheckoutConfig) GetMappingAttributes() []MappingAttributes {
-	if o == nil {
+func (c *CartCheckoutConfig) GetMappingAttributes() []MappingAttributes {
+	if c == nil {
 		return nil
 	}
-	return o.MappingAttributes
+	return c.MappingAttributes
 }
 
-func (o *CartCheckoutConfig) GetMappingConfig() *MappingConfigRef {
-	if o == nil {
+func (c *CartCheckoutConfig) GetMappingConfig() *MappingConfigRef {
+	if c == nil {
 		return nil
 	}
-	return o.MappingConfig
+	return c.MappingConfig
 }
 
-func (o *CartCheckoutConfig) GetRelationAttributes() []RelationAttribute {
-	if o == nil {
+func (c *CartCheckoutConfig) GetRelationAttributes() []RelationAttribute {
+	if c == nil {
 		return nil
 	}
-	return o.RelationAttributes
+	return c.RelationAttributes
 }
 
-func (o *CartCheckoutConfig) GetTargetUnique() []string {
-	if o == nil {
+func (c *CartCheckoutConfig) GetTargetUnique() []string {
+	if c == nil {
 		return nil
 	}
-	return o.TargetUnique
+	return c.TargetUnique
 }
 
-func (o *CartCheckoutConfig) GetVersion() *string {
-	if o == nil {
+func (c *CartCheckoutConfig) GetVersion() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Version
+	return c.Version
 }

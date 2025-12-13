@@ -91,53 +91,53 @@ func (s *SendEmailConfigSourceFilter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SendEmailConfigSourceFilter) GetAttribute() *string {
-	if o == nil {
+func (s *SendEmailConfigSourceFilter) GetAttribute() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Attribute
+	return s.Attribute
 }
 
-func (o *SendEmailConfigSourceFilter) GetDocumentType() *DocumentType {
-	if o == nil {
+func (s *SendEmailConfigSourceFilter) GetDocumentType() *DocumentType {
+	if s == nil {
 		return nil
 	}
-	return o.DocumentType
+	return s.DocumentType
 }
 
-func (o *SendEmailConfigSourceFilter) GetFilenameRegex() *string {
-	if o == nil {
+func (s *SendEmailConfigSourceFilter) GetFilenameRegex() *string {
+	if s == nil {
 		return nil
 	}
-	return o.FilenameRegex
+	return s.FilenameRegex
 }
 
-func (o *SendEmailConfigSourceFilter) GetLimit() *int64 {
-	if o == nil {
+func (s *SendEmailConfigSourceFilter) GetLimit() *int64 {
+	if s == nil {
 		return nil
 	}
-	return o.Limit
+	return s.Limit
 }
 
-func (o *SendEmailConfigSourceFilter) GetRelationTag() *string {
-	if o == nil {
+func (s *SendEmailConfigSourceFilter) GetRelationTag() *string {
+	if s == nil {
 		return nil
 	}
-	return o.RelationTag
+	return s.RelationTag
 }
 
-func (o *SendEmailConfigSourceFilter) GetSelf() *bool {
-	if o == nil {
+func (s *SendEmailConfigSourceFilter) GetSelf() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.Self
+	return s.Self
 }
 
-func (o *SendEmailConfigSourceFilter) GetTag() *string {
-	if o == nil {
+func (s *SendEmailConfigSourceFilter) GetTag() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Tag
+	return s.Tag
 }
 
 type Attachments struct {
@@ -156,11 +156,11 @@ func (a *Attachments) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Attachments) GetSourceFilter() *SendEmailConfigSourceFilter {
-	if o == nil {
+func (a *Attachments) GetSourceFilter() *SendEmailConfigSourceFilter {
+	if a == nil {
 		return nil
 	}
-	return o.SourceFilter
+	return a.SourceFilter
 }
 
 type LanguageCode string
@@ -220,51 +220,51 @@ func (s *SendEmailConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SendEmailConfig) GetAttachments() []Attachments {
-	if o == nil {
+func (s *SendEmailConfig) GetAttachments() []Attachments {
+	if s == nil {
 		return nil
 	}
-	return o.Attachments
+	return s.Attachments
 }
 
-func (o *SendEmailConfig) GetConditions() []SendEmailCondition {
-	if o == nil {
+func (s *SendEmailConfig) GetConditions() []SendEmailCondition {
+	if s == nil {
 		return nil
 	}
-	return o.Conditions
+	return s.Conditions
 }
 
-func (o *SendEmailConfig) GetEmailTemplateID() *string {
-	if o == nil {
+func (s *SendEmailConfig) GetEmailTemplateID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.EmailTemplateID
+	return s.EmailTemplateID
 }
 
-func (o *SendEmailConfig) GetLanguageCode() *LanguageCode {
-	if o == nil {
+func (s *SendEmailConfig) GetLanguageCode() *LanguageCode {
+	if s == nil {
 		return nil
 	}
-	return o.LanguageCode
+	return s.LanguageCode
 }
 
-func (o *SendEmailConfig) GetNotifyPortalUserOnly() *bool {
-	if o == nil {
+func (s *SendEmailConfig) GetNotifyPortalUserOnly() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.NotifyPortalUserOnly
+	return s.NotifyPortalUserOnly
 }
 
-func (o *SendEmailConfig) GetSkipCreatingEntities() *bool {
-	if o == nil {
+func (s *SendEmailConfig) GetSkipCreatingEntities() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.SkipCreatingEntities
+	return s.SkipCreatingEntities
 }
 
-func (o *SendEmailConfig) GetWaitForConfirmation() *bool {
-	if o == nil {
+func (s *SendEmailConfig) GetWaitForConfirmation() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.WaitForConfirmation
+	return s.WaitForConfirmation
 }

@@ -24,18 +24,18 @@ func (r *Reason) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Reason) GetMessage() *string {
-	if o == nil {
+func (r *Reason) GetMessage() *string {
+	if r == nil {
 		return nil
 	}
-	return o.Message
+	return r.Message
 }
 
-func (o *Reason) GetPayload() map[string]any {
-	if o == nil {
+func (r *Reason) GetPayload() map[string]any {
+	if r == nil {
 		return nil
 	}
-	return o.Payload
+	return r.Payload
 }
 
 type AutomationAction struct {
@@ -75,121 +75,121 @@ func (a *AutomationAction) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *AutomationAction) GetAllowFailure() *bool {
-	if o == nil {
+func (a *AutomationAction) GetAllowFailure() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.AllowFailure
+	return a.AllowFailure
 }
 
-func (o *AutomationAction) GetConditionID() *string {
-	if o == nil {
+func (a *AutomationAction) GetConditionID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ConditionID
+	return a.ConditionID
 }
 
-func (o *AutomationAction) GetConfig() map[string]any {
-	if o == nil {
+func (a *AutomationAction) GetConfig() map[string]any {
+	if a == nil {
 		return nil
 	}
-	return o.Config
+	return a.Config
 }
 
-func (o *AutomationAction) GetCreatedAutomatically() *bool {
-	if o == nil {
+func (a *AutomationAction) GetCreatedAutomatically() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.CreatedAutomatically
+	return a.CreatedAutomatically
 }
 
-func (o *AutomationAction) GetErrorOutput() *ErrorOutput {
-	if o == nil {
+func (a *AutomationAction) GetErrorOutput() *ErrorOutput {
+	if a == nil {
 		return nil
 	}
-	return o.ErrorOutput
+	return a.ErrorOutput
 }
 
-func (o *AutomationAction) GetExecutionStatus() *ExecutionStatus {
-	if o == nil {
+func (a *AutomationAction) GetExecutionStatus() *ExecutionStatus {
+	if a == nil {
 		return nil
 	}
-	return o.ExecutionStatus
+	return a.ExecutionStatus
 }
 
-func (o *AutomationAction) GetFlowActionID() *string {
-	if o == nil {
+func (a *AutomationAction) GetFlowActionID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.FlowActionID
+	return a.FlowActionID
 }
 
-func (o *AutomationAction) GetID() *string {
-	if o == nil {
+func (a *AutomationAction) GetID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ID
+	return a.ID
 }
 
-func (o *AutomationAction) GetIsBulkAction() *bool {
-	if o == nil {
+func (a *AutomationAction) GetIsBulkAction() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.IsBulkAction
+	return a.IsBulkAction
 }
 
-func (o *AutomationAction) GetName() *string {
-	if o == nil {
+func (a *AutomationAction) GetName() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Name
+	return a.Name
 }
 
-func (o *AutomationAction) GetOutputs() map[string]any {
-	if o == nil {
+func (a *AutomationAction) GetOutputs() map[string]any {
+	if a == nil {
 		return nil
 	}
-	return o.Outputs
+	return a.Outputs
 }
 
-func (o *AutomationAction) GetReason() *Reason {
-	if o == nil {
+func (a *AutomationAction) GetReason() *Reason {
+	if a == nil {
 		return nil
 	}
-	return o.Reason
+	return a.Reason
 }
 
-func (o *AutomationAction) GetRetryStrategy() *RetryStrategy {
-	if o == nil {
+func (a *AutomationAction) GetRetryStrategy() *RetryStrategy {
+	if a == nil {
 		return nil
 	}
-	return o.RetryStrategy
+	return a.RetryStrategy
 }
 
-func (o *AutomationAction) GetScheduleID() *string {
-	if o == nil {
+func (a *AutomationAction) GetScheduleID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ScheduleID
+	return a.ScheduleID
 }
 
-func (o *AutomationAction) GetStartedAt() *string {
-	if o == nil {
+func (a *AutomationAction) GetStartedAt() *string {
+	if a == nil {
 		return nil
 	}
-	return o.StartedAt
+	return a.StartedAt
 }
 
-func (o *AutomationAction) GetType() *string {
-	if o == nil {
+func (a *AutomationAction) GetType() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Type
+	return a.Type
 }
 
-func (o *AutomationAction) GetUpdatedAt() *string {
-	if o == nil {
+func (a *AutomationAction) GetUpdatedAt() *string {
+	if a == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return a.UpdatedAt
 }

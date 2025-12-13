@@ -17,8 +17,8 @@ const (
 
 // Uniq - Unique array
 type Uniq struct {
-	Boolean    *bool    `queryParam:"inline" name:"_uniq"`
-	ArrayOfStr []string `queryParam:"inline" name:"_uniq"`
+	Boolean    *bool    `queryParam:"inline,name=_uniq" union:"member"`
+	ArrayOfStr []string `queryParam:"inline,name=_uniq" union:"member"`
 
 	Type UniqType
 }
@@ -43,17 +43,43 @@ func CreateUniqArrayOfStr(arrayOfStr []string) Uniq {
 
 func (u *Uniq) UnmarshalJSON(data []byte) error {
 
+	var candidates []utils.UnionCandidate
+
+	// Collect all valid candidates
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = UniqTypeBoolean
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  UniqTypeBoolean,
+			Value: &boolean,
+		})
 	}
 
 	var arrayOfStr []string = []string{}
 	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
-		u.ArrayOfStr = arrayOfStr
-		u.Type = UniqTypeArrayOfStr
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  UniqTypeArrayOfStr,
+			Value: arrayOfStr,
+		})
+	}
+
+	if len(candidates) == 0 {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for Uniq", string(data))
+	}
+
+	// Pick the best candidate using multi-stage filtering
+	best := utils.PickBestUnionCandidate(candidates, data)
+	if best == nil {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for Uniq", string(data))
+	}
+
+	// Set the union type and value based on the best candidate
+	u.Type = best.Type.(UniqType)
+	switch best.Type {
+	case UniqTypeBoolean:
+		u.Boolean = best.Value.(*bool)
+		return nil
+	case UniqTypeArrayOfStr:
+		u.ArrayOfStr = best.Value.([]string)
 		return nil
 	}
 

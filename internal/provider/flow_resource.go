@@ -341,7 +341,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 					Attributes: map[string]schema.Attribute{
 						"any": schema.StringAttribute{
 							CustomType:  jsontypes.NormalizedType{},
-							Computed:    true,
 							Optional:    true,
 							Description: `Parsed as JSON.`,
 							Validators: []validator.String{
@@ -357,7 +356,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 							},
 						},
 						"api_submission_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
@@ -403,7 +401,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 							},
 						},
 						"entity_manual_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
@@ -450,7 +447,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 							},
 						},
 						"entity_operation_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
@@ -503,7 +499,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																},
 																Attributes: map[string]schema.Attribute{
 																	"anything_but_condition": schema.SingleNestedAttribute{
-																		Computed: true,
 																		Optional: true,
 																		Attributes: map[string]schema.Attribute{
 																			"anything_but": schema.ListAttribute{
@@ -524,7 +519,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																	"equals_ignore_case_condition": schema.SingleNestedAttribute{
-																		Computed: true,
 																		Optional: true,
 																		Attributes: map[string]schema.Attribute{
 																			"equals_ignore_case": schema.StringAttribute{
@@ -544,7 +538,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																	"exists_condition": schema.SingleNestedAttribute{
-																		Computed: true,
 																		Optional: true,
 																		Attributes: map[string]schema.Attribute{
 																			"exists": schema.BoolAttribute{
@@ -564,7 +557,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																	"prefix_condition": schema.SingleNestedAttribute{
-																		Computed: true,
 																		Optional: true,
 																		Attributes: map[string]schema.Attribute{
 																			"prefix": schema.StringAttribute{
@@ -584,7 +576,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																	"str": schema.StringAttribute{
-																		Computed: true,
 																		Optional: true,
 																		Validators: []validator.String{
 																			stringvalidator.ConflictsWith(path.Expressions{
@@ -598,7 +589,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																	"suffix_condition": schema.SingleNestedAttribute{
-																		Computed: true,
 																		Optional: true,
 																		Attributes: map[string]schema.Attribute{
 																			"suffix": schema.StringAttribute{
@@ -618,7 +608,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																	"wildcard_condition": schema.SingleNestedAttribute{
-																		Computed: true,
 																		Optional: true,
 																		Attributes: map[string]schema.Attribute{
 																			"wildcard": schema.StringAttribute{
@@ -860,7 +849,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 							},
 						},
 						"flows_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
@@ -915,7 +903,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 							},
 						},
 						"frontend_submit_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
@@ -961,7 +948,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 							},
 						},
 						"journey_submit_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
@@ -1011,7 +997,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 							},
 						},
 						"received_email_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
@@ -1334,7 +1319,10 @@ func (r *FlowResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 200 {
+	switch res.StatusCode {
+	case 200, 404:
+		break
+	default:
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

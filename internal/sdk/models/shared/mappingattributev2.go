@@ -18,22 +18,22 @@ func (m MappingAttributeV2) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MappingAttributeV2) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"operation"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *MappingAttributeV2) GetOperation() OperationNode {
-	if o == nil {
+func (m *MappingAttributeV2) GetOperation() OperationNode {
+	if m == nil {
 		return OperationNode{}
 	}
-	return o.Operation
+	return m.Operation
 }
 
-func (o *MappingAttributeV2) GetTarget() *string {
-	if o == nil {
+func (m *MappingAttributeV2) GetTarget() *string {
+	if m == nil {
 		return nil
 	}
-	return o.Target
+	return m.Target
 }

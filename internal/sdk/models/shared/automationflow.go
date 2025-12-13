@@ -50,31 +50,31 @@ func (d DisableDetails) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DisableDetails) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"disabled_at", "disabled_by"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *DisableDetails) GetBlame() *string {
-	if o == nil {
+func (d *DisableDetails) GetBlame() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Blame
+	return d.Blame
 }
 
-func (o *DisableDetails) GetDisabledAt() time.Time {
-	if o == nil {
+func (d *DisableDetails) GetDisabledAt() time.Time {
+	if d == nil {
 		return time.Time{}
 	}
-	return o.DisabledAt
+	return d.DisabledAt
 }
 
-func (o *DisableDetails) GetDisabledBy() DisabledBy {
-	if o == nil {
+func (d *DisableDetails) GetDisabledBy() DisabledBy {
+	if d == nil {
 		return DisabledBy("")
 	}
-	return o.DisabledBy
+	return d.DisabledBy
 }
 
 // MaxExecutions - Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified.
@@ -85,18 +85,18 @@ type MaxExecutions struct {
 	Window *string `json:"window,omitempty"`
 }
 
-func (o *MaxExecutions) GetCount() *float64 {
-	if o == nil {
+func (m *MaxExecutions) GetCount() *float64 {
+	if m == nil {
 		return nil
 	}
-	return o.Count
+	return m.Count
 }
 
-func (o *MaxExecutions) GetWindow() *string {
-	if o == nil {
+func (m *MaxExecutions) GetWindow() *string {
+	if m == nil {
 		return nil
 	}
-	return o.Window
+	return m.Window
 }
 
 type AutomationFlow struct {
@@ -127,109 +127,109 @@ type AutomationFlow struct {
 	WorkflowContext *WorkflowContext `json:"workflow_context,omitempty"`
 }
 
-func (o *AutomationFlow) GetManifest() []string {
-	if o == nil {
+func (a *AutomationFlow) GetManifest() []string {
+	if a == nil {
 		return nil
 	}
-	return o.Manifest
+	return a.Manifest
 }
 
-func (o *AutomationFlow) GetActions() []any {
-	if o == nil {
+func (a *AutomationFlow) GetActions() []any {
+	if a == nil {
 		return []any{}
 	}
-	return o.Actions
+	return a.Actions
 }
 
-func (o *AutomationFlow) GetConditions() []ActionCondition {
-	if o == nil {
+func (a *AutomationFlow) GetConditions() []ActionCondition {
+	if a == nil {
 		return nil
 	}
-	return o.Conditions
+	return a.Conditions
 }
 
-func (o *AutomationFlow) GetDisableDetails() *DisableDetails {
-	if o == nil {
+func (a *AutomationFlow) GetDisableDetails() *DisableDetails {
+	if a == nil {
 		return nil
 	}
-	return o.DisableDetails
+	return a.DisableDetails
 }
 
-func (o *AutomationFlow) GetEnabled() *bool {
-	if o == nil {
+func (a *AutomationFlow) GetEnabled() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.Enabled
+	return a.Enabled
 }
 
-func (o *AutomationFlow) GetEntitySchema() *string {
-	if o == nil {
+func (a *AutomationFlow) GetEntitySchema() *string {
+	if a == nil {
 		return nil
 	}
-	return o.EntitySchema
+	return a.EntitySchema
 }
 
-func (o *AutomationFlow) GetFlowName() string {
-	if o == nil {
+func (a *AutomationFlow) GetFlowName() string {
+	if a == nil {
 		return ""
 	}
-	return o.FlowName
+	return a.FlowName
 }
 
-func (o *AutomationFlow) GetID() *string {
-	if o == nil {
+func (a *AutomationFlow) GetID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ID
+	return a.ID
 }
 
-func (o *AutomationFlow) GetMaxExecutions() *MaxExecutions {
-	if o == nil {
+func (a *AutomationFlow) GetMaxExecutions() *MaxExecutions {
+	if a == nil {
 		return nil
 	}
-	return o.MaxExecutions
+	return a.MaxExecutions
 }
 
-func (o *AutomationFlow) GetSchedules() any {
-	if o == nil {
+func (a *AutomationFlow) GetSchedules() any {
+	if a == nil {
 		return nil
 	}
-	return o.Schedules
+	return a.Schedules
 }
 
-func (o *AutomationFlow) GetSystemFlow() *bool {
-	if o == nil {
+func (a *AutomationFlow) GetSystemFlow() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.SystemFlow
+	return a.SystemFlow
 }
 
-func (o *AutomationFlow) GetTriggerConditions() []any {
-	if o == nil {
+func (a *AutomationFlow) GetTriggerConditions() []any {
+	if a == nil {
 		return nil
 	}
-	return o.TriggerConditions
+	return a.TriggerConditions
 }
 
-func (o *AutomationFlow) GetTriggers() []AnyTrigger {
-	if o == nil {
+func (a *AutomationFlow) GetTriggers() []AnyTrigger {
+	if a == nil {
 		return []AnyTrigger{}
 	}
-	return o.Triggers
+	return a.Triggers
 }
 
-func (o *AutomationFlow) GetVersion() *float64 {
-	if o == nil {
+func (a *AutomationFlow) GetVersion() *float64 {
+	if a == nil {
 		return nil
 	}
-	return o.Version
+	return a.Version
 }
 
-func (o *AutomationFlow) GetWorkflowContext() *WorkflowContext {
-	if o == nil {
+func (a *AutomationFlow) GetWorkflowContext() *WorkflowContext {
+	if a == nil {
 		return nil
 	}
-	return o.WorkflowContext
+	return a.WorkflowContext
 }
 
 type AutomationFlowInput struct {
@@ -258,100 +258,100 @@ type AutomationFlowInput struct {
 	WorkflowContext *WorkflowContext `json:"workflow_context,omitempty"`
 }
 
-func (o *AutomationFlowInput) GetManifest() []string {
-	if o == nil {
+func (a *AutomationFlowInput) GetManifest() []string {
+	if a == nil {
 		return nil
 	}
-	return o.Manifest
+	return a.Manifest
 }
 
-func (o *AutomationFlowInput) GetActions() []any {
-	if o == nil {
+func (a *AutomationFlowInput) GetActions() []any {
+	if a == nil {
 		return []any{}
 	}
-	return o.Actions
+	return a.Actions
 }
 
-func (o *AutomationFlowInput) GetConditions() []ActionCondition {
-	if o == nil {
+func (a *AutomationFlowInput) GetConditions() []ActionCondition {
+	if a == nil {
 		return nil
 	}
-	return o.Conditions
+	return a.Conditions
 }
 
-func (o *AutomationFlowInput) GetDisableDetails() *DisableDetails {
-	if o == nil {
+func (a *AutomationFlowInput) GetDisableDetails() *DisableDetails {
+	if a == nil {
 		return nil
 	}
-	return o.DisableDetails
+	return a.DisableDetails
 }
 
-func (o *AutomationFlowInput) GetEnabled() *bool {
-	if o == nil {
+func (a *AutomationFlowInput) GetEnabled() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.Enabled
+	return a.Enabled
 }
 
-func (o *AutomationFlowInput) GetEntitySchema() *string {
-	if o == nil {
+func (a *AutomationFlowInput) GetEntitySchema() *string {
+	if a == nil {
 		return nil
 	}
-	return o.EntitySchema
+	return a.EntitySchema
 }
 
-func (o *AutomationFlowInput) GetFlowName() string {
-	if o == nil {
+func (a *AutomationFlowInput) GetFlowName() string {
+	if a == nil {
 		return ""
 	}
-	return o.FlowName
+	return a.FlowName
 }
 
-func (o *AutomationFlowInput) GetMaxExecutions() *MaxExecutions {
-	if o == nil {
+func (a *AutomationFlowInput) GetMaxExecutions() *MaxExecutions {
+	if a == nil {
 		return nil
 	}
-	return o.MaxExecutions
+	return a.MaxExecutions
 }
 
-func (o *AutomationFlowInput) GetSchedules() any {
-	if o == nil {
+func (a *AutomationFlowInput) GetSchedules() any {
+	if a == nil {
 		return nil
 	}
-	return o.Schedules
+	return a.Schedules
 }
 
-func (o *AutomationFlowInput) GetSystemFlow() *bool {
-	if o == nil {
+func (a *AutomationFlowInput) GetSystemFlow() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.SystemFlow
+	return a.SystemFlow
 }
 
-func (o *AutomationFlowInput) GetTriggerConditions() []any {
-	if o == nil {
+func (a *AutomationFlowInput) GetTriggerConditions() []any {
+	if a == nil {
 		return nil
 	}
-	return o.TriggerConditions
+	return a.TriggerConditions
 }
 
-func (o *AutomationFlowInput) GetTriggers() []AnyTrigger {
-	if o == nil {
+func (a *AutomationFlowInput) GetTriggers() []AnyTrigger {
+	if a == nil {
 		return []AnyTrigger{}
 	}
-	return o.Triggers
+	return a.Triggers
 }
 
-func (o *AutomationFlowInput) GetVersion() *float64 {
-	if o == nil {
+func (a *AutomationFlowInput) GetVersion() *float64 {
+	if a == nil {
 		return nil
 	}
-	return o.Version
+	return a.Version
 }
 
-func (o *AutomationFlowInput) GetWorkflowContext() *WorkflowContext {
-	if o == nil {
+func (a *AutomationFlowInput) GetWorkflowContext() *WorkflowContext {
+	if a == nil {
 		return nil
 	}
-	return o.WorkflowContext
+	return a.WorkflowContext
 }

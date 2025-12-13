@@ -17,29 +17,29 @@ func (e ErrorDetail) MarshalJSON() ([]byte, error) {
 }
 
 func (e *ErrorDetail) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"explanation"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ErrorDetail) GetContext() *string {
-	if o == nil {
+func (e *ErrorDetail) GetContext() *string {
+	if e == nil {
 		return nil
 	}
-	return o.Context
+	return e.Context
 }
 
-func (o *ErrorDetail) GetExplanation() string {
-	if o == nil {
+func (e *ErrorDetail) GetExplanation() string {
+	if e == nil {
 		return ""
 	}
-	return o.Explanation
+	return e.Explanation
 }
 
-func (o *ErrorDetail) GetID() *string {
-	if o == nil {
+func (e *ErrorDetail) GetID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.ID
+	return e.ID
 }

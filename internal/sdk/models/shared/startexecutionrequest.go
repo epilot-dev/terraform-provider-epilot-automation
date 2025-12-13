@@ -15,30 +15,30 @@ type StartExecutionRequest struct {
 	WorkflowContext *WorkflowExecutionContext `json:"workflow_context,omitempty"`
 }
 
-func (o *StartExecutionRequest) GetEntityID() string {
-	if o == nil {
+func (s *StartExecutionRequest) GetEntityID() string {
+	if s == nil {
 		return ""
 	}
-	return o.EntityID
+	return s.EntityID
 }
 
-func (o *StartExecutionRequest) GetFlowAutomationTaskID() *string {
-	if o == nil {
+func (s *StartExecutionRequest) GetFlowAutomationTaskID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.FlowAutomationTaskID
+	return s.FlowAutomationTaskID
 }
 
-func (o *StartExecutionRequest) GetFlowExecutionID() *string {
-	if o == nil {
+func (s *StartExecutionRequest) GetFlowExecutionID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.FlowExecutionID
+	return s.FlowExecutionID
 }
 
-func (o *StartExecutionRequest) GetWorkflowContext() *WorkflowExecutionContext {
-	if o == nil {
+func (s *StartExecutionRequest) GetWorkflowContext() *WorkflowExecutionContext {
+	if s == nil {
 		return nil
 	}
-	return o.WorkflowContext
+	return s.WorkflowContext
 }

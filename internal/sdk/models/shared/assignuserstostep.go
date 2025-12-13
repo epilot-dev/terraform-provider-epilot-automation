@@ -23,23 +23,23 @@ func (a *AssignUsersToStep) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *AssignUsersToStep) GetStepID() *string {
-	if o == nil {
+func (a *AssignUsersToStep) GetStepID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.StepID
+	return a.StepID
 }
 
-func (o *AssignUsersToStep) GetStepName() *string {
-	if o == nil {
+func (a *AssignUsersToStep) GetStepName() *string {
+	if a == nil {
 		return nil
 	}
-	return o.StepName
+	return a.StepName
 }
 
-func (o *AssignUsersToStep) GetUserIds() []float64 {
-	if o == nil {
+func (a *AssignUsersToStep) GetUserIds() []float64 {
+	if a == nil {
 		return nil
 	}
-	return o.UserIds
+	return a.UserIds
 }

@@ -16,8 +16,8 @@ const (
 )
 
 type MapEntityConfigMappingAttributes struct {
-	MappingAttributeV2 *MappingAttributeV2 `queryParam:"inline" name:"mapping_attributes"`
-	MappingAttribute   *MappingAttribute   `queryParam:"inline" name:"mapping_attributes"`
+	MappingAttributeV2 *MappingAttributeV2 `queryParam:"inline,name=mapping_attributes" union:"member"`
+	MappingAttribute   *MappingAttribute   `queryParam:"inline,name=mapping_attributes" union:"member"`
 
 	Type MapEntityConfigMappingAttributesType
 }
@@ -42,17 +42,43 @@ func CreateMapEntityConfigMappingAttributesMappingAttribute(mappingAttribute Map
 
 func (u *MapEntityConfigMappingAttributes) UnmarshalJSON(data []byte) error {
 
+	var candidates []utils.UnionCandidate
+
+	// Collect all valid candidates
 	var mappingAttributeV2 MappingAttributeV2 = MappingAttributeV2{}
 	if err := utils.UnmarshalJSON(data, &mappingAttributeV2, "", true, nil); err == nil {
-		u.MappingAttributeV2 = &mappingAttributeV2
-		u.Type = MapEntityConfigMappingAttributesTypeMappingAttributeV2
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  MapEntityConfigMappingAttributesTypeMappingAttributeV2,
+			Value: &mappingAttributeV2,
+		})
 	}
 
 	var mappingAttribute MappingAttribute = MappingAttribute{}
 	if err := utils.UnmarshalJSON(data, &mappingAttribute, "", true, nil); err == nil {
-		u.MappingAttribute = &mappingAttribute
-		u.Type = MapEntityConfigMappingAttributesTypeMappingAttribute
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  MapEntityConfigMappingAttributesTypeMappingAttribute,
+			Value: &mappingAttribute,
+		})
+	}
+
+	if len(candidates) == 0 {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for MapEntityConfigMappingAttributes", string(data))
+	}
+
+	// Pick the best candidate using multi-stage filtering
+	best := utils.PickBestUnionCandidate(candidates, data)
+	if best == nil {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for MapEntityConfigMappingAttributes", string(data))
+	}
+
+	// Set the union type and value based on the best candidate
+	u.Type = best.Type.(MapEntityConfigMappingAttributesType)
+	switch best.Type {
+	case MapEntityConfigMappingAttributesTypeMappingAttributeV2:
+		u.MappingAttributeV2 = best.Value.(*MappingAttributeV2)
+		return nil
+	case MapEntityConfigMappingAttributesTypeMappingAttribute:
+		u.MappingAttribute = best.Value.(*MappingAttribute)
 		return nil
 	}
 
@@ -93,57 +119,57 @@ func (m MapEntityConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MapEntityConfig) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"target_schema"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *MapEntityConfig) GetLinkbackRelationAttribute() *string {
-	if o == nil {
+func (m *MapEntityConfig) GetLinkbackRelationAttribute() *string {
+	if m == nil {
 		return nil
 	}
-	return o.LinkbackRelationAttribute
+	return m.LinkbackRelationAttribute
 }
 
-func (o *MapEntityConfig) GetLinkbackRelationTags() []string {
-	if o == nil {
+func (m *MapEntityConfig) GetLinkbackRelationTags() []string {
+	if m == nil {
 		return nil
 	}
-	return o.LinkbackRelationTags
+	return m.LinkbackRelationTags
 }
 
-func (o *MapEntityConfig) GetMappingAttributes() []MapEntityConfigMappingAttributes {
-	if o == nil {
+func (m *MapEntityConfig) GetMappingAttributes() []MapEntityConfigMappingAttributes {
+	if m == nil {
 		return nil
 	}
-	return o.MappingAttributes
+	return m.MappingAttributes
 }
 
-func (o *MapEntityConfig) GetMappingConfig() *MappingConfigRef {
-	if o == nil {
+func (m *MapEntityConfig) GetMappingConfig() *MappingConfigRef {
+	if m == nil {
 		return nil
 	}
-	return o.MappingConfig
+	return m.MappingConfig
 }
 
-func (o *MapEntityConfig) GetRelationAttributes() []RelationAttribute {
-	if o == nil {
+func (m *MapEntityConfig) GetRelationAttributes() []RelationAttribute {
+	if m == nil {
 		return nil
 	}
-	return o.RelationAttributes
+	return m.RelationAttributes
 }
 
-func (o *MapEntityConfig) GetTargetSchema() string {
-	if o == nil {
+func (m *MapEntityConfig) GetTargetSchema() string {
+	if m == nil {
 		return ""
 	}
-	return o.TargetSchema
+	return m.TargetSchema
 }
 
-func (o *MapEntityConfig) GetTargetUnique() []string {
-	if o == nil {
+func (m *MapEntityConfig) GetTargetUnique() []string {
+	if m == nil {
 		return nil
 	}
-	return o.TargetUnique
+	return m.TargetUnique
 }

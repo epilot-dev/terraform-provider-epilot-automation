@@ -23,64 +23,64 @@ func (e EntityItemSnapshot) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EntityItemSnapshot) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"_created_at", "_id", "_org", "_schema", "_title", "_updated_at"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *EntityItemSnapshot) GetAdditionalProperties() any {
-	if o == nil {
+func (e *EntityItemSnapshot) GetAdditionalProperties() any {
+	if e == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return e.AdditionalProperties
 }
 
-func (o *EntityItemSnapshot) GetCreatedAt() time.Time {
-	if o == nil {
+func (e *EntityItemSnapshot) GetCreatedAt() time.Time {
+	if e == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return e.CreatedAt
 }
 
-func (o *EntityItemSnapshot) GetID() string {
-	if o == nil {
+func (e *EntityItemSnapshot) GetID() string {
+	if e == nil {
 		return ""
 	}
-	return o.ID
+	return e.ID
 }
 
-func (o *EntityItemSnapshot) GetOrg() string {
-	if o == nil {
+func (e *EntityItemSnapshot) GetOrg() string {
+	if e == nil {
 		return ""
 	}
-	return o.Org
+	return e.Org
 }
 
-func (o *EntityItemSnapshot) GetSchema() string {
-	if o == nil {
+func (e *EntityItemSnapshot) GetSchema() string {
+	if e == nil {
 		return ""
 	}
-	return o.Schema
+	return e.Schema
 }
 
-func (o *EntityItemSnapshot) GetTags() []string {
-	if o == nil {
+func (e *EntityItemSnapshot) GetTags() []string {
+	if e == nil {
 		return nil
 	}
-	return o.Tags
+	return e.Tags
 }
 
-func (o *EntityItemSnapshot) GetTitle() string {
-	if o == nil {
+func (e *EntityItemSnapshot) GetTitle() string {
+	if e == nil {
 		return ""
 	}
-	return o.Title
+	return e.Title
 }
 
-func (o *EntityItemSnapshot) GetUpdatedAt() time.Time {
-	if o == nil {
+func (e *EntityItemSnapshot) GetUpdatedAt() time.Time {
+	if e == nil {
 		return time.Time{}
 	}
-	return o.UpdatedAt
+	return e.UpdatedAt
 }

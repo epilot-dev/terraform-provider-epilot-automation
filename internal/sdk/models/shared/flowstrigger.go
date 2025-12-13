@@ -20,24 +20,24 @@ func (f FlowsTriggerConfiguration) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowsTriggerConfiguration) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &f, "", false, []string{"source_id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *FlowsTriggerConfiguration) GetJourneyID() *string {
-	if o == nil {
+func (f *FlowsTriggerConfiguration) GetJourneyID() *string {
+	if f == nil {
 		return nil
 	}
-	return o.JourneyID
+	return f.JourneyID
 }
 
-func (o *FlowsTriggerConfiguration) GetSourceID() string {
-	if o == nil {
+func (f *FlowsTriggerConfiguration) GetSourceID() string {
+	if f == nil {
 		return ""
 	}
-	return o.SourceID
+	return f.SourceID
 }
 
 type FlowsTriggerType string
@@ -74,29 +74,29 @@ func (f FlowsTrigger) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowsTrigger) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &f, "", false, []string{"configuration", "type"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *FlowsTrigger) GetConfiguration() FlowsTriggerConfiguration {
-	if o == nil {
+func (f *FlowsTrigger) GetConfiguration() FlowsTriggerConfiguration {
+	if f == nil {
 		return FlowsTriggerConfiguration{}
 	}
-	return o.Configuration
+	return f.Configuration
 }
 
-func (o *FlowsTrigger) GetID() *string {
-	if o == nil {
+func (f *FlowsTrigger) GetID() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ID
+	return f.ID
 }
 
-func (o *FlowsTrigger) GetType() FlowsTriggerType {
-	if o == nil {
+func (f *FlowsTrigger) GetType() FlowsTriggerType {
+	if f == nil {
 		return FlowsTriggerType("")
 	}
-	return o.Type
+	return f.Type
 }
