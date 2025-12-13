@@ -32,39 +32,39 @@ func (c *Config) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Config) GetAppID() *string {
-	if o == nil {
+func (c *Config) GetAppID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.AppID
+	return c.AppID
 }
 
-func (o *Config) GetComponentID() *string {
-	if o == nil {
+func (c *Config) GetComponentID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ComponentID
+	return c.ComponentID
 }
 
-func (o *Config) GetDescription() *string {
-	if o == nil {
+func (c *Config) GetDescription() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Description
+	return c.Description
 }
 
-func (o *Config) GetName() *string {
-	if o == nil {
+func (c *Config) GetName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *Config) GetWaitForCallback() *bool {
-	if o == nil {
+func (c *Config) GetWaitForCallback() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.WaitForCallback
+	return c.WaitForCallback
 }
 
 type CustomActionReason struct {
@@ -85,18 +85,18 @@ func (c *CustomActionReason) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomActionReason) GetMessage() *string {
-	if o == nil {
+func (c *CustomActionReason) GetMessage() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Message
+	return c.Message
 }
 
-func (o *CustomActionReason) GetPayload() map[string]any {
-	if o == nil {
+func (c *CustomActionReason) GetPayload() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.Payload
+	return c.Payload
 }
 
 type CustomActionType string
@@ -159,121 +159,121 @@ func (c *CustomAction) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomAction) GetAllowFailure() *bool {
-	if o == nil {
+func (c *CustomAction) GetAllowFailure() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.AllowFailure
+	return c.AllowFailure
 }
 
-func (o *CustomAction) GetConditionID() *string {
-	if o == nil {
+func (c *CustomAction) GetConditionID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ConditionID
+	return c.ConditionID
 }
 
-func (o *CustomAction) GetConfig() *Config {
-	if o == nil {
+func (c *CustomAction) GetConfig() *Config {
+	if c == nil {
 		return nil
 	}
-	return o.Config
+	return c.Config
 }
 
-func (o *CustomAction) GetCreatedAutomatically() *bool {
-	if o == nil {
+func (c *CustomAction) GetCreatedAutomatically() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.CreatedAutomatically
+	return c.CreatedAutomatically
 }
 
-func (o *CustomAction) GetErrorOutput() *ErrorOutput {
-	if o == nil {
+func (c *CustomAction) GetErrorOutput() *ErrorOutput {
+	if c == nil {
 		return nil
 	}
-	return o.ErrorOutput
+	return c.ErrorOutput
 }
 
-func (o *CustomAction) GetExecutionStatus() *ExecutionStatus {
-	if o == nil {
+func (c *CustomAction) GetExecutionStatus() *ExecutionStatus {
+	if c == nil {
 		return nil
 	}
-	return o.ExecutionStatus
+	return c.ExecutionStatus
 }
 
-func (o *CustomAction) GetFlowActionID() *string {
-	if o == nil {
+func (c *CustomAction) GetFlowActionID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FlowActionID
+	return c.FlowActionID
 }
 
-func (o *CustomAction) GetID() *string {
-	if o == nil {
+func (c *CustomAction) GetID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomAction) GetIsBulkAction() *bool {
-	if o == nil {
+func (c *CustomAction) GetIsBulkAction() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.IsBulkAction
+	return c.IsBulkAction
 }
 
-func (o *CustomAction) GetName() *string {
-	if o == nil {
+func (c *CustomAction) GetName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomAction) GetOutputs() map[string]any {
-	if o == nil {
+func (c *CustomAction) GetOutputs() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.Outputs
+	return c.Outputs
 }
 
-func (o *CustomAction) GetReason() *CustomActionReason {
-	if o == nil {
+func (c *CustomAction) GetReason() *CustomActionReason {
+	if c == nil {
 		return nil
 	}
-	return o.Reason
+	return c.Reason
 }
 
-func (o *CustomAction) GetRetryStrategy() *RetryStrategy {
-	if o == nil {
+func (c *CustomAction) GetRetryStrategy() *RetryStrategy {
+	if c == nil {
 		return nil
 	}
-	return o.RetryStrategy
+	return c.RetryStrategy
 }
 
-func (o *CustomAction) GetScheduleID() *string {
-	if o == nil {
+func (c *CustomAction) GetScheduleID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ScheduleID
+	return c.ScheduleID
 }
 
-func (o *CustomAction) GetStartedAt() *string {
-	if o == nil {
+func (c *CustomAction) GetStartedAt() *string {
+	if c == nil {
 		return nil
 	}
-	return o.StartedAt
+	return c.StartedAt
 }
 
-func (o *CustomAction) GetType() *CustomActionType {
-	if o == nil {
+func (c *CustomAction) GetType() *CustomActionType {
+	if c == nil {
 		return nil
 	}
-	return o.Type
+	return c.Type
 }
 
-func (o *CustomAction) GetUpdatedAt() *string {
-	if o == nil {
+func (c *CustomAction) GetUpdatedAt() *string {
+	if c == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return c.UpdatedAt
 }

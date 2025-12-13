@@ -25,29 +25,29 @@ func (c CopyValueMapper) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CopyValueMapper) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"mode", "source", "target"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *CopyValueMapper) GetMode() MappingAttributeMode {
-	if o == nil {
+func (c *CopyValueMapper) GetMode() MappingAttributeMode {
+	if c == nil {
 		return MappingAttributeMode("")
 	}
-	return o.Mode
+	return c.Mode
 }
 
-func (o *CopyValueMapper) GetSource() string {
-	if o == nil {
+func (c *CopyValueMapper) GetSource() string {
+	if c == nil {
 		return ""
 	}
-	return o.Source
+	return c.Source
 }
 
-func (o *CopyValueMapper) GetTarget() string {
-	if o == nil {
+func (c *CopyValueMapper) GetTarget() string {
+	if c == nil {
 		return ""
 	}
-	return o.Target
+	return c.Target
 }

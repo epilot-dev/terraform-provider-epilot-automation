@@ -12,18 +12,18 @@ type PatchBulkJobRequest struct {
 	JobID               string                      `pathParam:"style=simple,explode=false,name=job_id"`
 }
 
-func (o *PatchBulkJobRequest) GetPatchBulkJobRequest() *shared.PatchBulkJobRequest {
-	if o == nil {
+func (p *PatchBulkJobRequest) GetPatchBulkJobRequest() *shared.PatchBulkJobRequest {
+	if p == nil {
 		return nil
 	}
-	return o.PatchBulkJobRequest
+	return p.PatchBulkJobRequest
 }
 
-func (o *PatchBulkJobRequest) GetJobID() string {
-	if o == nil {
+func (p *PatchBulkJobRequest) GetJobID() string {
+	if p == nil {
 		return ""
 	}
-	return o.JobID
+	return p.JobID
 }
 
 // PatchBulkJobResponseBody - The requested resource is forbidden
@@ -34,18 +34,18 @@ type PatchBulkJobResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *PatchBulkJobResponseBody) GetError() *string {
-	if o == nil {
+func (p *PatchBulkJobResponseBody) GetError() *string {
+	if p == nil {
 		return nil
 	}
-	return o.Error
+	return p.Error
 }
 
-func (o *PatchBulkJobResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (p *PatchBulkJobResponseBody) GetStatus() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.Status
+	return p.Status
 }
 
 type PatchBulkJobResponse struct {
@@ -61,37 +61,37 @@ type PatchBulkJobResponse struct {
 	Object *PatchBulkJobResponseBody
 }
 
-func (o *PatchBulkJobResponse) GetBulkTriggerJob() *shared.BulkTriggerJob {
-	if o == nil {
+func (p *PatchBulkJobResponse) GetBulkTriggerJob() *shared.BulkTriggerJob {
+	if p == nil {
 		return nil
 	}
-	return o.BulkTriggerJob
+	return p.BulkTriggerJob
 }
 
-func (o *PatchBulkJobResponse) GetContentType() string {
-	if o == nil {
+func (p *PatchBulkJobResponse) GetContentType() string {
+	if p == nil {
 		return ""
 	}
-	return o.ContentType
+	return p.ContentType
 }
 
-func (o *PatchBulkJobResponse) GetStatusCode() int {
-	if o == nil {
+func (p *PatchBulkJobResponse) GetStatusCode() int {
+	if p == nil {
 		return 0
 	}
-	return o.StatusCode
+	return p.StatusCode
 }
 
-func (o *PatchBulkJobResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (p *PatchBulkJobResponse) GetRawResponse() *http.Response {
+	if p == nil {
 		return nil
 	}
-	return o.RawResponse
+	return p.RawResponse
 }
 
-func (o *PatchBulkJobResponse) GetObject() *PatchBulkJobResponseBody {
-	if o == nil {
+func (p *PatchBulkJobResponse) GetObject() *PatchBulkJobResponseBody {
+	if p == nil {
 		return nil
 	}
-	return o.Object
+	return p.Object
 }

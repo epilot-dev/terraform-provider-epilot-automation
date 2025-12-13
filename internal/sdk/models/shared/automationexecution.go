@@ -19,10 +19,10 @@ const (
 )
 
 type TriggerEvent struct {
-	TriggerEventManual             *TriggerEventManual             `queryParam:"inline" name:"trigger_event"`
-	TriggerEventEntityActivity     *TriggerEventEntityActivity     `queryParam:"inline" name:"trigger_event"`
-	TriggerEventEntityOperation    *TriggerEventEntityOperation    `queryParam:"inline" name:"trigger_event"`
-	TriggerEventFlowAutomationTask *TriggerEventFlowAutomationTask `queryParam:"inline" name:"trigger_event"`
+	TriggerEventManual             *TriggerEventManual             `queryParam:"inline,name=trigger_event" union:"member"`
+	TriggerEventEntityActivity     *TriggerEventEntityActivity     `queryParam:"inline,name=trigger_event" union:"member"`
+	TriggerEventEntityOperation    *TriggerEventEntityOperation    `queryParam:"inline,name=trigger_event" union:"member"`
+	TriggerEventFlowAutomationTask *TriggerEventFlowAutomationTask `queryParam:"inline,name=trigger_event" union:"member"`
 
 	Type TriggerEventType
 }
@@ -65,31 +65,65 @@ func CreateTriggerEventTriggerEventFlowAutomationTask(triggerEventFlowAutomation
 
 func (u *TriggerEvent) UnmarshalJSON(data []byte) error {
 
-	var triggerEventEntityOperation TriggerEventEntityOperation = TriggerEventEntityOperation{}
-	if err := utils.UnmarshalJSON(data, &triggerEventEntityOperation, "", true, nil); err == nil {
-		u.TriggerEventEntityOperation = &triggerEventEntityOperation
-		u.Type = TriggerEventTypeTriggerEventEntityOperation
-		return nil
-	}
+	var candidates []utils.UnionCandidate
 
-	var triggerEventFlowAutomationTask TriggerEventFlowAutomationTask = TriggerEventFlowAutomationTask{}
-	if err := utils.UnmarshalJSON(data, &triggerEventFlowAutomationTask, "", true, nil); err == nil {
-		u.TriggerEventFlowAutomationTask = &triggerEventFlowAutomationTask
-		u.Type = TriggerEventTypeTriggerEventFlowAutomationTask
-		return nil
+	// Collect all valid candidates
+	var triggerEventManual TriggerEventManual = TriggerEventManual{}
+	if err := utils.UnmarshalJSON(data, &triggerEventManual, "", true, nil); err == nil {
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  TriggerEventTypeTriggerEventManual,
+			Value: &triggerEventManual,
+		})
 	}
 
 	var triggerEventEntityActivity TriggerEventEntityActivity = TriggerEventEntityActivity{}
 	if err := utils.UnmarshalJSON(data, &triggerEventEntityActivity, "", true, nil); err == nil {
-		u.TriggerEventEntityActivity = &triggerEventEntityActivity
-		u.Type = TriggerEventTypeTriggerEventEntityActivity
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  TriggerEventTypeTriggerEventEntityActivity,
+			Value: &triggerEventEntityActivity,
+		})
 	}
 
-	var triggerEventManual TriggerEventManual = TriggerEventManual{}
-	if err := utils.UnmarshalJSON(data, &triggerEventManual, "", true, nil); err == nil {
-		u.TriggerEventManual = &triggerEventManual
-		u.Type = TriggerEventTypeTriggerEventManual
+	var triggerEventEntityOperation TriggerEventEntityOperation = TriggerEventEntityOperation{}
+	if err := utils.UnmarshalJSON(data, &triggerEventEntityOperation, "", true, nil); err == nil {
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  TriggerEventTypeTriggerEventEntityOperation,
+			Value: &triggerEventEntityOperation,
+		})
+	}
+
+	var triggerEventFlowAutomationTask TriggerEventFlowAutomationTask = TriggerEventFlowAutomationTask{}
+	if err := utils.UnmarshalJSON(data, &triggerEventFlowAutomationTask, "", true, nil); err == nil {
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  TriggerEventTypeTriggerEventFlowAutomationTask,
+			Value: &triggerEventFlowAutomationTask,
+		})
+	}
+
+	if len(candidates) == 0 {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for TriggerEvent", string(data))
+	}
+
+	// Pick the best candidate using multi-stage filtering
+	best := utils.PickBestUnionCandidate(candidates, data)
+	if best == nil {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for TriggerEvent", string(data))
+	}
+
+	// Set the union type and value based on the best candidate
+	u.Type = best.Type.(TriggerEventType)
+	switch best.Type {
+	case TriggerEventTypeTriggerEventManual:
+		u.TriggerEventManual = best.Value.(*TriggerEventManual)
+		return nil
+	case TriggerEventTypeTriggerEventEntityActivity:
+		u.TriggerEventEntityActivity = best.Value.(*TriggerEventEntityActivity)
+		return nil
+	case TriggerEventTypeTriggerEventEntityOperation:
+		u.TriggerEventEntityOperation = best.Value.(*TriggerEventEntityOperation)
+		return nil
+	case TriggerEventTypeTriggerEventFlowAutomationTask:
+		u.TriggerEventFlowAutomationTask = best.Value.(*TriggerEventFlowAutomationTask)
 		return nil
 	}
 
@@ -147,141 +181,141 @@ func (a AutomationExecution) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AutomationExecution) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"actions", "entity_id", "flow_id", "id", "org_id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AutomationExecution) GetActions() []AnyAction {
-	if o == nil {
+func (a *AutomationExecution) GetActions() []AnyAction {
+	if a == nil {
 		return []AnyAction{}
 	}
-	return o.Actions
+	return a.Actions
 }
 
-func (o *AutomationExecution) GetActivityID() *string {
-	if o == nil {
+func (a *AutomationExecution) GetActivityID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ActivityID
+	return a.ActivityID
 }
 
-func (o *AutomationExecution) GetConditions() []ActionCondition {
-	if o == nil {
+func (a *AutomationExecution) GetConditions() []ActionCondition {
+	if a == nil {
 		return nil
 	}
-	return o.Conditions
+	return a.Conditions
 }
 
-func (o *AutomationExecution) GetCreatedAt() *time.Time {
-	if o == nil {
+func (a *AutomationExecution) GetCreatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return a.CreatedAt
 }
 
-func (o *AutomationExecution) GetCurrentActionID() *string {
-	if o == nil {
+func (a *AutomationExecution) GetCurrentActionID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.CurrentActionID
+	return a.CurrentActionID
 }
 
-func (o *AutomationExecution) GetEntityID() string {
-	if o == nil {
+func (a *AutomationExecution) GetEntityID() string {
+	if a == nil {
 		return ""
 	}
-	return o.EntityID
+	return a.EntityID
 }
 
-func (o *AutomationExecution) GetEntitySnapshot() *EntityItemSnapshot {
-	if o == nil {
+func (a *AutomationExecution) GetEntitySnapshot() *EntityItemSnapshot {
+	if a == nil {
 		return nil
 	}
-	return o.EntitySnapshot
+	return a.EntitySnapshot
 }
 
-func (o *AutomationExecution) GetExecutionStatus() *ExecutionStatus {
-	if o == nil {
+func (a *AutomationExecution) GetExecutionStatus() *ExecutionStatus {
+	if a == nil {
 		return nil
 	}
-	return o.ExecutionStatus
+	return a.ExecutionStatus
 }
 
-func (o *AutomationExecution) GetFlowID() string {
-	if o == nil {
+func (a *AutomationExecution) GetFlowID() string {
+	if a == nil {
 		return ""
 	}
-	return o.FlowID
+	return a.FlowID
 }
 
-func (o *AutomationExecution) GetFlowName() *string {
-	if o == nil {
+func (a *AutomationExecution) GetFlowName() *string {
+	if a == nil {
 		return nil
 	}
-	return o.FlowName
+	return a.FlowName
 }
 
-func (o *AutomationExecution) GetID() string {
-	if o == nil {
+func (a *AutomationExecution) GetID() string {
+	if a == nil {
 		return ""
 	}
-	return o.ID
+	return a.ID
 }
 
-func (o *AutomationExecution) GetOrgID() string {
-	if o == nil {
+func (a *AutomationExecution) GetOrgID() string {
+	if a == nil {
 		return ""
 	}
-	return o.OrgID
+	return a.OrgID
 }
 
-func (o *AutomationExecution) GetResumeToken() *string {
-	if o == nil {
+func (a *AutomationExecution) GetResumeToken() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ResumeToken
+	return a.ResumeToken
 }
 
-func (o *AutomationExecution) GetSchedules() []ActionSchedule {
-	if o == nil {
+func (a *AutomationExecution) GetSchedules() []ActionSchedule {
+	if a == nil {
 		return nil
 	}
-	return o.Schedules
+	return a.Schedules
 }
 
-func (o *AutomationExecution) GetTriggerContext() map[string]string {
-	if o == nil {
+func (a *AutomationExecution) GetTriggerContext() map[string]string {
+	if a == nil {
 		return nil
 	}
-	return o.TriggerContext
+	return a.TriggerContext
 }
 
-func (o *AutomationExecution) GetTriggerEvent() *TriggerEvent {
-	if o == nil {
+func (a *AutomationExecution) GetTriggerEvent() *TriggerEvent {
+	if a == nil {
 		return nil
 	}
-	return o.TriggerEvent
+	return a.TriggerEvent
 }
 
-func (o *AutomationExecution) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (a *AutomationExecution) GetUpdatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return a.UpdatedAt
 }
 
-func (o *AutomationExecution) GetVersion() *float64 {
-	if o == nil {
+func (a *AutomationExecution) GetVersion() *float64 {
+	if a == nil {
 		return nil
 	}
-	return o.Version
+	return a.Version
 }
 
-func (o *AutomationExecution) GetWorkflowContext() *WorkflowExecutionContext {
-	if o == nil {
+func (a *AutomationExecution) GetWorkflowContext() *WorkflowExecutionContext {
+	if a == nil {
 		return nil
 	}
-	return o.WorkflowContext
+	return a.WorkflowContext
 }

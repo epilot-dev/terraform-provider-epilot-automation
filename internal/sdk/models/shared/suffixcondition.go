@@ -21,9 +21,9 @@ func (s *SuffixCondition) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SuffixCondition) GetSuffix() *string {
-	if o == nil {
+func (s *SuffixCondition) GetSuffix() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Suffix
+	return s.Suffix
 }

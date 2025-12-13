@@ -43,36 +43,36 @@ func (t TriggerEventManual) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TriggerEventManual) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, []string{"entity_id", "org_id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TriggerEventManual) GetCaller() *APICallerContext {
-	if o == nil {
+func (t *TriggerEventManual) GetCaller() *APICallerContext {
+	if t == nil {
 		return nil
 	}
-	return o.Caller
+	return t.Caller
 }
 
-func (o *TriggerEventManual) GetEntityID() string {
-	if o == nil {
+func (t *TriggerEventManual) GetEntityID() string {
+	if t == nil {
 		return ""
 	}
-	return o.EntityID
+	return t.EntityID
 }
 
-func (o *TriggerEventManual) GetOrgID() string {
-	if o == nil {
+func (t *TriggerEventManual) GetOrgID() string {
+	if t == nil {
 		return ""
 	}
-	return o.OrgID
+	return t.OrgID
 }
 
-func (o *TriggerEventManual) GetType() *TriggerEventManualType {
-	if o == nil {
+func (t *TriggerEventManual) GetType() *TriggerEventManualType {
+	if t == nil {
 		return nil
 	}
-	return o.Type
+	return t.Type
 }

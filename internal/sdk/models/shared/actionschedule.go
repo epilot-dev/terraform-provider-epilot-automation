@@ -80,44 +80,44 @@ type ActionSchedule struct {
 	TimeRelation *TimeRelation        `json:"timeRelation,omitempty"`
 }
 
-func (o *ActionSchedule) GetID() string {
-	if o == nil {
+func (a *ActionSchedule) GetID() string {
+	if a == nil {
 		return ""
 	}
-	return o.ID
+	return a.ID
 }
 
-func (o *ActionSchedule) GetNumberOfUnits() *float64 {
-	if o == nil {
+func (a *ActionSchedule) GetNumberOfUnits() *float64 {
+	if a == nil {
 		return nil
 	}
-	return o.NumberOfUnits
+	return a.NumberOfUnits
 }
 
-func (o *ActionSchedule) GetScheduleAPIID() *string {
-	if o == nil {
+func (a *ActionSchedule) GetScheduleAPIID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ScheduleAPIID
+	return a.ScheduleAPIID
 }
 
-func (o *ActionSchedule) GetSource() ActionScheduleSource {
-	if o == nil {
+func (a *ActionSchedule) GetSource() ActionScheduleSource {
+	if a == nil {
 		return ActionScheduleSource{}
 	}
-	return o.Source
+	return a.Source
 }
 
-func (o *ActionSchedule) GetTimePeriod() *TimePeriod {
-	if o == nil {
+func (a *ActionSchedule) GetTimePeriod() *TimePeriod {
+	if a == nil {
 		return nil
 	}
-	return o.TimePeriod
+	return a.TimePeriod
 }
 
-func (o *ActionSchedule) GetTimeRelation() *TimeRelation {
-	if o == nil {
+func (a *ActionSchedule) GetTimeRelation() *TimeRelation {
+	if a == nil {
 		return nil
 	}
-	return o.TimeRelation
+	return a.TimeRelation
 }
