@@ -26,18 +26,18 @@ func (f *FlowExecutionCancelActionReason) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *FlowExecutionCancelActionReason) GetMessage() *string {
-	if o == nil {
+func (f *FlowExecutionCancelActionReason) GetMessage() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Message
+	return f.Message
 }
 
-func (o *FlowExecutionCancelActionReason) GetPayload() map[string]any {
-	if o == nil {
+func (f *FlowExecutionCancelActionReason) GetPayload() map[string]any {
+	if f == nil {
 		return nil
 	}
-	return o.Payload
+	return f.Payload
 }
 
 type FlowExecutionCancelActionType string
@@ -101,121 +101,121 @@ func (f *FlowExecutionCancelAction) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *FlowExecutionCancelAction) GetAllowFailure() *bool {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetAllowFailure() *bool {
+	if f == nil {
 		return nil
 	}
-	return o.AllowFailure
+	return f.AllowFailure
 }
 
-func (o *FlowExecutionCancelAction) GetConditionID() *string {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetConditionID() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ConditionID
+	return f.ConditionID
 }
 
-func (o *FlowExecutionCancelAction) GetConfig() *FlowExecutionCancelConfig {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetConfig() *FlowExecutionCancelConfig {
+	if f == nil {
 		return nil
 	}
-	return o.Config
+	return f.Config
 }
 
-func (o *FlowExecutionCancelAction) GetCreatedAutomatically() *bool {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetCreatedAutomatically() *bool {
+	if f == nil {
 		return nil
 	}
-	return o.CreatedAutomatically
+	return f.CreatedAutomatically
 }
 
-func (o *FlowExecutionCancelAction) GetErrorOutput() *ErrorOutput {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetErrorOutput() *ErrorOutput {
+	if f == nil {
 		return nil
 	}
-	return o.ErrorOutput
+	return f.ErrorOutput
 }
 
-func (o *FlowExecutionCancelAction) GetExecutionStatus() *ExecutionStatus {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetExecutionStatus() *ExecutionStatus {
+	if f == nil {
 		return nil
 	}
-	return o.ExecutionStatus
+	return f.ExecutionStatus
 }
 
-func (o *FlowExecutionCancelAction) GetFlowActionID() *string {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetFlowActionID() *string {
+	if f == nil {
 		return nil
 	}
-	return o.FlowActionID
+	return f.FlowActionID
 }
 
-func (o *FlowExecutionCancelAction) GetID() *string {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetID() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ID
+	return f.ID
 }
 
-func (o *FlowExecutionCancelAction) GetIsBulkAction() *bool {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetIsBulkAction() *bool {
+	if f == nil {
 		return nil
 	}
-	return o.IsBulkAction
+	return f.IsBulkAction
 }
 
-func (o *FlowExecutionCancelAction) GetName() *string {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetName() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Name
+	return f.Name
 }
 
-func (o *FlowExecutionCancelAction) GetOutputs() map[string]any {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetOutputs() map[string]any {
+	if f == nil {
 		return nil
 	}
-	return o.Outputs
+	return f.Outputs
 }
 
-func (o *FlowExecutionCancelAction) GetReason() *FlowExecutionCancelActionReason {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetReason() *FlowExecutionCancelActionReason {
+	if f == nil {
 		return nil
 	}
-	return o.Reason
+	return f.Reason
 }
 
-func (o *FlowExecutionCancelAction) GetRetryStrategy() *RetryStrategy {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetRetryStrategy() *RetryStrategy {
+	if f == nil {
 		return nil
 	}
-	return o.RetryStrategy
+	return f.RetryStrategy
 }
 
-func (o *FlowExecutionCancelAction) GetScheduleID() *string {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetScheduleID() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ScheduleID
+	return f.ScheduleID
 }
 
-func (o *FlowExecutionCancelAction) GetStartedAt() *string {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetStartedAt() *string {
+	if f == nil {
 		return nil
 	}
-	return o.StartedAt
+	return f.StartedAt
 }
 
-func (o *FlowExecutionCancelAction) GetType() *FlowExecutionCancelActionType {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetType() *FlowExecutionCancelActionType {
+	if f == nil {
 		return nil
 	}
-	return o.Type
+	return f.Type
 }
 
-func (o *FlowExecutionCancelAction) GetUpdatedAt() *string {
-	if o == nil {
+func (f *FlowExecutionCancelAction) GetUpdatedAt() *string {
+	if f == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return f.UpdatedAt
 }

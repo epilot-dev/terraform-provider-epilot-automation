@@ -26,18 +26,18 @@ func (t *TriggerShareEntityActionReason) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TriggerShareEntityActionReason) GetMessage() *string {
-	if o == nil {
+func (t *TriggerShareEntityActionReason) GetMessage() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Message
+	return t.Message
 }
 
-func (o *TriggerShareEntityActionReason) GetPayload() map[string]any {
-	if o == nil {
+func (t *TriggerShareEntityActionReason) GetPayload() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.Payload
+	return t.Payload
 }
 
 type TriggerShareEntityActionType string
@@ -100,121 +100,121 @@ func (t *TriggerShareEntityAction) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TriggerShareEntityAction) GetAllowFailure() *bool {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetAllowFailure() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.AllowFailure
+	return t.AllowFailure
 }
 
-func (o *TriggerShareEntityAction) GetConditionID() *string {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetConditionID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.ConditionID
+	return t.ConditionID
 }
 
-func (o *TriggerShareEntityAction) GetConfig() *TriggerShareEntityConfig {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetConfig() *TriggerShareEntityConfig {
+	if t == nil {
 		return nil
 	}
-	return o.Config
+	return t.Config
 }
 
-func (o *TriggerShareEntityAction) GetCreatedAutomatically() *bool {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetCreatedAutomatically() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.CreatedAutomatically
+	return t.CreatedAutomatically
 }
 
-func (o *TriggerShareEntityAction) GetErrorOutput() *ErrorOutput {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetErrorOutput() *ErrorOutput {
+	if t == nil {
 		return nil
 	}
-	return o.ErrorOutput
+	return t.ErrorOutput
 }
 
-func (o *TriggerShareEntityAction) GetExecutionStatus() *ExecutionStatus {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetExecutionStatus() *ExecutionStatus {
+	if t == nil {
 		return nil
 	}
-	return o.ExecutionStatus
+	return t.ExecutionStatus
 }
 
-func (o *TriggerShareEntityAction) GetFlowActionID() *string {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetFlowActionID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.FlowActionID
+	return t.FlowActionID
 }
 
-func (o *TriggerShareEntityAction) GetID() *string {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.ID
+	return t.ID
 }
 
-func (o *TriggerShareEntityAction) GetIsBulkAction() *bool {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetIsBulkAction() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.IsBulkAction
+	return t.IsBulkAction
 }
 
-func (o *TriggerShareEntityAction) GetName() *string {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetName() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Name
+	return t.Name
 }
 
-func (o *TriggerShareEntityAction) GetOutputs() map[string]any {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetOutputs() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.Outputs
+	return t.Outputs
 }
 
-func (o *TriggerShareEntityAction) GetReason() *TriggerShareEntityActionReason {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetReason() *TriggerShareEntityActionReason {
+	if t == nil {
 		return nil
 	}
-	return o.Reason
+	return t.Reason
 }
 
-func (o *TriggerShareEntityAction) GetRetryStrategy() *RetryStrategy {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetRetryStrategy() *RetryStrategy {
+	if t == nil {
 		return nil
 	}
-	return o.RetryStrategy
+	return t.RetryStrategy
 }
 
-func (o *TriggerShareEntityAction) GetScheduleID() *string {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetScheduleID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.ScheduleID
+	return t.ScheduleID
 }
 
-func (o *TriggerShareEntityAction) GetStartedAt() *string {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetStartedAt() *string {
+	if t == nil {
 		return nil
 	}
-	return o.StartedAt
+	return t.StartedAt
 }
 
-func (o *TriggerShareEntityAction) GetType() *TriggerShareEntityActionType {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetType() *TriggerShareEntityActionType {
+	if t == nil {
 		return nil
 	}
-	return o.Type
+	return t.Type
 }
 
-func (o *TriggerShareEntityAction) GetUpdatedAt() *string {
-	if o == nil {
+func (t *TriggerShareEntityAction) GetUpdatedAt() *string {
+	if t == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return t.UpdatedAt
 }

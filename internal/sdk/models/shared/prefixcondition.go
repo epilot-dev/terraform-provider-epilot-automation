@@ -21,9 +21,9 @@ func (p *PrefixCondition) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *PrefixCondition) GetPrefix() *string {
-	if o == nil {
+func (p *PrefixCondition) GetPrefix() *string {
+	if p == nil {
 		return nil
 	}
-	return o.Prefix
+	return p.Prefix
 }

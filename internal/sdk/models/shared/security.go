@@ -6,9 +6,9 @@ type Security struct {
 	EpilotAuth *string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
 }
 
-func (o *Security) GetEpilotAuth() *string {
-	if o == nil {
+func (s *Security) GetEpilotAuth() *string {
+	if s == nil {
 		return nil
 	}
-	return o.EpilotAuth
+	return s.EpilotAuth
 }

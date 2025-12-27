@@ -18,9 +18,9 @@ const (
 
 // EntitySearchFilterValue - A filter field value.
 type EntitySearchFilterValue struct {
-	Str     *string  `queryParam:"inline" name:"EntitySearchFilterValue"`
-	Number  *float64 `queryParam:"inline" name:"EntitySearchFilterValue"`
-	Boolean *bool    `queryParam:"inline" name:"EntitySearchFilterValue"`
+	Str     *string  `queryParam:"inline,name=EntitySearchFilterValue" union:"member"`
+	Number  *float64 `queryParam:"inline,name=EntitySearchFilterValue" union:"member"`
+	Boolean *bool    `queryParam:"inline,name=EntitySearchFilterValue" union:"member"`
 
 	Type EntitySearchFilterValueType
 }
@@ -54,24 +54,54 @@ func CreateEntitySearchFilterValueBoolean(boolean bool) EntitySearchFilterValue 
 
 func (u *EntitySearchFilterValue) UnmarshalJSON(data []byte) error {
 
+	var candidates []utils.UnionCandidate
+
+	// Collect all valid candidates
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = EntitySearchFilterValueTypeStr
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  EntitySearchFilterValueTypeStr,
+			Value: &str,
+		})
 	}
 
 	var number float64 = float64(0)
 	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = EntitySearchFilterValueTypeNumber
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  EntitySearchFilterValueTypeNumber,
+			Value: &number,
+		})
 	}
 
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = EntitySearchFilterValueTypeBoolean
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  EntitySearchFilterValueTypeBoolean,
+			Value: &boolean,
+		})
+	}
+
+	if len(candidates) == 0 {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for EntitySearchFilterValue", string(data))
+	}
+
+	// Pick the best candidate using multi-stage filtering
+	best := utils.PickBestUnionCandidate(candidates, data)
+	if best == nil {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for EntitySearchFilterValue", string(data))
+	}
+
+	// Set the union type and value based on the best candidate
+	u.Type = best.Type.(EntitySearchFilterValueType)
+	switch best.Type {
+	case EntitySearchFilterValueTypeStr:
+		u.Str = best.Value.(*string)
+		return nil
+	case EntitySearchFilterValueTypeNumber:
+		u.Number = best.Value.(*float64)
+		return nil
+	case EntitySearchFilterValueTypeBoolean:
+		u.Boolean = best.Value.(*bool)
 		return nil
 	}
 

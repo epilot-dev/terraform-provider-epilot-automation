@@ -21,9 +21,9 @@ func (a *AnythingButCondition) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *AnythingButCondition) GetAnythingBut() []string {
-	if o == nil {
+func (a *AnythingButCondition) GetAnythingBut() []string {
+	if a == nil {
 		return nil
 	}
-	return o.AnythingBut
+	return a.AnythingBut
 }

@@ -14,18 +14,18 @@ type PutFlowRequest struct {
 	FlowID string `pathParam:"style=simple,explode=false,name=flow_id"`
 }
 
-func (o *PutFlowRequest) GetAutomationFlow() *shared.AutomationFlowInput {
-	if o == nil {
+func (p *PutFlowRequest) GetAutomationFlow() *shared.AutomationFlowInput {
+	if p == nil {
 		return nil
 	}
-	return o.AutomationFlow
+	return p.AutomationFlow
 }
 
-func (o *PutFlowRequest) GetFlowID() string {
-	if o == nil {
+func (p *PutFlowRequest) GetFlowID() string {
+	if p == nil {
 		return ""
 	}
-	return o.FlowID
+	return p.FlowID
 }
 
 // PutFlowResponseBody - The requested resource is forbidden
@@ -36,18 +36,18 @@ type PutFlowResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *PutFlowResponseBody) GetError() *string {
-	if o == nil {
+func (p *PutFlowResponseBody) GetError() *string {
+	if p == nil {
 		return nil
 	}
-	return o.Error
+	return p.Error
 }
 
-func (o *PutFlowResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (p *PutFlowResponseBody) GetStatus() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.Status
+	return p.Status
 }
 
 type PutFlowResponse struct {
@@ -63,37 +63,37 @@ type PutFlowResponse struct {
 	Object *PutFlowResponseBody
 }
 
-func (o *PutFlowResponse) GetAutomationFlow() *shared.AutomationFlow {
-	if o == nil {
+func (p *PutFlowResponse) GetAutomationFlow() *shared.AutomationFlow {
+	if p == nil {
 		return nil
 	}
-	return o.AutomationFlow
+	return p.AutomationFlow
 }
 
-func (o *PutFlowResponse) GetContentType() string {
-	if o == nil {
+func (p *PutFlowResponse) GetContentType() string {
+	if p == nil {
 		return ""
 	}
-	return o.ContentType
+	return p.ContentType
 }
 
-func (o *PutFlowResponse) GetStatusCode() int {
-	if o == nil {
+func (p *PutFlowResponse) GetStatusCode() int {
+	if p == nil {
 		return 0
 	}
-	return o.StatusCode
+	return p.StatusCode
 }
 
-func (o *PutFlowResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (p *PutFlowResponse) GetRawResponse() *http.Response {
+	if p == nil {
 		return nil
 	}
-	return o.RawResponse
+	return p.RawResponse
 }
 
-func (o *PutFlowResponse) GetObject() *PutFlowResponseBody {
-	if o == nil {
+func (p *PutFlowResponse) GetObject() *PutFlowResponseBody {
+	if p == nil {
 		return nil
 	}
-	return o.Object
+	return p.Object
 }

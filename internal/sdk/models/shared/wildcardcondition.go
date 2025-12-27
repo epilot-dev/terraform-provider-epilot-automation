@@ -21,9 +21,9 @@ func (w *WildcardCondition) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WildcardCondition) GetWildcard() *string {
-	if o == nil {
+func (w *WildcardCondition) GetWildcard() *string {
+	if w == nil {
 		return nil
 	}
-	return o.Wildcard
+	return w.Wildcard
 }

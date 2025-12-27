@@ -23,11 +23,11 @@ func (c *Configuration) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Configuration) GetSourceID() *string {
-	if o == nil {
+func (c *Configuration) GetSourceID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.SourceID
+	return c.SourceID
 }
 
 type Type string
@@ -64,29 +64,29 @@ func (a APISubmissionTrigger) MarshalJSON() ([]byte, error) {
 }
 
 func (a *APISubmissionTrigger) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"configuration", "type"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *APISubmissionTrigger) GetConfiguration() Configuration {
-	if o == nil {
+func (a *APISubmissionTrigger) GetConfiguration() Configuration {
+	if a == nil {
 		return Configuration{}
 	}
-	return o.Configuration
+	return a.Configuration
 }
 
-func (o *APISubmissionTrigger) GetID() *string {
-	if o == nil {
+func (a *APISubmissionTrigger) GetID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ID
+	return a.ID
 }
 
-func (o *APISubmissionTrigger) GetType() Type {
-	if o == nil {
+func (a *APISubmissionTrigger) GetType() Type {
+	if a == nil {
 		return Type("")
 	}
-	return o.Type
+	return a.Type
 }

@@ -17,8 +17,8 @@ const (
 
 // OperationNode - Mapping operation nodes are either primitive values or operation node objects
 type OperationNode struct {
-	OperationObjectNode *OperationObjectNode `queryParam:"inline" name:"OperationNode"`
-	Any                 any                  `queryParam:"inline" name:"OperationNode"`
+	OperationObjectNode *OperationObjectNode `queryParam:"inline,name=OperationNode" union:"member"`
+	Any                 any                  `queryParam:"inline,name=OperationNode" union:"member"`
 
 	Type OperationNodeType
 }
@@ -43,17 +43,43 @@ func CreateOperationNodeAny(anyT any) OperationNode {
 
 func (u *OperationNode) UnmarshalJSON(data []byte) error {
 
+	var candidates []utils.UnionCandidate
+
+	// Collect all valid candidates
 	var operationObjectNode OperationObjectNode = OperationObjectNode{}
 	if err := utils.UnmarshalJSON(data, &operationObjectNode, "", true, nil); err == nil {
-		u.OperationObjectNode = &operationObjectNode
-		u.Type = OperationNodeTypeOperationObjectNode
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  OperationNodeTypeOperationObjectNode,
+			Value: &operationObjectNode,
+		})
 	}
 
 	var anyVar any = nil
 	if err := utils.UnmarshalJSON(data, &anyVar, "", true, nil); err == nil {
-		u.Any = anyVar
-		u.Type = OperationNodeTypeAny
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  OperationNodeTypeAny,
+			Value: anyVar,
+		})
+	}
+
+	if len(candidates) == 0 {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for OperationNode", string(data))
+	}
+
+	// Pick the best candidate using multi-stage filtering
+	best := utils.PickBestUnionCandidate(candidates, data)
+	if best == nil {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for OperationNode", string(data))
+	}
+
+	// Set the union type and value based on the best candidate
+	u.Type = best.Type.(OperationNodeType)
+	switch best.Type {
+	case OperationNodeTypeOperationObjectNode:
+		u.OperationObjectNode = best.Value.(*OperationObjectNode)
+		return nil
+	case OperationNodeTypeAny:
+		u.Any = best.Value.(any)
 		return nil
 	}
 

@@ -48,30 +48,30 @@ type ActionScheduleSource struct {
 	Schema *string `json:"schema,omitempty"`
 }
 
-func (o *ActionScheduleSource) GetAttribute() *string {
-	if o == nil {
+func (a *ActionScheduleSource) GetAttribute() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Attribute
+	return a.Attribute
 }
 
-func (o *ActionScheduleSource) GetID() string {
-	if o == nil {
+func (a *ActionScheduleSource) GetID() string {
+	if a == nil {
 		return ""
 	}
-	return o.ID
+	return a.ID
 }
 
-func (o *ActionScheduleSource) GetOrigin() Origin {
-	if o == nil {
+func (a *ActionScheduleSource) GetOrigin() Origin {
+	if a == nil {
 		return Origin("")
 	}
-	return o.Origin
+	return a.Origin
 }
 
-func (o *ActionScheduleSource) GetSchema() *string {
-	if o == nil {
+func (a *ActionScheduleSource) GetSchema() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Schema
+	return a.Schema
 }

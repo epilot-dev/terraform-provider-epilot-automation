@@ -1,25 +1,1164 @@
 lockVersion: 2.0.0
 id: 6df5dec4-6d34-4c07-99f4-b36e64bbb781
 management:
-  docChecksum: 64456dc9d7c1f8bdd4d7b2cbef7ab194
+  docChecksum: 007fcc54a3235072f523eefaa42accd2
   docVersion: 1.0.0
-  speakeasyVersion: 1.611.0
-  generationVersion: 2.694.1
-  releaseVersion: 0.10.0
-  configChecksum: e19814370fb300fecda714041e10c6d9
+  speakeasyVersion: 1.680.5
+  generationVersion: 2.788.7
+  releaseVersion: 0.11.0
+  configChecksum: 32d7c3da8e6d0b738c8c44f46c74a8f3
+  repoURL: https://github.com/epilot-dev/terraform-provider-epilot-automation.git
+persistentEdits:
+  generation_id: 40f196eb-8a13-4534-8b2a-69c6a127ac27
+  pristine_commit_hash: fe638fe40ac05106e21e9783c9c506d940c43fa6
+  pristine_tree_hash: 1a21fd416c4543cf890cb9d51e13f82aa631a6a6
 features:
   terraform:
     additionalDependencies: 0.1.0
-    additionalProperties: 0.1.2
-    constsAndDefaults: 0.2.1
-    core: 3.44.1
+    additionalProperties: 0.1.3
+    constsAndDefaults: 0.3.0
+    core: 3.46.26
     deprecations: 2.82.0
-    globalSecurity: 2.82.0
+    globalSecurity: 2.82.1
     globalServerURLs: 2.83.0
     inputOutputModels: 2.83.0
     nullables: 0.0.0
     retries: 2.81.4
-    unions: 2.81.17
+    unions: 2.82.6
+trackedFiles:
+  .gitattributes:
+    id: 24139dae6567
+    last_write_checksum: sha1:84b0115789fc3ea52e31df701d8a27f76077e29f
+    pristine_git_object: e6a994416d0f527912d2d272e2583458f4fc9bcb
+  USAGE.md:
+    id: 3aed33ce6e6f
+    last_write_checksum: sha1:02c32c9430f37507b3eacd41cdc36f080809e92d
+    pristine_git_object: 8e707bb129af1da185ba30b4c289b0160819c437
+  examples/data-sources/epilot-automation_flow/data-source.tf:
+    id: 678c6b2abb7c
+    last_write_checksum: sha1:d4eda6cb6455727913ecf43c87c938c332813531
+    pristine_git_object: 801396a623239f62a88f7f3acddd8d6925d42e16
+  examples/provider/provider.tf:
+    id: 954e955c0240
+    last_write_checksum: sha1:848529b770a783ece9936e84b5c98be7a849e0c4
+    pristine_git_object: 6c3b060148f3e43405ddad26c977bb1dd3039390
+  examples/resources/epilot-automation_flow/import-by-string-id.tf:
+    id: a23dea2385a9
+    last_write_checksum: sha1:fedf06fa4cbaa26985526dc09faeeb9be19219a2
+    pristine_git_object: a8d6a27ebb931181bc84b9b576650b5c5ddef4f7
+  examples/resources/epilot-automation_flow/import.sh:
+    id: 00f4caea4a66
+    last_write_checksum: sha1:266da0c06f84a5fd78b3ab7894d6ae0084327035
+    pristine_git_object: 66c89c4448e959e8a865f8d6d154c09f02a6365c
+  examples/resources/epilot-automation_flow/resource.tf:
+    id: 14997dc86410
+    last_write_checksum: sha1:3c21edaecba73d679de479ae5c0f4ee1414bab56
+    pristine_git_object: a59254a5c5f735908242d8e48a2a76be7379b53b
+  go.mod:
+    id: c47645c391ad
+    last_write_checksum: sha1:63ed4eaabb28c3aa0ce86344fb1d4a7c887ced12
+    pristine_git_object: b01be086426f96fb7b062db2439d29d90ab203ed
+  internal/planmodifiers/boolplanmodifier/suppress_diff.go:
+    id: 3cf85b98963e
+    last_write_checksum: sha1:6f59e8b3012155bc5bffbdd6378d5d94fdf3f9da
+    pristine_git_object: 18a668c326f7b8b199f3754a627640eb0bfe1dd7
+  internal/planmodifiers/boolplanmodifier/use_config_value.go:
+    id: c0a10558e419
+    last_write_checksum: sha1:506e2cac3ec4075a8837403860ef0b07e19bc337
+    pristine_git_object: 210846ca24831a6bda811d3e8a42326716d7bf97
+  internal/planmodifiers/float32planmodifier/suppress_diff.go:
+    id: b7f3f671e479
+    last_write_checksum: sha1:2fefd1c831a8a40cf9c2f12725a3e31be08e9ad9
+    pristine_git_object: 5fe35bbe5f3ccaa6150569fc47b390d39e844cb3
+  internal/planmodifiers/float32planmodifier/use_config_value.go:
+    id: e75edfe23c08
+    last_write_checksum: sha1:2683d9de3605886cb01438a9015c8e8b02b4e069
+    pristine_git_object: 0aafffa779b10b01d1e9c831c3a4bda3e6d97789
+  internal/planmodifiers/float64planmodifier/suppress_diff.go:
+    id: 7ae872c2243d
+    last_write_checksum: sha1:d4b252b4643bdb05b44b5a42e72cc5178ef1a5de
+    pristine_git_object: 0685da389515a9893708720931f00d65bd5e0f90
+  internal/planmodifiers/float64planmodifier/use_config_value.go:
+    id: 8fd8670f7434
+    last_write_checksum: sha1:cc1f1cadfd17a0b9b1e729029dccc03f17d734a5
+    pristine_git_object: ecd655b8d658d84aa5cbcc3e1808b69674071325
+  internal/planmodifiers/int32planmodifier/suppress_diff.go:
+    id: 3ee3ede7dc9d
+    last_write_checksum: sha1:fae6ff571e32891b621bab153f5429a16419d89c
+    pristine_git_object: 0a91c93329afd9157f7f0c78c202b5502d17180f
+  internal/planmodifiers/int32planmodifier/use_config_value.go:
+    id: 40be4e07e289
+    last_write_checksum: sha1:019ba1949b00493bf1a866821f9331d50c8a1f09
+    pristine_git_object: ebc98aae308008b2cda39d5f4cfa781982afa44f
+  internal/planmodifiers/int64planmodifier/suppress_diff.go:
+    id: fade0cc85582
+    last_write_checksum: sha1:7c3a520a9133ffa256d641a4cb3f8386ef4eeeb9
+    pristine_git_object: 94b59bc50c112f4ba242a06d60713bfe13cf244f
+  internal/planmodifiers/int64planmodifier/use_config_value.go:
+    id: e38d6f43d093
+    last_write_checksum: sha1:b5a63f0c356cd72698e25e1b4f4fc3e29b35d482
+    pristine_git_object: 2ec2d53d3ac13f58f64feb32b7fb07ca37b8fe99
+  internal/planmodifiers/listplanmodifier/suppress_diff.go:
+    id: 7b93ed9460b9
+    last_write_checksum: sha1:a30686098c8e4f12399fbd8b6736db985792a8bf
+    pristine_git_object: ebf8f7c86406ccbf6d517b4d139f8b3847ed8f18
+  internal/planmodifiers/listplanmodifier/use_config_value.go:
+    id: c9b31b246860
+    last_write_checksum: sha1:c56e2d23520ac7023f800328bb7599e7eba2f202
+    pristine_git_object: 7e851c7613c71921fd4ccf7ca1f95b8b22ce9745
+  internal/planmodifiers/mapplanmodifier/suppress_diff.go:
+    id: 37bee37da583
+    last_write_checksum: sha1:20eb5722dc7814d3c781e59c700a5eee5a5920c2
+    pristine_git_object: 0984c8975e492c1f9012190bf4695be72edcc64a
+  internal/planmodifiers/mapplanmodifier/use_config_value.go:
+    id: 8fef370eccaa
+    last_write_checksum: sha1:7c2163c8fa4be8e8f7e7499cdb08cc5ed1924b39
+    pristine_git_object: 0f2a717f45ca60218f4b8d9e81a6a5cd01494905
+  internal/planmodifiers/numberplanmodifier/suppress_diff.go:
+    id: 0debe6a63221
+    last_write_checksum: sha1:e7838a3ca9e64c849bf88b432223a16ebe40bb60
+    pristine_git_object: f1bbeacecc83e6925ce9eb2b89df4c95890a511e
+  internal/planmodifiers/numberplanmodifier/use_config_value.go:
+    id: e6b779d30d26
+    last_write_checksum: sha1:9b92d53a4a5f57e211e6f41ebb6c36cb12357ae6
+    pristine_git_object: e93c117a0665121b4c43c4a0fd5faec999ad016e
+  internal/planmodifiers/objectplanmodifier/suppress_diff.go:
+    id: c5bc1c3980dd
+    last_write_checksum: sha1:9ade982f6690dbce40adc504cd0b64c88aa1cf68
+    pristine_git_object: 06a2fb2bd01723bac4bca86c9a73550ccfba82bc
+  internal/planmodifiers/objectplanmodifier/use_config_value.go:
+    id: 7f103d324869
+    last_write_checksum: sha1:1f2b6727605c0b56ff2212ab2e2528046f05b157
+    pristine_git_object: eaf24076aeaf233c342886079be38561b94d3856
+  internal/planmodifiers/setplanmodifier/suppress_diff.go:
+    id: 2db9381ea39f
+    last_write_checksum: sha1:83381d5799955d31358f73bfb1dc9bf67f04ea71
+    pristine_git_object: 1aaaddbbb4d082cef8f57958533480bc99db267a
+  internal/planmodifiers/setplanmodifier/use_config_value.go:
+    id: 62a591230001
+    last_write_checksum: sha1:fe02165f8fd260bbce09f34adfa378376363422f
+    pristine_git_object: a95de11e54a028586b41352c084de59fdc7af66c
+  internal/planmodifiers/stringplanmodifier/suppress_diff.go:
+    id: 05379039a176
+    last_write_checksum: sha1:028896436aaf23b1a6e130657d1afee81e9db9f3
+    pristine_git_object: 1c0cc12ef6bf38545cb3f700e9a225c1f1e56d4c
+  internal/planmodifiers/stringplanmodifier/use_config_value.go:
+    id: a783ed056524
+    last_write_checksum: sha1:250673402508661f9d12cfa026dc029d5e7855d9
+    pristine_git_object: 8b4457aeb6b22b7f2b581434762e71f3f782897b
+  internal/planmodifiers/utils/state_check.go:
+    id: ead742412d0f
+    last_write_checksum: sha1:acc38ad698bf4fa8c51aa662076cf57b79024bd5
+    pristine_git_object: 0ea64fbeb1fd7709d7241a8e06d34bfe9d0323d3
+  internal/provider/flow_data_source.go:
+    id: aab744e4c7a3
+    last_write_checksum: sha1:eb7aaa049001e43f3ed6c51082c622d3e121dfaa
+    pristine_git_object: de371b15f115ebf081ea5f9e6052791d07a06b68
+  internal/provider/flow_data_source_sdk.go:
+    id: bf3b83aedb2d
+    last_write_checksum: sha1:60f3d466397266b8f3f404d275e1df98d87e277f
+    pristine_git_object: 663b769bcf0a3cd3875fc2c5e4fd4a9c242e3b7e
+  internal/provider/flow_resource.go:
+    id: 80ecc42ecba6
+    last_write_checksum: sha1:9dc8c23d39c1c76408d8795da21d3aed13364a5b
+    pristine_git_object: 9cdf6da58bfadb450ee3d7ad08d951605a12ceec
+  internal/provider/flow_resource_sdk.go:
+    id: 0f98e3f6de20
+    last_write_checksum: sha1:880d0981ef28a88c92d824e27b7ae4cb75bbb262
+    pristine_git_object: 39611c6f6dcef87bb228cc77575d59d7f6dc0ece
+  internal/provider/provider.go:
+    id: 1e7e86841cf3
+    last_write_checksum: sha1:2f9240c804c9806686e11846cdf0ab6068923fcd
+    pristine_git_object: 56c78bb9b22aa544ac795d7370df4ed64758f4ed
+  internal/provider/reflect/diags.go:
+    id: 35b6b44972e2
+    last_write_checksum: sha1:ace8bc53054bb1d8ee8689acf3e4323de75a6297
+    pristine_git_object: 50c50c8c2ee48a2e0bd9f7e01e9de02489c887d8
+  internal/provider/reflect/doc.go:
+    id: cbfb54ee320b
+    last_write_checksum: sha1:67814656717ff0d0ff38fd9db09872e28666642b
+    pristine_git_object: e384126d4201af70574ce3a9fb8102edaa3b932e
+  internal/provider/reflect/generic_attr_value.go:
+    id: e422f9e35e9e
+    last_write_checksum: sha1:33300f91738c9b79e41ea4d8f3581d6800ac06ef
+    pristine_git_object: 48824d543386df6c125ed86da32d85d24659454c
+  internal/provider/reflect/helpers.go:
+    id: 3c19b91a8408
+    last_write_checksum: sha1:3a2083aa9f84f5a54638803f2225daf86408d360
+    pristine_git_object: 8085789a770637a76b1728b0f89b30c564696ca6
+  internal/provider/reflect/interfaces.go:
+    id: d1096171c6f2
+    last_write_checksum: sha1:e03017ee98ee8d1bd64fde7a025975638bcfaed7
+    pristine_git_object: ff4416e40b7dd139a553979327b0dac70aff37c5
+  internal/provider/reflect/into.go:
+    id: 50e3644442fc
+    last_write_checksum: sha1:7a29c6e2fd31069faddc441132ff04a92a6198be
+    pristine_git_object: 29a437fe2bdb30a956b8c7668d11032962962472
+  internal/provider/reflect/map.go:
+    id: 0d8232fb373f
+    last_write_checksum: sha1:803a218b09d4d9de46d27a5c0227ed3fc6617f62
+    pristine_git_object: 91e27a6c1d51441d6091752a0e199c300c1f09dc
+  internal/provider/reflect/number.go:
+    id: f7e5eb196c35
+    last_write_checksum: sha1:ff756986a30b648c423b9af8996584ffc5983514
+    pristine_git_object: 53673b8476a3115f39f7ed03921221243bbe29a3
+  internal/provider/reflect/options.go:
+    id: ae46de5fdb32
+    last_write_checksum: sha1:735603671bc13388dca9edeb7fefc0b229196793
+    pristine_git_object: 002addd9ab508962b4dc80b0b1f788c738cb8382
+  internal/provider/reflect/outof.go:
+    id: 2b83f83dde82
+    last_write_checksum: sha1:46f09acf317888545161fc1cd288113bd3836ead
+    pristine_git_object: 215406a5867a4b5b6e0978a1664492049cc3738a
+  internal/provider/reflect/pointer.go:
+    id: b758e7c3bf1c
+    last_write_checksum: sha1:92cc23f30396e1a9204f70ac68ebfe7d58cbb967
+    pristine_git_object: 215653e7c5d5ba9863ef5053d9084c9d69eba5ca
+  internal/provider/reflect/primitive.go:
+    id: c302568a3411
+    last_write_checksum: sha1:8b7708414f8be915065952b31986869feaa2fae6
+    pristine_git_object: adf648e88b61a8234951db180e4c25bbb7c1b353
+  internal/provider/reflect/slice.go:
+    id: cd2dec5ab676
+    last_write_checksum: sha1:70ce36709e204b74e3ded36c4683df7e48df294f
+    pristine_git_object: 79ad6b80c2a9492522820c3060a89f2de1131e92
+  internal/provider/reflect/struct.go:
+    id: 973d7dbf96c1
+    last_write_checksum: sha1:504fa0ca7711df0887f8c265c7acb3774e89afe7
+    pristine_git_object: c588f768bd7b39be33962188f97d81e1c4c25f4b
+  internal/provider/typeconvert/date.go:
+    id: dfe2bc95ad1b
+    last_write_checksum: sha1:0d80de2459ef75f9408845741b01ce25a32dd4c1
+    pristine_git_object: fd9668bb651087c908fc84ae10493ab1bbb33089
+  internal/provider/typeconvert/datetime.go:
+    id: d2fb73d4f01c
+    last_write_checksum: sha1:a2a20e6785f1e12c3f94c016cbc106e54942e981
+    pristine_git_object: 7bfdc553a393a1db69a25574998eb6cc5df79566
+  internal/provider/typeconvert/int.go:
+    id: c44fcd78fccc
+    last_write_checksum: sha1:c28123f17006dc96a233f916a17c38408e37b71f
+    pristine_git_object: 54763e7a7555fae6d8bf51c4590220ff610202aa
+  internal/provider/types/action_condition.go:
+    id: 9f48fd5fa308
+    last_write_checksum: sha1:5352380eb1e334d102b9d7588eb60e30ee27b594
+    pristine_git_object: 1c8853be33b502266283d15bf1a020fdad70314f
+  internal/provider/types/activity.go:
+    id: b239e174480c
+    last_write_checksum: sha1:e8af9945b95869742038a112f92cf940b0dc1c75
+    pristine_git_object: ea2038a903a20fc254941ddf88c67ec88e540e77
+  internal/provider/types/any_trigger.go:
+    id: dbf42fe327d3
+    last_write_checksum: sha1:4eb7920389a4b680472db412851b939229e55e51
+    pristine_git_object: 4739effd45e1a605bd5d571a861e82470a0423d0
+  internal/provider/types/anything_but_condition.go:
+    id: f77348745d93
+    last_write_checksum: sha1:ed9cade19a8410c44a42f9ad159a92f5e4bbdea5
+    pristine_git_object: 11f2749c0f5d7b9990d810e9bdd36c3665370453
+  internal/provider/types/api_submission_trigger.go:
+    id: 6ced632238ab
+    last_write_checksum: sha1:0f403625c7450b2e81ac14aa58eb40a989fb9c92
+    pristine_git_object: e1db330816e7b0ef1ad5723b7281d84aeeb695f8
+  internal/provider/types/condition_statement.go:
+    id: 8e455fc409b3
+    last_write_checksum: sha1:75a6425d6b6c1050fa2bf2ac3b08bf836d3ad3b9
+    pristine_git_object: e8a5d53046c4363e54fa010bed3b8c0275e40b42
+  internal/provider/types/configuration.go:
+    id: 2b222d76e950
+    last_write_checksum: sha1:6dbb4e07efeb66dc0c3a46707086fbb741ce093e
+    pristine_git_object: 26b34a5a64cb8058aad4cd9251e92d5f2d59ac09
+  internal/provider/types/disable_details.go:
+    id: 2f99fe4d9ee8
+    last_write_checksum: sha1:02db52bede3e641438d35ac7b7b8f2c2c0d56d50
+    pristine_git_object: b34f4902c846410aa95b9ad88904670d354fcd57
+  internal/provider/types/ecp_config.go:
+    id: 6a0cdff2d80c
+    last_write_checksum: sha1:fe32c46da24eb87e21bcb9c64ebd565bf5b84be7
+    pristine_git_object: fb919d4c4508fc434a423aab56830aebcbe545cf
+  internal/provider/types/entity_manual_trigger.go:
+    id: 1c0ac75378df
+    last_write_checksum: sha1:f2e29cfabc4a60d404b271ae22db8eb818fc1f79
+    pristine_git_object: e47423fc667dc941938ac49e51d1b8719d96352e
+  internal/provider/types/entity_manual_trigger_configuration.go:
+    id: 79f6f2fa9a21
+    last_write_checksum: sha1:dde80b8c2c417096ffa97012a9a7d2af6fd1af20
+    pristine_git_object: 4df80499c17272641cb59e1e0af4a742e81525e3
+  internal/provider/types/entity_operation_trigger.go:
+    id: d678372836b4
+    last_write_checksum: sha1:0da235188c566ea9964ea30c281d56e008c0820a
+    pristine_git_object: af1d38bd6439ca1195783650f50652374875893b
+  internal/provider/types/entity_operation_trigger_configuration.go:
+    id: c359fcac847e
+    last_write_checksum: sha1:e815579ab59b1d7e137bc371baf08571beaf7f0f
+    pristine_git_object: 94138fc6877809644e7fdb4a0ee260d9ce120166
+  internal/provider/types/entity_operation_trigger_operation.go:
+    id: 4bea6a0a5194
+    last_write_checksum: sha1:36f5cbbc04cbedda615720c4c530d4ffda3d157a
+    pristine_git_object: daa0ff197443451acabe35da82085a237492c234
+  internal/provider/types/entity_operation_trigger_schemas_type.go:
+    id: 1af84020593a
+    last_write_checksum: sha1:f4c4545c379c364324fbf19b078db471b48f6e3b
+    pristine_git_object: 4a7b92b1470d1712af282797359e38a06d98bc97
+  internal/provider/types/equals_ignore_case_condition.go:
+    id: e500f486bcc7
+    last_write_checksum: sha1:c6eff298597db7d6208540e5bc85a99bf8d93cde
+    pristine_git_object: cdb96a4bdc8ab31b5b84d666c7acb0034bc9186c
+  internal/provider/types/exists_condition.go:
+    id: 90ce02360aad
+    last_write_checksum: sha1:779be28ebb7527a79392cde5d334bb3bac340924
+    pristine_git_object: 02a344b6d3a74ff3e0d42944c6a14542a034b12b
+  internal/provider/types/file_config.go:
+    id: f8108fbb8fe6
+    last_write_checksum: sha1:4661a2a4ac1c987258606507078b843431f56df4
+    pristine_git_object: 8f82aa037335a627362f8ee970ef2f2a23256387
+  internal/provider/types/filter_config.go:
+    id: 766c435bb885
+    last_write_checksum: sha1:a0b32a1aec70380e1a1ff6a98b3a2e2c20c52a99
+    pristine_git_object: 0320229254d1db622f88ef8ace6256c742f3a428
+  internal/provider/types/flows_trigger.go:
+    id: ce7a9888c22f
+    last_write_checksum: sha1:7246777f768addd4b1f23d39a27ac2a3be3cb6e3
+    pristine_git_object: 36d740cbb7727650b96fc2fedb2ba43266ed4f9a
+  internal/provider/types/flows_trigger_configuration.go:
+    id: 06b43717fa8d
+    last_write_checksum: sha1:662a72bab3702edf5f4f39dea8102e993de98e07
+    pristine_git_object: 235b6684692bd769e738aa4f2880b51081498e84
+  internal/provider/types/journey_submit_trigger.go:
+    id: ef04f25521b7
+    last_write_checksum: sha1:a54f452fe653a3a231a2d7d0230836ec47fbf0af
+    pristine_git_object: e3dd4f02f4d5cdc31a788c6fbe00e74fd598e533
+  internal/provider/types/journey_submit_trigger_configuration.go:
+    id: d5ac02bc241e
+    last_write_checksum: sha1:27ac5fa1dac1ab350dd1fbcc0a81311931b6f1be
+    pristine_git_object: bdbf779016a1c7c58099e4e2391ce280b75e8c57
+  internal/provider/types/max_executions.go:
+    id: fac9dd928084
+    last_write_checksum: sha1:e5e2da94e90d1081201e5f06cf6dd8a477792cb6
+    pristine_git_object: 4ce279f4996e90710845340a81032e1ad04c7ef8
+  internal/provider/types/prefix_condition.go:
+    id: c61880234dde
+    last_write_checksum: sha1:895aed724bf2d78d3cda3a833e1373102f39c65c
+    pristine_git_object: 1cc96b3aabefbcd0933b6a5fbe4c3e969f95bb6d
+  internal/provider/types/received_email_trigger.go:
+    id: 35c2c8aaa62d
+    last_write_checksum: sha1:eec1be64a705a444e2f1055903f42d30dc38e3e4
+    pristine_git_object: c16555d3674ab7c77b554a0fd6cb5ee487a084ec
+  internal/provider/types/received_email_trigger_configuration.go:
+    id: 1cc092cf4108
+    last_write_checksum: sha1:eb65418b15d2067514ab53dc63768315f97957fd
+    pristine_git_object: 9e9651bd2ae84e8c2ad0e54d54a7062f5e48469f
+  internal/provider/types/source.go:
+    id: 6652bdaccd98
+    last_write_checksum: sha1:a581c1807dd5c2b94fa5d30243a56b8ea80cf8a7
+    pristine_git_object: a113216cde9407a84ae4f609a5ac4fc6dce960c4
+  internal/provider/types/suffix_condition.go:
+    id: 6f8186e38356
+    last_write_checksum: sha1:5c79a760fecaf95e41fb82554b15d98ad10259d8
+    pristine_git_object: 7b51cf43fcbf3e09a7b624eb11f93b62422e2915
+  internal/provider/types/wildcard_condition.go:
+    id: 1659b25d1b39
+    last_write_checksum: sha1:fea134b349baf5a4ffa2cdbdfa18c8682ed30edc
+    pristine_git_object: f03ff3e767fbd835b5a6be490a3b18fa0bcbcb51
+  internal/provider/types/workflow_context.go:
+    id: 80a315f982a8
+    last_write_checksum: sha1:5fbe58c0937f9fba682924b5085982c0999d19e4
+    pristine_git_object: 64127917ec4a656413aabd1749d1e600ad23562f
+  internal/provider/utils.go:
+    id: 312d50f148af
+    last_write_checksum: sha1:3913beedb8e649ff6faab9dd23445509ac4a3dcc
+    pristine_git_object: c846dcb16c1918d26a4e4b778712596211749814
+  internal/sdk/.gitattributes:
+    id: 1ea4c4e0a39d
+    last_write_checksum: sha1:84b0115789fc3ea52e31df701d8a27f76077e29f
+    pristine_git_object: e6a994416d0f527912d2d272e2583458f4fc9bcb
+  internal/sdk/bulk.go:
+    id: 836a7223ac2e
+    last_write_checksum: sha1:f4f64e91ef2bf11f34b04bedb7b1f06610dc4218
+    pristine_git_object: 5999f4862374eba1d536c18648df34c2e9040478
+  internal/sdk/docs/models/operations/option.md:
+    id: a35737eb2e35
+    last_write_checksum: sha1:08cfee5d266c9d82987e448f6c98a143aa42c5f8
+    pristine_git_object: 35d8a1e2ad48a64702c6a654ac8880dabec053b0
+  internal/sdk/executions.go:
+    id: 80c2db8e7c0f
+    last_write_checksum: sha1:2649b580a2cffe095009a9f244535c97d6418d04
+    pristine_git_object: b98fe947003952d6f481fedc52c90880788405f1
+  internal/sdk/flows.go:
+    id: f0bd356aea6a
+    last_write_checksum: sha1:81b5d119151399d3fc952b0dcc2b9ac1d47b8d56
+    pristine_git_object: b2227368adbeeeaeb1463d088d86a605519816bf
+  internal/sdk/internal/config/sdkconfiguration.go:
+    id: 6af0bc8635d9
+    last_write_checksum: sha1:78693c528eea8a951a3366144e21479ca8a9185b
+    pristine_git_object: d65e679910e0059feb46fe5b3b064623108ec0c6
+  internal/sdk/internal/hooks/hooks.go:
+    id: 4e88208e997f
+    last_write_checksum: sha1:be9444875d71b6e602ba9463cb5dc17f5b3fd37f
+    pristine_git_object: 56e080487077abd871419d90334a4fa87b3b2f9f
+  internal/sdk/internal/utils/contenttype.go:
+    id: b767d5c02609
+    last_write_checksum: sha1:ab5cfd860d02c6e6a37f89e2b5649a9859947fb1
+    pristine_git_object: f6487e01eb987c0aa49e7aa50b5ff24830314c63
+  internal/sdk/internal/utils/env.go:
+    id: 4b4be1422b75
+    last_write_checksum: sha1:1e0bcb2d2caed9f3657f1dbc99b55811bed0298c
+    pristine_git_object: 110d464eacf2387b347bad1cb903666354a339e9
+  internal/sdk/internal/utils/form.go:
+    id: a29055426367
+    last_write_checksum: sha1:3019d975a779d8586ddfdfe4279de5e95e4ae91a
+    pristine_git_object: bc68dfef27eb2180ae9d7a259a509d747917d7e1
+  internal/sdk/internal/utils/headers.go:
+    id: f035883ac0ff
+    last_write_checksum: sha1:b5477c825952c8c330d9f4a7d58f3dfc85a4826d
+    pristine_git_object: 8700a39bdc27773ce6dc3588fc5c758e239ad969
+  internal/sdk/internal/utils/json.go:
+    id: 2231afac3add
+    last_write_checksum: sha1:079a6bff285d14b5d55bd4f51da4b617232ed3dc
+    pristine_git_object: 148e7999a6a56a71949a23cf7cafb7ebc96dfa18
+  internal/sdk/internal/utils/pathparams.go:
+    id: e7fec2afe4a6
+    last_write_checksum: sha1:31dd87d5e041745fe5229c940a8c13ffc3352fe8
+    pristine_git_object: dfc5d511aa8bba0b69a116c0b054285bf8b24913
+  internal/sdk/internal/utils/queryparams.go:
+    id: fb88ad971185
+    last_write_checksum: sha1:4b633d4d16378b0cbf9107708db5682956c46b03
+    pristine_git_object: db686de48dc3e660273cd549cc5ac2fd4562c24f
+  internal/sdk/internal/utils/requestbody.go:
+    id: c971a8b3bbf5
+    last_write_checksum: sha1:f1cf4f9d0f552310624149ae58c9ba9e54a6d14b
+    pristine_git_object: 1884bc4f53b96f0de122d9dcf21ae0f47ca2e375
+  internal/sdk/internal/utils/retries.go:
+    id: 6832c2142453
+    last_write_checksum: sha1:168a1b8ed68be5cd66e3e242b9e596f42485a89a
+    pristine_git_object: 435e0f1e59f663ebfb82acada6b9d84f514a6058
+  internal/sdk/internal/utils/security.go:
+    id: 6ebe9eaeb99b
+    last_write_checksum: sha1:bb9cc1870101f6d2a990766f3eb0ea37292f7507
+    pristine_git_object: 19dfa6f4607dea64b1dd61c211e072212e7a3cb2
+  internal/sdk/internal/utils/union.go:
+    id: 183142835cfe
+    last_write_checksum: sha1:cafae717fe4070969e20c6f595d5284aebe4883d
+    pristine_git_object: f2d3d8d928024287ff08205f64f8520427de1d2d
+  internal/sdk/internal/utils/union_test.go:
+    id: 4c885192f6f0
+    last_write_checksum: sha1:83ac73c1901de4c6db90f65cf5879163f3d47a00
+    pristine_git_object: f66814c73ace94d8e71d785fd6161fb405745754
+  internal/sdk/internal/utils/utils.go:
+    id: feefcdf75dbd
+    last_write_checksum: sha1:d88d96cc244301d137581432095043f27a3e17b0
+    pristine_git_object: 0415b536598baa76c5d1a8fc32816ed1b83f9137
+  internal/sdk/models/errors/sdkerror.go:
+    id: 19b5a8d3586b
+    last_write_checksum: sha1:5d65fce5049df7c5113e11c9ccb1e4c46b91901c
+    pristine_git_object: c633d568d96b5297c7d2edfc9d22fc717428edf1
+  internal/sdk/models/operations/batchgetflows.go:
+    id: 82e5213df361
+    last_write_checksum: sha1:0890d76643b97bc50bd8fec8fce80c0e67c48d6b
+    pristine_git_object: 7690872d52dde3fbfe754a460deeccebbffd5e3c
+  internal/sdk/models/operations/bulktriggerexecutions.go:
+    id: b6bfe1fd3509
+    last_write_checksum: sha1:c62ef47f805d30b292539b78e693da4a56365425
+    pristine_git_object: c4b2de507b0056a0604280808e3f823a5c8890b0
+  internal/sdk/models/operations/cancelexecution.go:
+    id: f279d203ac1b
+    last_write_checksum: sha1:ebcfc6ae74ce1d77cac94bc1c76c663050dedb8e
+    pristine_git_object: 95090d874ae5bff99f1a426bd0c700ccde83028f
+  internal/sdk/models/operations/cancelschedule.go:
+    id: 3ea5397f21ec
+    last_write_checksum: sha1:ca72e64379cb23d755ca0725b70b5da8ea239bc9
+    pristine_git_object: c7ee7804c8fd95a7a7890c032f752f811f14a9cb
+  internal/sdk/models/operations/createflow.go:
+    id: 20e202c7f254
+    last_write_checksum: sha1:3c366ab75486c98d247e93ce6a26bcae65df47b5
+    pristine_git_object: 928c442f9097d51c10fd253a745baa5b4ea8ef03
+  internal/sdk/models/operations/deleteflow.go:
+    id: 761ae15aa1ed
+    last_write_checksum: sha1:4d84ee1e8da161055b2002e51eadb7f01d415ab3
+    pristine_git_object: 2da08f6fea1d6f28a78c006cc02852a77b21e814
+  internal/sdk/models/operations/getbulkjob.go:
+    id: 0f75cfca4cd6
+    last_write_checksum: sha1:43d2bb8ed33029a21c52dcca9124d02fac83e49a
+    pristine_git_object: eac342a710c2caf6ca9d5ecdcff26c474a363e94
+  internal/sdk/models/operations/getexecution.go:
+    id: 6b03b1fe25a5
+    last_write_checksum: sha1:6f39e39adfe2a7bffe450677fb25d5865ed304d3
+    pristine_git_object: cb6fcb971701a059dbae16e81e038d812708449d
+  internal/sdk/models/operations/getexecutions.go:
+    id: 98600b37328f
+    last_write_checksum: sha1:0cf93a7314c5f1dfa514a50ea5764b5bb0e87762
+    pristine_git_object: f4f427a06aa610a3bf87922ad4b629a43fc60584
+  internal/sdk/models/operations/getflow.go:
+    id: 61a0f783021c
+    last_write_checksum: sha1:0424d9dde2f72981be5d986caa7c1d761c3cb025
+    pristine_git_object: d70a78dcc308c7661c4bcf3494543b1b7a598737
+  internal/sdk/models/operations/options.go:
+    id: 6d0d29414e00
+    last_write_checksum: sha1:cc6abe0a0e7e2e75ccda4e19792bb77daba3a551
+    pristine_git_object: 4bc009610efab156d52de86313b111c3c274959a
+  internal/sdk/models/operations/patchbulkjob.go:
+    id: c5800075f084
+    last_write_checksum: sha1:4944da6c679d9750f58dfe6e0eb7fd74d8f0d885
+    pristine_git_object: 98e3a551bd1cc4788fc463f5b898c27de01a70c3
+  internal/sdk/models/operations/putflow.go:
+    id: 254119aced84
+    last_write_checksum: sha1:4bb0ebf3649a9a997aa589630a0c15019956e767
+    pristine_git_object: 0ab27c6ba12a3588c0ecfffa669ba3164a30f5ba
+  internal/sdk/models/operations/resumeexecutionwithtoken.go:
+    id: 6f00b8d69453
+    last_write_checksum: sha1:c02fc73c4577cc2c648b99289be1b52cb7c04536
+    pristine_git_object: 55dfc1c14e949f204989348782787f4e07f00d98
+  internal/sdk/models/operations/retriggeraction.go:
+    id: 259e8ce1fab6
+    last_write_checksum: sha1:d9bdbc274da459adb97e36a95f1817e6dd4de79f
+    pristine_git_object: d9d8673232ccd031a3a71e78aba2fd526989dfcd
+  internal/sdk/models/operations/searchflows.go:
+    id: 481ba71ebff9
+    last_write_checksum: sha1:a67b4555b1d94d2301c4f1a5be2101fe5d0fdfff
+    pristine_git_object: c24575d7a41afb340532505836ddea5b2cb5909f
+  internal/sdk/models/operations/startexecution.go:
+    id: b46211768467
+    last_write_checksum: sha1:303b5ca6ff81743cd225530e43c33ba8b722b981
+    pristine_git_object: e21f66641bbc64881d3592d8b47d6cb64cc3aadd
+  internal/sdk/models/shared/actioncondition.go:
+    id: 68a7f0ac3aae
+    last_write_checksum: sha1:12610e6cf42b04236573fe2400d4f7446145e56a
+    pristine_git_object: eb8de875601c7195bac4dd362893d3ac0a015375
+  internal/sdk/models/shared/actionschedule.go:
+    id: ef63b805ad3e
+    last_write_checksum: sha1:2584f85a1378a625ce48cd707b4ed56a5f4a5db4
+    pristine_git_object: 92f03845cd0d7c739f15436a74b91ade2bb6c9ae
+  internal/sdk/models/shared/actionschedulesource.go:
+    id: fdd674ccfa7b
+    last_write_checksum: sha1:b74184a6f785500cce6c1b5af1c8b8ae289c537b
+    pristine_git_object: 422fe78d7fc88925365adedf39e150bdd89b791b
+  internal/sdk/models/shared/anyaction.go:
+    id: 39021c2429a3
+    last_write_checksum: sha1:3afa0c3e8df89702c4c116d6e44d842d562e28d7
+    pristine_git_object: 9c701b4c2e23766d7a46ed9ccb1cbee57d6db50a
+  internal/sdk/models/shared/anythingbutcondition.go:
+    id: 2e299a26b522
+    last_write_checksum: sha1:89dc1ac2cfd0895ae8c2962fbf43cef006da4cf2
+    pristine_git_object: 038b698133031653a9217797c5d1669e232b3909
+  internal/sdk/models/shared/anytrigger.go:
+    id: a2f0cb7f1657
+    last_write_checksum: sha1:031164593e6e3dc385f42a8b2e9bf7361608e92b
+    pristine_git_object: 076c3c0264c4a5e64074fff6780f6280fcb5992b
+  internal/sdk/models/shared/apicallercontext.go:
+    id: 6ab0906af095
+    last_write_checksum: sha1:03b163f6c63e86aabaa4c3e895935bd1cab474a8
+    pristine_git_object: 5320c5acd33dd0516463079700d8e054e2d9a7ab
+  internal/sdk/models/shared/apisubmissiontrigger.go:
+    id: b748663387ce
+    last_write_checksum: sha1:b29ff2888b4fcfe7e83f3db779b587b487abe1eb
+    pristine_git_object: 89aa45337215927ef311be3f814566545a8e6657
+  internal/sdk/models/shared/appendvaluemapper.go:
+    id: 89b6a344f8e6
+    last_write_checksum: sha1:aa4f75945232ecc43c2b468957f18b27d5bb47d1
+    pristine_git_object: aa79dc3cbe02e70840ccdbe63f242c2da732f120
+  internal/sdk/models/shared/assignuserstostep.go:
+    id: 52615f496b85
+    last_write_checksum: sha1:0661481c5435c2db4cda0e0f4c1545df44596e52
+    pristine_git_object: 83184da4d40655663561ebdce4c90048a1963616
+  internal/sdk/models/shared/automationaction.go:
+    id: 484e66f41778
+    last_write_checksum: sha1:530b18963a77fc5f208068ab1a453c0ad10e21c5
+    pristine_git_object: 797eb62b56a150e3f908b769db1d9829b15491d4
+  internal/sdk/models/shared/automationexecution.go:
+    id: c8ade628b097
+    last_write_checksum: sha1:e0a59b411126a8e4fa2f740ca172679d846b175f
+    pristine_git_object: a269c49be7bf8e425129d205c23661b4a5939f59
+  internal/sdk/models/shared/automationflow.go:
+    id: 7fe7c2fe1819
+    last_write_checksum: sha1:0af18fb29a018c89598b008c171006858ac664af
+    pristine_git_object: ed59a310301534f18cf0d2af959b2c51f8188123
+  internal/sdk/models/shared/bulktriggerjob.go:
+    id: 6b73b82f7d8b
+    last_write_checksum: sha1:dc308c5ff47544e4406e1fca0e060083dbb07f08
+    pristine_git_object: 99af578e3171ac401fc850ca965f26c4fe41e294
+  internal/sdk/models/shared/bulktriggerrequest.go:
+    id: 4adb63e69e42
+    last_write_checksum: sha1:0019da1ddba50f1be87de37db2a30954f1d53b4a
+    pristine_git_object: 423d76c87906926f78f9d86279e6d06fbc714916
+  internal/sdk/models/shared/cancellationreason.go:
+    id: 0a6286512b9d
+    last_write_checksum: sha1:9bdda5032faca74a38ba9a67d2bbdda4eb497ab4
+    pristine_git_object: 7804a068c66f57973588770f330c2193ff9c4cd8
+  internal/sdk/models/shared/cartcheckoutaction.go:
+    id: d07fe5854bc0
+    last_write_checksum: sha1:175aeb245df32676f5b31a222b3c0c62cfba75e5
+    pristine_git_object: b2b6fe09f502cc1fb0c77db486a6e1cf8f37fddf
+  internal/sdk/models/shared/cartcheckoutconfig.go:
+    id: f1fac4e801bf
+    last_write_checksum: sha1:fc61caa50c00ca4a07e554eef52e818c521a5e32
+    pristine_git_object: 4195c13bcbe97565ccb027fab9ecdfbfff343e0d
+  internal/sdk/models/shared/conditionstatement.go:
+    id: 42da453dfb8b
+    last_write_checksum: sha1:d7c3a382004ceb1fda05954be7bf8e0f2903b05e
+    pristine_git_object: 1b141f1429eadbc6495e1c5352b7102210421b56
+  internal/sdk/models/shared/copyvaluemapper.go:
+    id: 34abca237066
+    last_write_checksum: sha1:dfe8075da2806eceaf2194f7b2972f29404411f0
+    pristine_git_object: 42d6e07ddbc7d8915408dcc0582d4e293169e5c4
+  internal/sdk/models/shared/createdocumentaction.go:
+    id: a149222b7afa
+    last_write_checksum: sha1:aa9138f75f86d4c787887d183f94eb116cb5a78f
+    pristine_git_object: fa383d5f56b6ef28a8c9232bdedd8c5a4933dec0
+  internal/sdk/models/shared/createdocumentconfig.go:
+    id: 68d2acd3e515
+    last_write_checksum: sha1:03961330acd7b166143dadf78ef76ffe821a0a3c
+    pristine_git_object: cd3f1f59669aaf8491e5382c350c163b455903b1
+  internal/sdk/models/shared/customaction.go:
+    id: 6326f0b309c1
+    last_write_checksum: sha1:25cbc710835f9efe199cbe8094c1d7dfeaee4c64
+    pristine_git_object: 8dd5eff7e654d1f7059bae461f301f05ba11b270
+  internal/sdk/models/shared/entityitemsnapshot.go:
+    id: f5b80f26c496
+    last_write_checksum: sha1:4e95be5b1b838bec9f39d4a4fd7fce5d787c7e5c
+    pristine_git_object: 2c6470ac21e1ce8c673979947b8701eb0bfb8ea4
+  internal/sdk/models/shared/entitymanualtrigger.go:
+    id: 1f7afc707999
+    last_write_checksum: sha1:3239f8e729d5c4b01f68b6856c23f9adc5dc2145
+    pristine_git_object: ca2f45e1f3f904a28fd30348044b78a510f9c645
+  internal/sdk/models/shared/entityoperation.go:
+    id: 0f261658779b
+    last_write_checksum: sha1:126af4694f2f2ec6d9c4793301c2c68bc19a9d36
+    pristine_git_object: 8ae7286dcff8b0d8119a2c3e1f4f8a8b4e0e6be6
+  internal/sdk/models/shared/entityoperationtrigger.go:
+    id: e0abb21c8383
+    last_write_checksum: sha1:6b40c6a333de62c7d9104e9844233b2481e21365
+    pristine_git_object: 53a1e6c2ba68f27bf80f527382b7e89a542dda17
+  internal/sdk/models/shared/entityref.go:
+    id: 818ef835f077
+    last_write_checksum: sha1:ca120a276ed028e824d3b47677a8526b32686329
+    pristine_git_object: 31c0d70df2fdd2f08a27190df6ac4e26e04117ac
+  internal/sdk/models/shared/entitysearchfilter.go:
+    id: 0561207a72ff
+    last_write_checksum: sha1:657ec393d7bb6c196a71de1a08a565e8e2f390e6
+    pristine_git_object: 5f0e52bb3bfced3b1dbcf113ff163b1b78122075
+  internal/sdk/models/shared/entitysearchfiltervalue.go:
+    id: ad72b190d782
+    last_write_checksum: sha1:ccd2cbfde17d22161d6929d73a0a142a2b948300
+    pristine_git_object: 52727e280e5017246f23387dd912539f138152f4
+  internal/sdk/models/shared/equalsignorecasecondition.go:
+    id: 355a5ccdc63d
+    last_write_checksum: sha1:c6dd3a52ae742c7489ad28c670a0896aef9fb001
+    pristine_git_object: 1322d6521aef0ecd289e7c21eaba11b305d9b6a5
+  internal/sdk/models/shared/errorcode.go:
+    id: e1c682098129
+    last_write_checksum: sha1:ef3b9a2d6c3db8c5d967b1e48c4ef15a8e170584
+    pristine_git_object: bd7f3e748bbff52c618bc1b979dd4ec8d7ba95ce
+  internal/sdk/models/shared/errordetail.go:
+    id: fc468bf051a8
+    last_write_checksum: sha1:c12864fadc8e3e053127e52761fef78aafaa9fa6
+    pristine_git_object: a2d1d79c2a6d2147db6dad18ce6a1615d982d788
+  internal/sdk/models/shared/erroroutput.go:
+    id: 675883094d12
+    last_write_checksum: sha1:9a67c7624dd0dee98d961ca636142547792c7c63
+    pristine_git_object: fa928c01722981db63beb37dfac77d154806fe31
+  internal/sdk/models/shared/execitem.go:
+    id: 77921003200f
+    last_write_checksum: sha1:8ddc9d7c5aea4f425e8a2117169b1376c40803cf
+    pristine_git_object: b5050ba6ec16a54966c8894e16e7de4e399a4f1e
+  internal/sdk/models/shared/executionchain.go:
+    id: 494038e0c534
+    last_write_checksum: sha1:54f6e0ff42ea7875eaaa2f2de78b7d666500de1e
+    pristine_git_object: c2065cf4db2e34d17f03d0b459ec336c791b9929
+  internal/sdk/models/shared/executionstatus.go:
+    id: 0cd0d140eaaa
+    last_write_checksum: sha1:ebe9fce2f67e49fe7f1e71903291b50837592cbc
+    pristine_git_object: fe17d822741cac7755972a61971aa14cb139c662
+  internal/sdk/models/shared/existscondition.go:
+    id: 1cddfec6ff2e
+    last_write_checksum: sha1:0ce78c0bda3ea96115f2d6c5c29a8746ff0e94fc
+    pristine_git_object: 81187556b285a53cc20f01be5eadd722b45443a2
+  internal/sdk/models/shared/flowexecutioncancelaction.go:
+    id: 5b6c2847dcc0
+    last_write_checksum: sha1:2b9b8a1446c8dd4c43d56a1aa5653e58e6722dd3
+    pristine_git_object: 25eada43edf1be832c1dc71859bdd04446a814cf
+  internal/sdk/models/shared/flowexecutioncancelconfig.go:
+    id: 57486763c547
+    last_write_checksum: sha1:61077f92e1f8a04354e1b0d3cac2fb186cb2c0cc
+    pristine_git_object: e1261408fcb117f3550ac7b9da57503400b2060a
+  internal/sdk/models/shared/flowstrigger.go:
+    id: 532560d42283
+    last_write_checksum: sha1:9f12b071e50539dc7c77cfc9518381e84b671dae
+    pristine_git_object: eef6a78934c9e597b9036e0f56d1f7ec9bc90bab
+  internal/sdk/models/shared/frontendsubmittrigger.go:
+    id: a68d850e0bc7
+    last_write_checksum: sha1:59bc202d8eaf063960a26ccb28701d77b5df6b63
+    pristine_git_object: 7e5e16d52c8ecd52592ad9ab6d5456b1d05d03f3
+  internal/sdk/models/shared/getexecutionsresp.go:
+    id: e943a5482edb
+    last_write_checksum: sha1:ff8a0d1e506852cab47d6520a6c3afc856961574
+    pristine_git_object: 8cdb40777e0e24106d34ed703ad01e210ea3cf0a
+  internal/sdk/models/shared/informerpaction.go:
+    id: 4227792e1d2a
+    last_write_checksum: sha1:1c878cfdeea1024a59321cf23f1d8e24aecdbad6
+    pristine_git_object: 09fa99fc30b2b84721ba74971a6096c26522cac4
+  internal/sdk/models/shared/informerpconfig.go:
+    id: a47cfd8236c9
+    last_write_checksum: sha1:ecf608e394eb434a2a9e0675b05096d0a7e16b04
+    pristine_git_object: 8c69cc73ecec852ac650ae50a21e515bda417d6d
+  internal/sdk/models/shared/journeysubmittrigger.go:
+    id: bad2325f52f7
+    last_write_checksum: sha1:2bd11f0375648186ff01b2406925493d71283d07
+    pristine_git_object: e4afb4db0357301b793f6b687c70985bb5b31170
+  internal/sdk/models/shared/mapentityaction.go:
+    id: 929c1862a111
+    last_write_checksum: sha1:631fa9409d09f81d4dd30a33a2d0642e87eebd21
+    pristine_git_object: aadcb6a4e4369574223698aa377f0e0b994cda52
+  internal/sdk/models/shared/mapentityconfig.go:
+    id: bb50f1ddbda8
+    last_write_checksum: sha1:cb589cf48d8943b8dbdb16da3c6a95ad01cf0c0d
+    pristine_git_object: 5f24f27a4546ea9d246143d9c51707333580e787
+  internal/sdk/models/shared/mappingattribute.go:
+    id: 7644e8699a82
+    last_write_checksum: sha1:85645491b63ffe437cbaaa34815229f730f8e181
+    pristine_git_object: 1e6e17543c44561355f03452eadebdf86ea764eb
+  internal/sdk/models/shared/mappingattributemode.go:
+    id: 66bd667d2318
+    last_write_checksum: sha1:087ccb8d98318d9bfbfeeeb80909e04bac8add5f
+    pristine_git_object: 0e3b80ee1fa1f66e82783ac5877c6d96de5a0f94
+  internal/sdk/models/shared/mappingattributev2.go:
+    id: 056550a53001
+    last_write_checksum: sha1:b9017d65cc4e8190e275a175308d33430b5c632e
+    pristine_git_object: 044c94ef73f17469133600957eeff0dfc3cf7121
+  internal/sdk/models/shared/mappingconfigref.go:
+    id: 2eb78f197ae1
+    last_write_checksum: sha1:d7177a8b99d303c39baef6242a5edf05e1b50f56
+    pristine_git_object: 8d8f70a82d3226464cb19b29798253230213f595
+  internal/sdk/models/shared/operationnode.go:
+    id: 48cb92647b50
+    last_write_checksum: sha1:3b6c28f477eb892fa9974dbcb536166ae1bdd248
+    pristine_git_object: 8e328eab5059f4184eae32dabeaff4842ad5cf52
+  internal/sdk/models/shared/operationobjectnode.go:
+    id: b93ada60fefb
+    last_write_checksum: sha1:d9aa6556cde04ff3f42fdea3695e4c5667875eaa
+    pristine_git_object: 9a97b53e4fa71cfc4a10a2909ca262db1f2c3246
+  internal/sdk/models/shared/patchbulkjobrequest.go:
+    id: 287ace28b8fd
+    last_write_checksum: sha1:898b2d3ef76b8e544255485c4fe6bbef7814a18d
+    pristine_git_object: 81a92ab7ad4b52fb9f95a0da3c05b7fc449edbee
+  internal/sdk/models/shared/prefixcondition.go:
+    id: 7ee3c5ca6fce
+    last_write_checksum: sha1:abc833f1d05c252633f0b7377b0f695c66d16159
+    pristine_git_object: 29eae1cd8634193d560ce83cbb9ec166bcc1647c
+  internal/sdk/models/shared/receivedemailtrigger.go:
+    id: f09aa3e43ad6
+    last_write_checksum: sha1:b9e3d2b273397b99bfa237dcae926550c7df6f9e
+    pristine_git_object: 8f5607ffb77840e1b13bf5a199830ae94ef9e5d3
+  internal/sdk/models/shared/relationattribute.go:
+    id: 16dc5fcda3bc
+    last_write_checksum: sha1:7a4cabbdd3c002f83bba88f411c766d9f14dda86
+    pristine_git_object: 0bb02ba19016fa0f02102fdd0a649ddaec9251e1
+  internal/sdk/models/shared/resumereq.go:
+    id: 03ec1ea01775
+    last_write_checksum: sha1:e063c4e56319aa9162497f6e349877cdc773cad8
+    pristine_git_object: dc71c365d97e57b3980bc978b5db93f64fb2340b
+  internal/sdk/models/shared/resumeresp.go:
+    id: b17f93e6b055
+    last_write_checksum: sha1:72130137c4ebfe6f24ee8c68f57da950ef0766e4
+    pristine_git_object: e98e61789daa9d0e0e030efba161d25a6756cea9
+  internal/sdk/models/shared/retryreq.go:
+    id: bce223ae1bf3
+    last_write_checksum: sha1:cf5bcdbbbeee759d0f54ee882935807aaba7507d
+    pristine_git_object: f64e5928dbad328a7d3cbabc0b35b44b76bcebd8
+  internal/sdk/models/shared/retrystrategy.go:
+    id: 3388e47ff808
+    last_write_checksum: sha1:734be646710c288c922b6ecb5e43ec98ff1e9503
+    pristine_git_object: f1b4406dbda06ecdf628f616ad71ef735a1529f9
+  internal/sdk/models/shared/searchautomationsresp.go:
+    id: bc2ce0c3da11
+    last_write_checksum: sha1:9fa6db3e57c6aec9d1e9d4c740712ac632def462
+    pristine_git_object: d84ec4e342cf7b5e9c51aecc1fc2685fa89c5578
+  internal/sdk/models/shared/security.go:
+    id: 9098af98367e
+    last_write_checksum: sha1:961d82eed3050b7bd4cb075bf457c993a1c8add1
+    pristine_git_object: d8751e61ed1d6a04689da8a83076ab8cda0062f9
+  internal/sdk/models/shared/sendemailaction.go:
+    id: c1707ba3ede8
+    last_write_checksum: sha1:62bd3eb9234e67dfb62cfa2d9ec8cb9396046644
+    pristine_git_object: 7ab90a9bcaa78eced0900aa1200c2cb5792156ed
+  internal/sdk/models/shared/sendemailcondition.go:
+    id: d14fcb3fc0ef
+    last_write_checksum: sha1:0f49b3d30f924e620efaf000d01d5c40f2b110ed
+    pristine_git_object: aed7132f5cb111df6ceff93cbff99e35e66bfb3d
+  internal/sdk/models/shared/sendemailconfig.go:
+    id: bb0288a1e514
+    last_write_checksum: sha1:1063337693427f3b548015e3be49c07160264988
+    pristine_git_object: ae2197f83c0686a0863c97dcefe590f079850dc9
+  internal/sdk/models/shared/setvaluemapper.go:
+    id: c8b9756290e3
+    last_write_checksum: sha1:808c1d8c0523418e03df48a0a2e71e9eaecedf0c
+    pristine_git_object: 5e27c0c3d9c47b063bcf36645a25b0b1c6816bce
+  internal/sdk/models/shared/startexecutionrequest.go:
+    id: aeb55854c5b7
+    last_write_checksum: sha1:db35542f77505a35b9ff138b21d380dc336dd084
+    pristine_git_object: 83ffda3fcab6ae703202525b0f2830f976263038
+  internal/sdk/models/shared/suffixcondition.go:
+    id: 8f26036a0066
+    last_write_checksum: sha1:e92ed89527da29be2cd80a1c6bd24b61f1685cec
+    pristine_git_object: 5e64beab306ac8d04fd2b54c1ca3bd5bfd0a385a
+  internal/sdk/models/shared/triggerevententityactivity.go:
+    id: d072af4509a0
+    last_write_checksum: sha1:8cd9b3fc277cce46cb153d761da2924966164f42
+    pristine_git_object: 1a2ecf4528610b01e700d8bf41cdd80db546e966
+  internal/sdk/models/shared/triggerevententityoperation.go:
+    id: a74222998b3e
+    last_write_checksum: sha1:bd4cbbe8746c085125691835c748d80ecbe67eeb
+    pristine_git_object: 57b56fd9be33bc5e85b68505a4ab1c4bf32c5111
+  internal/sdk/models/shared/triggereventflowautomationtask.go:
+    id: 78c202797188
+    last_write_checksum: sha1:8fcb46b102281dcb7530b2a0e84a30c76ada262b
+    pristine_git_object: fa4a4a388bf432b4e437c7bc6fdbbef7c6e59568
+  internal/sdk/models/shared/triggereventmanual.go:
+    id: 2bacf8cf54ec
+    last_write_checksum: sha1:8c55602c7eaecf1cdb97b142132f52af76066439
+    pristine_git_object: 65804fb301d5e87b9116800accb91f78fb861ce3
+  internal/sdk/models/shared/triggershareentityaction.go:
+    id: 510e537848fe
+    last_write_checksum: sha1:87cf1b9bdbd17183d5f3e399b2eac762785f94f5
+    pristine_git_object: 064108ec97373f6615560fef3cd511b27697f995
+  internal/sdk/models/shared/triggershareentityconfig.go:
+    id: faca42c8a897
+    last_write_checksum: sha1:f60c9e27e302d24d68093a72bcbf0ca3354fd3bd
+    pristine_git_object: 1edc8a836da2998cfb8fd5b7afb5f616081ee701
+  internal/sdk/models/shared/triggerwebhookaction.go:
+    id: 00eae1dc34c3
+    last_write_checksum: sha1:8cf8afe332bf6467df478acab79a49fbfc186827
+    pristine_git_object: 3017acb587e4dfeae2b9b4bef8a1e55065988ed5
+  internal/sdk/models/shared/triggerwebhookconfig.go:
+    id: 8e165414e3f0
+    last_write_checksum: sha1:07e159ba78cbaed634ee73f55f3676e74d734a8b
+    pristine_git_object: 7ca2583e054ee68c6a8d8155d91a347f20798702
+  internal/sdk/models/shared/triggerworkflowaction.go:
+    id: cbdc2b59dac9
+    last_write_checksum: sha1:62c2cdaa28c88c6d36514ad1ed85d46bf25930d7
+    pristine_git_object: 7cd97ffdc2b736b673a105543e4e62d80442c71c
+  internal/sdk/models/shared/triggerworkflowconfig.go:
+    id: f1e8a8edf53a
+    last_write_checksum: sha1:0f49f2787df8f4e837c325feae6c16ffc6842fa1
+    pristine_git_object: df08397840f376f2c8411e384ba0b9e8b2d59146
+  internal/sdk/models/shared/wildcardcondition.go:
+    id: 986fc674e705
+    last_write_checksum: sha1:f11b4e9fec5a3d6bdf6a037fd55e26e5e20bc206
+    pristine_git_object: 24570c97ec368b6ef5f5b0a2dd5dbf00bd0378ea
+  internal/sdk/models/shared/workflowcontext.go:
+    id: 03cd36f2f84c
+    last_write_checksum: sha1:ff72213891241ae0ae34bd1c386b8c0f8f89f904
+    pristine_git_object: b56ca89bcd584159dff7bbc9062c6585de1ad435
+  internal/sdk/models/shared/workflowcontextrole.go:
+    id: 41920a2f331f
+    last_write_checksum: sha1:bbccf518a0bf146f2fc0bb9d0c9998992f58ce19
+    pristine_git_object: a743a4d16006dbc2e49c991e3d952049c7b9a44c
+  internal/sdk/models/shared/workflowexecutioncontext.go:
+    id: 8752849a2f60
+    last_write_checksum: sha1:12e71e4363553bd7fcb91f789b839696bde4026b
+    pristine_git_object: 8b3cebfb79be7796f097a93d1f093acf20bb14ed
+  internal/sdk/optionalnullable/optionalnullable.go:
+    id: 4b83aa3f3df3
+    last_write_checksum: sha1:d6aff1a420c31e025ea21d46cf056e305ae76fe8
+    pristine_git_object: c6739be0619b6726565e0f11855ffe44b0e5607e
+  internal/sdk/optionalnullable/optionalnullable_test.go:
+    id: 3920a41dfc4c
+    last_write_checksum: sha1:2e9433eff1651ac77d6678ea76880d9a4980cbc2
+    pristine_git_object: e6e5a01c6e721e879e24a38a1f97e3e27d4686d4
+  internal/sdk/retry/config.go:
+    id: 7ea5fa9128b6
+    last_write_checksum: sha1:f565273be789ffe0e3c160de1ac72a63cfe67fbe
+    pristine_git_object: aa809fccb3445b1e2530a979dad620512f50e70f
+  internal/sdk/sdk.go:
+    id: 02d7190ee502
+    last_write_checksum: sha1:b2822f86af17516fd2033ccc9dbfd2f89bdc4a99
+    pristine_git_object: 8338bb4e2f2f33996f8ac92a8ecdc6828204c053
+  internal/sdk/types/bigint.go:
+    id: fc530b70337e
+    last_write_checksum: sha1:49b004005d0461fb04b846eca062b070b0360b31
+    pristine_git_object: 9c6a086d51595888a6ff787ebcb8693559afee95
+  internal/sdk/types/date.go:
+    id: c4bff082c66f
+    last_write_checksum: sha1:3036a2e1ed15a1d484c093367eba000c38f384d0
+    pristine_git_object: 5b2782f219efe6bfbce46fc2dec68998eb759438
+  internal/sdk/types/datetime.go:
+    id: a8109857c712
+    last_write_checksum: sha1:196d050af6450669214e9ae4fd28e56263ae2b5d
+    pristine_git_object: 3eff332daa04e34cec5ffb10add670bafd8ac454
+  internal/sdk/types/pointers.go:
+    id: 2f3f971639f6
+    last_write_checksum: sha1:fc2275ea006257ba9ba4ff6f2a2cdb6205371eef
+    pristine_git_object: 35c439d2661e08fcb6a854096fd7b9a8561b3938
+  internal/validators/DateValidator.go:
+    id: 4fdfa187ab97
+    last_write_checksum: sha1:d1200d30449d93a242b7b3bca854f2b4e1dd9e25
+    pristine_git_object: 83972ccf98f2fae8f9ed8dc73f6563a3213ece65
+  internal/validators/ExactlyOneChild.go:
+    id: 66e7bd50b47d
+    last_write_checksum: sha1:ab8e18d1763fbd5b262c3e7d917c81ac40ba839f
+    pristine_git_object: 1765a3a0b83d38a6cc8f118ea2cfab67ab44c910
+  internal/validators/JSONParseValidator.go:
+    id: ce72f37482f5
+    last_write_checksum: sha1:77af551821798350f868410aab90352f7ec7b370
+    pristine_git_object: b8bb96b5e0930635eb754f169b3eaf285d48dd1c
+  internal/validators/RFC3339Validator.go:
+    id: 0cf126c9a956
+    last_write_checksum: sha1:8d9accfc3aa477a74b0f927652f5e2ae3d28061d
+    pristine_git_object: f5e61466b5c639cb17d0cb2cfe28611957297ce9
+  internal/validators/boolvalidators/not_null.go:
+    id: 865145e65396
+    last_write_checksum: sha1:89a7362be9d519ed7c9fb7c4989d273a3aa5f279
+    pristine_git_object: 6eca17e0cff87f7682f8baa2cd81cd33bc972f4c
+  internal/validators/float32validators/not_null.go:
+    id: 330748f4ff91
+    last_write_checksum: sha1:4f0a859aa9d7348056c6559bad9ca336104beaef
+    pristine_git_object: c9a8973c7dc830b9c5aac546ea7cbe6021f01629
+  internal/validators/float64validators/not_null.go:
+    id: 8f5e6362f0f5
+    last_write_checksum: sha1:f2436a4a1323d58ffcff3b153167c4e463325c12
+    pristine_git_object: 8f786d278597ffac3c525755e429c9a3caa60b20
+  internal/validators/int32validators/not_null.go:
+    id: ea876d1f8b07
+    last_write_checksum: sha1:d08335af46ab809d0076da8543b3455662fb66a0
+    pristine_git_object: ec9a3f10adfdd29c3cca40e53dc42db329cf37d7
+  internal/validators/int64validators/not_null.go:
+    id: d3f822eb4c69
+    last_write_checksum: sha1:b5bf5b539f2631813ee8771cf00d8ea9744c6dd3
+    pristine_git_object: 707ff9573f026b7b7ee3f59462c7a8ba10a1aba9
+  internal/validators/listvalidators/not_null.go:
+    id: b3ee156dafa7
+    last_write_checksum: sha1:11f33dfa3cb1b9eadc7e4a8287518135ddae191e
+    pristine_git_object: 9b88e520b7d58c14c6844d3dbc26ce4f96d39af1
+  internal/validators/mapvalidators/not_null.go:
+    id: 9cff80d0791c
+    last_write_checksum: sha1:64117afe6cdb1a0e1b57df970da8df0e18d10442
+    pristine_git_object: dc6959e9cdadb16e0e1ea90f98b2d27f2d357b64
+  internal/validators/numbervalidators/not_null.go:
+    id: b335c948bcf4
+    last_write_checksum: sha1:54d925f13a630f21e14709ce6181e5eaf96bd6e3
+    pristine_git_object: 57d4da0ae000f671698384abc550196744884871
+  internal/validators/objectvalidators/not_null.go:
+    id: dd14631b3a38
+    last_write_checksum: sha1:5f897f5dcd2686d43c9bd683900572a8d7ef6473
+    pristine_git_object: bf0189497acb3b1214f2480e9db071186d85ecad
+  internal/validators/setvalidators/not_null.go:
+    id: e612a6618fac
+    last_write_checksum: sha1:de772bcb14615735a8ebd2a9ffaae06f464a86d5
+    pristine_git_object: f859d64810168dd4ec7bfb1ea1c0186c551f8987
+  internal/validators/stringvalidators/not_null.go:
+    id: 80be7ffedf6c
+    last_write_checksum: sha1:df498b49dd87f9508f3eaec3a63ed0a08ae3c16e
+    pristine_git_object: 1e40ac1b6ce68540327e01910f0dc91a60b62607
+  main.go:
+    id: 0607f785dfa3
+    last_write_checksum: sha1:4cdc199b975f4da5be9de6afb9efa8ce4350129a
+    pristine_git_object: a3ff0f936096e5b406447ef24b23cf4c9ad979d9
+  terraform-registry-manifest.json:
+    id: fc3d63fd06e1
+    last_write_checksum: sha1:45b609f3f65164bc2f00b6e2b24faf64627e15b8
+    pristine_git_object: fec2a5691e493a1941bd79b312b3925403a91aa6
+  tools/tools.go:
+    id: 683390d33800
+    last_write_checksum: sha1:8239addbb5e66af0488adc7dc4aba098e4634d88
+    pristine_git_object: 36b25801b3a26b57ee042a610a3c35ca65b1376a
+examples:
+  cancelExecution:
+    speakeasy-default-cancel-execution:
+      parameters:
+        path:
+          execution_id: "9baf184f-bc81-4128-bca3-d974c90a12c4"
+      responses:
+        "200":
+          application/json: {"actions": [], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"_created_at": "2025-06-19T20:56:44.249Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-09-08T10:33:58.807Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "trigger_event": {"caller": {"EpilotAuth": {"claims": {"cognito:username": "n.ahmad@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "n.ahmad@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123"}, "version": 2}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  cancelSchedule:
+    speakeasy-default-cancel-schedule:
+      parameters:
+        path:
+          execution_id: "9baf184f-bc81-4128-bca3-d974c90a12c4"
+          schedule_id: "<id>"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "source": {"id": "<id>", "origin": "automation"}}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  getExecution:
+    speakeasy-default-get-execution:
+      parameters:
+        path:
+          execution_id: "9baf184f-bc81-4128-bca3-d974c90a12c4"
+      responses:
+        "200":
+          application/json: {"actions": [], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"_created_at": "2025-09-19T20:38:02.071Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-05-08T17:14:29.270Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "trigger_event": {"caller": {"EpilotAuth": {"claims": {"cognito:username": "n.ahmad@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "n.ahmad@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123"}, "version": 2}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  getExecutions:
+    manual_trigger:
+      parameters:
+        query:
+          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
+          size: 25
+          from: 0
+          include_flows: false
+      responses:
+        "200":
+          application/json: {"results": [{"actions": [], "created_at": "2023-01-01T10:00:00Z", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_status": "success", "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "123", "trigger_event": {"caller": {"EpilotAuth": {"claims": {"email": "user@epilot.cloud", "userId": "10006129"}, "organizationId": "123", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123", "type": "manual"}, "updated_at": "2023-01-01T10:05:00Z", "version": 1}], "total": 1}
+    entity_operation_trigger:
+      parameters:
+        query:
+          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
+          size: 25
+          from: 0
+          include_flows: false
+      responses:
+        "200":
+          application/json: {"results": [{"actions": [], "activity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef", "created_at": "2023-01-01T12:00:00Z", "entity_id": "f4e4fcbd-cbcc-4496-bf5f-60c6ce2c621e", "execution_status": "in_progress", "flow_id": "8e2e067e-3c63-4b1a-8e02-6150a3d1fd89", "flow_name": "Contact updated automation", "id": "8cdf274e-ab70-4029-9ca2-c863b80a11c3", "org_id": "123", "trigger_event": {"activity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef", "entity_id": "f4e4fcbd-cbcc-4496-bf5f-60c6ce2c621e", "operation_type": "updateEntity", "org_id": "123", "type": "entity_operation"}, "updated_at": "2023-01-01T12:02:00Z", "version": 1}], "total": 1}
+    entity_activity_trigger:
+      parameters:
+        query:
+          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
+          size: 25
+          from: 0
+          include_flows: false
+      responses:
+        "200":
+          application/json: {"results": [{"actions": [], "activity_id": "b3c4d5e6-f7a8-9012-3456-789012bcdef0", "created_at": "2023-01-01T14:00:00Z", "entity_id": "c2b1a9d8-7e6f-5040-3029-180716253f4e", "execution_status": "failed", "flow_id": "6d1d956d-2b52-4a0a-9e01-5049a2c0ee78", "flow_name": "Document upload handler", "id": "7bde163d-9a5f-3f18-8b92-d752a79a10b2", "org_id": "123", "trigger_event": {"activity_id": "b3c4d5e6-f7a8-9012-3456-789012bcdef0", "activity_type": "DocUploadedFromPortal", "entity_id": "c2b1a9d8-7e6f-5040-3029-180716253f4e", "org_id": "123", "type": "entity_activity"}, "updated_at": "2023-01-01T14:01:30Z", "version": 1}], "total": 1}
+    flow_automation_task_trigger:
+      parameters:
+        query:
+          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
+          size: 25
+          from: 0
+          include_flows: false
+      responses:
+        "200":
+          application/json: {"results": [{"actions": [], "created_at": "2023-01-01T16:00:00Z", "entity_id": "d3c2b1a0-8f7e-6d5c-4b3a-291807364e5f", "execution_status": "paused", "flow_id": "9f0f178f-4c74-5b2b-af12-6160b3d1ee89", "flow_name": "Journey completion follow-up", "id": "5ade051c-8a4e-2e07-7a81-c641968a0fa1", "org_id": "123", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_event": {"caller": {"EpilotAuth": {"claims": {"email": "user@epilot.cloud", "userId": "10006129"}, "organizationId": "123", "userId": "10006129"}}, "entity_id": "d3c2b1a0-8f7e-6d5c-4b3a-291807364e5f", "flow_automation_task_id": "2fa221ec-3aac-4655-ab8f-c062eca44a3", "flow_execution_id": "wfwAJoT_cK", "org_id": "123", "type": "flow_automation_task"}, "updated_at": "2023-01-01T16:03:00Z", "version": 1}], "total": 1}
+    mixed_execution_statuses:
+      parameters:
+        query:
+          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
+          size: 25
+          from: 0
+          include_flows: false
+      responses:
+        "200":
+          application/json: {"results": [{"actions": [], "created_at": "2023-01-01T09:00:00Z", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_status": "success", "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Send welcome email", "id": "1aef262e-9b5f-4f29-8c93-e763b90b21d3", "org_id": "123", "trigger_event": {"caller": {"EpilotAuth": {"claims": {"email": "admin@epilot.cloud", "userId": "10006129"}, "organizationId": "123", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123", "type": "manual"}, "updated_at": "2023-01-01T09:02:00Z", "version": 2}, {"actions": [], "activity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef", "created_at": "2023-01-01T10:30:00Z", "entity_id": "f4e4fcbd-cbcc-4496-bf5f-60c6ce2c621e", "execution_status": "in_progress", "flow_id": "8e2e067e-3c63-4b1a-8e02-6150a3d1fd89", "flow_name": "Update CRM system", "id": "2bef373f-ac60-5039-9da4-f874ca1c32e4", "org_id": "123", "trigger_event": {"activity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef", "entity_id": "f4e4fcbd-cbcc-4496-bf5f-60c6ce2c621e", "operation_type": "createEntity", "org_id": "123", "type": "entity_operation"}, "updated_at": "2023-01-01T10:31:00Z", "version": 1}, {"actions": [], "activity_id": "b3c4d5e6-f7a8-9012-3456-789012bcdef0", "created_at": "2023-01-01T11:15:00Z", "entity_id": "c2b1a9d8-7e6f-5040-3029-180716253f4e", "execution_status": "failed", "flow_id": "6d1d956d-2b52-4a0a-9e01-5049a2c0ee78", "flow_name": "Generate invoice", "id": "3cef484g-bd71-6149-ae04-0985db2d43f5", "org_id": "123", "trigger_event": {"activity_id": "b3c4d5e6-f7a8-9012-3456-789012bcdef0", "activity_type": "CreateMeterReading", "entity_id": "c2b1a9d8-7e6f-5040-3029-180716253f4e", "org_id": "123", "type": "entity_activity"}, "updated_at": "2023-01-01T11:16:30Z", "version": 1}, {"actions": [], "created_at": "2023-01-01T12:45:00Z", "entity_id": "d3c2b1a0-8f7e-6d5c-4b3a-291807364e5f", "execution_status": "scheduled", "flow_id": "9f0f178f-4c74-5b2b-af12-6160b3d1ee89", "flow_name": "Scheduled reminder", "id": "4def595h-ce82-7259-bf15-1a96ec3e54g6", "org_id": "123", "trigger_event": {"caller": {"EpilotAuth": {"claims": {"email": "scheduler@epilot.cloud", "userId": "10006130"}, "organizationId": "123", "userId": "10006130"}}, "entity_id": "d3c2b1a0-8f7e-6d5c-4b3a-291807364e5f", "flow_automation_task_id": "3gb332fd-4bbd-5766-bc9g-d173fdb55b4", "flow_execution_id": "xgxBKpU_dL", "org_id": "123", "type": "flow_automation_task"}, "updated_at": "2023-01-01T12:45:00Z", "version": 1}], "total": 4}
+  resumeExecutionWithToken:
+    speakeasy-default-resume-execution-with-token:
+      requestBody:
+        application/json: {"resume_token": "eyJraWQiOiJrZXkifQ=="}
+      responses:
+        "200":
+          application/json: {"execution": {"actions": [{"config": {"linkback_relation_attribute": "mapped_entities", "mapping_attributes": [{"operation": {"_append": ["new", "tags"], "_uniq": true}, "target": "_tags"}], "target_schema": "<value>"}, "flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"_created_at": "2024-03-21T04:41:04.652Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-10-26T21:50:45.416Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "trigger_event": {"caller": {"EpilotAuth": {"claims": {"cognito:username": "n.ahmad@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "n.ahmad@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123"}, "version": 2}, "resumedAction": {"flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  retriggerAction:
+    speakeasy-default-retrigger-action:
+      parameters:
+        path:
+          execution_id: "9baf184f-bc81-4128-bca3-d974c90a12c4"
+          action_id: "9ec3711b-db63-449c-b894-54d5bb622a8f"
+      responses:
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  startExecution:
+    speakeasy-default-start-execution:
+      requestBody:
+        application/json: {"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"}
+      responses:
+        "201":
+          application/json: {"actions": [], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"_created_at": "2023-04-10T03:07:51.548Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-08-06T16:07:13.759Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "trigger_event": {"caller": {"EpilotAuth": {"claims": {"cognito:username": "n.ahmad@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "n.ahmad@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "flow_automation_task_id": "2fa221ec-3aac-4655-ab8f-c062eca44a3", "flow_execution_id": "wfwAJoT_cK", "org_id": "123"}, "version": 2}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  bulkTriggerExecutions:
+    speakeasy-default-bulk-trigger-executions:
+      requestBody:
+        application/json: {"entities_filter": [{"term": {"_schema": "contact"}}, {"terms": {"status": ["active"]}}], "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}}
+      responses:
+        "202":
+          application/json: {"created_at": "2024-05-29T17:28:00.502Z", "created_by": "1234", "entity_query": {"data": [{"term": {"_schema": "contact"}}, {"terms": {"status": ["active"]}}], "type": "filter"}, "execution_summary": [{"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "execution_status": "scheduled", "timestamp": "2025-10-30T15:56:47.842Z"}], "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "job_id": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "status": "cancelled", "task_token": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "updated_at": "2025-09-20T03:08:25.923Z"}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  getBulkJob:
+    speakeasy-default-get-bulk-job:
+      parameters:
+        path:
+          job_id: "8c086140-f33e-4bb7-a993-50c0f2402c7b"
+      responses:
+        "200":
+          application/json: {"created_at": "2025-05-10T13:07:43.096Z", "created_by": "1234", "entity_query": {"data": [{"term": {"_schema": "contact"}}, {"terms": {"status": ["active"]}}], "type": "filter"}, "execution_summary": [{"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "execution_status": "hot", "timestamp": "2025-10-30T15:56:47.842Z"}], "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "job_id": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "status": "cancelled", "task_token": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "updated_at": "2025-08-06T03:26:59.317Z"}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  patchBulkJob:
+    speakeasy-default-patch-bulk-job:
+      parameters:
+        path:
+          job_id: "8c086140-f33e-4bb7-a993-50c0f2402c7b"
+      responses:
+        "200":
+          application/json: {"created_at": "2023-02-05T18:57:32.351Z", "created_by": "1234", "entity_query": {"data": [{"term": {"_schema": "contact"}}, {"terms": {"status": ["active"]}}], "type": "query"}, "execution_summary": [{"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "execution_status": "failed", "timestamp": "2025-10-30T15:56:47.842Z"}], "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "job_id": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "status": "querying_entities", "task_token": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "updated_at": "2025-02-19T10:53:21.653Z"}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  batchGetFlows:
+    speakeasy-default-batch-get-flows:
+      requestBody:
+        application/json: {"ids": ["7791b04a-16d2-44a2-9af9-2d59c25c512f"]}
+      responses:
+        "200":
+          application/json: {"results": [{"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": [], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [{"configuration": {"schema": "submission"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "entity_manual"}], "version": 2}], "total": 3031.1}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  createFlow:
+    speakeasy-default-create-flow:
+      requestBody:
+        application/json: {"_manifest": null, "actions": ["<value 1>", "<value 2>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [{"configuration": {}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "received_email"}], "version": 2}
+      responses:
+        "201":
+          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>", "<value 3>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  deleteFlow:
+    speakeasy-default-delete-flow:
+      parameters:
+        path:
+          flow_id: "7791b04a-16d2-44a2-9af9-2d59c25c512f"
+      responses:
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  getFlow:
+    speakeasy-default-get-flow:
+      parameters:
+        path:
+          flow_id: "7791b04a-16d2-44a2-9af9-2d59c25c512f"
+      responses:
+        "200":
+          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>", "<value 3>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  putFlow:
+    speakeasy-default-put-flow:
+      parameters:
+        path:
+          flow_id: "7791b04a-16d2-44a2-9af9-2d59c25c512f"
+      requestBody:
+        application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [{"configuration": {"source_id": "99"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "frontend_submission"}], "version": 2}
+      responses:
+        "200":
+          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
+        "403":
+          application/json: {"error": "Forbidden", "status": 403}
+  searchFlows:
+    speakeasy-default-search-flows:
+      parameters:
+        query:
+          schema: "submission"
+          size: 25
+          from: 0
+          trigger_source_id: "600945fe-212e-4b97-acf7-391d64648384"
+          include_flows: false
+      responses:
+        "200":
+          application/json: {"results": [{"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": [], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}], "total": 2438.26}
+examplesVersion: 1.0.2
+generatedTests: {}
 generatedFiles:
   - .gitattributes
   - USAGE.md
@@ -241,204 +1380,3 @@ generatedFiles:
   - main.go
   - terraform-registry-manifest.json
   - tools/tools.go
-examples:
-  cancelExecution:
-    speakeasy-default-cancel-execution:
-      parameters:
-        path:
-          execution_id: "9baf184f-bc81-4128-bca3-d974c90a12c4"
-      responses:
-        "200":
-          application/json: {"actions": [], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"_created_at": "2025-06-19T20:56:44.249Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-09-08T10:33:58.807Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "trigger_event": {"caller": {"EpilotAuth": {"claims": {"cognito:username": "n.ahmad@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "n.ahmad@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123"}, "version": 2}
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  cancelSchedule:
-    speakeasy-default-cancel-schedule:
-      parameters:
-        path:
-          execution_id: "9baf184f-bc81-4128-bca3-d974c90a12c4"
-          schedule_id: "<id>"
-      responses:
-        "200":
-          application/json: {"id": "<id>", "source": {"id": "<id>", "origin": "automation"}}
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  getExecution:
-    speakeasy-default-get-execution:
-      parameters:
-        path:
-          execution_id: "9baf184f-bc81-4128-bca3-d974c90a12c4"
-      responses:
-        "200":
-          application/json: {"actions": [], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"_created_at": "2025-09-19T20:38:02.071Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-05-08T17:14:29.270Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "trigger_event": {"caller": {"EpilotAuth": {"claims": {"cognito:username": "n.ahmad@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "n.ahmad@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123"}, "version": 2}
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  getExecutions:
-    manual_trigger:
-      parameters:
-        query:
-          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
-          size: 25
-          from: 0
-          include_flows: false
-      responses:
-        "200":
-          application/json: {"results": [{"actions": [], "created_at": "2023-01-01T10:00:00Z", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_status": "success", "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "123", "trigger_event": {"caller": {"EpilotAuth": {"claims": {"email": "user@epilot.cloud", "userId": "10006129"}, "organizationId": "123", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123", "type": "manual"}, "updated_at": "2023-01-01T10:05:00Z", "version": 1}], "total": 1}
-    entity_operation_trigger:
-      parameters:
-        query:
-          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
-          size: 25
-          from: 0
-          include_flows: false
-      responses:
-        "200":
-          application/json: {"results": [{"actions": [], "activity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef", "created_at": "2023-01-01T12:00:00Z", "entity_id": "f4e4fcbd-cbcc-4496-bf5f-60c6ce2c621e", "execution_status": "in_progress", "flow_id": "8e2e067e-3c63-4b1a-8e02-6150a3d1fd89", "flow_name": "Contact updated automation", "id": "8cdf274e-ab70-4029-9ca2-c863b80a11c3", "org_id": "123", "trigger_event": {"activity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef", "entity_id": "f4e4fcbd-cbcc-4496-bf5f-60c6ce2c621e", "operation_type": "updateEntity", "org_id": "123", "type": "entity_operation"}, "updated_at": "2023-01-01T12:02:00Z", "version": 1}], "total": 1}
-    entity_activity_trigger:
-      parameters:
-        query:
-          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
-          size: 25
-          from: 0
-          include_flows: false
-      responses:
-        "200":
-          application/json: {"results": [{"actions": [], "activity_id": "b3c4d5e6-f7a8-9012-3456-789012bcdef0", "created_at": "2023-01-01T14:00:00Z", "entity_id": "c2b1a9d8-7e6f-5040-3029-180716253f4e", "execution_status": "failed", "flow_id": "6d1d956d-2b52-4a0a-9e01-5049a2c0ee78", "flow_name": "Document upload handler", "id": "7bde163d-9a5f-3f18-8b92-d752a79a10b2", "org_id": "123", "trigger_event": {"activity_id": "b3c4d5e6-f7a8-9012-3456-789012bcdef0", "activity_type": "DocUploadedFromPortal", "entity_id": "c2b1a9d8-7e6f-5040-3029-180716253f4e", "org_id": "123", "type": "entity_activity"}, "updated_at": "2023-01-01T14:01:30Z", "version": 1}], "total": 1}
-    flow_automation_task_trigger:
-      parameters:
-        query:
-          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
-          size: 25
-          from: 0
-          include_flows: false
-      responses:
-        "200":
-          application/json: {"results": [{"actions": [], "created_at": "2023-01-01T16:00:00Z", "entity_id": "d3c2b1a0-8f7e-6d5c-4b3a-291807364e5f", "execution_status": "paused", "flow_id": "9f0f178f-4c74-5b2b-af12-6160b3d1ee89", "flow_name": "Journey completion follow-up", "id": "5ade051c-8a4e-2e07-7a81-c641968a0fa1", "org_id": "123", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_event": {"caller": {"EpilotAuth": {"claims": {"email": "user@epilot.cloud", "userId": "10006129"}, "organizationId": "123", "userId": "10006129"}}, "entity_id": "d3c2b1a0-8f7e-6d5c-4b3a-291807364e5f", "flow_automation_task_id": "2fa221ec-3aac-4655-ab8f-c062eca44a3", "flow_execution_id": "wfwAJoT_cK", "org_id": "123", "type": "flow_automation_task"}, "updated_at": "2023-01-01T16:03:00Z", "version": 1}], "total": 1}
-    mixed_execution_statuses:
-      parameters:
-        query:
-          entity_id: "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"
-          size: 25
-          from: 0
-          include_flows: false
-      responses:
-        "200":
-          application/json: {"results": [{"actions": [], "created_at": "2023-01-01T09:00:00Z", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_status": "success", "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Send welcome email", "id": "1aef262e-9b5f-4f29-8c93-e763b90b21d3", "org_id": "123", "trigger_event": {"caller": {"EpilotAuth": {"claims": {"email": "admin@epilot.cloud", "userId": "10006129"}, "organizationId": "123", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123", "type": "manual"}, "updated_at": "2023-01-01T09:02:00Z", "version": 2}, {"actions": [], "activity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef", "created_at": "2023-01-01T10:30:00Z", "entity_id": "f4e4fcbd-cbcc-4496-bf5f-60c6ce2c621e", "execution_status": "in_progress", "flow_id": "8e2e067e-3c63-4b1a-8e02-6150a3d1fd89", "flow_name": "Update CRM system", "id": "2bef373f-ac60-5039-9da4-f874ca1c32e4", "org_id": "123", "trigger_event": {"activity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef", "entity_id": "f4e4fcbd-cbcc-4496-bf5f-60c6ce2c621e", "operation_type": "createEntity", "org_id": "123", "type": "entity_operation"}, "updated_at": "2023-01-01T10:31:00Z", "version": 1}, {"actions": [], "activity_id": "b3c4d5e6-f7a8-9012-3456-789012bcdef0", "created_at": "2023-01-01T11:15:00Z", "entity_id": "c2b1a9d8-7e6f-5040-3029-180716253f4e", "execution_status": "failed", "flow_id": "6d1d956d-2b52-4a0a-9e01-5049a2c0ee78", "flow_name": "Generate invoice", "id": "3cef484g-bd71-6149-ae04-0985db2d43f5", "org_id": "123", "trigger_event": {"activity_id": "b3c4d5e6-f7a8-9012-3456-789012bcdef0", "activity_type": "CreateMeterReading", "entity_id": "c2b1a9d8-7e6f-5040-3029-180716253f4e", "org_id": "123", "type": "entity_activity"}, "updated_at": "2023-01-01T11:16:30Z", "version": 1}, {"actions": [], "created_at": "2023-01-01T12:45:00Z", "entity_id": "d3c2b1a0-8f7e-6d5c-4b3a-291807364e5f", "execution_status": "scheduled", "flow_id": "9f0f178f-4c74-5b2b-af12-6160b3d1ee89", "flow_name": "Scheduled reminder", "id": "4def595h-ce82-7259-bf15-1a96ec3e54g6", "org_id": "123", "trigger_event": {"caller": {"EpilotAuth": {"claims": {"email": "scheduler@epilot.cloud", "userId": "10006130"}, "organizationId": "123", "userId": "10006130"}}, "entity_id": "d3c2b1a0-8f7e-6d5c-4b3a-291807364e5f", "flow_automation_task_id": "3gb332fd-4bbd-5766-bc9g-d173fdb55b4", "flow_execution_id": "xgxBKpU_dL", "org_id": "123", "type": "flow_automation_task"}, "updated_at": "2023-01-01T12:45:00Z", "version": 1}], "total": 4}
-  resumeExecutionWithToken:
-    speakeasy-default-resume-execution-with-token:
-      requestBody:
-        application/json: {"resume_token": "eyJraWQiOiJrZXkifQ=="}
-      responses:
-        "200":
-          application/json: {"execution": {"actions": [{"config": {"linkback_relation_attribute": "mapped_entities", "mapping_attributes": [{"operation": {"_append": ["new", "tags"], "_uniq": true}, "target": "_tags"}], "target_schema": "<value>"}, "flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"_created_at": "2024-03-21T04:41:04.652Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-10-26T21:50:45.416Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "trigger_event": {"caller": {"EpilotAuth": {"claims": {"cognito:username": "n.ahmad@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "n.ahmad@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "org_id": "123"}, "version": 2}, "resumedAction": {"flow_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "outputs": {}, "reason": {"message": "There are no registered portal users for the given emails, hence skipping the action"}}}
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  retriggerAction:
-    speakeasy-default-retrigger-action:
-      parameters:
-        path:
-          execution_id: "9baf184f-bc81-4128-bca3-d974c90a12c4"
-          action_id: "9ec3711b-db63-449c-b894-54d5bb622a8f"
-      responses:
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  startExecution:
-    speakeasy-default-start-execution:
-      requestBody:
-        application/json: {"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74"}
-      responses:
-        "201":
-          application/json: {"actions": [], "activity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "current_action_id": "9ec3711b-db63-449c-b894-54d5bb622a8f", "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "entity_snapshot": {"_created_at": "2023-04-10T03:07:51.548Z", "_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "_org": "<value>", "_schema": "<value>", "_title": "<value>", "_updated_at": "2024-08-06T16:07:13.759Z"}, "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "flow_name": "Handle contact form", "id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "resume_token": "eyJraWQiOiJrZXkifQ==", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "trigger_event": {"caller": {"EpilotAuth": {"claims": {"cognito:username": "n.ahmad@epilot.cloud", "custom:ivy_user_id": "10006129", "email": "n.ahmad@epilot.cloud", "sub": "476e9b48-42f4-4234-a2b0-4668b34626ce"}, "organizationId": "739224", "token": "eyJraWQiOi...", "userId": "10006129"}}, "entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "flow_automation_task_id": "2fa221ec-3aac-4655-ab8f-c062eca44a3", "flow_execution_id": "wfwAJoT_cK", "org_id": "123"}, "version": 2}
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  bulkTriggerExecutions:
-    speakeasy-default-bulk-trigger-executions:
-      requestBody:
-        application/json: {"entities_filter": [{"term": {"_schema": "contact"}}, {"terms": {"status": ["active"]}}], "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}}
-      responses:
-        "202":
-          application/json: {"created_at": "2024-05-29T17:28:00.502Z", "created_by": "1234", "entity_query": {"data": [{"term": {"_schema": "contact"}}, {"terms": {"status": ["active"]}}], "type": "filter"}, "execution_summary": [{"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "execution_status": "scheduled", "timestamp": "2025-10-30T15:56:47.842Z"}], "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "job_id": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "status": "cancelled", "task_token": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "updated_at": "2025-09-20T03:08:25.923Z"}
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  getBulkJob:
-    speakeasy-default-get-bulk-job:
-      parameters:
-        path:
-          job_id: "8c086140-f33e-4bb7-a993-50c0f2402c7b"
-      responses:
-        "200":
-          application/json: {"created_at": "2025-05-10T13:07:43.096Z", "created_by": "1234", "entity_query": {"data": [{"term": {"_schema": "contact"}}, {"terms": {"status": ["active"]}}], "type": "filter"}, "execution_summary": [{"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "execution_status": "hot", "timestamp": "2025-10-30T15:56:47.842Z"}], "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "job_id": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "status": "cancelled", "task_token": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "updated_at": "2025-08-06T03:26:59.317Z"}
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  patchBulkJob:
-    speakeasy-default-patch-bulk-job:
-      parameters:
-        path:
-          job_id: "8c086140-f33e-4bb7-a993-50c0f2402c7b"
-      responses:
-        "200":
-          application/json: {"created_at": "2023-02-05T18:57:32.351Z", "created_by": "1234", "entity_query": {"data": [{"term": {"_schema": "contact"}}, {"terms": {"status": ["active"]}}], "type": "query"}, "execution_summary": [{"entity_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "execution_id": "9baf184f-bc81-4128-bca3-d974c90a12c4", "execution_status": "failed", "timestamp": "2025-10-30T15:56:47.842Z"}], "flow_id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "job_id": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "org_id": "e3d3ebac-baab-4395-abf4-50b5bf1f8b74", "status": "querying_entities", "task_token": "8c086140-f33e-4bb7-a993-50c0f2402c7b", "trigger_context": {"entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"}, "updated_at": "2025-02-19T10:53:21.653Z"}
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  batchGetFlows:
-    speakeasy-default-batch-get-flows:
-      requestBody:
-        application/json: {"ids": ["7791b04a-16d2-44a2-9af9-2d59c25c512f"]}
-      responses:
-        "200":
-          application/json: {"results": [{"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": [], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [{"configuration": {"schema": "submission"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "entity_manual"}], "version": 2}], "total": 3031.1}
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  createFlow:
-    speakeasy-default-create-flow:
-      requestBody:
-        application/json: {"_manifest": null, "actions": ["<value 1>", "<value 2>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [{"configuration": {}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "received_email"}], "version": 2}
-      responses:
-        "201":
-          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>", "<value 3>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  deleteFlow:
-    speakeasy-default-delete-flow:
-      parameters:
-        path:
-          flow_id: "7791b04a-16d2-44a2-9af9-2d59c25c512f"
-      responses:
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  getFlow:
-    speakeasy-default-get-flow:
-      parameters:
-        path:
-          flow_id: "7791b04a-16d2-44a2-9af9-2d59c25c512f"
-      responses:
-        "200":
-          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>", "<value 3>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  putFlow:
-    speakeasy-default-put-flow:
-      parameters:
-        path:
-          flow_id: "7791b04a-16d2-44a2-9af9-2d59c25c512f"
-      requestBody:
-        application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>", "<value 2>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [{"configuration": {"source_id": "99"}, "id": "12d4f45a-1883-4841-a94c-5928cb338a94", "type": "frontend_submission"}], "version": 2}
-      responses:
-        "200":
-          application/json: {"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": ["<value 1>"], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}
-        "403":
-          application/json: {"error": "Forbidden", "status": 403}
-  searchFlows:
-    speakeasy-default-search-flows:
-      parameters:
-        query:
-          schema: "submission"
-          size: 25
-          from: 0
-          trigger_source_id: "600945fe-212e-4b97-acf7-391d64648384"
-          include_flows: false
-      responses:
-        "200":
-          application/json: {"results": [{"_manifest": ["123e4567-e89b-12d3-a456-426614174000"], "actions": [], "conditions": [{"statements": [{"operation": "equals", "source": {"attribute": "email", "attributeType": "text", "id": "trigger-id", "origin": "trigger", "originType": "entity", "schema": "contact"}, "values": ["hello@epilot.cloud"]}]}], "entity_schema": "submission", "flow_name": "Handle contact form", "id": "7791b04a-16d2-44a2-9af9-2d59c25c512f", "max_executions": {"count": 100, "window": "PT1M"}, "triggers": [], "version": 2}], "total": 2438.26}
-examplesVersion: 1.0.2
-generatedTests: {}

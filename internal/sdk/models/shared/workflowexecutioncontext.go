@@ -3,29 +3,38 @@
 package shared
 
 type WorkflowExecutionContext struct {
-	WorkflowExecID     string  `json:"workflow_exec_id"`
-	WorkflowExecTaskID *string `json:"workflow_exec_task_id,omitempty"`
+	// [Internal] Tracks execution chain for infinite loop prevention. This is an internal property and should not be used by external consumers.
+	ExecutionChain     *ExecutionChain `json:"_execution_chain,omitempty"`
+	WorkflowExecID     string          `json:"workflow_exec_id"`
+	WorkflowExecTaskID *string         `json:"workflow_exec_task_id,omitempty"`
 	// The role this automation plays in the workflow.
 	WorkflowRole WorkflowContextRole `json:"workflow_role"`
 }
 
-func (o *WorkflowExecutionContext) GetWorkflowExecID() string {
-	if o == nil {
-		return ""
-	}
-	return o.WorkflowExecID
-}
-
-func (o *WorkflowExecutionContext) GetWorkflowExecTaskID() *string {
-	if o == nil {
+func (w *WorkflowExecutionContext) GetExecutionChain() *ExecutionChain {
+	if w == nil {
 		return nil
 	}
-	return o.WorkflowExecTaskID
+	return w.ExecutionChain
 }
 
-func (o *WorkflowExecutionContext) GetWorkflowRole() WorkflowContextRole {
-	if o == nil {
+func (w *WorkflowExecutionContext) GetWorkflowExecID() string {
+	if w == nil {
+		return ""
+	}
+	return w.WorkflowExecID
+}
+
+func (w *WorkflowExecutionContext) GetWorkflowExecTaskID() *string {
+	if w == nil {
+		return nil
+	}
+	return w.WorkflowExecTaskID
+}
+
+func (w *WorkflowExecutionContext) GetWorkflowRole() WorkflowContextRole {
+	if w == nil {
 		return WorkflowContextRole("")
 	}
-	return o.WorkflowRole
+	return w.WorkflowRole
 }

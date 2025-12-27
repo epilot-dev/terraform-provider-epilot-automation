@@ -46,11 +46,11 @@ func (r *ReceivedEmailTriggerConfiguration) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ReceivedEmailTriggerConfiguration) GetMessageType() *MessageType {
-	if o == nil {
+func (r *ReceivedEmailTriggerConfiguration) GetMessageType() *MessageType {
+	if r == nil {
 		return nil
 	}
-	return o.MessageType
+	return r.MessageType
 }
 
 type ReceivedEmailTriggerType string
@@ -87,29 +87,29 @@ func (r ReceivedEmailTrigger) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ReceivedEmailTrigger) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, []string{"configuration", "type"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &r, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ReceivedEmailTrigger) GetConfiguration() ReceivedEmailTriggerConfiguration {
-	if o == nil {
+func (r *ReceivedEmailTrigger) GetConfiguration() ReceivedEmailTriggerConfiguration {
+	if r == nil {
 		return ReceivedEmailTriggerConfiguration{}
 	}
-	return o.Configuration
+	return r.Configuration
 }
 
-func (o *ReceivedEmailTrigger) GetID() *string {
-	if o == nil {
+func (r *ReceivedEmailTrigger) GetID() *string {
+	if r == nil {
 		return nil
 	}
-	return o.ID
+	return r.ID
 }
 
-func (o *ReceivedEmailTrigger) GetType() ReceivedEmailTriggerType {
-	if o == nil {
+func (r *ReceivedEmailTrigger) GetType() ReceivedEmailTriggerType {
+	if r == nil {
 		return ReceivedEmailTriggerType("")
 	}
-	return o.Type
+	return r.Type
 }

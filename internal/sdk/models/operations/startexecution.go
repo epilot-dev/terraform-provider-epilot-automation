@@ -15,18 +15,18 @@ type StartExecutionResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *StartExecutionResponseBody) GetError() *string {
-	if o == nil {
+func (s *StartExecutionResponseBody) GetError() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Error
+	return s.Error
 }
 
-func (o *StartExecutionResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (s *StartExecutionResponseBody) GetStatus() *int64 {
+	if s == nil {
 		return nil
 	}
-	return o.Status
+	return s.Status
 }
 
 type StartExecutionResponse struct {
@@ -42,37 +42,37 @@ type StartExecutionResponse struct {
 	Object *StartExecutionResponseBody
 }
 
-func (o *StartExecutionResponse) GetAutomationExecution() *shared.AutomationExecution {
-	if o == nil {
+func (s *StartExecutionResponse) GetAutomationExecution() *shared.AutomationExecution {
+	if s == nil {
 		return nil
 	}
-	return o.AutomationExecution
+	return s.AutomationExecution
 }
 
-func (o *StartExecutionResponse) GetContentType() string {
-	if o == nil {
+func (s *StartExecutionResponse) GetContentType() string {
+	if s == nil {
 		return ""
 	}
-	return o.ContentType
+	return s.ContentType
 }
 
-func (o *StartExecutionResponse) GetStatusCode() int {
-	if o == nil {
+func (s *StartExecutionResponse) GetStatusCode() int {
+	if s == nil {
 		return 0
 	}
-	return o.StatusCode
+	return s.StatusCode
 }
 
-func (o *StartExecutionResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (s *StartExecutionResponse) GetRawResponse() *http.Response {
+	if s == nil {
 		return nil
 	}
-	return o.RawResponse
+	return s.RawResponse
 }
 
-func (o *StartExecutionResponse) GetObject() *StartExecutionResponseBody {
-	if o == nil {
+func (s *StartExecutionResponse) GetObject() *StartExecutionResponseBody {
+	if s == nil {
 		return nil
 	}
-	return o.Object
+	return s.Object
 }

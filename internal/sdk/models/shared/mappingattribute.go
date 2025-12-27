@@ -17,9 +17,9 @@ const (
 )
 
 type MappingAttribute struct {
-	SetValueMapper    *SetValueMapper    `queryParam:"inline" name:"MappingAttribute"`
-	CopyValueMapper   *CopyValueMapper   `queryParam:"inline" name:"MappingAttribute"`
-	AppendValueMapper *AppendValueMapper `queryParam:"inline" name:"MappingAttribute"`
+	SetValueMapper    *SetValueMapper    `queryParam:"inline,name=MappingAttribute" union:"member"`
+	CopyValueMapper   *CopyValueMapper   `queryParam:"inline,name=MappingAttribute" union:"member"`
+	AppendValueMapper *AppendValueMapper `queryParam:"inline,name=MappingAttribute" union:"member"`
 
 	Type MappingAttributeType
 }
@@ -53,24 +53,54 @@ func CreateMappingAttributeAppendValueMapper(appendValueMapper AppendValueMapper
 
 func (u *MappingAttribute) UnmarshalJSON(data []byte) error {
 
+	var candidates []utils.UnionCandidate
+
+	// Collect all valid candidates
 	var setValueMapper SetValueMapper = SetValueMapper{}
 	if err := utils.UnmarshalJSON(data, &setValueMapper, "", true, nil); err == nil {
-		u.SetValueMapper = &setValueMapper
-		u.Type = MappingAttributeTypeSetValueMapper
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  MappingAttributeTypeSetValueMapper,
+			Value: &setValueMapper,
+		})
 	}
 
 	var copyValueMapper CopyValueMapper = CopyValueMapper{}
 	if err := utils.UnmarshalJSON(data, &copyValueMapper, "", true, nil); err == nil {
-		u.CopyValueMapper = &copyValueMapper
-		u.Type = MappingAttributeTypeCopyValueMapper
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  MappingAttributeTypeCopyValueMapper,
+			Value: &copyValueMapper,
+		})
 	}
 
 	var appendValueMapper AppendValueMapper = AppendValueMapper{}
 	if err := utils.UnmarshalJSON(data, &appendValueMapper, "", true, nil); err == nil {
-		u.AppendValueMapper = &appendValueMapper
-		u.Type = MappingAttributeTypeAppendValueMapper
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  MappingAttributeTypeAppendValueMapper,
+			Value: &appendValueMapper,
+		})
+	}
+
+	if len(candidates) == 0 {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for MappingAttribute", string(data))
+	}
+
+	// Pick the best candidate using multi-stage filtering
+	best := utils.PickBestUnionCandidate(candidates, data)
+	if best == nil {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for MappingAttribute", string(data))
+	}
+
+	// Set the union type and value based on the best candidate
+	u.Type = best.Type.(MappingAttributeType)
+	switch best.Type {
+	case MappingAttributeTypeSetValueMapper:
+		u.SetValueMapper = best.Value.(*SetValueMapper)
+		return nil
+	case MappingAttributeTypeCopyValueMapper:
+		u.CopyValueMapper = best.Value.(*CopyValueMapper)
+		return nil
+	case MappingAttributeTypeAppendValueMapper:
+		u.AppendValueMapper = best.Value.(*AppendValueMapper)
 		return nil
 	}
 

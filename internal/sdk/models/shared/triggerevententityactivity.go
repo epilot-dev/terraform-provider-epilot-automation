@@ -44,43 +44,43 @@ func (t TriggerEventEntityActivity) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TriggerEventEntityActivity) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, []string{"activity_id", "activity_type", "org_id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TriggerEventEntityActivity) GetActivityID() string {
-	if o == nil {
+func (t *TriggerEventEntityActivity) GetActivityID() string {
+	if t == nil {
 		return ""
 	}
-	return o.ActivityID
+	return t.ActivityID
 }
 
-func (o *TriggerEventEntityActivity) GetActivityType() string {
-	if o == nil {
+func (t *TriggerEventEntityActivity) GetActivityType() string {
+	if t == nil {
 		return ""
 	}
-	return o.ActivityType
+	return t.ActivityType
 }
 
-func (o *TriggerEventEntityActivity) GetEntityID() *string {
-	if o == nil {
+func (t *TriggerEventEntityActivity) GetEntityID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.EntityID
+	return t.EntityID
 }
 
-func (o *TriggerEventEntityActivity) GetOrgID() string {
-	if o == nil {
+func (t *TriggerEventEntityActivity) GetOrgID() string {
+	if t == nil {
 		return ""
 	}
-	return o.OrgID
+	return t.OrgID
 }
 
-func (o *TriggerEventEntityActivity) GetType() *TriggerEventEntityActivityType {
-	if o == nil {
+func (t *TriggerEventEntityActivity) GetType() *TriggerEventEntityActivityType {
+	if t == nil {
 		return nil
 	}
-	return o.Type
+	return t.Type
 }
