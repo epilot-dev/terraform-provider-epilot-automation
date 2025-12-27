@@ -25,17 +25,17 @@ const (
 )
 
 type AnyAction struct {
-	MapEntityAction           *MapEntityAction           `queryParam:"inline" name:"AnyAction"`
-	TriggerWorkflowAction     *TriggerWorkflowAction     `queryParam:"inline" name:"AnyAction"`
-	TriggerShareEntityAction  *TriggerShareEntityAction  `queryParam:"inline" name:"AnyAction"`
-	TriggerWebhookAction      *TriggerWebhookAction      `queryParam:"inline" name:"AnyAction"`
-	InformERPAction           *InformERPAction           `queryParam:"inline" name:"AnyAction"`
-	CreateDocumentAction      *CreateDocumentAction      `queryParam:"inline" name:"AnyAction"`
-	SendEmailAction           *SendEmailAction           `queryParam:"inline" name:"AnyAction"`
-	CartCheckoutAction        *CartCheckoutAction        `queryParam:"inline" name:"AnyAction"`
-	CustomAction              *CustomAction              `queryParam:"inline" name:"AnyAction"`
-	AutomationAction          *AutomationAction          `queryParam:"inline" name:"AnyAction"`
-	FlowExecutionCancelAction *FlowExecutionCancelAction `queryParam:"inline" name:"AnyAction"`
+	MapEntityAction           *MapEntityAction           `queryParam:"inline,name=AnyAction" union:"member"`
+	TriggerWorkflowAction     *TriggerWorkflowAction     `queryParam:"inline,name=AnyAction" union:"member"`
+	TriggerShareEntityAction  *TriggerShareEntityAction  `queryParam:"inline,name=AnyAction" union:"member"`
+	TriggerWebhookAction      *TriggerWebhookAction      `queryParam:"inline,name=AnyAction" union:"member"`
+	InformERPAction           *InformERPAction           `queryParam:"inline,name=AnyAction" union:"member"`
+	CreateDocumentAction      *CreateDocumentAction      `queryParam:"inline,name=AnyAction" union:"member"`
+	SendEmailAction           *SendEmailAction           `queryParam:"inline,name=AnyAction" union:"member"`
+	CartCheckoutAction        *CartCheckoutAction        `queryParam:"inline,name=AnyAction" union:"member"`
+	CustomAction              *CustomAction              `queryParam:"inline,name=AnyAction" union:"member"`
+	AutomationAction          *AutomationAction          `queryParam:"inline,name=AnyAction" union:"member"`
+	FlowExecutionCancelAction *FlowExecutionCancelAction `queryParam:"inline,name=AnyAction" union:"member"`
 
 	Type AnyActionType
 }
@@ -141,80 +141,142 @@ func CreateAnyActionFlowExecutionCancelAction(flowExecutionCancelAction FlowExec
 
 func (u *AnyAction) UnmarshalJSON(data []byte) error {
 
+	var candidates []utils.UnionCandidate
+
+	// Collect all valid candidates
 	var mapEntityAction MapEntityAction = MapEntityAction{}
 	if err := utils.UnmarshalJSON(data, &mapEntityAction, "", true, nil); err == nil {
-		u.MapEntityAction = &mapEntityAction
-		u.Type = AnyActionTypeMapEntityAction
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  AnyActionTypeMapEntityAction,
+			Value: &mapEntityAction,
+		})
 	}
 
 	var triggerWorkflowAction TriggerWorkflowAction = TriggerWorkflowAction{}
 	if err := utils.UnmarshalJSON(data, &triggerWorkflowAction, "", true, nil); err == nil {
-		u.TriggerWorkflowAction = &triggerWorkflowAction
-		u.Type = AnyActionTypeTriggerWorkflowAction
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  AnyActionTypeTriggerWorkflowAction,
+			Value: &triggerWorkflowAction,
+		})
 	}
 
 	var triggerShareEntityAction TriggerShareEntityAction = TriggerShareEntityAction{}
 	if err := utils.UnmarshalJSON(data, &triggerShareEntityAction, "", true, nil); err == nil {
-		u.TriggerShareEntityAction = &triggerShareEntityAction
-		u.Type = AnyActionTypeTriggerShareEntityAction
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  AnyActionTypeTriggerShareEntityAction,
+			Value: &triggerShareEntityAction,
+		})
 	}
 
 	var triggerWebhookAction TriggerWebhookAction = TriggerWebhookAction{}
 	if err := utils.UnmarshalJSON(data, &triggerWebhookAction, "", true, nil); err == nil {
-		u.TriggerWebhookAction = &triggerWebhookAction
-		u.Type = AnyActionTypeTriggerWebhookAction
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  AnyActionTypeTriggerWebhookAction,
+			Value: &triggerWebhookAction,
+		})
 	}
 
 	var informERPAction InformERPAction = InformERPAction{}
 	if err := utils.UnmarshalJSON(data, &informERPAction, "", true, nil); err == nil {
-		u.InformERPAction = &informERPAction
-		u.Type = AnyActionTypeInformERPAction
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  AnyActionTypeInformERPAction,
+			Value: &informERPAction,
+		})
 	}
 
 	var createDocumentAction CreateDocumentAction = CreateDocumentAction{}
 	if err := utils.UnmarshalJSON(data, &createDocumentAction, "", true, nil); err == nil {
-		u.CreateDocumentAction = &createDocumentAction
-		u.Type = AnyActionTypeCreateDocumentAction
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  AnyActionTypeCreateDocumentAction,
+			Value: &createDocumentAction,
+		})
 	}
 
 	var sendEmailAction SendEmailAction = SendEmailAction{}
 	if err := utils.UnmarshalJSON(data, &sendEmailAction, "", true, nil); err == nil {
-		u.SendEmailAction = &sendEmailAction
-		u.Type = AnyActionTypeSendEmailAction
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  AnyActionTypeSendEmailAction,
+			Value: &sendEmailAction,
+		})
 	}
 
 	var cartCheckoutAction CartCheckoutAction = CartCheckoutAction{}
 	if err := utils.UnmarshalJSON(data, &cartCheckoutAction, "", true, nil); err == nil {
-		u.CartCheckoutAction = &cartCheckoutAction
-		u.Type = AnyActionTypeCartCheckoutAction
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  AnyActionTypeCartCheckoutAction,
+			Value: &cartCheckoutAction,
+		})
 	}
 
 	var customAction CustomAction = CustomAction{}
 	if err := utils.UnmarshalJSON(data, &customAction, "", true, nil); err == nil {
-		u.CustomAction = &customAction
-		u.Type = AnyActionTypeCustomAction
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  AnyActionTypeCustomAction,
+			Value: &customAction,
+		})
 	}
 
 	var automationAction AutomationAction = AutomationAction{}
 	if err := utils.UnmarshalJSON(data, &automationAction, "", true, nil); err == nil {
-		u.AutomationAction = &automationAction
-		u.Type = AnyActionTypeAutomationAction
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  AnyActionTypeAutomationAction,
+			Value: &automationAction,
+		})
 	}
 
 	var flowExecutionCancelAction FlowExecutionCancelAction = FlowExecutionCancelAction{}
 	if err := utils.UnmarshalJSON(data, &flowExecutionCancelAction, "", true, nil); err == nil {
-		u.FlowExecutionCancelAction = &flowExecutionCancelAction
-		u.Type = AnyActionTypeFlowExecutionCancelAction
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  AnyActionTypeFlowExecutionCancelAction,
+			Value: &flowExecutionCancelAction,
+		})
+	}
+
+	if len(candidates) == 0 {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for AnyAction", string(data))
+	}
+
+	// Pick the best candidate using multi-stage filtering
+	best := utils.PickBestUnionCandidate(candidates, data)
+	if best == nil {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for AnyAction", string(data))
+	}
+
+	// Set the union type and value based on the best candidate
+	u.Type = best.Type.(AnyActionType)
+	switch best.Type {
+	case AnyActionTypeMapEntityAction:
+		u.MapEntityAction = best.Value.(*MapEntityAction)
+		return nil
+	case AnyActionTypeTriggerWorkflowAction:
+		u.TriggerWorkflowAction = best.Value.(*TriggerWorkflowAction)
+		return nil
+	case AnyActionTypeTriggerShareEntityAction:
+		u.TriggerShareEntityAction = best.Value.(*TriggerShareEntityAction)
+		return nil
+	case AnyActionTypeTriggerWebhookAction:
+		u.TriggerWebhookAction = best.Value.(*TriggerWebhookAction)
+		return nil
+	case AnyActionTypeInformERPAction:
+		u.InformERPAction = best.Value.(*InformERPAction)
+		return nil
+	case AnyActionTypeCreateDocumentAction:
+		u.CreateDocumentAction = best.Value.(*CreateDocumentAction)
+		return nil
+	case AnyActionTypeSendEmailAction:
+		u.SendEmailAction = best.Value.(*SendEmailAction)
+		return nil
+	case AnyActionTypeCartCheckoutAction:
+		u.CartCheckoutAction = best.Value.(*CartCheckoutAction)
+		return nil
+	case AnyActionTypeCustomAction:
+		u.CustomAction = best.Value.(*CustomAction)
+		return nil
+	case AnyActionTypeAutomationAction:
+		u.AutomationAction = best.Value.(*AutomationAction)
+		return nil
+	case AnyActionTypeFlowExecutionCancelAction:
+		u.FlowExecutionCancelAction = best.Value.(*FlowExecutionCancelAction)
 		return nil
 	}
 

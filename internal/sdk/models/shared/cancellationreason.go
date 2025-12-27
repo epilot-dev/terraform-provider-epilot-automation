@@ -19,22 +19,22 @@ func (c CancellationReason) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CancellationReason) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "title"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *CancellationReason) GetID() string {
-	if o == nil {
+func (c *CancellationReason) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CancellationReason) GetTitle() string {
-	if o == nil {
+func (c *CancellationReason) GetTitle() string {
+	if c == nil {
 		return ""
 	}
-	return o.Title
+	return c.Title
 }

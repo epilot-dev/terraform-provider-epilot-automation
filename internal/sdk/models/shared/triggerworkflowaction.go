@@ -26,18 +26,18 @@ func (t *TriggerWorkflowActionReason) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TriggerWorkflowActionReason) GetMessage() *string {
-	if o == nil {
+func (t *TriggerWorkflowActionReason) GetMessage() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Message
+	return t.Message
 }
 
-func (o *TriggerWorkflowActionReason) GetPayload() map[string]any {
-	if o == nil {
+func (t *TriggerWorkflowActionReason) GetPayload() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.Payload
+	return t.Payload
 }
 
 type TriggerWorkflowActionType string
@@ -100,121 +100,121 @@ func (t *TriggerWorkflowAction) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TriggerWorkflowAction) GetAllowFailure() *bool {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetAllowFailure() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.AllowFailure
+	return t.AllowFailure
 }
 
-func (o *TriggerWorkflowAction) GetConditionID() *string {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetConditionID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.ConditionID
+	return t.ConditionID
 }
 
-func (o *TriggerWorkflowAction) GetConfig() *TriggerWorkflowConfig {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetConfig() *TriggerWorkflowConfig {
+	if t == nil {
 		return nil
 	}
-	return o.Config
+	return t.Config
 }
 
-func (o *TriggerWorkflowAction) GetCreatedAutomatically() *bool {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetCreatedAutomatically() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.CreatedAutomatically
+	return t.CreatedAutomatically
 }
 
-func (o *TriggerWorkflowAction) GetErrorOutput() *ErrorOutput {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetErrorOutput() *ErrorOutput {
+	if t == nil {
 		return nil
 	}
-	return o.ErrorOutput
+	return t.ErrorOutput
 }
 
-func (o *TriggerWorkflowAction) GetExecutionStatus() *ExecutionStatus {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetExecutionStatus() *ExecutionStatus {
+	if t == nil {
 		return nil
 	}
-	return o.ExecutionStatus
+	return t.ExecutionStatus
 }
 
-func (o *TriggerWorkflowAction) GetFlowActionID() *string {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetFlowActionID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.FlowActionID
+	return t.FlowActionID
 }
 
-func (o *TriggerWorkflowAction) GetID() *string {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.ID
+	return t.ID
 }
 
-func (o *TriggerWorkflowAction) GetIsBulkAction() *bool {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetIsBulkAction() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.IsBulkAction
+	return t.IsBulkAction
 }
 
-func (o *TriggerWorkflowAction) GetName() *string {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetName() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Name
+	return t.Name
 }
 
-func (o *TriggerWorkflowAction) GetOutputs() map[string]any {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetOutputs() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.Outputs
+	return t.Outputs
 }
 
-func (o *TriggerWorkflowAction) GetReason() *TriggerWorkflowActionReason {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetReason() *TriggerWorkflowActionReason {
+	if t == nil {
 		return nil
 	}
-	return o.Reason
+	return t.Reason
 }
 
-func (o *TriggerWorkflowAction) GetRetryStrategy() *RetryStrategy {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetRetryStrategy() *RetryStrategy {
+	if t == nil {
 		return nil
 	}
-	return o.RetryStrategy
+	return t.RetryStrategy
 }
 
-func (o *TriggerWorkflowAction) GetScheduleID() *string {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetScheduleID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.ScheduleID
+	return t.ScheduleID
 }
 
-func (o *TriggerWorkflowAction) GetStartedAt() *string {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetStartedAt() *string {
+	if t == nil {
 		return nil
 	}
-	return o.StartedAt
+	return t.StartedAt
 }
 
-func (o *TriggerWorkflowAction) GetType() *TriggerWorkflowActionType {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetType() *TriggerWorkflowActionType {
+	if t == nil {
 		return nil
 	}
-	return o.Type
+	return t.Type
 }
 
-func (o *TriggerWorkflowAction) GetUpdatedAt() *string {
-	if o == nil {
+func (t *TriggerWorkflowAction) GetUpdatedAt() *string {
+	if t == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return t.UpdatedAt
 }

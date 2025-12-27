@@ -7,16 +7,16 @@ type ResumeResp struct {
 	ResumedAction AnyAction           `json:"resumedAction"`
 }
 
-func (o *ResumeResp) GetExecution() AutomationExecution {
-	if o == nil {
+func (r *ResumeResp) GetExecution() AutomationExecution {
+	if r == nil {
 		return AutomationExecution{}
 	}
-	return o.Execution
+	return r.Execution
 }
 
-func (o *ResumeResp) GetResumedAction() AnyAction {
-	if o == nil {
+func (r *ResumeResp) GetResumedAction() AnyAction {
+	if r == nil {
 		return AnyAction{}
 	}
-	return o.ResumedAction
+	return r.ResumedAction
 }

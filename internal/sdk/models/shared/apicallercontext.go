@@ -25,39 +25,39 @@ func (c *Claims) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Claims) GetCognitoUsername() *string {
-	if o == nil {
+func (c *Claims) GetCognitoUsername() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CognitoUsername
+	return c.CognitoUsername
 }
 
-func (o *Claims) GetCustomIvyUserID() *string {
-	if o == nil {
+func (c *Claims) GetCustomIvyUserID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomIvyUserID
+	return c.CustomIvyUserID
 }
 
-func (o *Claims) GetEmail() *string {
-	if o == nil {
+func (c *Claims) GetEmail() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Email
+	return c.Email
 }
 
-func (o *Claims) GetSub() *string {
-	if o == nil {
+func (c *Claims) GetSub() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Sub
+	return c.Sub
 }
 
-func (o *Claims) GetUserID() *string {
-	if o == nil {
+func (c *Claims) GetUserID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.UserID
+	return c.UserID
 }
 
 type EpilotAuth struct {
@@ -78,32 +78,32 @@ func (e *EpilotAuth) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *EpilotAuth) GetClaims() *Claims {
-	if o == nil {
+func (e *EpilotAuth) GetClaims() *Claims {
+	if e == nil {
 		return nil
 	}
-	return o.Claims
+	return e.Claims
 }
 
-func (o *EpilotAuth) GetOrganizationID() *string {
-	if o == nil {
+func (e *EpilotAuth) GetOrganizationID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return e.OrganizationID
 }
 
-func (o *EpilotAuth) GetToken() *string {
-	if o == nil {
+func (e *EpilotAuth) GetToken() *string {
+	if e == nil {
 		return nil
 	}
-	return o.Token
+	return e.Token
 }
 
-func (o *EpilotAuth) GetUserID() *string {
-	if o == nil {
+func (e *EpilotAuth) GetUserID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.UserID
+	return e.UserID
 }
 
 type APICallerContext struct {
@@ -122,16 +122,16 @@ func (a *APICallerContext) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *APICallerContext) GetAdditionalProperties() any {
-	if o == nil {
+func (a *APICallerContext) GetAdditionalProperties() any {
+	if a == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return a.AdditionalProperties
 }
 
-func (o *APICallerContext) GetEpilotAuth() *EpilotAuth {
-	if o == nil {
+func (a *APICallerContext) GetEpilotAuth() *EpilotAuth {
+	if a == nil {
 		return nil
 	}
-	return o.EpilotAuth
+	return a.EpilotAuth
 }

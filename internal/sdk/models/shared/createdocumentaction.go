@@ -26,18 +26,18 @@ func (c *CreateDocumentActionReason) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CreateDocumentActionReason) GetMessage() *string {
-	if o == nil {
+func (c *CreateDocumentActionReason) GetMessage() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Message
+	return c.Message
 }
 
-func (o *CreateDocumentActionReason) GetPayload() map[string]any {
-	if o == nil {
+func (c *CreateDocumentActionReason) GetPayload() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.Payload
+	return c.Payload
 }
 
 type CreateDocumentActionType string
@@ -100,121 +100,121 @@ func (c *CreateDocumentAction) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CreateDocumentAction) GetAllowFailure() *bool {
-	if o == nil {
+func (c *CreateDocumentAction) GetAllowFailure() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.AllowFailure
+	return c.AllowFailure
 }
 
-func (o *CreateDocumentAction) GetConditionID() *string {
-	if o == nil {
+func (c *CreateDocumentAction) GetConditionID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ConditionID
+	return c.ConditionID
 }
 
-func (o *CreateDocumentAction) GetConfig() *CreateDocumentConfig {
-	if o == nil {
+func (c *CreateDocumentAction) GetConfig() *CreateDocumentConfig {
+	if c == nil {
 		return nil
 	}
-	return o.Config
+	return c.Config
 }
 
-func (o *CreateDocumentAction) GetCreatedAutomatically() *bool {
-	if o == nil {
+func (c *CreateDocumentAction) GetCreatedAutomatically() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.CreatedAutomatically
+	return c.CreatedAutomatically
 }
 
-func (o *CreateDocumentAction) GetErrorOutput() *ErrorOutput {
-	if o == nil {
+func (c *CreateDocumentAction) GetErrorOutput() *ErrorOutput {
+	if c == nil {
 		return nil
 	}
-	return o.ErrorOutput
+	return c.ErrorOutput
 }
 
-func (o *CreateDocumentAction) GetExecutionStatus() *ExecutionStatus {
-	if o == nil {
+func (c *CreateDocumentAction) GetExecutionStatus() *ExecutionStatus {
+	if c == nil {
 		return nil
 	}
-	return o.ExecutionStatus
+	return c.ExecutionStatus
 }
 
-func (o *CreateDocumentAction) GetFlowActionID() *string {
-	if o == nil {
+func (c *CreateDocumentAction) GetFlowActionID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FlowActionID
+	return c.FlowActionID
 }
 
-func (o *CreateDocumentAction) GetID() *string {
-	if o == nil {
+func (c *CreateDocumentAction) GetID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CreateDocumentAction) GetIsBulkAction() *bool {
-	if o == nil {
+func (c *CreateDocumentAction) GetIsBulkAction() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.IsBulkAction
+	return c.IsBulkAction
 }
 
-func (o *CreateDocumentAction) GetName() *string {
-	if o == nil {
+func (c *CreateDocumentAction) GetName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CreateDocumentAction) GetOutputs() map[string]any {
-	if o == nil {
+func (c *CreateDocumentAction) GetOutputs() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.Outputs
+	return c.Outputs
 }
 
-func (o *CreateDocumentAction) GetReason() *CreateDocumentActionReason {
-	if o == nil {
+func (c *CreateDocumentAction) GetReason() *CreateDocumentActionReason {
+	if c == nil {
 		return nil
 	}
-	return o.Reason
+	return c.Reason
 }
 
-func (o *CreateDocumentAction) GetRetryStrategy() *RetryStrategy {
-	if o == nil {
+func (c *CreateDocumentAction) GetRetryStrategy() *RetryStrategy {
+	if c == nil {
 		return nil
 	}
-	return o.RetryStrategy
+	return c.RetryStrategy
 }
 
-func (o *CreateDocumentAction) GetScheduleID() *string {
-	if o == nil {
+func (c *CreateDocumentAction) GetScheduleID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ScheduleID
+	return c.ScheduleID
 }
 
-func (o *CreateDocumentAction) GetStartedAt() *string {
-	if o == nil {
+func (c *CreateDocumentAction) GetStartedAt() *string {
+	if c == nil {
 		return nil
 	}
-	return o.StartedAt
+	return c.StartedAt
 }
 
-func (o *CreateDocumentAction) GetType() *CreateDocumentActionType {
-	if o == nil {
+func (c *CreateDocumentAction) GetType() *CreateDocumentActionType {
+	if c == nil {
 		return nil
 	}
-	return o.Type
+	return c.Type
 }
 
-func (o *CreateDocumentAction) GetUpdatedAt() *string {
-	if o == nil {
+func (c *CreateDocumentAction) GetUpdatedAt() *string {
+	if c == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return c.UpdatedAt
 }

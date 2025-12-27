@@ -38,16 +38,16 @@ type PatchBulkJobRequest struct {
 	TaskToken string `json:"task_token"`
 }
 
-func (o *PatchBulkJobRequest) GetAction() Action {
-	if o == nil {
+func (p *PatchBulkJobRequest) GetAction() Action {
+	if p == nil {
 		return Action("")
 	}
-	return o.Action
+	return p.Action
 }
 
-func (o *PatchBulkJobRequest) GetTaskToken() string {
-	if o == nil {
+func (p *PatchBulkJobRequest) GetTaskToken() string {
+	if p == nil {
 		return ""
 	}
-	return o.TaskToken
+	return p.TaskToken
 }

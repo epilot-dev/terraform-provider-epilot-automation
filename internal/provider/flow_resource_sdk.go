@@ -348,103 +348,103 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 	var manifest []string
 	if r.Manifest != nil {
 		manifest = make([]string, 0, len(r.Manifest))
-		for _, manifestItem := range r.Manifest {
-			manifest = append(manifest, manifestItem.ValueString())
+		for manifestIndex := range r.Manifest {
+			manifest = append(manifest, r.Manifest[manifestIndex].ValueString())
 		}
 	}
 	actions := make([]interface{}, 0, len(r.Actions))
-	for _, actionsItem := range r.Actions {
+	for actionsIndex := range r.Actions {
 		var actionsTmp interface{}
-		_ = json.Unmarshal([]byte(actionsItem.ValueString()), &actionsTmp)
+		_ = json.Unmarshal([]byte(r.Actions[actionsIndex].ValueString()), &actionsTmp)
 		actions = append(actions, actionsTmp)
 	}
 	conditions := make([]shared.ActionCondition, 0, len(r.Conditions))
-	for _, conditionsItem := range r.Conditions {
+	for conditionsIndex := range r.Conditions {
 		evaluationResult := new(bool)
-		if !conditionsItem.EvaluationResult.IsUnknown() && !conditionsItem.EvaluationResult.IsNull() {
-			*evaluationResult = conditionsItem.EvaluationResult.ValueBool()
+		if !r.Conditions[conditionsIndex].EvaluationResult.IsUnknown() && !r.Conditions[conditionsIndex].EvaluationResult.IsNull() {
+			*evaluationResult = r.Conditions[conditionsIndex].EvaluationResult.ValueBool()
 		} else {
 			evaluationResult = nil
 		}
 		id := new(string)
-		if !conditionsItem.ID.IsUnknown() && !conditionsItem.ID.IsNull() {
-			*id = conditionsItem.ID.ValueString()
+		if !r.Conditions[conditionsIndex].ID.IsUnknown() && !r.Conditions[conditionsIndex].ID.IsNull() {
+			*id = r.Conditions[conditionsIndex].ID.ValueString()
 		} else {
 			id = nil
 		}
 		scheduleID := new(string)
-		if !conditionsItem.ScheduleID.IsUnknown() && !conditionsItem.ScheduleID.IsNull() {
-			*scheduleID = conditionsItem.ScheduleID.ValueString()
+		if !r.Conditions[conditionsIndex].ScheduleID.IsUnknown() && !r.Conditions[conditionsIndex].ScheduleID.IsNull() {
+			*scheduleID = r.Conditions[conditionsIndex].ScheduleID.ValueString()
 		} else {
 			scheduleID = nil
 		}
-		statements := make([]shared.ConditionStatement, 0, len(conditionsItem.Statements))
-		for _, statementsItem := range conditionsItem.Statements {
+		statements := make([]shared.ConditionStatement, 0, len(r.Conditions[conditionsIndex].Statements))
+		for statementsIndex := range r.Conditions[conditionsIndex].Statements {
 			id1 := new(string)
-			if !statementsItem.ID.IsUnknown() && !statementsItem.ID.IsNull() {
-				*id1 = statementsItem.ID.ValueString()
+			if !r.Conditions[conditionsIndex].Statements[statementsIndex].ID.IsUnknown() && !r.Conditions[conditionsIndex].Statements[statementsIndex].ID.IsNull() {
+				*id1 = r.Conditions[conditionsIndex].Statements[statementsIndex].ID.ValueString()
 			} else {
 				id1 = nil
 			}
 			operation := new(shared.Operation)
-			if !statementsItem.Operation.IsUnknown() && !statementsItem.Operation.IsNull() {
-				*operation = shared.Operation(statementsItem.Operation.ValueString())
+			if !r.Conditions[conditionsIndex].Statements[statementsIndex].Operation.IsUnknown() && !r.Conditions[conditionsIndex].Statements[statementsIndex].Operation.IsNull() {
+				*operation = shared.Operation(r.Conditions[conditionsIndex].Statements[statementsIndex].Operation.ValueString())
 			} else {
 				operation = nil
 			}
 			var source *shared.Source
-			if statementsItem.Source != nil {
+			if r.Conditions[conditionsIndex].Statements[statementsIndex].Source != nil {
 				attribute := new(string)
-				if !statementsItem.Source.Attribute.IsUnknown() && !statementsItem.Source.Attribute.IsNull() {
-					*attribute = statementsItem.Source.Attribute.ValueString()
+				if !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.Attribute.IsUnknown() && !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.Attribute.IsNull() {
+					*attribute = r.Conditions[conditionsIndex].Statements[statementsIndex].Source.Attribute.ValueString()
 				} else {
 					attribute = nil
 				}
 				attributeOperation := new(shared.AttributeOperation)
-				if !statementsItem.Source.AttributeOperation.IsUnknown() && !statementsItem.Source.AttributeOperation.IsNull() {
-					*attributeOperation = shared.AttributeOperation(statementsItem.Source.AttributeOperation.ValueString())
+				if !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.AttributeOperation.IsUnknown() && !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.AttributeOperation.IsNull() {
+					*attributeOperation = shared.AttributeOperation(r.Conditions[conditionsIndex].Statements[statementsIndex].Source.AttributeOperation.ValueString())
 				} else {
 					attributeOperation = nil
 				}
 				attributeRepeatable := new(bool)
-				if !statementsItem.Source.AttributeRepeatable.IsUnknown() && !statementsItem.Source.AttributeRepeatable.IsNull() {
-					*attributeRepeatable = statementsItem.Source.AttributeRepeatable.ValueBool()
+				if !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.AttributeRepeatable.IsUnknown() && !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.AttributeRepeatable.IsNull() {
+					*attributeRepeatable = r.Conditions[conditionsIndex].Statements[statementsIndex].Source.AttributeRepeatable.ValueBool()
 				} else {
 					attributeRepeatable = nil
 				}
 				attributeType := new(shared.AttributeType)
-				if !statementsItem.Source.AttributeType.IsUnknown() && !statementsItem.Source.AttributeType.IsNull() {
-					*attributeType = shared.AttributeType(statementsItem.Source.AttributeType.ValueString())
+				if !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.AttributeType.IsUnknown() && !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.AttributeType.IsNull() {
+					*attributeType = shared.AttributeType(r.Conditions[conditionsIndex].Statements[statementsIndex].Source.AttributeType.ValueString())
 				} else {
 					attributeType = nil
 				}
 				id2 := new(string)
-				if !statementsItem.Source.ID.IsUnknown() && !statementsItem.Source.ID.IsNull() {
-					*id2 = statementsItem.Source.ID.ValueString()
+				if !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.ID.IsUnknown() && !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.ID.IsNull() {
+					*id2 = r.Conditions[conditionsIndex].Statements[statementsIndex].Source.ID.ValueString()
 				} else {
 					id2 = nil
 				}
 				origin := new(shared.ConditionStatementOrigin)
-				if !statementsItem.Source.Origin.IsUnknown() && !statementsItem.Source.Origin.IsNull() {
-					*origin = shared.ConditionStatementOrigin(statementsItem.Source.Origin.ValueString())
+				if !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.Origin.IsUnknown() && !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.Origin.IsNull() {
+					*origin = shared.ConditionStatementOrigin(r.Conditions[conditionsIndex].Statements[statementsIndex].Source.Origin.ValueString())
 				} else {
 					origin = nil
 				}
 				originType := new(shared.OriginType)
-				if !statementsItem.Source.OriginType.IsUnknown() && !statementsItem.Source.OriginType.IsNull() {
-					*originType = shared.OriginType(statementsItem.Source.OriginType.ValueString())
+				if !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.OriginType.IsUnknown() && !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.OriginType.IsNull() {
+					*originType = shared.OriginType(r.Conditions[conditionsIndex].Statements[statementsIndex].Source.OriginType.ValueString())
 				} else {
 					originType = nil
 				}
 				repeatableItemOp := new(bool)
-				if !statementsItem.Source.RepeatableItemOp.IsUnknown() && !statementsItem.Source.RepeatableItemOp.IsNull() {
-					*repeatableItemOp = statementsItem.Source.RepeatableItemOp.ValueBool()
+				if !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.RepeatableItemOp.IsUnknown() && !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.RepeatableItemOp.IsNull() {
+					*repeatableItemOp = r.Conditions[conditionsIndex].Statements[statementsIndex].Source.RepeatableItemOp.ValueBool()
 				} else {
 					repeatableItemOp = nil
 				}
 				schema := new(string)
-				if !statementsItem.Source.Schema.IsUnknown() && !statementsItem.Source.Schema.IsNull() {
-					*schema = statementsItem.Source.Schema.ValueString()
+				if !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.Schema.IsUnknown() && !r.Conditions[conditionsIndex].Statements[statementsIndex].Source.Schema.IsNull() {
+					*schema = r.Conditions[conditionsIndex].Statements[statementsIndex].Source.Schema.ValueString()
 				} else {
 					schema = nil
 				}
@@ -460,9 +460,9 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 					Schema:              schema,
 				}
 			}
-			values := make([]string, 0, len(statementsItem.Values))
-			for _, valuesItem := range statementsItem.Values {
-				values = append(values, valuesItem.ValueString())
+			values := make([]string, 0, len(r.Conditions[conditionsIndex].Statements[statementsIndex].Values))
+			for valuesIndex := range r.Conditions[conditionsIndex].Statements[statementsIndex].Values {
+				values = append(values, r.Conditions[conditionsIndex].Statements[statementsIndex].Values[valuesIndex].ValueString())
 			}
 			statements = append(statements, shared.ConditionStatement{
 				ID:        id1,
@@ -539,17 +539,17 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 		systemFlow = nil
 	}
 	triggerConditions := make([]interface{}, 0, len(r.TriggerConditions))
-	for _, triggerConditionsItem := range r.TriggerConditions {
+	for triggerConditionsIndex := range r.TriggerConditions {
 		var triggerConditionsTmp interface{}
-		_ = json.Unmarshal([]byte(triggerConditionsItem.ValueString()), &triggerConditionsTmp)
+		_ = json.Unmarshal([]byte(r.TriggerConditions[triggerConditionsIndex].ValueString()), &triggerConditionsTmp)
 		triggerConditions = append(triggerConditions, triggerConditionsTmp)
 	}
 	triggers := make([]shared.AnyTrigger, 0, len(r.Triggers))
-	for _, triggersItem := range r.Triggers {
-		if triggersItem.FrontendSubmitTrigger != nil {
+	for triggersItem := range r.Triggers {
+		if r.Triggers[triggersItem].FrontendSubmitTrigger != nil {
 			sourceID := new(string)
-			if !triggersItem.FrontendSubmitTrigger.Configuration.SourceID.IsUnknown() && !triggersItem.FrontendSubmitTrigger.Configuration.SourceID.IsNull() {
-				*sourceID = triggersItem.FrontendSubmitTrigger.Configuration.SourceID.ValueString()
+			if !r.Triggers[triggersItem].FrontendSubmitTrigger.Configuration.SourceID.IsUnknown() && !r.Triggers[triggersItem].FrontendSubmitTrigger.Configuration.SourceID.IsNull() {
+				*sourceID = r.Triggers[triggersItem].FrontendSubmitTrigger.Configuration.SourceID.ValueString()
 			} else {
 				sourceID = nil
 			}
@@ -557,12 +557,12 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 				SourceID: sourceID,
 			}
 			id3 := new(string)
-			if !triggersItem.FrontendSubmitTrigger.ID.IsUnknown() && !triggersItem.FrontendSubmitTrigger.ID.IsNull() {
-				*id3 = triggersItem.FrontendSubmitTrigger.ID.ValueString()
+			if !r.Triggers[triggersItem].FrontendSubmitTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].FrontendSubmitTrigger.ID.IsNull() {
+				*id3 = r.Triggers[triggersItem].FrontendSubmitTrigger.ID.ValueString()
 			} else {
 				id3 = nil
 			}
-			typeVar := shared.FrontendSubmitTriggerType(triggersItem.FrontendSubmitTrigger.Type.ValueString())
+			typeVar := shared.FrontendSubmitTriggerType(r.Triggers[triggersItem].FrontendSubmitTrigger.Type.ValueString())
 			frontendSubmitTrigger := shared.FrontendSubmitTrigger{
 				Configuration: configuration,
 				ID:            id3,
@@ -572,20 +572,20 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 				FrontendSubmitTrigger: &frontendSubmitTrigger,
 			})
 		}
-		if triggersItem.JourneySubmitTrigger != nil {
+		if r.Triggers[triggersItem].JourneySubmitTrigger != nil {
 			var sourceId1 string
-			sourceId1 = triggersItem.JourneySubmitTrigger.Configuration.SourceID.ValueString()
+			sourceId1 = r.Triggers[triggersItem].JourneySubmitTrigger.Configuration.SourceID.ValueString()
 
 			configuration1 := shared.JourneySubmitTriggerConfiguration{
 				SourceID: sourceId1,
 			}
 			id4 := new(string)
-			if !triggersItem.JourneySubmitTrigger.ID.IsUnknown() && !triggersItem.JourneySubmitTrigger.ID.IsNull() {
-				*id4 = triggersItem.JourneySubmitTrigger.ID.ValueString()
+			if !r.Triggers[triggersItem].JourneySubmitTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].JourneySubmitTrigger.ID.IsNull() {
+				*id4 = r.Triggers[triggersItem].JourneySubmitTrigger.ID.ValueString()
 			} else {
 				id4 = nil
 			}
-			typeVar1 := shared.JourneySubmitTriggerType(triggersItem.JourneySubmitTrigger.Type.ValueString())
+			typeVar1 := shared.JourneySubmitTriggerType(r.Triggers[triggersItem].JourneySubmitTrigger.Type.ValueString())
 			journeySubmitTrigger := shared.JourneySubmitTrigger{
 				Configuration: configuration1,
 				ID:            id4,
@@ -595,10 +595,10 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 				JourneySubmitTrigger: &journeySubmitTrigger,
 			})
 		}
-		if triggersItem.APISubmissionTrigger != nil {
+		if r.Triggers[triggersItem].APISubmissionTrigger != nil {
 			sourceId2 := new(string)
-			if !triggersItem.APISubmissionTrigger.Configuration.SourceID.IsUnknown() && !triggersItem.APISubmissionTrigger.Configuration.SourceID.IsNull() {
-				*sourceId2 = triggersItem.APISubmissionTrigger.Configuration.SourceID.ValueString()
+			if !r.Triggers[triggersItem].APISubmissionTrigger.Configuration.SourceID.IsUnknown() && !r.Triggers[triggersItem].APISubmissionTrigger.Configuration.SourceID.IsNull() {
+				*sourceId2 = r.Triggers[triggersItem].APISubmissionTrigger.Configuration.SourceID.ValueString()
 			} else {
 				sourceId2 = nil
 			}
@@ -606,12 +606,12 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 				SourceID: sourceId2,
 			}
 			id5 := new(string)
-			if !triggersItem.APISubmissionTrigger.ID.IsUnknown() && !triggersItem.APISubmissionTrigger.ID.IsNull() {
-				*id5 = triggersItem.APISubmissionTrigger.ID.ValueString()
+			if !r.Triggers[triggersItem].APISubmissionTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].APISubmissionTrigger.ID.IsNull() {
+				*id5 = r.Triggers[triggersItem].APISubmissionTrigger.ID.ValueString()
 			} else {
 				id5 = nil
 			}
-			typeVar2 := shared.Type(triggersItem.APISubmissionTrigger.Type.ValueString())
+			typeVar2 := shared.Type(r.Triggers[triggersItem].APISubmissionTrigger.Type.ValueString())
 			apiSubmissionTrigger := shared.APISubmissionTrigger{
 				Configuration: configuration2,
 				ID:            id5,
@@ -621,14 +621,14 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 				APISubmissionTrigger: &apiSubmissionTrigger,
 			})
 		}
-		if triggersItem.EntityOperationTrigger != nil {
+		if r.Triggers[triggersItem].EntityOperationTrigger != nil {
 			var ecpConfig *shared.EcpConfig
-			if triggersItem.EntityOperationTrigger.Configuration.EcpConfig != nil {
+			if r.Triggers[triggersItem].EntityOperationTrigger.Configuration.EcpConfig != nil {
 				var fileConfig *shared.FileConfig
-				if triggersItem.EntityOperationTrigger.Configuration.EcpConfig.FileConfig != nil {
+				if r.Triggers[triggersItem].EntityOperationTrigger.Configuration.EcpConfig.FileConfig != nil {
 					sharedWithEndCustomer := new(bool)
-					if !triggersItem.EntityOperationTrigger.Configuration.EcpConfig.FileConfig.SharedWithEndCustomer.IsUnknown() && !triggersItem.EntityOperationTrigger.Configuration.EcpConfig.FileConfig.SharedWithEndCustomer.IsNull() {
-						*sharedWithEndCustomer = triggersItem.EntityOperationTrigger.Configuration.EcpConfig.FileConfig.SharedWithEndCustomer.ValueBool()
+					if !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.EcpConfig.FileConfig.SharedWithEndCustomer.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.EcpConfig.FileConfig.SharedWithEndCustomer.IsNull() {
+						*sharedWithEndCustomer = r.Triggers[triggersItem].EntityOperationTrigger.Configuration.EcpConfig.FileConfig.SharedWithEndCustomer.ValueBool()
 					} else {
 						sharedWithEndCustomer = nil
 					}
@@ -637,14 +637,14 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 					}
 				}
 				origin1 := new(string)
-				if !triggersItem.EntityOperationTrigger.Configuration.EcpConfig.Origin.IsUnknown() && !triggersItem.EntityOperationTrigger.Configuration.EcpConfig.Origin.IsNull() {
-					*origin1 = triggersItem.EntityOperationTrigger.Configuration.EcpConfig.Origin.ValueString()
+				if !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.EcpConfig.Origin.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.EcpConfig.Origin.IsNull() {
+					*origin1 = r.Triggers[triggersItem].EntityOperationTrigger.Configuration.EcpConfig.Origin.ValueString()
 				} else {
 					origin1 = nil
 				}
 				portalID := new(string)
-				if !triggersItem.EntityOperationTrigger.Configuration.EcpConfig.PortalID.IsUnknown() && !triggersItem.EntityOperationTrigger.Configuration.EcpConfig.PortalID.IsNull() {
-					*portalID = triggersItem.EntityOperationTrigger.Configuration.EcpConfig.PortalID.ValueString()
+				if !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.EcpConfig.PortalID.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.EcpConfig.PortalID.IsNull() {
+					*portalID = r.Triggers[triggersItem].EntityOperationTrigger.Configuration.EcpConfig.PortalID.ValueString()
 				} else {
 					portalID = nil
 				}
@@ -654,28 +654,28 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 					PortalID:   portalID,
 				}
 			}
-			excludeActivities := make([]string, 0, len(triggersItem.EntityOperationTrigger.Configuration.ExcludeActivities))
-			for _, excludeActivitiesItem := range triggersItem.EntityOperationTrigger.Configuration.ExcludeActivities {
-				excludeActivities = append(excludeActivities, excludeActivitiesItem.ValueString())
+			excludeActivities := make([]string, 0, len(r.Triggers[triggersItem].EntityOperationTrigger.Configuration.ExcludeActivities))
+			for excludeActivitiesIndex := range r.Triggers[triggersItem].EntityOperationTrigger.Configuration.ExcludeActivities {
+				excludeActivities = append(excludeActivities, r.Triggers[triggersItem].EntityOperationTrigger.Configuration.ExcludeActivities[excludeActivitiesIndex].ValueString())
 			}
 			var filterConfig *shared.FilterConfig
-			if triggersItem.EntityOperationTrigger.Configuration.FilterConfig != nil {
+			if r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig != nil {
 				var activity *shared.Activity
-				if triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Activity != nil {
-					typeVar3 := make([]shared.EntityOperationTriggerSchemasType, 0, len(triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Activity.Type))
-					for _, typeItem := range triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Activity.Type {
-						if !typeItem.Str.IsUnknown() && !typeItem.Str.IsNull() {
+				if r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity != nil {
+					typeVar3 := make([]shared.EntityOperationTriggerSchemasType, 0, len(r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type))
+					for typeItem := range r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type {
+						if !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].Str.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].Str.IsNull() {
 							var str string
-							str = typeItem.Str.ValueString()
+							str = r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].Str.ValueString()
 
 							typeVar3 = append(typeVar3, shared.EntityOperationTriggerSchemasType{
 								Str: &str,
 							})
 						}
-						if typeItem.EqualsIgnoreCaseCondition != nil {
+						if r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].EqualsIgnoreCaseCondition != nil {
 							equalsIgnoreCase := new(string)
-							if !typeItem.EqualsIgnoreCaseCondition.EqualsIgnoreCase.IsUnknown() && !typeItem.EqualsIgnoreCaseCondition.EqualsIgnoreCase.IsNull() {
-								*equalsIgnoreCase = typeItem.EqualsIgnoreCaseCondition.EqualsIgnoreCase.ValueString()
+							if !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].EqualsIgnoreCaseCondition.EqualsIgnoreCase.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].EqualsIgnoreCaseCondition.EqualsIgnoreCase.IsNull() {
+								*equalsIgnoreCase = r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].EqualsIgnoreCaseCondition.EqualsIgnoreCase.ValueString()
 							} else {
 								equalsIgnoreCase = nil
 							}
@@ -686,10 +686,10 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 								EqualsIgnoreCaseCondition: &equalsIgnoreCaseCondition,
 							})
 						}
-						if typeItem.AnythingButCondition != nil {
-							anythingBut := make([]string, 0, len(typeItem.AnythingButCondition.AnythingBut))
-							for _, anythingButItem := range typeItem.AnythingButCondition.AnythingBut {
-								anythingBut = append(anythingBut, anythingButItem.ValueString())
+						if r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].AnythingButCondition != nil {
+							anythingBut := make([]string, 0, len(r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].AnythingButCondition.AnythingBut))
+							for anythingButIndex := range r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].AnythingButCondition.AnythingBut {
+								anythingBut = append(anythingBut, r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].AnythingButCondition.AnythingBut[anythingButIndex].ValueString())
 							}
 							anythingButCondition := shared.AnythingButCondition{
 								AnythingBut: anythingBut,
@@ -698,10 +698,10 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 								AnythingButCondition: &anythingButCondition,
 							})
 						}
-						if typeItem.ExistsCondition != nil {
+						if r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].ExistsCondition != nil {
 							exists := new(bool)
-							if !typeItem.ExistsCondition.Exists.IsUnknown() && !typeItem.ExistsCondition.Exists.IsNull() {
-								*exists = typeItem.ExistsCondition.Exists.ValueBool()
+							if !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].ExistsCondition.Exists.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].ExistsCondition.Exists.IsNull() {
+								*exists = r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].ExistsCondition.Exists.ValueBool()
 							} else {
 								exists = nil
 							}
@@ -712,10 +712,10 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 								ExistsCondition: &existsCondition,
 							})
 						}
-						if typeItem.PrefixCondition != nil {
+						if r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].PrefixCondition != nil {
 							prefix := new(string)
-							if !typeItem.PrefixCondition.Prefix.IsUnknown() && !typeItem.PrefixCondition.Prefix.IsNull() {
-								*prefix = typeItem.PrefixCondition.Prefix.ValueString()
+							if !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].PrefixCondition.Prefix.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].PrefixCondition.Prefix.IsNull() {
+								*prefix = r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].PrefixCondition.Prefix.ValueString()
 							} else {
 								prefix = nil
 							}
@@ -726,10 +726,10 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 								PrefixCondition: &prefixCondition,
 							})
 						}
-						if typeItem.SuffixCondition != nil {
+						if r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].SuffixCondition != nil {
 							suffix := new(string)
-							if !typeItem.SuffixCondition.Suffix.IsUnknown() && !typeItem.SuffixCondition.Suffix.IsNull() {
-								*suffix = typeItem.SuffixCondition.Suffix.ValueString()
+							if !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].SuffixCondition.Suffix.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].SuffixCondition.Suffix.IsNull() {
+								*suffix = r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].SuffixCondition.Suffix.ValueString()
 							} else {
 								suffix = nil
 							}
@@ -740,10 +740,10 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 								SuffixCondition: &suffixCondition,
 							})
 						}
-						if typeItem.WildcardCondition != nil {
+						if r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].WildcardCondition != nil {
 							wildcard := new(string)
-							if !typeItem.WildcardCondition.Wildcard.IsUnknown() && !typeItem.WildcardCondition.Wildcard.IsNull() {
-								*wildcard = typeItem.WildcardCondition.Wildcard.ValueString()
+							if !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].WildcardCondition.Wildcard.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].WildcardCondition.Wildcard.IsNull() {
+								*wildcard = r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Activity.Type[typeItem].WildcardCondition.Wildcard.ValueString()
 							} else {
 								wildcard = nil
 							}
@@ -760,18 +760,18 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 					}
 				}
 				var operation1 *shared.EntityOperationTriggerOperation
-				if triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation != nil {
+				if r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Operation != nil {
 					var diff interface{}
-					if !triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.IsUnknown() && !triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.IsNull() {
-						_ = json.Unmarshal([]byte(triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.ValueString()), &diff)
+					if !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.IsNull() {
+						_ = json.Unmarshal([]byte(r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Operation.Diff.ValueString()), &diff)
 					}
-					operation2 := make([]shared.EntityOperation, 0, len(triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Operation))
-					for _, operationItem := range triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Operation {
+					operation2 := make([]shared.EntityOperation, 0, len(r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Operation.Operation))
+					for _, operationItem := range r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Operation.Operation {
 						operation2 = append(operation2, shared.EntityOperation(operationItem.ValueString()))
 					}
 					var payload interface{}
-					if !triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Payload.IsUnknown() && !triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Payload.IsNull() {
-						_ = json.Unmarshal([]byte(triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Payload.ValueString()), &payload)
+					if !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Operation.Payload.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Operation.Payload.IsNull() {
+						_ = json.Unmarshal([]byte(r.Triggers[triggersItem].EntityOperationTrigger.Configuration.FilterConfig.Operation.Payload.ValueString()), &payload)
 					}
 					operation1 = &shared.EntityOperationTriggerOperation{
 						Diff:      diff,
@@ -784,17 +784,17 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 					Operation: operation1,
 				}
 			}
-			includeActivities := make([]string, 0, len(triggersItem.EntityOperationTrigger.Configuration.IncludeActivities))
-			for _, includeActivitiesItem := range triggersItem.EntityOperationTrigger.Configuration.IncludeActivities {
-				includeActivities = append(includeActivities, includeActivitiesItem.ValueString())
+			includeActivities := make([]string, 0, len(r.Triggers[triggersItem].EntityOperationTrigger.Configuration.IncludeActivities))
+			for includeActivitiesIndex := range r.Triggers[triggersItem].EntityOperationTrigger.Configuration.IncludeActivities {
+				includeActivities = append(includeActivities, r.Triggers[triggersItem].EntityOperationTrigger.Configuration.IncludeActivities[includeActivitiesIndex].ValueString())
 			}
-			operationsVar := make([]shared.EntityOperation, 0, len(triggersItem.EntityOperationTrigger.Configuration.Operations))
-			for _, operationsItem := range triggersItem.EntityOperationTrigger.Configuration.Operations {
+			operationsVar := make([]shared.EntityOperation, 0, len(r.Triggers[triggersItem].EntityOperationTrigger.Configuration.Operations))
+			for _, operationsItem := range r.Triggers[triggersItem].EntityOperationTrigger.Configuration.Operations {
 				operationsVar = append(operationsVar, shared.EntityOperation(operationsItem.ValueString()))
 			}
 			schema1 := new(string)
-			if !triggersItem.EntityOperationTrigger.Configuration.Schema.IsUnknown() && !triggersItem.EntityOperationTrigger.Configuration.Schema.IsNull() {
-				*schema1 = triggersItem.EntityOperationTrigger.Configuration.Schema.ValueString()
+			if !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.Schema.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.Configuration.Schema.IsNull() {
+				*schema1 = r.Triggers[triggersItem].EntityOperationTrigger.Configuration.Schema.ValueString()
 			} else {
 				schema1 = nil
 			}
@@ -807,12 +807,12 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 				Schema:            schema1,
 			}
 			id6 := new(string)
-			if !triggersItem.EntityOperationTrigger.ID.IsUnknown() && !triggersItem.EntityOperationTrigger.ID.IsNull() {
-				*id6 = triggersItem.EntityOperationTrigger.ID.ValueString()
+			if !r.Triggers[triggersItem].EntityOperationTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.ID.IsNull() {
+				*id6 = r.Triggers[triggersItem].EntityOperationTrigger.ID.ValueString()
 			} else {
 				id6 = nil
 			}
-			typeVar4 := shared.EntityOperationTriggerType(triggersItem.EntityOperationTrigger.Type.ValueString())
+			typeVar4 := shared.EntityOperationTriggerType(r.Triggers[triggersItem].EntityOperationTrigger.Type.ValueString())
 			entityOperationTrigger := shared.EntityOperationTrigger{
 				Configuration: configuration3,
 				ID:            id6,
@@ -822,17 +822,17 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 				EntityOperationTrigger: &entityOperationTrigger,
 			})
 		}
-		if !triggersItem.Any.IsUnknown() && !triggersItem.Any.IsNull() {
+		if !r.Triggers[triggersItem].Any.IsUnknown() && !r.Triggers[triggersItem].Any.IsNull() {
 			var anyVar interface{}
-			_ = json.Unmarshal([]byte(triggersItem.Any.ValueString()), &anyVar)
+			_ = json.Unmarshal([]byte(r.Triggers[triggersItem].Any.ValueString()), &anyVar)
 			triggers = append(triggers, shared.AnyTrigger{
 				Any: &anyVar,
 			})
 		}
-		if triggersItem.EntityManualTrigger != nil {
+		if r.Triggers[triggersItem].EntityManualTrigger != nil {
 			schema2 := new(string)
-			if !triggersItem.EntityManualTrigger.Configuration.Schema.IsUnknown() && !triggersItem.EntityManualTrigger.Configuration.Schema.IsNull() {
-				*schema2 = triggersItem.EntityManualTrigger.Configuration.Schema.ValueString()
+			if !r.Triggers[triggersItem].EntityManualTrigger.Configuration.Schema.IsUnknown() && !r.Triggers[triggersItem].EntityManualTrigger.Configuration.Schema.IsNull() {
+				*schema2 = r.Triggers[triggersItem].EntityManualTrigger.Configuration.Schema.ValueString()
 			} else {
 				schema2 = nil
 			}
@@ -840,12 +840,12 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 				Schema: schema2,
 			}
 			id7 := new(string)
-			if !triggersItem.EntityManualTrigger.ID.IsUnknown() && !triggersItem.EntityManualTrigger.ID.IsNull() {
-				*id7 = triggersItem.EntityManualTrigger.ID.ValueString()
+			if !r.Triggers[triggersItem].EntityManualTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].EntityManualTrigger.ID.IsNull() {
+				*id7 = r.Triggers[triggersItem].EntityManualTrigger.ID.ValueString()
 			} else {
 				id7 = nil
 			}
-			typeVar5 := shared.EntityManualTriggerType(triggersItem.EntityManualTrigger.Type.ValueString())
+			typeVar5 := shared.EntityManualTriggerType(r.Triggers[triggersItem].EntityManualTrigger.Type.ValueString())
 			entityManualTrigger := shared.EntityManualTrigger{
 				Configuration: configuration4,
 				ID:            id7,
@@ -855,10 +855,10 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 				EntityManualTrigger: &entityManualTrigger,
 			})
 		}
-		if triggersItem.ReceivedEmailTrigger != nil {
+		if r.Triggers[triggersItem].ReceivedEmailTrigger != nil {
 			messageType := new(shared.MessageType)
-			if !triggersItem.ReceivedEmailTrigger.Configuration.MessageType.IsUnknown() && !triggersItem.ReceivedEmailTrigger.Configuration.MessageType.IsNull() {
-				*messageType = shared.MessageType(triggersItem.ReceivedEmailTrigger.Configuration.MessageType.ValueString())
+			if !r.Triggers[triggersItem].ReceivedEmailTrigger.Configuration.MessageType.IsUnknown() && !r.Triggers[triggersItem].ReceivedEmailTrigger.Configuration.MessageType.IsNull() {
+				*messageType = shared.MessageType(r.Triggers[triggersItem].ReceivedEmailTrigger.Configuration.MessageType.ValueString())
 			} else {
 				messageType = nil
 			}
@@ -866,12 +866,12 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 				MessageType: messageType,
 			}
 			id8 := new(string)
-			if !triggersItem.ReceivedEmailTrigger.ID.IsUnknown() && !triggersItem.ReceivedEmailTrigger.ID.IsNull() {
-				*id8 = triggersItem.ReceivedEmailTrigger.ID.ValueString()
+			if !r.Triggers[triggersItem].ReceivedEmailTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].ReceivedEmailTrigger.ID.IsNull() {
+				*id8 = r.Triggers[triggersItem].ReceivedEmailTrigger.ID.ValueString()
 			} else {
 				id8 = nil
 			}
-			typeVar6 := shared.ReceivedEmailTriggerType(triggersItem.ReceivedEmailTrigger.Type.ValueString())
+			typeVar6 := shared.ReceivedEmailTriggerType(r.Triggers[triggersItem].ReceivedEmailTrigger.Type.ValueString())
 			receivedEmailTrigger := shared.ReceivedEmailTrigger{
 				Configuration: configuration5,
 				ID:            id8,
@@ -881,27 +881,27 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 				ReceivedEmailTrigger: &receivedEmailTrigger,
 			})
 		}
-		if triggersItem.FlowsTrigger != nil {
+		if r.Triggers[triggersItem].FlowsTrigger != nil {
 			journeyID := new(string)
-			if !triggersItem.FlowsTrigger.Configuration.JourneyID.IsUnknown() && !triggersItem.FlowsTrigger.Configuration.JourneyID.IsNull() {
-				*journeyID = triggersItem.FlowsTrigger.Configuration.JourneyID.ValueString()
+			if !r.Triggers[triggersItem].FlowsTrigger.Configuration.JourneyID.IsUnknown() && !r.Triggers[triggersItem].FlowsTrigger.Configuration.JourneyID.IsNull() {
+				*journeyID = r.Triggers[triggersItem].FlowsTrigger.Configuration.JourneyID.ValueString()
 			} else {
 				journeyID = nil
 			}
 			var sourceId3 string
-			sourceId3 = triggersItem.FlowsTrigger.Configuration.SourceID.ValueString()
+			sourceId3 = r.Triggers[triggersItem].FlowsTrigger.Configuration.SourceID.ValueString()
 
 			configuration6 := shared.FlowsTriggerConfiguration{
 				JourneyID: journeyID,
 				SourceID:  sourceId3,
 			}
 			id9 := new(string)
-			if !triggersItem.FlowsTrigger.ID.IsUnknown() && !triggersItem.FlowsTrigger.ID.IsNull() {
-				*id9 = triggersItem.FlowsTrigger.ID.ValueString()
+			if !r.Triggers[triggersItem].FlowsTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].FlowsTrigger.ID.IsNull() {
+				*id9 = r.Triggers[triggersItem].FlowsTrigger.ID.ValueString()
 			} else {
 				id9 = nil
 			}
-			typeVar7 := shared.FlowsTriggerType(triggersItem.FlowsTrigger.Type.ValueString())
+			typeVar7 := shared.FlowsTriggerType(r.Triggers[triggersItem].FlowsTrigger.Type.ValueString())
 			flowsTrigger := shared.FlowsTrigger{
 				Configuration: configuration6,
 				ID:            id9,

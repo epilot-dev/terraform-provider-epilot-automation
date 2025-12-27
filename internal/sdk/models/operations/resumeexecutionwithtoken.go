@@ -15,18 +15,18 @@ type ResumeExecutionWithTokenResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *ResumeExecutionWithTokenResponseBody) GetError() *string {
-	if o == nil {
+func (r *ResumeExecutionWithTokenResponseBody) GetError() *string {
+	if r == nil {
 		return nil
 	}
-	return o.Error
+	return r.Error
 }
 
-func (o *ResumeExecutionWithTokenResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (r *ResumeExecutionWithTokenResponseBody) GetStatus() *int64 {
+	if r == nil {
 		return nil
 	}
-	return o.Status
+	return r.Status
 }
 
 type ResumeExecutionWithTokenResponse struct {
@@ -42,37 +42,37 @@ type ResumeExecutionWithTokenResponse struct {
 	Object *ResumeExecutionWithTokenResponseBody
 }
 
-func (o *ResumeExecutionWithTokenResponse) GetContentType() string {
-	if o == nil {
+func (r *ResumeExecutionWithTokenResponse) GetContentType() string {
+	if r == nil {
 		return ""
 	}
-	return o.ContentType
+	return r.ContentType
 }
 
-func (o *ResumeExecutionWithTokenResponse) GetResumeResp() *shared.ResumeResp {
-	if o == nil {
+func (r *ResumeExecutionWithTokenResponse) GetResumeResp() *shared.ResumeResp {
+	if r == nil {
 		return nil
 	}
-	return o.ResumeResp
+	return r.ResumeResp
 }
 
-func (o *ResumeExecutionWithTokenResponse) GetStatusCode() int {
-	if o == nil {
+func (r *ResumeExecutionWithTokenResponse) GetStatusCode() int {
+	if r == nil {
 		return 0
 	}
-	return o.StatusCode
+	return r.StatusCode
 }
 
-func (o *ResumeExecutionWithTokenResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (r *ResumeExecutionWithTokenResponse) GetRawResponse() *http.Response {
+	if r == nil {
 		return nil
 	}
-	return o.RawResponse
+	return r.RawResponse
 }
 
-func (o *ResumeExecutionWithTokenResponse) GetObject() *ResumeExecutionWithTokenResponseBody {
-	if o == nil {
+func (r *ResumeExecutionWithTokenResponse) GetObject() *ResumeExecutionWithTokenResponseBody {
+	if r == nil {
 		return nil
 	}
-	return o.Object
+	return r.Object
 }

@@ -21,9 +21,9 @@ func (e *EqualsIgnoreCaseCondition) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *EqualsIgnoreCaseCondition) GetEqualsIgnoreCase() *string {
-	if o == nil {
+func (e *EqualsIgnoreCaseCondition) GetEqualsIgnoreCase() *string {
+	if e == nil {
 		return nil
 	}
-	return o.EqualsIgnoreCase
+	return e.EqualsIgnoreCase
 }

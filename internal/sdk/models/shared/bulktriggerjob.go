@@ -19,9 +19,9 @@ const (
 )
 
 type Data struct {
-	ArrayOfEntityRef          []EntityRef          `queryParam:"inline" name:"data"`
-	Str                       *string              `queryParam:"inline" name:"data"`
-	ArrayOfEntitySearchFilter []EntitySearchFilter `queryParam:"inline" name:"data"`
+	ArrayOfEntityRef          []EntityRef          `queryParam:"inline,name=data" union:"member"`
+	Str                       *string              `queryParam:"inline,name=data" union:"member"`
+	ArrayOfEntitySearchFilter []EntitySearchFilter `queryParam:"inline,name=data" union:"member"`
 
 	Type DataType
 }
@@ -55,24 +55,54 @@ func CreateDataArrayOfEntitySearchFilter(arrayOfEntitySearchFilter []EntitySearc
 
 func (u *Data) UnmarshalJSON(data []byte) error {
 
+	var candidates []utils.UnionCandidate
+
+	// Collect all valid candidates
 	var arrayOfEntityRef []EntityRef = []EntityRef{}
 	if err := utils.UnmarshalJSON(data, &arrayOfEntityRef, "", true, nil); err == nil {
-		u.ArrayOfEntityRef = arrayOfEntityRef
-		u.Type = DataTypeArrayOfEntityRef
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  DataTypeArrayOfEntityRef,
+			Value: arrayOfEntityRef,
+		})
 	}
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = DataTypeStr
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  DataTypeStr,
+			Value: &str,
+		})
 	}
 
 	var arrayOfEntitySearchFilter []EntitySearchFilter = []EntitySearchFilter{}
 	if err := utils.UnmarshalJSON(data, &arrayOfEntitySearchFilter, "", true, nil); err == nil {
-		u.ArrayOfEntitySearchFilter = arrayOfEntitySearchFilter
-		u.Type = DataTypeArrayOfEntitySearchFilter
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  DataTypeArrayOfEntitySearchFilter,
+			Value: arrayOfEntitySearchFilter,
+		})
+	}
+
+	if len(candidates) == 0 {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for Data", string(data))
+	}
+
+	// Pick the best candidate using multi-stage filtering
+	best := utils.PickBestUnionCandidate(candidates, data)
+	if best == nil {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for Data", string(data))
+	}
+
+	// Set the union type and value based on the best candidate
+	u.Type = best.Type.(DataType)
+	switch best.Type {
+	case DataTypeArrayOfEntityRef:
+		u.ArrayOfEntityRef = best.Value.([]EntityRef)
+		return nil
+	case DataTypeStr:
+		u.Str = best.Value.(*string)
+		return nil
+	case DataTypeArrayOfEntitySearchFilter:
+		u.ArrayOfEntitySearchFilter = best.Value.([]EntitySearchFilter)
 		return nil
 	}
 
@@ -130,18 +160,18 @@ type EntityQuery struct {
 	Type BulkTriggerJobType `json:"type"`
 }
 
-func (o *EntityQuery) GetData() Data {
-	if o == nil {
+func (e *EntityQuery) GetData() Data {
+	if e == nil {
 		return Data{}
 	}
-	return o.Data
+	return e.Data
 }
 
-func (o *EntityQuery) GetType() BulkTriggerJobType {
-	if o == nil {
+func (e *EntityQuery) GetType() BulkTriggerJobType {
+	if e == nil {
 		return BulkTriggerJobType("")
 	}
-	return o.Type
+	return e.Type
 }
 
 type SearchAfterType string
@@ -152,8 +182,8 @@ const (
 )
 
 type SearchAfter struct {
-	Str    *string  `queryParam:"inline" name:"search_after"`
-	Number *float64 `queryParam:"inline" name:"search_after"`
+	Str    *string  `queryParam:"inline,name=search_after" union:"member"`
+	Number *float64 `queryParam:"inline,name=search_after" union:"member"`
 
 	Type SearchAfterType
 }
@@ -178,17 +208,43 @@ func CreateSearchAfterNumber(number float64) SearchAfter {
 
 func (u *SearchAfter) UnmarshalJSON(data []byte) error {
 
+	var candidates []utils.UnionCandidate
+
+	// Collect all valid candidates
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = SearchAfterTypeStr
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  SearchAfterTypeStr,
+			Value: &str,
+		})
 	}
 
 	var number float64 = float64(0)
 	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = SearchAfterTypeNumber
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  SearchAfterTypeNumber,
+			Value: &number,
+		})
+	}
+
+	if len(candidates) == 0 {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for SearchAfter", string(data))
+	}
+
+	// Pick the best candidate using multi-stage filtering
+	best := utils.PickBestUnionCandidate(candidates, data)
+	if best == nil {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for SearchAfter", string(data))
+	}
+
+	// Set the union type and value based on the best candidate
+	u.Type = best.Type.(SearchAfterType)
+	switch best.Type {
+	case SearchAfterTypeStr:
+		u.Str = best.Value.(*string)
+		return nil
+	case SearchAfterTypeNumber:
+		u.Number = best.Value.(*float64)
 		return nil
 	}
 
@@ -223,46 +279,46 @@ type PaginationState struct {
 	TotalProcessed *int64 `json:"total_processed,omitempty"`
 }
 
-func (o *PaginationState) GetHasMore() *bool {
-	if o == nil {
+func (p *PaginationState) GetHasMore() *bool {
+	if p == nil {
 		return nil
 	}
-	return o.HasMore
+	return p.HasMore
 }
 
-func (o *PaginationState) GetPageSize() *int64 {
-	if o == nil {
+func (p *PaginationState) GetPageSize() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.PageSize
+	return p.PageSize
 }
 
-func (o *PaginationState) GetPagesProcessed() *int64 {
-	if o == nil {
+func (p *PaginationState) GetPagesProcessed() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.PagesProcessed
+	return p.PagesProcessed
 }
 
-func (o *PaginationState) GetSearchAfter() []SearchAfter {
-	if o == nil {
+func (p *PaginationState) GetSearchAfter() []SearchAfter {
+	if p == nil {
 		return nil
 	}
-	return o.SearchAfter
+	return p.SearchAfter
 }
 
-func (o *PaginationState) GetStableQueryID() *string {
-	if o == nil {
+func (p *PaginationState) GetStableQueryID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.StableQueryID
+	return p.StableQueryID
 }
 
-func (o *PaginationState) GetTotalProcessed() *int64 {
-	if o == nil {
+func (p *PaginationState) GetTotalProcessed() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.TotalProcessed
+	return p.TotalProcessed
 }
 
 // Status of the bulk trigger automation job
@@ -365,106 +421,106 @@ func (b BulkTriggerJob) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BulkTriggerJob) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"created_at", "created_by", "flow_id", "job_id", "org_id", "status", "updated_at"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *BulkTriggerJob) GetApprovedAt() *time.Time {
-	if o == nil {
+func (b *BulkTriggerJob) GetApprovedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ApprovedAt
+	return b.ApprovedAt
 }
 
-func (o *BulkTriggerJob) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BulkTriggerJob) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BulkTriggerJob) GetCreatedBy() string {
-	if o == nil {
+func (b *BulkTriggerJob) GetCreatedBy() string {
+	if b == nil {
 		return ""
 	}
-	return o.CreatedBy
+	return b.CreatedBy
 }
 
-func (o *BulkTriggerJob) GetEntityQuery() *EntityQuery {
-	if o == nil {
+func (b *BulkTriggerJob) GetEntityQuery() *EntityQuery {
+	if b == nil {
 		return nil
 	}
-	return o.EntityQuery
+	return b.EntityQuery
 }
 
-func (o *BulkTriggerJob) GetExecutionSummary() []ExecItem {
-	if o == nil {
+func (b *BulkTriggerJob) GetExecutionSummary() []ExecItem {
+	if b == nil {
 		return nil
 	}
-	return o.ExecutionSummary
+	return b.ExecutionSummary
 }
 
-func (o *BulkTriggerJob) GetFlowID() string {
-	if o == nil {
+func (b *BulkTriggerJob) GetFlowID() string {
+	if b == nil {
 		return ""
 	}
-	return o.FlowID
+	return b.FlowID
 }
 
-func (o *BulkTriggerJob) GetJobID() string {
-	if o == nil {
+func (b *BulkTriggerJob) GetJobID() string {
+	if b == nil {
 		return ""
 	}
-	return o.JobID
+	return b.JobID
 }
 
-func (o *BulkTriggerJob) GetOrgID() string {
-	if o == nil {
+func (b *BulkTriggerJob) GetOrgID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrgID
+	return b.OrgID
 }
 
-func (o *BulkTriggerJob) GetPaginationState() *PaginationState {
-	if o == nil {
+func (b *BulkTriggerJob) GetPaginationState() *PaginationState {
+	if b == nil {
 		return nil
 	}
-	return o.PaginationState
+	return b.PaginationState
 }
 
-func (o *BulkTriggerJob) GetReportFileEntityID() *string {
-	if o == nil {
+func (b *BulkTriggerJob) GetReportFileEntityID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.ReportFileEntityID
+	return b.ReportFileEntityID
 }
 
-func (o *BulkTriggerJob) GetStatus() Status {
-	if o == nil {
+func (b *BulkTriggerJob) GetStatus() Status {
+	if b == nil {
 		return Status("")
 	}
-	return o.Status
+	return b.Status
 }
 
-func (o *BulkTriggerJob) GetTaskToken() *string {
-	if o == nil {
+func (b *BulkTriggerJob) GetTaskToken() *string {
+	if b == nil {
 		return nil
 	}
-	return o.TaskToken
+	return b.TaskToken
 }
 
-func (o *BulkTriggerJob) GetTriggerContext() map[string]string {
-	if o == nil {
+func (b *BulkTriggerJob) GetTriggerContext() map[string]string {
+	if b == nil {
 		return nil
 	}
-	return o.TriggerContext
+	return b.TriggerContext
 }
 
-func (o *BulkTriggerJob) GetUpdatedAt() time.Time {
-	if o == nil {
+func (b *BulkTriggerJob) GetUpdatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.UpdatedAt
+	return b.UpdatedAt
 }

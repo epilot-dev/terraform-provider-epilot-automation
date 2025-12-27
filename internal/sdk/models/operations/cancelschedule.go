@@ -13,18 +13,18 @@ type CancelScheduleRequest struct {
 	ScheduleID string `pathParam:"style=simple,explode=false,name=schedule_id"`
 }
 
-func (o *CancelScheduleRequest) GetExecutionID() string {
-	if o == nil {
+func (c *CancelScheduleRequest) GetExecutionID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ExecutionID
+	return c.ExecutionID
 }
 
-func (o *CancelScheduleRequest) GetScheduleID() string {
-	if o == nil {
+func (c *CancelScheduleRequest) GetScheduleID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ScheduleID
+	return c.ScheduleID
 }
 
 // CancelScheduleResponseBody - The requested resource is forbidden
@@ -35,18 +35,18 @@ type CancelScheduleResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *CancelScheduleResponseBody) GetError() *string {
-	if o == nil {
+func (c *CancelScheduleResponseBody) GetError() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Error
+	return c.Error
 }
 
-func (o *CancelScheduleResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (c *CancelScheduleResponseBody) GetStatus() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Status
+	return c.Status
 }
 
 type CancelScheduleResponse struct {
@@ -62,37 +62,37 @@ type CancelScheduleResponse struct {
 	Object *CancelScheduleResponseBody
 }
 
-func (o *CancelScheduleResponse) GetActionSchedule() *shared.ActionSchedule {
-	if o == nil {
+func (c *CancelScheduleResponse) GetActionSchedule() *shared.ActionSchedule {
+	if c == nil {
 		return nil
 	}
-	return o.ActionSchedule
+	return c.ActionSchedule
 }
 
-func (o *CancelScheduleResponse) GetContentType() string {
-	if o == nil {
+func (c *CancelScheduleResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *CancelScheduleResponse) GetStatusCode() int {
-	if o == nil {
+func (c *CancelScheduleResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *CancelScheduleResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *CancelScheduleResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }
 
-func (o *CancelScheduleResponse) GetObject() *CancelScheduleResponseBody {
-	if o == nil {
+func (c *CancelScheduleResponse) GetObject() *CancelScheduleResponseBody {
+	if c == nil {
 		return nil
 	}
-	return o.Object
+	return c.Object
 }

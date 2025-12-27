@@ -64,46 +64,46 @@ func (s *SourceFilter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceFilter) GetAttribute() *string {
-	if o == nil {
+func (s *SourceFilter) GetAttribute() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Attribute
+	return s.Attribute
 }
 
-func (o *SourceFilter) GetLimit() *int64 {
-	if o == nil {
+func (s *SourceFilter) GetLimit() *int64 {
+	if s == nil {
 		return nil
 	}
-	return o.Limit
+	return s.Limit
 }
 
-func (o *SourceFilter) GetRelationTag() *string {
-	if o == nil {
+func (s *SourceFilter) GetRelationTag() *string {
+	if s == nil {
 		return nil
 	}
-	return o.RelationTag
+	return s.RelationTag
 }
 
-func (o *SourceFilter) GetSchema() *string {
-	if o == nil {
+func (s *SourceFilter) GetSchema() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Schema
+	return s.Schema
 }
 
-func (o *SourceFilter) GetSelf() *bool {
-	if o == nil {
+func (s *SourceFilter) GetSelf() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.Self
+	return s.Self
 }
 
-func (o *SourceFilter) GetTag() *string {
-	if o == nil {
+func (s *SourceFilter) GetTag() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Tag
+	return s.Tag
 }
 
 type RelationAttribute struct {
@@ -125,50 +125,50 @@ func (r RelationAttribute) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RelationAttribute) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, []string{"mode", "target"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &r, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *RelationAttribute) GetMode() Mode {
-	if o == nil {
+func (r *RelationAttribute) GetMode() Mode {
+	if r == nil {
 		return Mode("")
 	}
-	return o.Mode
+	return r.Mode
 }
 
-func (o *RelationAttribute) GetRelatedTo() map[string]any {
-	if o == nil {
+func (r *RelationAttribute) GetRelatedTo() map[string]any {
+	if r == nil {
 		return nil
 	}
-	return o.RelatedTo
+	return r.RelatedTo
 }
 
-func (o *RelationAttribute) GetSourceFilter() *SourceFilter {
-	if o == nil {
+func (r *RelationAttribute) GetSourceFilter() *SourceFilter {
+	if r == nil {
 		return nil
 	}
-	return o.SourceFilter
+	return r.SourceFilter
 }
 
-func (o *RelationAttribute) GetTarget() string {
-	if o == nil {
+func (r *RelationAttribute) GetTarget() string {
+	if r == nil {
 		return ""
 	}
-	return o.Target
+	return r.Target
 }
 
-func (o *RelationAttribute) GetTargetTags() []string {
-	if o == nil {
+func (r *RelationAttribute) GetTargetTags() []string {
+	if r == nil {
 		return nil
 	}
-	return o.TargetTags
+	return r.TargetTags
 }
 
-func (o *RelationAttribute) GetTargetTagsIncludeSource() *bool {
-	if o == nil {
+func (r *RelationAttribute) GetTargetTagsIncludeSource() *bool {
+	if r == nil {
 		return nil
 	}
-	return o.TargetTagsIncludeSource
+	return r.TargetTagsIncludeSource
 }

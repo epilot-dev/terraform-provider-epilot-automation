@@ -21,9 +21,9 @@ func (t *TriggerShareEntityConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TriggerShareEntityConfig) GetPartnerOrgIds() []string {
-	if o == nil {
+func (t *TriggerShareEntityConfig) GetPartnerOrgIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.PartnerOrgIds
+	return t.PartnerOrgIds
 }

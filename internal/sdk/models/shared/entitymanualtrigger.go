@@ -24,11 +24,11 @@ func (e *EntityManualTriggerConfiguration) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *EntityManualTriggerConfiguration) GetSchema() *string {
-	if o == nil {
+func (e *EntityManualTriggerConfiguration) GetSchema() *string {
+	if e == nil {
 		return nil
 	}
-	return o.Schema
+	return e.Schema
 }
 
 type EntityManualTriggerType string
@@ -65,29 +65,29 @@ func (e EntityManualTrigger) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EntityManualTrigger) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"configuration", "type"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *EntityManualTrigger) GetConfiguration() EntityManualTriggerConfiguration {
-	if o == nil {
+func (e *EntityManualTrigger) GetConfiguration() EntityManualTriggerConfiguration {
+	if e == nil {
 		return EntityManualTriggerConfiguration{}
 	}
-	return o.Configuration
+	return e.Configuration
 }
 
-func (o *EntityManualTrigger) GetID() *string {
-	if o == nil {
+func (e *EntityManualTrigger) GetID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.ID
+	return e.ID
 }
 
-func (o *EntityManualTrigger) GetType() EntityManualTriggerType {
-	if o == nil {
+func (e *EntityManualTrigger) GetType() EntityManualTriggerType {
+	if e == nil {
 		return EntityManualTriggerType("")
 	}
-	return o.Type
+	return e.Type
 }

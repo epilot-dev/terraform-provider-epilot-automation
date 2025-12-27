@@ -24,11 +24,11 @@ func (f *FileConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *FileConfig) GetSharedWithEndCustomer() *bool {
-	if o == nil {
+func (f *FileConfig) GetSharedWithEndCustomer() *bool {
+	if f == nil {
 		return nil
 	}
-	return o.SharedWithEndCustomer
+	return f.SharedWithEndCustomer
 }
 
 type EcpConfig struct {
@@ -48,25 +48,25 @@ func (e *EcpConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *EcpConfig) GetFileConfig() *FileConfig {
-	if o == nil {
+func (e *EcpConfig) GetFileConfig() *FileConfig {
+	if e == nil {
 		return nil
 	}
-	return o.FileConfig
+	return e.FileConfig
 }
 
-func (o *EcpConfig) GetOrigin() *string {
-	if o == nil {
+func (e *EcpConfig) GetOrigin() *string {
+	if e == nil {
 		return nil
 	}
-	return o.Origin
+	return e.Origin
 }
 
-func (o *EcpConfig) GetPortalID() *string {
-	if o == nil {
+func (e *EcpConfig) GetPortalID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.PortalID
+	return e.PortalID
 }
 
 type EntityOperationTriggerSchemasTypeType string
@@ -82,13 +82,13 @@ const (
 )
 
 type EntityOperationTriggerSchemasType struct {
-	Str                       *string                    `queryParam:"inline" name:"type"`
-	EqualsIgnoreCaseCondition *EqualsIgnoreCaseCondition `queryParam:"inline" name:"type"`
-	AnythingButCondition      *AnythingButCondition      `queryParam:"inline" name:"type"`
-	ExistsCondition           *ExistsCondition           `queryParam:"inline" name:"type"`
-	PrefixCondition           *PrefixCondition           `queryParam:"inline" name:"type"`
-	SuffixCondition           *SuffixCondition           `queryParam:"inline" name:"type"`
-	WildcardCondition         *WildcardCondition         `queryParam:"inline" name:"type"`
+	Str                       *string                    `queryParam:"inline,name=type" union:"member"`
+	EqualsIgnoreCaseCondition *EqualsIgnoreCaseCondition `queryParam:"inline,name=type" union:"member"`
+	AnythingButCondition      *AnythingButCondition      `queryParam:"inline,name=type" union:"member"`
+	ExistsCondition           *ExistsCondition           `queryParam:"inline,name=type" union:"member"`
+	PrefixCondition           *PrefixCondition           `queryParam:"inline,name=type" union:"member"`
+	SuffixCondition           *SuffixCondition           `queryParam:"inline,name=type" union:"member"`
+	WildcardCondition         *WildcardCondition         `queryParam:"inline,name=type" union:"member"`
 
 	Type EntityOperationTriggerSchemasTypeType
 }
@@ -158,52 +158,98 @@ func CreateEntityOperationTriggerSchemasTypeWildcardCondition(wildcardCondition 
 
 func (u *EntityOperationTriggerSchemasType) UnmarshalJSON(data []byte) error {
 
+	var candidates []utils.UnionCandidate
+
+	// Collect all valid candidates
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  EntityOperationTriggerSchemasTypeTypeStr,
+			Value: &str,
+		})
+	}
+
 	var equalsIgnoreCaseCondition EqualsIgnoreCaseCondition = EqualsIgnoreCaseCondition{}
 	if err := utils.UnmarshalJSON(data, &equalsIgnoreCaseCondition, "", true, nil); err == nil {
-		u.EqualsIgnoreCaseCondition = &equalsIgnoreCaseCondition
-		u.Type = EntityOperationTriggerSchemasTypeTypeEqualsIgnoreCaseCondition
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  EntityOperationTriggerSchemasTypeTypeEqualsIgnoreCaseCondition,
+			Value: &equalsIgnoreCaseCondition,
+		})
 	}
 
 	var anythingButCondition AnythingButCondition = AnythingButCondition{}
 	if err := utils.UnmarshalJSON(data, &anythingButCondition, "", true, nil); err == nil {
-		u.AnythingButCondition = &anythingButCondition
-		u.Type = EntityOperationTriggerSchemasTypeTypeAnythingButCondition
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  EntityOperationTriggerSchemasTypeTypeAnythingButCondition,
+			Value: &anythingButCondition,
+		})
 	}
 
 	var existsCondition ExistsCondition = ExistsCondition{}
 	if err := utils.UnmarshalJSON(data, &existsCondition, "", true, nil); err == nil {
-		u.ExistsCondition = &existsCondition
-		u.Type = EntityOperationTriggerSchemasTypeTypeExistsCondition
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  EntityOperationTriggerSchemasTypeTypeExistsCondition,
+			Value: &existsCondition,
+		})
 	}
 
 	var prefixCondition PrefixCondition = PrefixCondition{}
 	if err := utils.UnmarshalJSON(data, &prefixCondition, "", true, nil); err == nil {
-		u.PrefixCondition = &prefixCondition
-		u.Type = EntityOperationTriggerSchemasTypeTypePrefixCondition
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  EntityOperationTriggerSchemasTypeTypePrefixCondition,
+			Value: &prefixCondition,
+		})
 	}
 
 	var suffixCondition SuffixCondition = SuffixCondition{}
 	if err := utils.UnmarshalJSON(data, &suffixCondition, "", true, nil); err == nil {
-		u.SuffixCondition = &suffixCondition
-		u.Type = EntityOperationTriggerSchemasTypeTypeSuffixCondition
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  EntityOperationTriggerSchemasTypeTypeSuffixCondition,
+			Value: &suffixCondition,
+		})
 	}
 
 	var wildcardCondition WildcardCondition = WildcardCondition{}
 	if err := utils.UnmarshalJSON(data, &wildcardCondition, "", true, nil); err == nil {
-		u.WildcardCondition = &wildcardCondition
-		u.Type = EntityOperationTriggerSchemasTypeTypeWildcardCondition
-		return nil
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  EntityOperationTriggerSchemasTypeTypeWildcardCondition,
+			Value: &wildcardCondition,
+		})
 	}
 
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = EntityOperationTriggerSchemasTypeTypeStr
+	if len(candidates) == 0 {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for EntityOperationTriggerSchemasType", string(data))
+	}
+
+	// Pick the best candidate using multi-stage filtering
+	best := utils.PickBestUnionCandidate(candidates, data)
+	if best == nil {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for EntityOperationTriggerSchemasType", string(data))
+	}
+
+	// Set the union type and value based on the best candidate
+	u.Type = best.Type.(EntityOperationTriggerSchemasTypeType)
+	switch best.Type {
+	case EntityOperationTriggerSchemasTypeTypeStr:
+		u.Str = best.Value.(*string)
+		return nil
+	case EntityOperationTriggerSchemasTypeTypeEqualsIgnoreCaseCondition:
+		u.EqualsIgnoreCaseCondition = best.Value.(*EqualsIgnoreCaseCondition)
+		return nil
+	case EntityOperationTriggerSchemasTypeTypeAnythingButCondition:
+		u.AnythingButCondition = best.Value.(*AnythingButCondition)
+		return nil
+	case EntityOperationTriggerSchemasTypeTypeExistsCondition:
+		u.ExistsCondition = best.Value.(*ExistsCondition)
+		return nil
+	case EntityOperationTriggerSchemasTypeTypePrefixCondition:
+		u.PrefixCondition = best.Value.(*PrefixCondition)
+		return nil
+	case EntityOperationTriggerSchemasTypeTypeSuffixCondition:
+		u.SuffixCondition = best.Value.(*SuffixCondition)
+		return nil
+	case EntityOperationTriggerSchemasTypeTypeWildcardCondition:
+		u.WildcardCondition = best.Value.(*WildcardCondition)
 		return nil
 	}
 
@@ -276,11 +322,11 @@ func (a *Activity) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Activity) GetType() []EntityOperationTriggerSchemasType {
-	if o == nil {
+func (a *Activity) GetType() []EntityOperationTriggerSchemasType {
+	if a == nil {
 		return nil
 	}
-	return o.Type
+	return a.Type
 }
 
 type EntityOperationTriggerOperation struct {
@@ -311,25 +357,25 @@ func (e *EntityOperationTriggerOperation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *EntityOperationTriggerOperation) GetDiff() any {
-	if o == nil {
+func (e *EntityOperationTriggerOperation) GetDiff() any {
+	if e == nil {
 		return nil
 	}
-	return o.Diff
+	return e.Diff
 }
 
-func (o *EntityOperationTriggerOperation) GetOperation() []EntityOperation {
-	if o == nil {
+func (e *EntityOperationTriggerOperation) GetOperation() []EntityOperation {
+	if e == nil {
 		return nil
 	}
-	return o.Operation
+	return e.Operation
 }
 
-func (o *EntityOperationTriggerOperation) GetPayload() any {
-	if o == nil {
+func (e *EntityOperationTriggerOperation) GetPayload() any {
+	if e == nil {
 		return nil
 	}
-	return o.Payload
+	return e.Payload
 }
 
 type FilterConfig struct {
@@ -348,18 +394,18 @@ func (f *FilterConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *FilterConfig) GetActivity() *Activity {
-	if o == nil {
+func (f *FilterConfig) GetActivity() *Activity {
+	if f == nil {
 		return nil
 	}
-	return o.Activity
+	return f.Activity
 }
 
-func (o *FilterConfig) GetOperation() *EntityOperationTriggerOperation {
-	if o == nil {
+func (f *FilterConfig) GetOperation() *EntityOperationTriggerOperation {
+	if f == nil {
 		return nil
 	}
-	return o.Operation
+	return f.Operation
 }
 
 type EntityOperationTriggerConfiguration struct {
@@ -382,46 +428,46 @@ func (e *EntityOperationTriggerConfiguration) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *EntityOperationTriggerConfiguration) GetEcpConfig() *EcpConfig {
-	if o == nil {
+func (e *EntityOperationTriggerConfiguration) GetEcpConfig() *EcpConfig {
+	if e == nil {
 		return nil
 	}
-	return o.EcpConfig
+	return e.EcpConfig
 }
 
-func (o *EntityOperationTriggerConfiguration) GetExcludeActivities() []string {
-	if o == nil {
+func (e *EntityOperationTriggerConfiguration) GetExcludeActivities() []string {
+	if e == nil {
 		return nil
 	}
-	return o.ExcludeActivities
+	return e.ExcludeActivities
 }
 
-func (o *EntityOperationTriggerConfiguration) GetFilterConfig() *FilterConfig {
-	if o == nil {
+func (e *EntityOperationTriggerConfiguration) GetFilterConfig() *FilterConfig {
+	if e == nil {
 		return nil
 	}
-	return o.FilterConfig
+	return e.FilterConfig
 }
 
-func (o *EntityOperationTriggerConfiguration) GetIncludeActivities() []string {
-	if o == nil {
+func (e *EntityOperationTriggerConfiguration) GetIncludeActivities() []string {
+	if e == nil {
 		return nil
 	}
-	return o.IncludeActivities
+	return e.IncludeActivities
 }
 
-func (o *EntityOperationTriggerConfiguration) GetOperations() []EntityOperation {
-	if o == nil {
+func (e *EntityOperationTriggerConfiguration) GetOperations() []EntityOperation {
+	if e == nil {
 		return nil
 	}
-	return o.Operations
+	return e.Operations
 }
 
-func (o *EntityOperationTriggerConfiguration) GetSchema() *string {
-	if o == nil {
+func (e *EntityOperationTriggerConfiguration) GetSchema() *string {
+	if e == nil {
 		return nil
 	}
-	return o.Schema
+	return e.Schema
 }
 
 type EntityOperationTriggerType string
@@ -571,29 +617,29 @@ func (e EntityOperationTrigger) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EntityOperationTrigger) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"configuration", "type"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *EntityOperationTrigger) GetConfiguration() EntityOperationTriggerConfiguration {
-	if o == nil {
+func (e *EntityOperationTrigger) GetConfiguration() EntityOperationTriggerConfiguration {
+	if e == nil {
 		return EntityOperationTriggerConfiguration{}
 	}
-	return o.Configuration
+	return e.Configuration
 }
 
-func (o *EntityOperationTrigger) GetID() *string {
-	if o == nil {
+func (e *EntityOperationTrigger) GetID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.ID
+	return e.ID
 }
 
-func (o *EntityOperationTrigger) GetType() EntityOperationTriggerType {
-	if o == nil {
+func (e *EntityOperationTrigger) GetType() EntityOperationTriggerType {
+	if e == nil {
 		return EntityOperationTriggerType("")
 	}
-	return o.Type
+	return e.Type
 }

@@ -21,9 +21,9 @@ func (e *ExistsCondition) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ExistsCondition) GetExists() *bool {
-	if o == nil {
+func (e *ExistsCondition) GetExists() *bool {
+	if e == nil {
 		return nil
 	}
-	return o.Exists
+	return e.Exists
 }

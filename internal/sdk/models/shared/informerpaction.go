@@ -26,18 +26,18 @@ func (i *InformERPActionReason) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *InformERPActionReason) GetMessage() *string {
-	if o == nil {
+func (i *InformERPActionReason) GetMessage() *string {
+	if i == nil {
 		return nil
 	}
-	return o.Message
+	return i.Message
 }
 
-func (o *InformERPActionReason) GetPayload() map[string]any {
-	if o == nil {
+func (i *InformERPActionReason) GetPayload() map[string]any {
+	if i == nil {
 		return nil
 	}
-	return o.Payload
+	return i.Payload
 }
 
 type InformERPActionType string
@@ -100,121 +100,121 @@ func (i *InformERPAction) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *InformERPAction) GetAllowFailure() *bool {
-	if o == nil {
+func (i *InformERPAction) GetAllowFailure() *bool {
+	if i == nil {
 		return nil
 	}
-	return o.AllowFailure
+	return i.AllowFailure
 }
 
-func (o *InformERPAction) GetConditionID() *string {
-	if o == nil {
+func (i *InformERPAction) GetConditionID() *string {
+	if i == nil {
 		return nil
 	}
-	return o.ConditionID
+	return i.ConditionID
 }
 
-func (o *InformERPAction) GetConfig() *InformERPConfig {
-	if o == nil {
+func (i *InformERPAction) GetConfig() *InformERPConfig {
+	if i == nil {
 		return nil
 	}
-	return o.Config
+	return i.Config
 }
 
-func (o *InformERPAction) GetCreatedAutomatically() *bool {
-	if o == nil {
+func (i *InformERPAction) GetCreatedAutomatically() *bool {
+	if i == nil {
 		return nil
 	}
-	return o.CreatedAutomatically
+	return i.CreatedAutomatically
 }
 
-func (o *InformERPAction) GetErrorOutput() *ErrorOutput {
-	if o == nil {
+func (i *InformERPAction) GetErrorOutput() *ErrorOutput {
+	if i == nil {
 		return nil
 	}
-	return o.ErrorOutput
+	return i.ErrorOutput
 }
 
-func (o *InformERPAction) GetExecutionStatus() *ExecutionStatus {
-	if o == nil {
+func (i *InformERPAction) GetExecutionStatus() *ExecutionStatus {
+	if i == nil {
 		return nil
 	}
-	return o.ExecutionStatus
+	return i.ExecutionStatus
 }
 
-func (o *InformERPAction) GetFlowActionID() *string {
-	if o == nil {
+func (i *InformERPAction) GetFlowActionID() *string {
+	if i == nil {
 		return nil
 	}
-	return o.FlowActionID
+	return i.FlowActionID
 }
 
-func (o *InformERPAction) GetID() *string {
-	if o == nil {
+func (i *InformERPAction) GetID() *string {
+	if i == nil {
 		return nil
 	}
-	return o.ID
+	return i.ID
 }
 
-func (o *InformERPAction) GetIsBulkAction() *bool {
-	if o == nil {
+func (i *InformERPAction) GetIsBulkAction() *bool {
+	if i == nil {
 		return nil
 	}
-	return o.IsBulkAction
+	return i.IsBulkAction
 }
 
-func (o *InformERPAction) GetName() *string {
-	if o == nil {
+func (i *InformERPAction) GetName() *string {
+	if i == nil {
 		return nil
 	}
-	return o.Name
+	return i.Name
 }
 
-func (o *InformERPAction) GetOutputs() map[string]any {
-	if o == nil {
+func (i *InformERPAction) GetOutputs() map[string]any {
+	if i == nil {
 		return nil
 	}
-	return o.Outputs
+	return i.Outputs
 }
 
-func (o *InformERPAction) GetReason() *InformERPActionReason {
-	if o == nil {
+func (i *InformERPAction) GetReason() *InformERPActionReason {
+	if i == nil {
 		return nil
 	}
-	return o.Reason
+	return i.Reason
 }
 
-func (o *InformERPAction) GetRetryStrategy() *RetryStrategy {
-	if o == nil {
+func (i *InformERPAction) GetRetryStrategy() *RetryStrategy {
+	if i == nil {
 		return nil
 	}
-	return o.RetryStrategy
+	return i.RetryStrategy
 }
 
-func (o *InformERPAction) GetScheduleID() *string {
-	if o == nil {
+func (i *InformERPAction) GetScheduleID() *string {
+	if i == nil {
 		return nil
 	}
-	return o.ScheduleID
+	return i.ScheduleID
 }
 
-func (o *InformERPAction) GetStartedAt() *string {
-	if o == nil {
+func (i *InformERPAction) GetStartedAt() *string {
+	if i == nil {
 		return nil
 	}
-	return o.StartedAt
+	return i.StartedAt
 }
 
-func (o *InformERPAction) GetType() *InformERPActionType {
-	if o == nil {
+func (i *InformERPAction) GetType() *InformERPActionType {
+	if i == nil {
 		return nil
 	}
-	return o.Type
+	return i.Type
 }
 
-func (o *InformERPAction) GetUpdatedAt() *string {
-	if o == nil {
+func (i *InformERPAction) GetUpdatedAt() *string {
+	if i == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return i.UpdatedAt
 }

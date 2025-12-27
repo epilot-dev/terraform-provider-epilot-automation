@@ -24,23 +24,23 @@ func (i *InformERPConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *InformERPConfig) GetEntitySources() []string {
-	if o == nil {
+func (i *InformERPConfig) GetEntitySources() []string {
+	if i == nil {
 		return nil
 	}
-	return o.EntitySources
+	return i.EntitySources
 }
 
-func (o *InformERPConfig) GetSync() *bool {
-	if o == nil {
+func (i *InformERPConfig) GetSync() *bool {
+	if i == nil {
 		return nil
 	}
-	return o.Sync
+	return i.Sync
 }
 
-func (o *InformERPConfig) GetTargetWebhookID() *string {
-	if o == nil {
+func (i *InformERPConfig) GetTargetWebhookID() *string {
+	if i == nil {
 		return nil
 	}
-	return o.TargetWebhookID
+	return i.TargetWebhookID
 }

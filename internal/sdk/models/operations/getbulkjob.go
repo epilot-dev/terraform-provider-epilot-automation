@@ -11,11 +11,11 @@ type GetBulkJobRequest struct {
 	JobID string `pathParam:"style=simple,explode=false,name=job_id"`
 }
 
-func (o *GetBulkJobRequest) GetJobID() string {
-	if o == nil {
+func (g *GetBulkJobRequest) GetJobID() string {
+	if g == nil {
 		return ""
 	}
-	return o.JobID
+	return g.JobID
 }
 
 // GetBulkJobResponseBody - The requested resource is forbidden
@@ -26,18 +26,18 @@ type GetBulkJobResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *GetBulkJobResponseBody) GetError() *string {
-	if o == nil {
+func (g *GetBulkJobResponseBody) GetError() *string {
+	if g == nil {
 		return nil
 	}
-	return o.Error
+	return g.Error
 }
 
-func (o *GetBulkJobResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (g *GetBulkJobResponseBody) GetStatus() *int64 {
+	if g == nil {
 		return nil
 	}
-	return o.Status
+	return g.Status
 }
 
 type GetBulkJobResponse struct {
@@ -53,37 +53,37 @@ type GetBulkJobResponse struct {
 	Object *GetBulkJobResponseBody
 }
 
-func (o *GetBulkJobResponse) GetBulkTriggerJob() *shared.BulkTriggerJob {
-	if o == nil {
+func (g *GetBulkJobResponse) GetBulkTriggerJob() *shared.BulkTriggerJob {
+	if g == nil {
 		return nil
 	}
-	return o.BulkTriggerJob
+	return g.BulkTriggerJob
 }
 
-func (o *GetBulkJobResponse) GetContentType() string {
-	if o == nil {
+func (g *GetBulkJobResponse) GetContentType() string {
+	if g == nil {
 		return ""
 	}
-	return o.ContentType
+	return g.ContentType
 }
 
-func (o *GetBulkJobResponse) GetStatusCode() int {
-	if o == nil {
+func (g *GetBulkJobResponse) GetStatusCode() int {
+	if g == nil {
 		return 0
 	}
-	return o.StatusCode
+	return g.StatusCode
 }
 
-func (o *GetBulkJobResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (g *GetBulkJobResponse) GetRawResponse() *http.Response {
+	if g == nil {
 		return nil
 	}
-	return o.RawResponse
+	return g.RawResponse
 }
 
-func (o *GetBulkJobResponse) GetObject() *GetBulkJobResponseBody {
-	if o == nil {
+func (g *GetBulkJobResponse) GetObject() *GetBulkJobResponseBody {
+	if g == nil {
 		return nil
 	}
-	return o.Object
+	return g.Object
 }
