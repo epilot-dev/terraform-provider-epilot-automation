@@ -281,14 +281,6 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(ctx context.Contex
 			r.Triggers = append(r.Triggers, triggers)
 		}
 		r.Version = types.Float64PointerValue(resp.Version)
-		if resp.WorkflowContext == nil {
-			r.WorkflowContext = nil
-		} else {
-			r.WorkflowContext = &tfTypes.WorkflowContext{}
-			r.WorkflowContext.TaskID = types.StringPointerValue(resp.WorkflowContext.TaskID)
-			r.WorkflowContext.WorkflowID = types.StringValue(resp.WorkflowContext.WorkflowID)
-			r.WorkflowContext.WorkflowRole = types.StringValue(string(resp.WorkflowContext.WorkflowRole))
-		}
 	}
 
 	return diags

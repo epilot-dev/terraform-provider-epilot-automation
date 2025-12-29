@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 6df5dec4-6d34-4c07-99f4-b36e64bbb781
 management:
-  docChecksum: 64456dc9d7c1f8bdd4d7b2cbef7ab194
+  docChecksum: a0e8162c35dea0d186f416e2cd8fe6f5
   docVersion: 1.0.0
   speakeasyVersion: 1.611.0
   generationVersion: 2.694.1
-  releaseVersion: 0.10.0
-  configChecksum: e19814370fb300fecda714041e10c6d9
+  releaseVersion: 0.10.1
+  configChecksum: f1d7fd4a508ad30b9a65574ef3b364e5
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -95,7 +95,6 @@ generatedFiles:
   - internal/provider/types/source.go
   - internal/provider/types/suffix_condition.go
   - internal/provider/types/wildcard_condition.go
-  - internal/provider/types/workflow_context.go
   - internal/provider/utils.go
   - internal/sdk/.gitattributes
   - internal/sdk/bulk.go
@@ -168,6 +167,7 @@ generatedFiles:
   - internal/sdk/models/shared/errordetail.go
   - internal/sdk/models/shared/erroroutput.go
   - internal/sdk/models/shared/execitem.go
+  - internal/sdk/models/shared/executionchain.go
   - internal/sdk/models/shared/executionstatus.go
   - internal/sdk/models/shared/existscondition.go
   - internal/sdk/models/shared/flowexecutioncancelaction.go
@@ -213,7 +213,6 @@ generatedFiles:
   - internal/sdk/models/shared/triggerworkflowaction.go
   - internal/sdk/models/shared/triggerworkflowconfig.go
   - internal/sdk/models/shared/wildcardcondition.go
-  - internal/sdk/models/shared/workflowcontext.go
   - internal/sdk/models/shared/workflowcontextrole.go
   - internal/sdk/models/shared/workflowexecutioncontext.go
   - internal/sdk/retry/config.go

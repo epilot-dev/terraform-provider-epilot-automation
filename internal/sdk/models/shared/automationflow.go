@@ -123,8 +123,6 @@ type AutomationFlow struct {
 	Triggers          []AnyTrigger `json:"triggers"`
 	// Version of the flow
 	Version *float64 `json:"version,omitempty"`
-	// For automation that are connected to workflows V2, this field tracks various information about the workflow.
-	WorkflowContext *WorkflowContext `json:"workflow_context,omitempty"`
 }
 
 func (o *AutomationFlow) GetManifest() []string {
@@ -225,13 +223,6 @@ func (o *AutomationFlow) GetVersion() *float64 {
 	return o.Version
 }
 
-func (o *AutomationFlow) GetWorkflowContext() *WorkflowContext {
-	if o == nil {
-		return nil
-	}
-	return o.WorkflowContext
-}
-
 type AutomationFlowInput struct {
 	// Source blueprint/manifest ID used when automation is created via blueprints.
 	Manifest []string `json:"_manifest,omitempty"`
@@ -254,8 +245,6 @@ type AutomationFlowInput struct {
 	Triggers          []AnyTrigger `json:"triggers"`
 	// Version of the flow
 	Version *float64 `json:"version,omitempty"`
-	// For automation that are connected to workflows V2, this field tracks various information about the workflow.
-	WorkflowContext *WorkflowContext `json:"workflow_context,omitempty"`
 }
 
 func (o *AutomationFlowInput) GetManifest() []string {
@@ -347,11 +336,4 @@ func (o *AutomationFlowInput) GetVersion() *float64 {
 		return nil
 	}
 	return o.Version
-}
-
-func (o *AutomationFlowInput) GetWorkflowContext() *WorkflowContext {
-	if o == nil {
-		return nil
-	}
-	return o.WorkflowContext
 }

@@ -3,10 +3,19 @@
 package shared
 
 type WorkflowExecutionContext struct {
-	WorkflowExecID     string  `json:"workflow_exec_id"`
-	WorkflowExecTaskID *string `json:"workflow_exec_task_id,omitempty"`
+	// [Internal] Tracks execution chain for infinite loop prevention. This is an internal property and should not be used by external consumers.
+	ExecutionChain     *ExecutionChain `json:"_execution_chain,omitempty"`
+	WorkflowExecID     string          `json:"workflow_exec_id"`
+	WorkflowExecTaskID *string         `json:"workflow_exec_task_id,omitempty"`
 	// The role this automation plays in the workflow.
 	WorkflowRole WorkflowContextRole `json:"workflow_role"`
+}
+
+func (o *WorkflowExecutionContext) GetExecutionChain() *ExecutionChain {
+	if o == nil {
+		return nil
+	}
+	return o.ExecutionChain
 }
 
 func (o *WorkflowExecutionContext) GetWorkflowExecID() string {

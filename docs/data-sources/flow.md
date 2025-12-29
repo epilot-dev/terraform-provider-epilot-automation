@@ -36,7 +36,6 @@ data "epilot-automation_flow" "my_flow" {
 - `trigger_conditions` (List of String)
 - `triggers` (Attributes List) (see [below for nested schema](#nestedatt--triggers))
 - `version` (Number) Version of the flow
-- `workflow_context` (Attributes) For automation that are connected to workflows V2, this field tracks various information about the workflow. (see [below for nested schema](#nestedatt--workflow_context))
 
 <a id="nestedatt--conditions"></a>
 ### Nested Schema for `conditions`
@@ -483,15 +482,3 @@ Read-Only:
 Read-Only:
 
 - `message_type` (String)
-
-
-
-
-<a id="nestedatt--workflow_context"></a>
-### Nested Schema for `workflow_context`
-
-Read-Only:
-
-- `task_id` (String) The ID of the task in the workflow that this automation is connected to
-- `workflow_id` (String) The ID of the workflow this automation is connected to
-- `workflow_role` (String) The role this automation plays in the workflow.

@@ -76,11 +76,6 @@ resource "epilot-automation_flow" "my_flow" {
     }
   ]
   version = 2
-  workflow_context = {
-    task_id       = "ad6bb2d1-dbe2-4e95-a375-270d63198b77"
-    workflow_id   = "8f4715e9-dd08-4118-9b22-81391910ac22"
-    workflow_role = "run_task_automation"
-  }
 }
 ```
 
@@ -105,7 +100,6 @@ resource "epilot-automation_flow" "my_flow" {
 - `system_flow` (Boolean) Determines if the flow is a system generated flow
 - `trigger_conditions` (List of String)
 - `version` (Number) Version of the flow
-- `workflow_context` (Attributes) For automation that are connected to workflows V2, this field tracks various information about the workflow. (see [below for nested schema](#nestedatt--workflow_context))
 
 ### Read-Only
 
@@ -558,16 +552,6 @@ Optional:
 
 - `count` (Number) Maximum number of executions per time window
 - `window` (String) ISO 8601 duration time window for the threshold
-
-
-<a id="nestedatt--workflow_context"></a>
-### Nested Schema for `workflow_context`
-
-Optional:
-
-- `task_id` (String) The ID of the task in the workflow that this automation is connected to
-- `workflow_id` (String) The ID of the workflow this automation is connected to. Not Null
-- `workflow_role` (String) The role this automation plays in the workflow. Not Null; must be one of ["trigger_workflow", "run_task_automation"]
 
 ## Import
 

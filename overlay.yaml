@@ -92,7 +92,9 @@ actions:
     remove: true
   - target: $["components"]["schemas"]["AutomationFlow"]["properties"]
     update: 
-      schedules: {}  
+      schedules: {} 
+  - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["workflow_context"]
+    remove: true
 
   # remove this due to failing backwards compatibility
   # - target: $["components"]["schemas"]["AutomationFlow"]["properties"]["conditions"]

@@ -282,14 +282,6 @@ func (r *FlowResourceModel) RefreshFromSharedAutomationFlow(ctx context.Context,
 			r.Triggers = append(r.Triggers, triggers)
 		}
 		r.Version = types.Float64PointerValue(resp.Version)
-		if resp.WorkflowContext == nil {
-			r.WorkflowContext = nil
-		} else {
-			r.WorkflowContext = &tfTypes.WorkflowContext{}
-			r.WorkflowContext.TaskID = types.StringPointerValue(resp.WorkflowContext.TaskID)
-			r.WorkflowContext.WorkflowID = types.StringValue(resp.WorkflowContext.WorkflowID)
-			r.WorkflowContext.WorkflowRole = types.StringValue(string(resp.WorkflowContext.WorkflowRole))
-		}
 	}
 
 	return diags
@@ -918,24 +910,6 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 	} else {
 		version = nil
 	}
-	var workflowContext *shared.WorkflowContext
-	if r.WorkflowContext != nil {
-		taskID := new(string)
-		if !r.WorkflowContext.TaskID.IsUnknown() && !r.WorkflowContext.TaskID.IsNull() {
-			*taskID = r.WorkflowContext.TaskID.ValueString()
-		} else {
-			taskID = nil
-		}
-		var workflowID string
-		workflowID = r.WorkflowContext.WorkflowID.ValueString()
-
-		workflowRole := shared.WorkflowContextRole(r.WorkflowContext.WorkflowRole.ValueString())
-		workflowContext = &shared.WorkflowContext{
-			TaskID:       taskID,
-			WorkflowID:   workflowID,
-			WorkflowRole: workflowRole,
-		}
-	}
 	out := shared.AutomationFlowInput{
 		Manifest:          manifest,
 		Actions:           actions,
@@ -950,7 +924,6 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 		TriggerConditions: triggerConditions,
 		Triggers:          triggers,
 		Version:           version,
-		WorkflowContext:   workflowContext,
 	}
 
 	return &out, diags

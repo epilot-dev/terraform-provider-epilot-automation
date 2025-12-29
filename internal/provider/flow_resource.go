@@ -53,7 +53,6 @@ type FlowResourceModel struct {
 	TriggerConditions []jsontypes.Normalized    `tfsdk:"trigger_conditions"`
 	Triggers          []tfTypes.AnyTrigger      `tfsdk:"triggers"`
 	Version           types.Float64             `tfsdk:"version"`
-	WorkflowContext   *tfTypes.WorkflowContext  `tfsdk:"workflow_context"`
 }
 
 func (r *FlowResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -1067,38 +1066,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Computed:    true,
 				Optional:    true,
 				Description: `Version of the flow`,
-			},
-			"workflow_context": schema.SingleNestedAttribute{
-				Computed: true,
-				Optional: true,
-				Attributes: map[string]schema.Attribute{
-					"task_id": schema.StringAttribute{
-						Computed:    true,
-						Optional:    true,
-						Description: `The ID of the task in the workflow that this automation is connected to`,
-					},
-					"workflow_id": schema.StringAttribute{
-						Computed:    true,
-						Optional:    true,
-						Description: `The ID of the workflow this automation is connected to. Not Null`,
-						Validators: []validator.String{
-							speakeasy_stringvalidators.NotNull(),
-						},
-					},
-					"workflow_role": schema.StringAttribute{
-						Computed:    true,
-						Optional:    true,
-						Description: `The role this automation plays in the workflow. Not Null; must be one of ["trigger_workflow", "run_task_automation"]`,
-						Validators: []validator.String{
-							speakeasy_stringvalidators.NotNull(),
-							stringvalidator.OneOf(
-								"trigger_workflow",
-								"run_task_automation",
-							),
-						},
-					},
-				},
-				Description: `For automation that are connected to workflows V2, this field tracks various information about the workflow.`,
 			},
 		},
 	}

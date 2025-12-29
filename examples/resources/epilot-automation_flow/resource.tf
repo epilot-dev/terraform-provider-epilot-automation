@@ -61,9 +61,4 @@ resource "epilot-automation_flow" "my_flow" {
     }
   ]
   version = 2
-  workflow_context = {
-    task_id       = "ad6bb2d1-dbe2-4e95-a375-270d63198b77"
-    workflow_id   = "8f4715e9-dd08-4118-9b22-81391910ac22"
-    workflow_role = "run_task_automation"
-  }
 }
