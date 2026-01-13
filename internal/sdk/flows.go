@@ -64,7 +64,7 @@ func (s *Flows) BatchGetFlows(ctx context.Context, request *operations.BatchGetF
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "batchGetFlows",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -291,7 +291,7 @@ func (s *Flows) CreateFlow(ctx context.Context, request *shared.AutomationFlowIn
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "createFlow",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -518,7 +518,7 @@ func (s *Flows) DeleteFlow(ctx context.Context, request operations.DeleteFlowReq
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "deleteFlow",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -720,7 +720,7 @@ func (s *Flows) GetFlow(ctx context.Context, request operations.GetFlowRequest, 
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "getFlow",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -942,7 +942,7 @@ func (s *Flows) PutFlow(ctx context.Context, request operations.PutFlowRequest, 
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "putFlow",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "AutomationFlow", "json", `request:"mediaType=application/json"`)
@@ -1169,7 +1169,7 @@ func (s *Flows) SearchFlows(ctx context.Context, request operations.SearchFlowsR
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "searchFlows",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -1191,7 +1191,7 @@ func (s *Flows) SearchFlows(ctx context.Context, request operations.SearchFlowsR
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 

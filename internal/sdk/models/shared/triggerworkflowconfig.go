@@ -25,37 +25,37 @@ func (t *TriggerWorkflowConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TriggerWorkflowConfig) GetAssignSteps() []AssignUsersToStep {
-	if o == nil {
+func (t *TriggerWorkflowConfig) GetAssignSteps() []AssignUsersToStep {
+	if t == nil {
 		return nil
 	}
-	return o.AssignSteps
+	return t.AssignSteps
 }
 
-func (o *TriggerWorkflowConfig) GetAssignees() []string {
-	if o == nil {
+func (t *TriggerWorkflowConfig) GetAssignees() []string {
+	if t == nil {
 		return nil
 	}
-	return o.Assignees
+	return t.Assignees
 }
 
-func (o *TriggerWorkflowConfig) GetConditions() []any {
-	if o == nil {
+func (t *TriggerWorkflowConfig) GetConditions() []any {
+	if t == nil {
 		return nil
 	}
-	return o.Conditions
+	return t.Conditions
 }
 
-func (o *TriggerWorkflowConfig) GetFilterWithPurposes() *bool {
-	if o == nil {
+func (t *TriggerWorkflowConfig) GetFilterWithPurposes() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.FilterWithPurposes
+	return t.FilterWithPurposes
 }
 
-func (o *TriggerWorkflowConfig) GetTargetWorkflow() *string {
-	if o == nil {
+func (t *TriggerWorkflowConfig) GetTargetWorkflow() *string {
+	if t == nil {
 		return nil
 	}
-	return o.TargetWorkflow
+	return t.TargetWorkflow
 }

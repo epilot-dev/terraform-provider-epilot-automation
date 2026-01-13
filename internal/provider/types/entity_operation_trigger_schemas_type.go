@@ -7,11 +7,11 @@ import (
 )
 
 type EntityOperationTriggerSchemasType struct {
-	Str                       types.String               `queryParam:"inline" tfsdk:"str" tfPlanOnly:"true"`
-	AnythingButCondition      *AnythingButCondition      `queryParam:"inline" tfsdk:"anything_but_condition" tfPlanOnly:"true"`
-	EqualsIgnoreCaseCondition *EqualsIgnoreCaseCondition `queryParam:"inline" tfsdk:"equals_ignore_case_condition" tfPlanOnly:"true"`
-	ExistsCondition           *ExistsCondition           `queryParam:"inline" tfsdk:"exists_condition" tfPlanOnly:"true"`
-	PrefixCondition           *PrefixCondition           `queryParam:"inline" tfsdk:"prefix_condition" tfPlanOnly:"true"`
-	SuffixCondition           *SuffixCondition           `queryParam:"inline" tfsdk:"suffix_condition" tfPlanOnly:"true"`
-	WildcardCondition         *WildcardCondition         `queryParam:"inline" tfsdk:"wildcard_condition" tfPlanOnly:"true"`
+	Str                       types.String               `queryParam:"inline" tfsdk:"str"`
+	AnythingButCondition      *AnythingButCondition      `queryParam:"inline" tfsdk:"anything_but_condition"`
+	EqualsIgnoreCaseCondition *EqualsIgnoreCaseCondition `queryParam:"inline" tfsdk:"equals_ignore_case_condition"`
+	ExistsCondition           *ExistsCondition           `queryParam:"inline" tfsdk:"exists_condition"`
+	PrefixCondition           *PrefixCondition           `queryParam:"inline" tfsdk:"prefix_condition"`
+	SuffixCondition           *SuffixCondition           `queryParam:"inline" tfsdk:"suffix_condition"`
+	WildcardCondition         *WildcardCondition         `queryParam:"inline" tfsdk:"wildcard_condition"`
 }

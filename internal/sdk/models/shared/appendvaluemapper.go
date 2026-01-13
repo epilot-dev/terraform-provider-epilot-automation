@@ -31,43 +31,43 @@ func (a AppendValueMapper) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AppendValueMapper) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"mode", "target", "value_json"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AppendValueMapper) GetMode() MappingAttributeMode {
-	if o == nil {
+func (a *AppendValueMapper) GetMode() MappingAttributeMode {
+	if a == nil {
 		return MappingAttributeMode("")
 	}
-	return o.Mode
+	return a.Mode
 }
 
-func (o *AppendValueMapper) GetSource() *string {
-	if o == nil {
+func (a *AppendValueMapper) GetSource() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Source
+	return a.Source
 }
 
-func (o *AppendValueMapper) GetTarget() string {
-	if o == nil {
+func (a *AppendValueMapper) GetTarget() string {
+	if a == nil {
 		return ""
 	}
-	return o.Target
+	return a.Target
 }
 
-func (o *AppendValueMapper) GetTargetUnique() []string {
-	if o == nil {
+func (a *AppendValueMapper) GetTargetUnique() []string {
+	if a == nil {
 		return nil
 	}
-	return o.TargetUnique
+	return a.TargetUnique
 }
 
-func (o *AppendValueMapper) GetValueJSON() string {
-	if o == nil {
+func (a *AppendValueMapper) GetValueJSON() string {
+	if a == nil {
 		return ""
 	}
-	return o.ValueJSON
+	return a.ValueJSON
 }

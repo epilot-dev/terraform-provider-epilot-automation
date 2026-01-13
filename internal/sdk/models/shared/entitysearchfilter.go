@@ -20,17 +20,17 @@ func (e Exists) MarshalJSON() ([]byte, error) {
 }
 
 func (e *Exists) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"field"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *Exists) GetField() string {
-	if o == nil {
+func (e *Exists) GetField() string {
+	if e == nil {
 		return ""
 	}
-	return o.Field
+	return e.Field
 }
 
 // Ids - Returns documents based on their IDs.
@@ -51,11 +51,11 @@ func (i *Ids) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Ids) GetValues() []string {
-	if o == nil {
+func (i *Ids) GetValues() []string {
+	if i == nil {
 		return nil
 	}
-	return o.Values
+	return i.Values
 }
 
 // Relation - Indicates how the range query matches values for range fields.
@@ -116,53 +116,53 @@ func (r *Range) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Range) GetFormat() *string {
-	if o == nil {
+func (r *Range) GetFormat() *string {
+	if r == nil {
 		return nil
 	}
-	return o.Format
+	return r.Format
 }
 
-func (o *Range) GetGt() *EntitySearchFilterValue {
-	if o == nil {
+func (r *Range) GetGt() *EntitySearchFilterValue {
+	if r == nil {
 		return nil
 	}
-	return o.Gt
+	return r.Gt
 }
 
-func (o *Range) GetGte() *EntitySearchFilterValue {
-	if o == nil {
+func (r *Range) GetGte() *EntitySearchFilterValue {
+	if r == nil {
 		return nil
 	}
-	return o.Gte
+	return r.Gte
 }
 
-func (o *Range) GetLt() *EntitySearchFilterValue {
-	if o == nil {
+func (r *Range) GetLt() *EntitySearchFilterValue {
+	if r == nil {
 		return nil
 	}
-	return o.Lt
+	return r.Lt
 }
 
-func (o *Range) GetLte() *EntitySearchFilterValue {
-	if o == nil {
+func (r *Range) GetLte() *EntitySearchFilterValue {
+	if r == nil {
 		return nil
 	}
-	return o.Lte
+	return r.Lte
 }
 
-func (o *Range) GetRelation() *Relation {
-	if o == nil {
+func (r *Range) GetRelation() *Relation {
+	if r == nil {
 		return nil
 	}
-	return o.Relation
+	return r.Relation
 }
 
-func (o *Range) GetTimeZone() *string {
-	if o == nil {
+func (r *Range) GetTimeZone() *string {
+	if r == nil {
 		return nil
 	}
-	return o.TimeZone
+	return r.TimeZone
 }
 
 type EntitySearchFilter struct {
@@ -200,58 +200,58 @@ func (e *EntitySearchFilter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *EntitySearchFilter) GetDollarAnd() []EntitySearchFilter {
-	if o == nil {
+func (e *EntitySearchFilter) GetDollarAnd() []EntitySearchFilter {
+	if e == nil {
 		return nil
 	}
-	return o.DollarAnd
+	return e.DollarAnd
 }
 
-func (o *EntitySearchFilter) GetDollarNot() []EntitySearchFilter {
-	if o == nil {
+func (e *EntitySearchFilter) GetDollarNot() []EntitySearchFilter {
+	if e == nil {
 		return nil
 	}
-	return o.DollarNot
+	return e.DollarNot
 }
 
-func (o *EntitySearchFilter) GetDollarOr() []EntitySearchFilter {
-	if o == nil {
+func (e *EntitySearchFilter) GetDollarOr() []EntitySearchFilter {
+	if e == nil {
 		return nil
 	}
-	return o.DollarOr
+	return e.DollarOr
 }
 
-func (o *EntitySearchFilter) GetExists() *Exists {
-	if o == nil {
+func (e *EntitySearchFilter) GetExists() *Exists {
+	if e == nil {
 		return nil
 	}
-	return o.Exists
+	return e.Exists
 }
 
-func (o *EntitySearchFilter) GetIds() *Ids {
-	if o == nil {
+func (e *EntitySearchFilter) GetIds() *Ids {
+	if e == nil {
 		return nil
 	}
-	return o.Ids
+	return e.Ids
 }
 
-func (o *EntitySearchFilter) GetRange() map[string]Range {
-	if o == nil {
+func (e *EntitySearchFilter) GetRange() map[string]Range {
+	if e == nil {
 		return nil
 	}
-	return o.Range
+	return e.Range
 }
 
-func (o *EntitySearchFilter) GetTerm() map[string]*EntitySearchFilterValue {
-	if o == nil {
+func (e *EntitySearchFilter) GetTerm() map[string]*EntitySearchFilterValue {
+	if e == nil {
 		return nil
 	}
-	return o.Term
+	return e.Term
 }
 
-func (o *EntitySearchFilter) GetTerms() map[string][]*EntitySearchFilterValue {
-	if o == nil {
+func (e *EntitySearchFilter) GetTerms() map[string][]*EntitySearchFilterValue {
+	if e == nil {
 		return nil
 	}
-	return o.Terms
+	return e.Terms
 }

@@ -15,18 +15,18 @@ type BulkTriggerExecutionsResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *BulkTriggerExecutionsResponseBody) GetError() *string {
-	if o == nil {
+func (b *BulkTriggerExecutionsResponseBody) GetError() *string {
+	if b == nil {
 		return nil
 	}
-	return o.Error
+	return b.Error
 }
 
-func (o *BulkTriggerExecutionsResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (b *BulkTriggerExecutionsResponseBody) GetStatus() *int64 {
+	if b == nil {
 		return nil
 	}
-	return o.Status
+	return b.Status
 }
 
 type BulkTriggerExecutionsResponse struct {
@@ -42,37 +42,37 @@ type BulkTriggerExecutionsResponse struct {
 	Object *BulkTriggerExecutionsResponseBody
 }
 
-func (o *BulkTriggerExecutionsResponse) GetBulkTriggerJob() *shared.BulkTriggerJob {
-	if o == nil {
+func (b *BulkTriggerExecutionsResponse) GetBulkTriggerJob() *shared.BulkTriggerJob {
+	if b == nil {
 		return nil
 	}
-	return o.BulkTriggerJob
+	return b.BulkTriggerJob
 }
 
-func (o *BulkTriggerExecutionsResponse) GetContentType() string {
-	if o == nil {
+func (b *BulkTriggerExecutionsResponse) GetContentType() string {
+	if b == nil {
 		return ""
 	}
-	return o.ContentType
+	return b.ContentType
 }
 
-func (o *BulkTriggerExecutionsResponse) GetStatusCode() int {
-	if o == nil {
+func (b *BulkTriggerExecutionsResponse) GetStatusCode() int {
+	if b == nil {
 		return 0
 	}
-	return o.StatusCode
+	return b.StatusCode
 }
 
-func (o *BulkTriggerExecutionsResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (b *BulkTriggerExecutionsResponse) GetRawResponse() *http.Response {
+	if b == nil {
 		return nil
 	}
-	return o.RawResponse
+	return b.RawResponse
 }
 
-func (o *BulkTriggerExecutionsResponse) GetObject() *BulkTriggerExecutionsResponseBody {
-	if o == nil {
+func (b *BulkTriggerExecutionsResponse) GetObject() *BulkTriggerExecutionsResponseBody {
+	if b == nil {
 		return nil
 	}
-	return o.Object
+	return b.Object
 }

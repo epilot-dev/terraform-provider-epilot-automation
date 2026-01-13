@@ -24,50 +24,50 @@ func (e ExecItem) MarshalJSON() ([]byte, error) {
 }
 
 func (e *ExecItem) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"entity_id", "execution_status"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ExecItem) GetEntityID() string {
-	if o == nil {
+func (e *ExecItem) GetEntityID() string {
+	if e == nil {
 		return ""
 	}
-	return o.EntityID
+	return e.EntityID
 }
 
-func (o *ExecItem) GetEntitySchema() *string {
-	if o == nil {
+func (e *ExecItem) GetEntitySchema() *string {
+	if e == nil {
 		return nil
 	}
-	return o.EntitySchema
+	return e.EntitySchema
 }
 
-func (o *ExecItem) GetError() *string {
-	if o == nil {
+func (e *ExecItem) GetError() *string {
+	if e == nil {
 		return nil
 	}
-	return o.Error
+	return e.Error
 }
 
-func (o *ExecItem) GetExecutionID() *string {
-	if o == nil {
+func (e *ExecItem) GetExecutionID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.ExecutionID
+	return e.ExecutionID
 }
 
-func (o *ExecItem) GetExecutionStatus() ExecutionStatus {
-	if o == nil {
+func (e *ExecItem) GetExecutionStatus() ExecutionStatus {
+	if e == nil {
 		return ExecutionStatus("")
 	}
-	return o.ExecutionStatus
+	return e.ExecutionStatus
 }
 
-func (o *ExecItem) GetTimestamp() *time.Time {
-	if o == nil {
+func (e *ExecItem) GetTimestamp() *time.Time {
+	if e == nil {
 		return nil
 	}
-	return o.Timestamp
+	return e.Timestamp
 }

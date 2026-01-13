@@ -7,12 +7,12 @@ import (
 )
 
 type AnyTrigger struct {
-	Any                    jsontypes.Normalized    `queryParam:"inline" tfsdk:"any" tfPlanOnly:"true"`
-	APISubmissionTrigger   *APISubmissionTrigger   `queryParam:"inline" tfsdk:"api_submission_trigger" tfPlanOnly:"true"`
-	EntityManualTrigger    *EntityManualTrigger    `queryParam:"inline" tfsdk:"entity_manual_trigger" tfPlanOnly:"true"`
-	EntityOperationTrigger *EntityOperationTrigger `queryParam:"inline" tfsdk:"entity_operation_trigger" tfPlanOnly:"true"`
-	FlowsTrigger           *FlowsTrigger           `queryParam:"inline" tfsdk:"flows_trigger" tfPlanOnly:"true"`
-	FrontendSubmitTrigger  *APISubmissionTrigger   `queryParam:"inline" tfsdk:"frontend_submit_trigger" tfPlanOnly:"true"`
-	JourneySubmitTrigger   *JourneySubmitTrigger   `queryParam:"inline" tfsdk:"journey_submit_trigger" tfPlanOnly:"true"`
-	ReceivedEmailTrigger   *ReceivedEmailTrigger   `queryParam:"inline" tfsdk:"received_email_trigger" tfPlanOnly:"true"`
+	Any                    jsontypes.Normalized    `queryParam:"inline" tfsdk:"any"`
+	APISubmissionTrigger   *APISubmissionTrigger   `queryParam:"inline" tfsdk:"api_submission_trigger"`
+	EntityManualTrigger    *EntityManualTrigger    `queryParam:"inline" tfsdk:"entity_manual_trigger"`
+	EntityOperationTrigger *EntityOperationTrigger `queryParam:"inline" tfsdk:"entity_operation_trigger"`
+	FlowsTrigger           *FlowsTrigger           `queryParam:"inline" tfsdk:"flows_trigger"`
+	FrontendSubmitTrigger  *APISubmissionTrigger   `queryParam:"inline" tfsdk:"frontend_submit_trigger"`
+	JourneySubmitTrigger   *JourneySubmitTrigger   `queryParam:"inline" tfsdk:"journey_submit_trigger"`
+	ReceivedEmailTrigger   *ReceivedEmailTrigger   `queryParam:"inline" tfsdk:"received_email_trigger"`
 }

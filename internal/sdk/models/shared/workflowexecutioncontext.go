@@ -11,30 +11,30 @@ type WorkflowExecutionContext struct {
 	WorkflowRole WorkflowContextRole `json:"workflow_role"`
 }
 
-func (o *WorkflowExecutionContext) GetExecutionChain() *ExecutionChain {
-	if o == nil {
+func (w *WorkflowExecutionContext) GetExecutionChain() *ExecutionChain {
+	if w == nil {
 		return nil
 	}
-	return o.ExecutionChain
+	return w.ExecutionChain
 }
 
-func (o *WorkflowExecutionContext) GetWorkflowExecID() string {
-	if o == nil {
+func (w *WorkflowExecutionContext) GetWorkflowExecID() string {
+	if w == nil {
 		return ""
 	}
-	return o.WorkflowExecID
+	return w.WorkflowExecID
 }
 
-func (o *WorkflowExecutionContext) GetWorkflowExecTaskID() *string {
-	if o == nil {
+func (w *WorkflowExecutionContext) GetWorkflowExecTaskID() *string {
+	if w == nil {
 		return nil
 	}
-	return o.WorkflowExecTaskID
+	return w.WorkflowExecTaskID
 }
 
-func (o *WorkflowExecutionContext) GetWorkflowRole() WorkflowContextRole {
-	if o == nil {
+func (w *WorkflowExecutionContext) GetWorkflowRole() WorkflowContextRole {
+	if w == nil {
 		return WorkflowContextRole("")
 	}
-	return o.WorkflowRole
+	return w.WorkflowRole
 }

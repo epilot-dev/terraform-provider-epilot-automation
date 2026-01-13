@@ -12,11 +12,11 @@ type BatchGetFlowsRequestBody struct {
 	Ids []string `json:"ids,omitempty"`
 }
 
-func (o *BatchGetFlowsRequestBody) GetIds() []string {
-	if o == nil {
+func (b *BatchGetFlowsRequestBody) GetIds() []string {
+	if b == nil {
 		return nil
 	}
-	return o.Ids
+	return b.Ids
 }
 
 // BatchGetFlowsResponseBody - The requested resource is forbidden
@@ -27,18 +27,18 @@ type BatchGetFlowsResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *BatchGetFlowsResponseBody) GetError() *string {
-	if o == nil {
+func (b *BatchGetFlowsResponseBody) GetError() *string {
+	if b == nil {
 		return nil
 	}
-	return o.Error
+	return b.Error
 }
 
-func (o *BatchGetFlowsResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (b *BatchGetFlowsResponseBody) GetStatus() *int64 {
+	if b == nil {
 		return nil
 	}
-	return o.Status
+	return b.Status
 }
 
 type BatchGetFlowsResponse struct {
@@ -54,37 +54,37 @@ type BatchGetFlowsResponse struct {
 	Object *BatchGetFlowsResponseBody
 }
 
-func (o *BatchGetFlowsResponse) GetContentType() string {
-	if o == nil {
+func (b *BatchGetFlowsResponse) GetContentType() string {
+	if b == nil {
 		return ""
 	}
-	return o.ContentType
+	return b.ContentType
 }
 
-func (o *BatchGetFlowsResponse) GetSearchAutomationsResp() *shared.SearchAutomationsResp {
-	if o == nil {
+func (b *BatchGetFlowsResponse) GetSearchAutomationsResp() *shared.SearchAutomationsResp {
+	if b == nil {
 		return nil
 	}
-	return o.SearchAutomationsResp
+	return b.SearchAutomationsResp
 }
 
-func (o *BatchGetFlowsResponse) GetStatusCode() int {
-	if o == nil {
+func (b *BatchGetFlowsResponse) GetStatusCode() int {
+	if b == nil {
 		return 0
 	}
-	return o.StatusCode
+	return b.StatusCode
 }
 
-func (o *BatchGetFlowsResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (b *BatchGetFlowsResponse) GetRawResponse() *http.Response {
+	if b == nil {
 		return nil
 	}
-	return o.RawResponse
+	return b.RawResponse
 }
 
-func (o *BatchGetFlowsResponse) GetObject() *BatchGetFlowsResponseBody {
-	if o == nil {
+func (b *BatchGetFlowsResponse) GetObject() *BatchGetFlowsResponseBody {
+	if b == nil {
 		return nil
 	}
-	return o.Object
+	return b.Object
 }

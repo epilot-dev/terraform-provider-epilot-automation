@@ -64,7 +64,7 @@ func (s *Bulk) BulkTriggerExecutions(ctx context.Context, request *shared.BulkTr
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "bulkTriggerExecutions",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -291,7 +291,7 @@ func (s *Bulk) GetBulkJob(ctx context.Context, request operations.GetBulkJobRequ
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "getBulkJob",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -513,7 +513,7 @@ func (s *Bulk) PatchBulkJob(ctx context.Context, request operations.PatchBulkJob
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "patchBulkJob",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "PatchBulkJobRequest", "json", `request:"mediaType=application/json"`)

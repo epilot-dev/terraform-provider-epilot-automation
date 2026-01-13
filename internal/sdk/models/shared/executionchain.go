@@ -12,23 +12,23 @@ type ExecutionChain struct {
 	ParentTaskID *string `json:"parent_task_id,omitempty"`
 }
 
-func (o *ExecutionChain) GetDepth() *int64 {
-	if o == nil {
+func (e *ExecutionChain) GetDepth() *int64 {
+	if e == nil {
 		return nil
 	}
-	return o.Depth
+	return e.Depth
 }
 
-func (o *ExecutionChain) GetParentExecutionID() *string {
-	if o == nil {
+func (e *ExecutionChain) GetParentExecutionID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.ParentExecutionID
+	return e.ParentExecutionID
 }
 
-func (o *ExecutionChain) GetParentTaskID() *string {
-	if o == nil {
+func (e *ExecutionChain) GetParentTaskID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.ParentTaskID
+	return e.ParentTaskID
 }

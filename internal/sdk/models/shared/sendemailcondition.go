@@ -22,18 +22,18 @@ func (e *Equals) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Equals) GetSource() *string {
-	if o == nil {
+func (e *Equals) GetSource() *string {
+	if e == nil {
 		return nil
 	}
-	return o.Source
+	return e.Source
 }
 
-func (o *Equals) GetValue() *string {
-	if o == nil {
+func (e *Equals) GetValue() *string {
+	if e == nil {
 		return nil
 	}
-	return o.Value
+	return e.Value
 }
 
 type SendEmailCondition struct {
@@ -51,9 +51,9 @@ func (s *SendEmailCondition) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SendEmailCondition) GetEquals() *Equals {
-	if o == nil {
+func (s *SendEmailCondition) GetEquals() *Equals {
+	if s == nil {
 		return nil
 	}
-	return o.Equals
+	return s.Equals
 }
