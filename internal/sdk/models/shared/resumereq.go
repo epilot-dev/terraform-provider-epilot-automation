@@ -7,9 +7,9 @@ type ResumeReq struct {
 	ResumeToken string `json:"resume_token"`
 }
 
-func (o *ResumeReq) GetResumeToken() string {
-	if o == nil {
+func (r *ResumeReq) GetResumeToken() string {
+	if r == nil {
 		return ""
 	}
-	return o.ResumeToken
+	return r.ResumeToken
 }

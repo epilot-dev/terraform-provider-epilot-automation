@@ -23,11 +23,11 @@ func (f *FrontendSubmitTriggerConfiguration) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *FrontendSubmitTriggerConfiguration) GetSourceID() *string {
-	if o == nil {
+func (f *FrontendSubmitTriggerConfiguration) GetSourceID() *string {
+	if f == nil {
 		return nil
 	}
-	return o.SourceID
+	return f.SourceID
 }
 
 type FrontendSubmitTriggerType string
@@ -64,29 +64,29 @@ func (f FrontendSubmitTrigger) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FrontendSubmitTrigger) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &f, "", false, []string{"configuration", "type"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *FrontendSubmitTrigger) GetConfiguration() FrontendSubmitTriggerConfiguration {
-	if o == nil {
+func (f *FrontendSubmitTrigger) GetConfiguration() FrontendSubmitTriggerConfiguration {
+	if f == nil {
 		return FrontendSubmitTriggerConfiguration{}
 	}
-	return o.Configuration
+	return f.Configuration
 }
 
-func (o *FrontendSubmitTrigger) GetID() *string {
-	if o == nil {
+func (f *FrontendSubmitTrigger) GetID() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ID
+	return f.ID
 }
 
-func (o *FrontendSubmitTrigger) GetType() FrontendSubmitTriggerType {
-	if o == nil {
+func (f *FrontendSubmitTrigger) GetType() FrontendSubmitTriggerType {
+	if f == nil {
 		return FrontendSubmitTriggerType("")
 	}
-	return o.Type
+	return f.Type
 }

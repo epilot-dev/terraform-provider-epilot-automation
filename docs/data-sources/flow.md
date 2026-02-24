@@ -218,6 +218,7 @@ Read-Only:
 - `flows_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--flows_trigger))
 - `frontend_submit_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--frontend_submit_trigger))
 - `journey_submit_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--journey_submit_trigger))
+- `new_email_thread_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--new_email_thread_trigger))
 - `received_email_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--received_email_trigger))
 
 <a id="nestedatt--triggers--api_submission_trigger"></a>
@@ -464,6 +465,25 @@ Read-Only:
 Read-Only:
 
 - `source_id` (String)
+
+
+
+<a id="nestedatt--triggers--new_email_thread_trigger"></a>
+### Nested Schema for `triggers.new_email_thread_trigger`
+
+Read-Only:
+
+- `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--new_email_thread_trigger--configuration))
+- `id` (String)
+- `type` (String)
+
+<a id="nestedatt--triggers--new_email_thread_trigger--configuration"></a>
+### Nested Schema for `triggers.new_email_thread_trigger.configuration`
+
+Read-Only:
+
+- `direction` (String) Whether the trigger should be matched against only inbound, outbound emails or both.
+- `shared_inbox_ids` (List of String) A list of shared inbox IDs that the email thread should be matched against.
 
 
 

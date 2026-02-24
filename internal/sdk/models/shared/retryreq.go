@@ -9,16 +9,16 @@ type RetryReq struct {
 	RetryStrategy *RetryStrategy `json:"retry_strategy,omitempty"`
 }
 
-func (o *RetryReq) GetConditionID() *string {
-	if o == nil {
+func (r *RetryReq) GetConditionID() *string {
+	if r == nil {
 		return nil
 	}
-	return o.ConditionID
+	return r.ConditionID
 }
 
-func (o *RetryReq) GetRetryStrategy() *RetryStrategy {
-	if o == nil {
+func (r *RetryReq) GetRetryStrategy() *RetryStrategy {
+	if r == nil {
 		return nil
 	}
-	return o.RetryStrategy
+	return r.RetryStrategy
 }

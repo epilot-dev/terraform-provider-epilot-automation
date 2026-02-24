@@ -226,7 +226,7 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(ctx context.Contex
 						}
 						triggers.EntityOperationTrigger.Configuration.FilterConfig.Operation.Operation = make([]types.String, 0, len(triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Operation))
 						for _, v := range triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Operation {
-							triggers.EntityOperationTrigger.Configuration.FilterConfig.Operation.Operation = append(triggers.EntityOperationTrigger.Configuration.FilterConfig.Operation.Operation, types.StringValue(string(v)))
+							triggers.EntityOperationTrigger.Configuration.FilterConfig.Operation.Operation = append(triggers.EntityOperationTrigger.Configuration.FilterConfig.Operation.Operation, types.StringPointerValue((*string)(v)))
 						}
 						if triggersItem.EntityOperationTrigger.Configuration.FilterConfig.Operation.Payload == nil {
 							triggers.EntityOperationTrigger.Configuration.FilterConfig.Operation.Payload = jsontypes.NewNormalizedNull()
@@ -242,7 +242,7 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(ctx context.Contex
 				}
 				triggers.EntityOperationTrigger.Configuration.Operations = make([]types.String, 0, len(triggersItem.EntityOperationTrigger.Configuration.Operations))
 				for _, v := range triggersItem.EntityOperationTrigger.Configuration.Operations {
-					triggers.EntityOperationTrigger.Configuration.Operations = append(triggers.EntityOperationTrigger.Configuration.Operations, types.StringValue(string(v)))
+					triggers.EntityOperationTrigger.Configuration.Operations = append(triggers.EntityOperationTrigger.Configuration.Operations, types.StringPointerValue((*string)(v)))
 				}
 				triggers.EntityOperationTrigger.Configuration.Schema = types.StringPointerValue(triggersItem.EntityOperationTrigger.Configuration.Schema)
 				triggers.EntityOperationTrigger.ID = types.StringPointerValue(triggersItem.EntityOperationTrigger.ID)
@@ -266,6 +266,16 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(ctx context.Contex
 				triggers.JourneySubmitTrigger.Configuration.SourceID = types.StringValue(triggersItem.JourneySubmitTrigger.Configuration.SourceID)
 				triggers.JourneySubmitTrigger.ID = types.StringPointerValue(triggersItem.JourneySubmitTrigger.ID)
 				triggers.JourneySubmitTrigger.Type = types.StringValue(string(triggersItem.JourneySubmitTrigger.Type))
+			}
+			if triggersItem.NewEmailThreadTrigger != nil {
+				triggers.NewEmailThreadTrigger = &tfTypes.NewEmailThreadTrigger{}
+				triggers.NewEmailThreadTrigger.Configuration.Direction = types.StringValue(string(triggersItem.NewEmailThreadTrigger.Configuration.Direction))
+				triggers.NewEmailThreadTrigger.Configuration.SharedInboxIds = make([]types.String, 0, len(triggersItem.NewEmailThreadTrigger.Configuration.SharedInboxIds))
+				for _, v := range triggersItem.NewEmailThreadTrigger.Configuration.SharedInboxIds {
+					triggers.NewEmailThreadTrigger.Configuration.SharedInboxIds = append(triggers.NewEmailThreadTrigger.Configuration.SharedInboxIds, types.StringValue(v))
+				}
+				triggers.NewEmailThreadTrigger.ID = types.StringPointerValue(triggersItem.NewEmailThreadTrigger.ID)
+				triggers.NewEmailThreadTrigger.Type = types.StringValue(string(triggersItem.NewEmailThreadTrigger.Type))
 			}
 			if triggersItem.ReceivedEmailTrigger != nil {
 				triggers.ReceivedEmailTrigger = &tfTypes.ReceivedEmailTrigger{}

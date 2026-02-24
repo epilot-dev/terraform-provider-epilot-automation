@@ -26,18 +26,18 @@ func (s *SendEmailActionReason) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SendEmailActionReason) GetMessage() *string {
-	if o == nil {
+func (s *SendEmailActionReason) GetMessage() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Message
+	return s.Message
 }
 
-func (o *SendEmailActionReason) GetPayload() map[string]any {
-	if o == nil {
+func (s *SendEmailActionReason) GetPayload() map[string]any {
+	if s == nil {
 		return nil
 	}
-	return o.Payload
+	return s.Payload
 }
 
 type SendEmailActionType string
@@ -100,121 +100,121 @@ func (s *SendEmailAction) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SendEmailAction) GetAllowFailure() *bool {
-	if o == nil {
+func (s *SendEmailAction) GetAllowFailure() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.AllowFailure
+	return s.AllowFailure
 }
 
-func (o *SendEmailAction) GetConditionID() *string {
-	if o == nil {
+func (s *SendEmailAction) GetConditionID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ConditionID
+	return s.ConditionID
 }
 
-func (o *SendEmailAction) GetConfig() *SendEmailConfig {
-	if o == nil {
+func (s *SendEmailAction) GetConfig() *SendEmailConfig {
+	if s == nil {
 		return nil
 	}
-	return o.Config
+	return s.Config
 }
 
-func (o *SendEmailAction) GetCreatedAutomatically() *bool {
-	if o == nil {
+func (s *SendEmailAction) GetCreatedAutomatically() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.CreatedAutomatically
+	return s.CreatedAutomatically
 }
 
-func (o *SendEmailAction) GetErrorOutput() *ErrorOutput {
-	if o == nil {
+func (s *SendEmailAction) GetErrorOutput() *ErrorOutput {
+	if s == nil {
 		return nil
 	}
-	return o.ErrorOutput
+	return s.ErrorOutput
 }
 
-func (o *SendEmailAction) GetExecutionStatus() *ExecutionStatus {
-	if o == nil {
+func (s *SendEmailAction) GetExecutionStatus() *ExecutionStatus {
+	if s == nil {
 		return nil
 	}
-	return o.ExecutionStatus
+	return s.ExecutionStatus
 }
 
-func (o *SendEmailAction) GetFlowActionID() *string {
-	if o == nil {
+func (s *SendEmailAction) GetFlowActionID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.FlowActionID
+	return s.FlowActionID
 }
 
-func (o *SendEmailAction) GetID() *string {
-	if o == nil {
+func (s *SendEmailAction) GetID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ID
+	return s.ID
 }
 
-func (o *SendEmailAction) GetIsBulkAction() *bool {
-	if o == nil {
+func (s *SendEmailAction) GetIsBulkAction() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.IsBulkAction
+	return s.IsBulkAction
 }
 
-func (o *SendEmailAction) GetName() *string {
-	if o == nil {
+func (s *SendEmailAction) GetName() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Name
+	return s.Name
 }
 
-func (o *SendEmailAction) GetOutputs() map[string]any {
-	if o == nil {
+func (s *SendEmailAction) GetOutputs() map[string]any {
+	if s == nil {
 		return nil
 	}
-	return o.Outputs
+	return s.Outputs
 }
 
-func (o *SendEmailAction) GetReason() *SendEmailActionReason {
-	if o == nil {
+func (s *SendEmailAction) GetReason() *SendEmailActionReason {
+	if s == nil {
 		return nil
 	}
-	return o.Reason
+	return s.Reason
 }
 
-func (o *SendEmailAction) GetRetryStrategy() *RetryStrategy {
-	if o == nil {
+func (s *SendEmailAction) GetRetryStrategy() *RetryStrategy {
+	if s == nil {
 		return nil
 	}
-	return o.RetryStrategy
+	return s.RetryStrategy
 }
 
-func (o *SendEmailAction) GetScheduleID() *string {
-	if o == nil {
+func (s *SendEmailAction) GetScheduleID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ScheduleID
+	return s.ScheduleID
 }
 
-func (o *SendEmailAction) GetStartedAt() *string {
-	if o == nil {
+func (s *SendEmailAction) GetStartedAt() *string {
+	if s == nil {
 		return nil
 	}
-	return o.StartedAt
+	return s.StartedAt
 }
 
-func (o *SendEmailAction) GetType() *SendEmailActionType {
-	if o == nil {
+func (s *SendEmailAction) GetType() *SendEmailActionType {
+	if s == nil {
 		return nil
 	}
-	return o.Type
+	return s.Type
 }
 
-func (o *SendEmailAction) GetUpdatedAt() *string {
-	if o == nil {
+func (s *SendEmailAction) GetUpdatedAt() *string {
+	if s == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return s.UpdatedAt
 }

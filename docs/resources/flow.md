@@ -66,13 +66,7 @@ resource "epilot-automation_flow" "my_flow" {
   ]
   triggers = [
     {
-      journey_submit_trigger = {
-        configuration = {
-          source_id = "36ccf21c-051d-4bb7-84ad-d0eb26b2da79"
-        }
-        id   = "12d4f45a-1883-4841-a94c-5928cb338a94"
-        type = "journey_submission"
-      }
+      # ...
     }
   ]
   version = 2
@@ -229,6 +223,7 @@ Optional:
 - `flows_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--flows_trigger))
 - `frontend_submit_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--frontend_submit_trigger))
 - `journey_submit_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--journey_submit_trigger))
+- `new_email_thread_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--new_email_thread_trigger))
 - `received_email_trigger` (Attributes) (see [below for nested schema](#nestedatt--triggers--received_email_trigger))
 
 <a id="nestedatt--triggers--api_submission_trigger"></a>
@@ -475,6 +470,25 @@ Optional:
 Optional:
 
 - `source_id` (String) Not Null
+
+
+
+<a id="nestedatt--triggers--new_email_thread_trigger"></a>
+### Nested Schema for `triggers.new_email_thread_trigger`
+
+Optional:
+
+- `configuration` (Attributes) Not Null (see [below for nested schema](#nestedatt--triggers--new_email_thread_trigger--configuration))
+- `id` (String)
+- `type` (String) Not Null; must be "new_email_thread"
+
+<a id="nestedatt--triggers--new_email_thread_trigger--configuration"></a>
+### Nested Schema for `triggers.new_email_thread_trigger.configuration`
+
+Optional:
+
+- `direction` (String) Whether the trigger should be matched against only inbound, outbound emails or both. Not Null; must be one of ["INBOUND", "OUTBOUND", "BOTH"]
+- `shared_inbox_ids` (List of String) A list of shared inbox IDs that the email thread should be matched against.
 
 
 

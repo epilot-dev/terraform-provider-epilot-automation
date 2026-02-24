@@ -51,13 +51,7 @@ resource "epilot-automation_flow" "my_flow" {
   ]
   triggers = [
     {
-      journey_submit_trigger = {
-        configuration = {
-          source_id = "36ccf21c-051d-4bb7-84ad-d0eb26b2da79"
-        }
-        id   = "12d4f45a-1883-4841-a94c-5928cb338a94"
-        type = "journey_submission"
-      }
+      # ...
     }
   ]
   version = 2

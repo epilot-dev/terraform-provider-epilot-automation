@@ -585,6 +585,31 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 								},
 							},
 						},
+						"new_email_thread_trigger": schema.SingleNestedAttribute{
+							Computed: true,
+							Attributes: map[string]schema.Attribute{
+								"configuration": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"direction": schema.StringAttribute{
+											Computed:    true,
+											Description: `Whether the trigger should be matched against only inbound, outbound emails or both.`,
+										},
+										"shared_inbox_ids": schema.ListAttribute{
+											Computed:    true,
+											ElementType: types.StringType,
+											Description: `A list of shared inbox IDs that the email thread should be matched against.`,
+										},
+									},
+								},
+								"id": schema.StringAttribute{
+									Computed: true,
+								},
+								"type": schema.StringAttribute{
+									Computed: true,
+								},
+							},
+						},
 						"received_email_trigger": schema.SingleNestedAttribute{
 							Computed: true,
 							Attributes: map[string]schema.Attribute{

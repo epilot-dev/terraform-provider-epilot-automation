@@ -11,11 +11,11 @@ type GetExecutionRequest struct {
 	ExecutionID string `pathParam:"style=simple,explode=false,name=execution_id"`
 }
 
-func (o *GetExecutionRequest) GetExecutionID() string {
-	if o == nil {
+func (g *GetExecutionRequest) GetExecutionID() string {
+	if g == nil {
 		return ""
 	}
-	return o.ExecutionID
+	return g.ExecutionID
 }
 
 // GetExecutionResponseBody - The requested resource is forbidden
@@ -26,18 +26,18 @@ type GetExecutionResponseBody struct {
 	Status *int64 `json:"status,omitempty"`
 }
 
-func (o *GetExecutionResponseBody) GetError() *string {
-	if o == nil {
+func (g *GetExecutionResponseBody) GetError() *string {
+	if g == nil {
 		return nil
 	}
-	return o.Error
+	return g.Error
 }
 
-func (o *GetExecutionResponseBody) GetStatus() *int64 {
-	if o == nil {
+func (g *GetExecutionResponseBody) GetStatus() *int64 {
+	if g == nil {
 		return nil
 	}
-	return o.Status
+	return g.Status
 }
 
 type GetExecutionResponse struct {
@@ -53,37 +53,37 @@ type GetExecutionResponse struct {
 	Object *GetExecutionResponseBody
 }
 
-func (o *GetExecutionResponse) GetAutomationExecution() *shared.AutomationExecution {
-	if o == nil {
+func (g *GetExecutionResponse) GetAutomationExecution() *shared.AutomationExecution {
+	if g == nil {
 		return nil
 	}
-	return o.AutomationExecution
+	return g.AutomationExecution
 }
 
-func (o *GetExecutionResponse) GetContentType() string {
-	if o == nil {
+func (g *GetExecutionResponse) GetContentType() string {
+	if g == nil {
 		return ""
 	}
-	return o.ContentType
+	return g.ContentType
 }
 
-func (o *GetExecutionResponse) GetStatusCode() int {
-	if o == nil {
+func (g *GetExecutionResponse) GetStatusCode() int {
+	if g == nil {
 		return 0
 	}
-	return o.StatusCode
+	return g.StatusCode
 }
 
-func (o *GetExecutionResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (g *GetExecutionResponse) GetRawResponse() *http.Response {
+	if g == nil {
 		return nil
 	}
-	return o.RawResponse
+	return g.RawResponse
 }
 
-func (o *GetExecutionResponse) GetObject() *GetExecutionResponseBody {
-	if o == nil {
+func (g *GetExecutionResponse) GetObject() *GetExecutionResponseBody {
+	if g == nil {
 		return nil
 	}
-	return o.Object
+	return g.Object
 }

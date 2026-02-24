@@ -5,6 +5,8 @@ package provider
 import (
 	"context"
 	"fmt"
+	speakeasy_objectplanmodifier "github.com/epilot-dev/terraform-provider-epilot-automation/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "github.com/epilot-dev/terraform-provider-epilot-automation/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/epilot-dev/terraform-provider-epilot-automation/internal/provider/types"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/validators"
@@ -18,6 +20,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -339,9 +342,11 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 					},
 					Attributes: map[string]schema.Attribute{
 						"any": schema.StringAttribute{
-							CustomType:  jsontypes.NormalizedType{},
-							Computed:    true,
-							Optional:    true,
+							CustomType: jsontypes.NormalizedType{},
+							Optional:   true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.UseConfigValue(),
+							},
 							Description: `Parsed as JSON.`,
 							Validators: []validator.String{
 								stringvalidator.ConflictsWith(path.Expressions{
@@ -351,13 +356,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									path.MatchRelative().AtParent().AtName("flows_trigger"),
 									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
 									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("new_email_thread_trigger"),
 									path.MatchRelative().AtParent().AtName("received_email_trigger"),
 								}...),
 							},
 						},
 						"api_submission_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.UseConfigValue(),
+							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -397,13 +405,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									path.MatchRelative().AtParent().AtName("flows_trigger"),
 									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
 									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("new_email_thread_trigger"),
 									path.MatchRelative().AtParent().AtName("received_email_trigger"),
 								}...),
 							},
 						},
 						"entity_manual_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.UseConfigValue(),
+							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -444,13 +455,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									path.MatchRelative().AtParent().AtName("flows_trigger"),
 									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
 									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("new_email_thread_trigger"),
 									path.MatchRelative().AtParent().AtName("received_email_trigger"),
 								}...),
 							},
 						},
 						"entity_operation_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.UseConfigValue(),
+							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -502,8 +516,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																},
 																Attributes: map[string]schema.Attribute{
 																	"anything_but_condition": schema.SingleNestedAttribute{
-																		Computed: true,
 																		Optional: true,
+																		PlanModifiers: []planmodifier.Object{
+																			speakeasy_objectplanmodifier.UseConfigValue(),
+																		},
 																		Attributes: map[string]schema.Attribute{
 																			"anything_but": schema.ListAttribute{
 																				Computed:    true,
@@ -523,8 +539,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																	"equals_ignore_case_condition": schema.SingleNestedAttribute{
-																		Computed: true,
 																		Optional: true,
+																		PlanModifiers: []planmodifier.Object{
+																			speakeasy_objectplanmodifier.UseConfigValue(),
+																		},
 																		Attributes: map[string]schema.Attribute{
 																			"equals_ignore_case": schema.StringAttribute{
 																				Computed: true,
@@ -543,8 +561,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																	"exists_condition": schema.SingleNestedAttribute{
-																		Computed: true,
 																		Optional: true,
+																		PlanModifiers: []planmodifier.Object{
+																			speakeasy_objectplanmodifier.UseConfigValue(),
+																		},
 																		Attributes: map[string]schema.Attribute{
 																			"exists": schema.BoolAttribute{
 																				Computed: true,
@@ -563,8 +583,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																	"prefix_condition": schema.SingleNestedAttribute{
-																		Computed: true,
 																		Optional: true,
+																		PlanModifiers: []planmodifier.Object{
+																			speakeasy_objectplanmodifier.UseConfigValue(),
+																		},
 																		Attributes: map[string]schema.Attribute{
 																			"prefix": schema.StringAttribute{
 																				Computed: true,
@@ -583,8 +605,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																	"str": schema.StringAttribute{
-																		Computed: true,
 																		Optional: true,
+																		PlanModifiers: []planmodifier.String{
+																			speakeasy_stringplanmodifier.UseConfigValue(),
+																		},
 																		Validators: []validator.String{
 																			stringvalidator.ConflictsWith(path.Expressions{
 																				path.MatchRelative().AtParent().AtName("anything_but_condition"),
@@ -597,8 +621,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																	"suffix_condition": schema.SingleNestedAttribute{
-																		Computed: true,
 																		Optional: true,
+																		PlanModifiers: []planmodifier.Object{
+																			speakeasy_objectplanmodifier.UseConfigValue(),
+																		},
 																		Attributes: map[string]schema.Attribute{
 																			"suffix": schema.StringAttribute{
 																				Computed: true,
@@ -617,8 +643,10 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																		},
 																	},
 																	"wildcard_condition": schema.SingleNestedAttribute{
-																		Computed: true,
 																		Optional: true,
+																		PlanModifiers: []planmodifier.Object{
+																			speakeasy_objectplanmodifier.UseConfigValue(),
+																		},
 																		Attributes: map[string]schema.Attribute{
 																			"wildcard": schema.StringAttribute{
 																				Computed: true,
@@ -854,13 +882,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									path.MatchRelative().AtParent().AtName("flows_trigger"),
 									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
 									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("new_email_thread_trigger"),
 									path.MatchRelative().AtParent().AtName("received_email_trigger"),
 								}...),
 							},
 						},
 						"flows_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.UseConfigValue(),
+							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -909,13 +940,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									path.MatchRelative().AtParent().AtName("entity_operation_trigger"),
 									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
 									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("new_email_thread_trigger"),
 									path.MatchRelative().AtParent().AtName("received_email_trigger"),
 								}...),
 							},
 						},
 						"frontend_submit_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.UseConfigValue(),
+							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -955,13 +989,16 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									path.MatchRelative().AtParent().AtName("entity_operation_trigger"),
 									path.MatchRelative().AtParent().AtName("flows_trigger"),
 									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("new_email_thread_trigger"),
 									path.MatchRelative().AtParent().AtName("received_email_trigger"),
 								}...),
 							},
 						},
 						"journey_submit_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.UseConfigValue(),
+							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -1005,13 +1042,80 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									path.MatchRelative().AtParent().AtName("entity_operation_trigger"),
 									path.MatchRelative().AtParent().AtName("flows_trigger"),
 									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("new_email_thread_trigger"),
+									path.MatchRelative().AtParent().AtName("received_email_trigger"),
+								}...),
+							},
+						},
+						"new_email_thread_trigger": schema.SingleNestedAttribute{
+							Optional: true,
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.UseConfigValue(),
+							},
+							Attributes: map[string]schema.Attribute{
+								"configuration": schema.SingleNestedAttribute{
+									Computed: true,
+									Optional: true,
+									Attributes: map[string]schema.Attribute{
+										"direction": schema.StringAttribute{
+											Computed:    true,
+											Optional:    true,
+											Description: `Whether the trigger should be matched against only inbound, outbound emails or both. Not Null; must be one of ["INBOUND", "OUTBOUND", "BOTH"]`,
+											Validators: []validator.String{
+												speakeasy_stringvalidators.NotNull(),
+												stringvalidator.OneOf(
+													"INBOUND",
+													"OUTBOUND",
+													"BOTH",
+												),
+											},
+										},
+										"shared_inbox_ids": schema.ListAttribute{
+											Computed:    true,
+											Optional:    true,
+											ElementType: types.StringType,
+											Description: `A list of shared inbox IDs that the email thread should be matched against.`,
+										},
+									},
+									Description: `Not Null`,
+									Validators: []validator.Object{
+										speakeasy_objectvalidators.NotNull(),
+									},
+								},
+								"id": schema.StringAttribute{
+									Computed: true,
+									Optional: true,
+								},
+								"type": schema.StringAttribute{
+									Computed:    true,
+									Optional:    true,
+									Description: `Not Null; must be "new_email_thread"`,
+									Validators: []validator.String{
+										speakeasy_stringvalidators.NotNull(),
+										stringvalidator.OneOf(
+											"new_email_thread",
+										),
+									},
+								},
+							},
+							Validators: []validator.Object{
+								objectvalidator.ConflictsWith(path.Expressions{
+									path.MatchRelative().AtParent().AtName("any"),
+									path.MatchRelative().AtParent().AtName("api_submission_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_manual_trigger"),
+									path.MatchRelative().AtParent().AtName("entity_operation_trigger"),
+									path.MatchRelative().AtParent().AtName("flows_trigger"),
+									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
 									path.MatchRelative().AtParent().AtName("received_email_trigger"),
 								}...),
 							},
 						},
 						"received_email_trigger": schema.SingleNestedAttribute{
-							Computed: true,
 							Optional: true,
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.UseConfigValue(),
+							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -1056,6 +1160,7 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 									path.MatchRelative().AtParent().AtName("flows_trigger"),
 									path.MatchRelative().AtParent().AtName("frontend_submit_trigger"),
 									path.MatchRelative().AtParent().AtName("journey_submit_trigger"),
+									path.MatchRelative().AtParent().AtName("new_email_thread_trigger"),
 								}...),
 							},
 						},
@@ -1301,7 +1406,10 @@ func (r *FlowResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 200 {
+	switch res.StatusCode {
+	case 200, 404:
+		break
+	default:
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

@@ -34,7 +34,7 @@ func (e *TriggerEventEntityOperationType) UnmarshalJSON(data []byte) error {
 type TriggerEventEntityOperation struct {
 	ActivityID    string                           `json:"activity_id"`
 	EntityID      string                           `json:"entity_id"`
-	OperationType EntityOperation                  `json:"operation_type"`
+	OperationType *EntityOperation                 `json:"operation_type"`
 	OrgID         string                           `json:"org_id"`
 	Type          *TriggerEventEntityOperationType `json:"type,omitempty"`
 }
@@ -44,43 +44,43 @@ func (t TriggerEventEntityOperation) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TriggerEventEntityOperation) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, []string{"activity_id", "entity_id", "operation_type", "org_id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TriggerEventEntityOperation) GetActivityID() string {
-	if o == nil {
+func (t *TriggerEventEntityOperation) GetActivityID() string {
+	if t == nil {
 		return ""
 	}
-	return o.ActivityID
+	return t.ActivityID
 }
 
-func (o *TriggerEventEntityOperation) GetEntityID() string {
-	if o == nil {
+func (t *TriggerEventEntityOperation) GetEntityID() string {
+	if t == nil {
 		return ""
 	}
-	return o.EntityID
+	return t.EntityID
 }
 
-func (o *TriggerEventEntityOperation) GetOperationType() EntityOperation {
-	if o == nil {
-		return EntityOperation("")
-	}
-	return o.OperationType
-}
-
-func (o *TriggerEventEntityOperation) GetOrgID() string {
-	if o == nil {
-		return ""
-	}
-	return o.OrgID
-}
-
-func (o *TriggerEventEntityOperation) GetType() *TriggerEventEntityOperationType {
-	if o == nil {
+func (t *TriggerEventEntityOperation) GetOperationType() *EntityOperation {
+	if t == nil {
 		return nil
 	}
-	return o.Type
+	return t.OperationType
+}
+
+func (t *TriggerEventEntityOperation) GetOrgID() string {
+	if t == nil {
+		return ""
+	}
+	return t.OrgID
+}
+
+func (t *TriggerEventEntityOperation) GetType() *TriggerEventEntityOperationType {
+	if t == nil {
+		return nil
+	}
+	return t.Type
 }
