@@ -163,17 +163,17 @@ func (a *Attachments) GetSourceFilter() *SendEmailConfigSourceFilter {
 	return a.SourceFilter
 }
 
-type LanguageCode string
+type SendEmailConfigLanguageCode string
 
 const (
-	LanguageCodeDe LanguageCode = "de"
-	LanguageCodeEn LanguageCode = "en"
+	SendEmailConfigLanguageCodeDe SendEmailConfigLanguageCode = "de"
+	SendEmailConfigLanguageCodeEn SendEmailConfigLanguageCode = "en"
 )
 
-func (e LanguageCode) ToPointer() *LanguageCode {
+func (e SendEmailConfigLanguageCode) ToPointer() *SendEmailConfigLanguageCode {
 	return &e
 }
-func (e *LanguageCode) UnmarshalJSON(data []byte) error {
+func (e *SendEmailConfigLanguageCode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -182,10 +182,39 @@ func (e *LanguageCode) UnmarshalJSON(data []byte) error {
 	case "de":
 		fallthrough
 	case "en":
-		*e = LanguageCode(v)
+		*e = SendEmailConfigLanguageCode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for LanguageCode: %v", v)
+		return fmt.Errorf("invalid value for SendEmailConfigLanguageCode: %v", v)
+	}
+}
+
+// SendEmailConfigReplyMode - Controls how the auto-reply email is sent when reply_to_sender is enabled.
+// - reply_in_thread: Sends the email as a reply within the existing email thread (default).
+// - new_email: Sends the email as a new standalone email to the original sender, creating a fresh thread.
+type SendEmailConfigReplyMode string
+
+const (
+	SendEmailConfigReplyModeReplyInThread SendEmailConfigReplyMode = "reply_in_thread"
+	SendEmailConfigReplyModeNewEmail      SendEmailConfigReplyMode = "new_email"
+)
+
+func (e SendEmailConfigReplyMode) ToPointer() *SendEmailConfigReplyMode {
+	return &e
+}
+func (e *SendEmailConfigReplyMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "reply_in_thread":
+		fallthrough
+	case "new_email":
+		*e = SendEmailConfigReplyMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SendEmailConfigReplyMode: %v", v)
 	}
 }
 
@@ -195,11 +224,23 @@ type SendEmailConfig struct {
 	//
 	Attachments []Attachments `json:"attachments,omitempty"`
 	// Conditions necessary to send out email. Otherwise it will be skipped
-	Conditions      []SendEmailCondition `json:"conditions,omitempty"`
-	EmailTemplateID *string              `json:"email_template_id,omitempty"`
-	LanguageCode    *LanguageCode        `json:"language_code,omitempty"`
+	Conditions      []SendEmailCondition         `json:"conditions,omitempty"`
+	EmailTemplateID *string                      `json:"email_template_id,omitempty"`
+	LanguageCode    *SendEmailConfigLanguageCode `json:"language_code,omitempty"`
+	// When enabled, the email thread will be automatically marked as done after this action completes.
+	MarkAsDone *bool `default:"true" json:"mark_as_done"`
 	// Send an email exclusively to the portal user if they are registered on the portal.
 	NotifyPortalUserOnly *bool `default:"false" json:"notify_portal_user_only"`
+	// Controls how the auto-reply email is sent when reply_to_sender is enabled.
+	// - reply_in_thread: Sends the email as a reply within the existing email thread (default).
+	// - new_email: Sends the email as a new standalone email to the original sender, creating a fresh thread.
+	//
+	ReplyMode *SendEmailConfigReplyMode `default:"reply_in_thread" json:"reply_mode"`
+	// When enabled, overrides the template's "To" field with the sender address of the triggering incoming email.
+	// This is useful for auto-reply scenarios where you want to automatically respond to the person who sent the email.
+	// Only works when the automation is triggered by a received email (received_email or new_email_thread triggers).
+	//
+	ReplyToSender *bool `default:"false" json:"reply_to_sender"`
 	// When true, it lets to send only the email by skip creating the thread & message entities.
 	SkipCreatingEntities *bool `default:"false" json:"skip_creating_entities"`
 	// Pause automation execution after sending email to wait for a confirmation link to be clicked.
@@ -241,11 +282,18 @@ func (s *SendEmailConfig) GetEmailTemplateID() *string {
 	return s.EmailTemplateID
 }
 
-func (s *SendEmailConfig) GetLanguageCode() *LanguageCode {
+func (s *SendEmailConfig) GetLanguageCode() *SendEmailConfigLanguageCode {
 	if s == nil {
 		return nil
 	}
 	return s.LanguageCode
+}
+
+func (s *SendEmailConfig) GetMarkAsDone() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.MarkAsDone
 }
 
 func (s *SendEmailConfig) GetNotifyPortalUserOnly() *bool {
@@ -253,6 +301,20 @@ func (s *SendEmailConfig) GetNotifyPortalUserOnly() *bool {
 		return nil
 	}
 	return s.NotifyPortalUserOnly
+}
+
+func (s *SendEmailConfig) GetReplyMode() *SendEmailConfigReplyMode {
+	if s == nil {
+		return nil
+	}
+	return s.ReplyMode
+}
+
+func (s *SendEmailConfig) GetReplyToSender() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.ReplyToSender
 }
 
 func (s *SendEmailConfig) GetSkipCreatingEntities() *bool {

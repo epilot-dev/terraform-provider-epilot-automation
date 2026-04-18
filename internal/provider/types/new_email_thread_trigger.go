@@ -7,7 +7,7 @@ import (
 )
 
 type NewEmailThreadTrigger struct {
-	Configuration NewEmailThreadTriggerConfiguration `tfsdk:"configuration"`
-	ID            types.String                       `tfsdk:"id"`
-	Type          types.String                       `tfsdk:"type"`
+	Configuration *NewEmailThreadTriggerConfiguration `tfsdk:"configuration"`
+	ID            types.String                        `tfsdk:"id"`
+	Type          types.String                        `tfsdk:"type"`
 }

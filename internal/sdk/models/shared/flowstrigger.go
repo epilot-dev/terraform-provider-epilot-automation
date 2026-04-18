@@ -11,8 +11,6 @@ import (
 type FlowsTriggerConfiguration struct {
 	// When Journeys are linked to Workflows V2 as Journey Automations, this field will contain the ID of the Journey
 	JourneyID *string `json:"journey_id,omitempty"`
-	// The ID of the workflow v2 that triggers this automation
-	SourceID string `json:"source_id"`
 }
 
 func (f FlowsTriggerConfiguration) MarshalJSON() ([]byte, error) {
@@ -31,13 +29,6 @@ func (f *FlowsTriggerConfiguration) GetJourneyID() *string {
 		return nil
 	}
 	return f.JourneyID
-}
-
-func (f *FlowsTriggerConfiguration) GetSourceID() string {
-	if f == nil {
-		return ""
-	}
-	return f.SourceID
 }
 
 type FlowsTriggerType string
@@ -64,9 +55,9 @@ func (e *FlowsTriggerType) UnmarshalJSON(data []byte) error {
 }
 
 type FlowsTrigger struct {
-	Configuration FlowsTriggerConfiguration `json:"configuration"`
-	ID            *string                   `json:"id,omitempty"`
-	Type          FlowsTriggerType          `json:"type"`
+	Configuration *FlowsTriggerConfiguration `json:"configuration,omitempty"`
+	ID            *string                    `json:"id,omitempty"`
+	Type          FlowsTriggerType           `json:"type"`
 }
 
 func (f FlowsTrigger) MarshalJSON() ([]byte, error) {
@@ -80,9 +71,9 @@ func (f *FlowsTrigger) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (f *FlowsTrigger) GetConfiguration() FlowsTriggerConfiguration {
+func (f *FlowsTrigger) GetConfiguration() *FlowsTriggerConfiguration {
 	if f == nil {
-		return FlowsTriggerConfiguration{}
+		return nil
 	}
 	return f.Configuration
 }

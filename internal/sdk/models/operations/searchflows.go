@@ -17,6 +17,8 @@ type SearchFlowsRequest struct {
 	Schema *string `queryParam:"style=form,explode=true,name=schema"`
 	// Pagination: max number of results to return
 	Size *int64 `default:"25" queryParam:"style=form,explode=true,name=size"`
+	// Filter by target workflow ID. Returns only automations that have a trigger-workflow action targeting this workflow.
+	TargetWorkflow *string `queryParam:"style=form,explode=true,name=target_workflow"`
 	// Trigger source identifier
 	TriggerSourceID *string `queryParam:"style=form,explode=true,name=trigger_source_id"`
 }
@@ -58,6 +60,13 @@ func (s *SearchFlowsRequest) GetSize() *int64 {
 		return nil
 	}
 	return s.Size
+}
+
+func (s *SearchFlowsRequest) GetTargetWorkflow() *string {
+	if s == nil {
+		return nil
+	}
+	return s.TargetWorkflow
 }
 
 func (s *SearchFlowsRequest) GetTriggerSourceID() *string {
