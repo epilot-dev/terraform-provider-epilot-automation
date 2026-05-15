@@ -112,6 +112,7 @@ func (r *FlowResourceModel) RefreshFromSharedAutomationFlow(ctx context.Context,
 			r.MaxExecutions.Count = types.Float64PointerValue(resp.MaxExecutions.Count)
 			r.MaxExecutions.Window = types.StringPointerValue(resp.MaxExecutions.Window)
 		}
+		r.Protected = types.BoolPointerValue(resp.Protected)
 		if resp.Schedules == nil {
 			r.Schedules = jsontypes.NewNormalizedNull()
 		} else {
@@ -251,8 +252,12 @@ func (r *FlowResourceModel) RefreshFromSharedAutomationFlow(ctx context.Context,
 			}
 			if triggersItem.FlowsTrigger != nil {
 				triggers.FlowsTrigger = &tfTypes.FlowsTrigger{}
-				triggers.FlowsTrigger.Configuration.JourneyID = types.StringPointerValue(triggersItem.FlowsTrigger.Configuration.JourneyID)
-				triggers.FlowsTrigger.Configuration.SourceID = types.StringValue(triggersItem.FlowsTrigger.Configuration.SourceID)
+				if triggersItem.FlowsTrigger.Configuration == nil {
+					triggers.FlowsTrigger.Configuration = nil
+				} else {
+					triggers.FlowsTrigger.Configuration = &tfTypes.FlowsTriggerConfiguration{}
+					triggers.FlowsTrigger.Configuration.JourneyID = types.StringPointerValue(triggersItem.FlowsTrigger.Configuration.JourneyID)
+				}
 				triggers.FlowsTrigger.ID = types.StringPointerValue(triggersItem.FlowsTrigger.ID)
 				triggers.FlowsTrigger.Type = types.StringValue(string(triggersItem.FlowsTrigger.Type))
 			}
@@ -529,6 +534,12 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 			Count:  count,
 			Window: window,
 		}
+	}
+	protected := new(bool)
+	if !r.Protected.IsUnknown() && !r.Protected.IsNull() {
+		*protected = r.Protected.ValueBool()
+	} else {
+		protected = nil
 	}
 	var schedules interface{}
 	if !r.Schedules.IsUnknown() && !r.Schedules.IsNull() {
@@ -910,18 +921,17 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 			})
 		}
 		if r.Triggers[triggersItem].FlowsTrigger != nil {
-			journeyID := new(string)
-			if !r.Triggers[triggersItem].FlowsTrigger.Configuration.JourneyID.IsUnknown() && !r.Triggers[triggersItem].FlowsTrigger.Configuration.JourneyID.IsNull() {
-				*journeyID = r.Triggers[triggersItem].FlowsTrigger.Configuration.JourneyID.ValueString()
-			} else {
-				journeyID = nil
-			}
-			var sourceId3 string
-			sourceId3 = r.Triggers[triggersItem].FlowsTrigger.Configuration.SourceID.ValueString()
-
-			configuration7 := shared.FlowsTriggerConfiguration{
-				JourneyID: journeyID,
-				SourceID:  sourceId3,
+			var configuration7 *shared.FlowsTriggerConfiguration
+			if r.Triggers[triggersItem].FlowsTrigger.Configuration != nil {
+				journeyID := new(string)
+				if !r.Triggers[triggersItem].FlowsTrigger.Configuration.JourneyID.IsUnknown() && !r.Triggers[triggersItem].FlowsTrigger.Configuration.JourneyID.IsNull() {
+					*journeyID = r.Triggers[triggersItem].FlowsTrigger.Configuration.JourneyID.ValueString()
+				} else {
+					journeyID = nil
+				}
+				configuration7 = &shared.FlowsTriggerConfiguration{
+					JourneyID: journeyID,
+				}
 			}
 			id10 := new(string)
 			if !r.Triggers[triggersItem].FlowsTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].FlowsTrigger.ID.IsNull() {
@@ -955,6 +965,7 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 		EntitySchema:      entitySchema,
 		FlowName:          flowName,
 		MaxExecutions:     maxExecutions,
+		Protected:         protected,
 		Schedules:         schedules,
 		SystemFlow:        systemFlow,
 		TriggerConditions: triggerConditions,

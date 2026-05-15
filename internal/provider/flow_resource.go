@@ -51,6 +51,7 @@ type FlowResourceModel struct {
 	ID                types.String              `tfsdk:"id"`
 	Manifest          []types.String            `tfsdk:"manifest"`
 	MaxExecutions     *tfTypes.MaxExecutions    `tfsdk:"max_executions"`
+	Protected         types.Bool                `tfsdk:"protected"`
 	Schedules         jsontypes.Normalized      `tfsdk:"schedules"`
 	SystemFlow        types.Bool                `tfsdk:"system_flow"`
 	TriggerConditions []jsontypes.Normalized    `tfsdk:"trigger_conditions"`
@@ -314,6 +315,11 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 					},
 				},
 				Description: `Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified.`,
+			},
+			"protected": schema.BoolAttribute{
+				Computed:    true,
+				Optional:    true,
+				Description: `If true, automation is displayed in read-only mode in the UI to discourage changes`,
 			},
 			"schedules": schema.StringAttribute{
 				CustomType:  jsontypes.NormalizedType{},
@@ -902,18 +908,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											Optional:    true,
 											Description: `When Journeys are linked to Workflows V2 as Journey Automations, this field will contain the ID of the Journey`,
 										},
-										"source_id": schema.StringAttribute{
-											Computed:    true,
-											Optional:    true,
-											Description: `The ID of the workflow v2 that triggers this automation. Not Null`,
-											Validators: []validator.String{
-												speakeasy_stringvalidators.NotNull(),
-											},
-										},
-									},
-									Description: `Not Null`,
-									Validators: []validator.Object{
-										speakeasy_objectvalidators.NotNull(),
 									},
 								},
 								"id": schema.StringAttribute{

@@ -44,6 +44,7 @@ resource "epilot-automation_flow" "my_flow" {
     count  = 100
     window = "PT1M"
   }
+  protected   = true
   schedules   = "{ \"see\": \"documentation\" }"
   system_flow = true
   trigger_conditions = [

@@ -59,6 +59,7 @@ resource "epilot-automation_flow" "my_flow" {
     count  = 100
     window = "PT1M"
   }
+  protected   = true
   schedules   = "{ \"see\": \"documentation\" }"
   system_flow = true
   trigger_conditions = [
@@ -90,6 +91,7 @@ resource "epilot-automation_flow" "my_flow" {
 - `entity_schema` (String) The triggering entity schema
 - `manifest` (List of String) Source blueprint/manifest ID used when automation is created via blueprints.
 - `max_executions` (Attributes) Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified. (see [below for nested schema](#nestedatt--max_executions))
+- `protected` (Boolean) If true, automation is displayed in read-only mode in the UI to discourage changes
 - `schedules` (String) Parsed as JSON.
 - `system_flow` (Boolean) Determines if the flow is a system generated flow
 - `trigger_conditions` (List of String)
@@ -423,7 +425,7 @@ Example:
 
 Optional:
 
-- `configuration` (Attributes) Not Null (see [below for nested schema](#nestedatt--triggers--flows_trigger--configuration))
+- `configuration` (Attributes) (see [below for nested schema](#nestedatt--triggers--flows_trigger--configuration))
 - `id` (String)
 - `type` (String) Not Null; must be "flows_trigger"
 
@@ -433,7 +435,6 @@ Optional:
 Optional:
 
 - `journey_id` (String) When Journeys are linked to Workflows V2 as Journey Automations, this field will contain the ID of the Journey
-- `source_id` (String) The ID of the workflow v2 that triggers this automation. Not Null
 
 
 

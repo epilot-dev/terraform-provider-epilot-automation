@@ -23,6 +23,8 @@ const (
 	AnyActionTypeCustomAction              AnyActionType = "CustomAction"
 	AnyActionTypeAutomationAction          AnyActionType = "AutomationAction"
 	AnyActionTypeFlowExecutionCancelAction AnyActionType = "FlowExecutionCancelAction"
+	AnyActionTypeForwardEmailAction        AnyActionType = "ForwardEmailAction"
+	AnyActionTypeReplyEmailAction          AnyActionType = "ReplyEmailAction"
 )
 
 type AnyAction struct {
@@ -38,6 +40,8 @@ type AnyAction struct {
 	CustomAction              *CustomAction              `queryParam:"inline" union:"member"`
 	AutomationAction          *AutomationAction          `queryParam:"inline" union:"member"`
 	FlowExecutionCancelAction *FlowExecutionCancelAction `queryParam:"inline" union:"member"`
+	ForwardEmailAction        *ForwardEmailAction        `queryParam:"inline" union:"member"`
+	ReplyEmailAction          *ReplyEmailAction          `queryParam:"inline" union:"member"`
 
 	Type AnyActionType
 }
@@ -150,6 +154,24 @@ func CreateAnyActionFlowExecutionCancelAction(flowExecutionCancelAction FlowExec
 	}
 }
 
+func CreateAnyActionForwardEmailAction(forwardEmailAction ForwardEmailAction) AnyAction {
+	typ := AnyActionTypeForwardEmailAction
+
+	return AnyAction{
+		ForwardEmailAction: &forwardEmailAction,
+		Type:               typ,
+	}
+}
+
+func CreateAnyActionReplyEmailAction(replyEmailAction ReplyEmailAction) AnyAction {
+	typ := AnyActionTypeReplyEmailAction
+
+	return AnyAction{
+		ReplyEmailAction: &replyEmailAction,
+		Type:             typ,
+	}
+}
+
 func (u *AnyAction) UnmarshalJSON(data []byte) error {
 
 	var candidates []utils.UnionCandidate
@@ -251,6 +273,22 @@ func (u *AnyAction) UnmarshalJSON(data []byte) error {
 		})
 	}
 
+	var forwardEmailAction ForwardEmailAction = ForwardEmailAction{}
+	if err := utils.UnmarshalJSON(data, &forwardEmailAction, "", true, nil); err == nil {
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  AnyActionTypeForwardEmailAction,
+			Value: &forwardEmailAction,
+		})
+	}
+
+	var replyEmailAction ReplyEmailAction = ReplyEmailAction{}
+	if err := utils.UnmarshalJSON(data, &replyEmailAction, "", true, nil); err == nil {
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  AnyActionTypeReplyEmailAction,
+			Value: &replyEmailAction,
+		})
+	}
+
 	if len(candidates) == 0 {
 		return fmt.Errorf("could not unmarshal `%s` into any supported union types for AnyAction", string(data))
 	}
@@ -299,6 +337,12 @@ func (u *AnyAction) UnmarshalJSON(data []byte) error {
 		return nil
 	case AnyActionTypeFlowExecutionCancelAction:
 		u.FlowExecutionCancelAction = best.Value.(*FlowExecutionCancelAction)
+		return nil
+	case AnyActionTypeForwardEmailAction:
+		u.ForwardEmailAction = best.Value.(*ForwardEmailAction)
+		return nil
+	case AnyActionTypeReplyEmailAction:
+		u.ReplyEmailAction = best.Value.(*ReplyEmailAction)
 		return nil
 	}
 
@@ -352,6 +396,14 @@ func (u AnyAction) MarshalJSON() ([]byte, error) {
 
 	if u.FlowExecutionCancelAction != nil {
 		return utils.MarshalJSON(u.FlowExecutionCancelAction, "", true)
+	}
+
+	if u.ForwardEmailAction != nil {
+		return utils.MarshalJSON(u.ForwardEmailAction, "", true)
+	}
+
+	if u.ReplyEmailAction != nil {
+		return utils.MarshalJSON(u.ReplyEmailAction, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type AnyAction: all fields are null")

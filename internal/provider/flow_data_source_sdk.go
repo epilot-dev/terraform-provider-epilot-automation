@@ -111,6 +111,7 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(ctx context.Contex
 			r.MaxExecutions.Count = types.Float64PointerValue(resp.MaxExecutions.Count)
 			r.MaxExecutions.Window = types.StringPointerValue(resp.MaxExecutions.Window)
 		}
+		r.Protected = types.BoolPointerValue(resp.Protected)
 		if resp.Schedules == nil {
 			r.Schedules = jsontypes.NewNormalizedNull()
 		} else {
@@ -250,8 +251,12 @@ func (r *FlowDataSourceModel) RefreshFromSharedAutomationFlow(ctx context.Contex
 			}
 			if triggersItem.FlowsTrigger != nil {
 				triggers.FlowsTrigger = &tfTypes.FlowsTrigger{}
-				triggers.FlowsTrigger.Configuration.JourneyID = types.StringPointerValue(triggersItem.FlowsTrigger.Configuration.JourneyID)
-				triggers.FlowsTrigger.Configuration.SourceID = types.StringValue(triggersItem.FlowsTrigger.Configuration.SourceID)
+				if triggersItem.FlowsTrigger.Configuration == nil {
+					triggers.FlowsTrigger.Configuration = nil
+				} else {
+					triggers.FlowsTrigger.Configuration = &tfTypes.FlowsTriggerConfiguration{}
+					triggers.FlowsTrigger.Configuration.JourneyID = types.StringPointerValue(triggersItem.FlowsTrigger.Configuration.JourneyID)
+				}
 				triggers.FlowsTrigger.ID = types.StringPointerValue(triggersItem.FlowsTrigger.ID)
 				triggers.FlowsTrigger.Type = types.StringValue(string(triggersItem.FlowsTrigger.Type))
 			}
