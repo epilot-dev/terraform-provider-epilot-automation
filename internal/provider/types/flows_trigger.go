@@ -7,7 +7,7 @@ import (
 )
 
 type FlowsTrigger struct {
-	Configuration FlowsTriggerConfiguration `tfsdk:"configuration"`
-	ID            types.String              `tfsdk:"id"`
-	Type          types.String              `tfsdk:"type"`
+	Configuration *FlowsTriggerConfiguration `tfsdk:"configuration"`
+	ID            types.String               `tfsdk:"id"`
+	Type          types.String               `tfsdk:"type"`
 }

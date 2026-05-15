@@ -39,6 +39,7 @@ type FlowDataSourceModel struct {
 	ID                types.String              `tfsdk:"id"`
 	Manifest          []types.String            `tfsdk:"manifest"`
 	MaxExecutions     *tfTypes.MaxExecutions    `tfsdk:"max_executions"`
+	Protected         types.Bool                `tfsdk:"protected"`
 	Schedules         jsontypes.Normalized      `tfsdk:"schedules"`
 	SystemFlow        types.Bool                `tfsdk:"system_flow"`
 	TriggerConditions []jsontypes.Normalized    `tfsdk:"trigger_conditions"`
@@ -162,6 +163,7 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 			},
 			"id": schema.StringAttribute{
 				Computed:    true,
+				Optional:    true,
 				Description: `ID of the Automation Flow`,
 			},
 			"manifest": schema.ListAttribute{
@@ -182,6 +184,10 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 					},
 				},
 				Description: `Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified.`,
+			},
+			"protected": schema.BoolAttribute{
+				Computed:    true,
+				Description: `If true, automation is displayed in read-only mode in the UI to discourage changes`,
 			},
 			"schedules": schema.StringAttribute{
 				CustomType:  jsontypes.NormalizedType{},
@@ -532,10 +538,6 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 										"journey_id": schema.StringAttribute{
 											Computed:    true,
 											Description: `When Journeys are linked to Workflows V2 as Journey Automations, this field will contain the ID of the Journey`,
-										},
-										"source_id": schema.StringAttribute{
-											Computed:    true,
-											Description: `The ID of the workflow v2 that triggers this automation`,
 										},
 									},
 								},

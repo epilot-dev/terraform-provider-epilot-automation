@@ -8,5 +8,4 @@ import (
 
 type FlowsTriggerConfiguration struct {
 	JourneyID types.String `tfsdk:"journey_id"`
-	SourceID  types.String `tfsdk:"source_id"`
 }

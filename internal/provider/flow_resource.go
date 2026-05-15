@@ -5,8 +5,6 @@ package provider
 import (
 	"context"
 	"fmt"
-	speakeasy_objectplanmodifier "github.com/epilot-dev/terraform-provider-epilot-automation/internal/planmodifiers/objectplanmodifier"
-	speakeasy_stringplanmodifier "github.com/epilot-dev/terraform-provider-epilot-automation/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/epilot-dev/terraform-provider-epilot-automation/internal/provider/types"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/validators"
@@ -20,7 +18,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -51,6 +48,7 @@ type FlowResourceModel struct {
 	ID                types.String              `tfsdk:"id"`
 	Manifest          []types.String            `tfsdk:"manifest"`
 	MaxExecutions     *tfTypes.MaxExecutions    `tfsdk:"max_executions"`
+	Protected         types.Bool                `tfsdk:"protected"`
 	Schedules         jsontypes.Normalized      `tfsdk:"schedules"`
 	SystemFlow        types.Bool                `tfsdk:"system_flow"`
 	TriggerConditions []jsontypes.Normalized    `tfsdk:"trigger_conditions"`
@@ -315,6 +313,11 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				},
 				Description: `Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified.`,
 			},
+			"protected": schema.BoolAttribute{
+				Computed:    true,
+				Optional:    true,
+				Description: `If true, automation is displayed in read-only mode in the UI to discourage changes`,
+			},
 			"schedules": schema.StringAttribute{
 				CustomType:  jsontypes.NormalizedType{},
 				Computed:    true,
@@ -342,11 +345,8 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 					},
 					Attributes: map[string]schema.Attribute{
 						"any": schema.StringAttribute{
-							CustomType: jsontypes.NormalizedType{},
-							Optional:   true,
-							PlanModifiers: []planmodifier.String{
-								speakeasy_stringplanmodifier.UseConfigValue(),
-							},
+							CustomType:  jsontypes.NormalizedType{},
+							Optional:    true,
 							Description: `Parsed as JSON.`,
 							Validators: []validator.String{
 								stringvalidator.ConflictsWith(path.Expressions{
@@ -363,9 +363,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 						},
 						"api_submission_trigger": schema.SingleNestedAttribute{
 							Optional: true,
-							PlanModifiers: []planmodifier.Object{
-								speakeasy_objectplanmodifier.UseConfigValue(),
-							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -412,9 +409,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 						},
 						"entity_manual_trigger": schema.SingleNestedAttribute{
 							Optional: true,
-							PlanModifiers: []planmodifier.Object{
-								speakeasy_objectplanmodifier.UseConfigValue(),
-							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -462,9 +456,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 						},
 						"entity_operation_trigger": schema.SingleNestedAttribute{
 							Optional: true,
-							PlanModifiers: []planmodifier.Object{
-								speakeasy_objectplanmodifier.UseConfigValue(),
-							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -517,9 +508,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																Attributes: map[string]schema.Attribute{
 																	"anything_but_condition": schema.SingleNestedAttribute{
 																		Optional: true,
-																		PlanModifiers: []planmodifier.Object{
-																			speakeasy_objectplanmodifier.UseConfigValue(),
-																		},
 																		Attributes: map[string]schema.Attribute{
 																			"anything_but": schema.ListAttribute{
 																				Computed:    true,
@@ -540,9 +528,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																	},
 																	"equals_ignore_case_condition": schema.SingleNestedAttribute{
 																		Optional: true,
-																		PlanModifiers: []planmodifier.Object{
-																			speakeasy_objectplanmodifier.UseConfigValue(),
-																		},
 																		Attributes: map[string]schema.Attribute{
 																			"equals_ignore_case": schema.StringAttribute{
 																				Computed: true,
@@ -562,9 +547,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																	},
 																	"exists_condition": schema.SingleNestedAttribute{
 																		Optional: true,
-																		PlanModifiers: []planmodifier.Object{
-																			speakeasy_objectplanmodifier.UseConfigValue(),
-																		},
 																		Attributes: map[string]schema.Attribute{
 																			"exists": schema.BoolAttribute{
 																				Computed: true,
@@ -584,9 +566,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																	},
 																	"prefix_condition": schema.SingleNestedAttribute{
 																		Optional: true,
-																		PlanModifiers: []planmodifier.Object{
-																			speakeasy_objectplanmodifier.UseConfigValue(),
-																		},
 																		Attributes: map[string]schema.Attribute{
 																			"prefix": schema.StringAttribute{
 																				Computed: true,
@@ -606,9 +585,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																	},
 																	"str": schema.StringAttribute{
 																		Optional: true,
-																		PlanModifiers: []planmodifier.String{
-																			speakeasy_stringplanmodifier.UseConfigValue(),
-																		},
 																		Validators: []validator.String{
 																			stringvalidator.ConflictsWith(path.Expressions{
 																				path.MatchRelative().AtParent().AtName("anything_but_condition"),
@@ -622,9 +598,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																	},
 																	"suffix_condition": schema.SingleNestedAttribute{
 																		Optional: true,
-																		PlanModifiers: []planmodifier.Object{
-																			speakeasy_objectplanmodifier.UseConfigValue(),
-																		},
 																		Attributes: map[string]schema.Attribute{
 																			"suffix": schema.StringAttribute{
 																				Computed: true,
@@ -644,9 +617,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 																	},
 																	"wildcard_condition": schema.SingleNestedAttribute{
 																		Optional: true,
-																		PlanModifiers: []planmodifier.Object{
-																			speakeasy_objectplanmodifier.UseConfigValue(),
-																		},
 																		Attributes: map[string]schema.Attribute{
 																			"wildcard": schema.StringAttribute{
 																				Computed: true,
@@ -889,9 +859,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 						},
 						"flows_trigger": schema.SingleNestedAttribute{
 							Optional: true,
-							PlanModifiers: []planmodifier.Object{
-								speakeasy_objectplanmodifier.UseConfigValue(),
-							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -902,18 +869,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											Optional:    true,
 											Description: `When Journeys are linked to Workflows V2 as Journey Automations, this field will contain the ID of the Journey`,
 										},
-										"source_id": schema.StringAttribute{
-											Computed:    true,
-											Optional:    true,
-											Description: `The ID of the workflow v2 that triggers this automation. Not Null`,
-											Validators: []validator.String{
-												speakeasy_stringvalidators.NotNull(),
-											},
-										},
-									},
-									Description: `Not Null`,
-									Validators: []validator.Object{
-										speakeasy_objectvalidators.NotNull(),
 									},
 								},
 								"id": schema.StringAttribute{
@@ -947,9 +902,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 						},
 						"frontend_submit_trigger": schema.SingleNestedAttribute{
 							Optional: true,
-							PlanModifiers: []planmodifier.Object{
-								speakeasy_objectplanmodifier.UseConfigValue(),
-							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -996,9 +948,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 						},
 						"journey_submit_trigger": schema.SingleNestedAttribute{
 							Optional: true,
-							PlanModifiers: []planmodifier.Object{
-								speakeasy_objectplanmodifier.UseConfigValue(),
-							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -1049,9 +998,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 						},
 						"new_email_thread_trigger": schema.SingleNestedAttribute{
 							Optional: true,
-							PlanModifiers: []planmodifier.Object{
-								speakeasy_objectplanmodifier.UseConfigValue(),
-							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,
@@ -1113,9 +1059,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 						},
 						"received_email_trigger": schema.SingleNestedAttribute{
 							Optional: true,
-							PlanModifiers: []planmodifier.Object{
-								speakeasy_objectplanmodifier.UseConfigValue(),
-							},
 							Attributes: map[string]schema.Attribute{
 								"configuration": schema.SingleNestedAttribute{
 									Computed: true,

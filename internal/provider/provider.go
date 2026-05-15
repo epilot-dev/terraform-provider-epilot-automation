@@ -6,8 +6,10 @@ import (
 	"context"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk"
 	"github.com/epilot-dev/terraform-provider-epilot-automation/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/action"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/ephemeral"
+	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-framework/list"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
@@ -17,7 +19,9 @@ import (
 )
 
 var _ provider.Provider = (*EpilotAutomationProvider)(nil)
+var _ provider.ProviderWithActions = (*EpilotAutomationProvider)(nil)
 var _ provider.ProviderWithEphemeralResources = (*EpilotAutomationProvider)(nil)
+var _ provider.ProviderWithFunctions = (*EpilotAutomationProvider)(nil)
 
 type EpilotAutomationProvider struct {
 	// version is set to the provider version on release, "dev" when the
@@ -90,10 +94,19 @@ func (p *EpilotAutomationProvider) Configure(ctx context.Context, req provider.C
 	}
 
 	client := sdk.New(opts...)
+	resp.ActionData = client
 	resp.DataSourceData = client
 	resp.EphemeralResourceData = client
 	resp.ListResourceData = client
 	resp.ResourceData = client
+}
+
+func (p *EpilotAutomationProvider) Functions(_ context.Context) []func() function.Function {
+	return []func() function.Function{}
+}
+
+func (p *EpilotAutomationProvider) Actions(_ context.Context) []func() action.Action {
+	return []func() action.Action{}
 }
 
 func (p *EpilotAutomationProvider) Resources(ctx context.Context) []func() resource.Resource {
