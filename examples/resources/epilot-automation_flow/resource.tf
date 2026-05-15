@@ -44,6 +44,7 @@ resource "epilot-automation_flow" "my_flow" {
     count  = 100
     window = "PT1M"
   }
+  protected   = true
   schedules   = "{ \"see\": \"documentation\" }"
   system_flow = true
   trigger_conditions = [
@@ -51,7 +52,13 @@ resource "epilot-automation_flow" "my_flow" {
   ]
   triggers = [
     {
-      # ...
+      frontend_submit_trigger = {
+        configuration = {
+          source_id = "99"
+        }
+        id   = "12d4f45a-1883-4841-a94c-5928cb338a94"
+        type = "frontend_submission"
+      }
     }
   ]
   version = 2

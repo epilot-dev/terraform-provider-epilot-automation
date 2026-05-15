@@ -2,11 +2,41 @@
 
 package shared
 
+type EntityContexts struct {
+	EntityID     *string `json:"entity_id,omitempty"`
+	EntitySchema *string `json:"entity_schema,omitempty"`
+	IsPrimary    *bool   `json:"is_primary,omitempty"`
+}
+
+func (e *EntityContexts) GetEntityID() *string {
+	if e == nil {
+		return nil
+	}
+	return e.EntityID
+}
+
+func (e *EntityContexts) GetEntitySchema() *string {
+	if e == nil {
+		return nil
+	}
+	return e.EntitySchema
+}
+
+func (e *EntityContexts) GetIsPrimary() *bool {
+	if e == nil {
+		return nil
+	}
+	return e.IsPrimary
+}
+
 type WorkflowExecutionContext struct {
 	// [Internal] Tracks execution chain for infinite loop prevention. This is an internal property and should not be used by external consumers.
-	ExecutionChain     *ExecutionChain `json:"_execution_chain,omitempty"`
-	WorkflowExecID     string          `json:"workflow_exec_id"`
-	WorkflowExecTaskID *string         `json:"workflow_exec_task_id,omitempty"`
+	ExecutionChain *ExecutionChain `json:"_execution_chain,omitempty"`
+	// Additional entity contexts from the parent flow execution. Used when an automation is triggered from a workflow task to carry all flow contexts into the automation, not just the primary entity.
+	//
+	EntityContexts     []EntityContexts `json:"entity_contexts,omitempty"`
+	WorkflowExecID     string           `json:"workflow_exec_id"`
+	WorkflowExecTaskID *string          `json:"workflow_exec_task_id,omitempty"`
 	// The role this automation plays in the workflow.
 	WorkflowRole WorkflowContextRole `json:"workflow_role"`
 }
@@ -16,6 +46,13 @@ func (w *WorkflowExecutionContext) GetExecutionChain() *ExecutionChain {
 		return nil
 	}
 	return w.ExecutionChain
+}
+
+func (w *WorkflowExecutionContext) GetEntityContexts() []EntityContexts {
+	if w == nil {
+		return nil
+	}
+	return w.EntityContexts
 }
 
 func (w *WorkflowExecutionContext) GetWorkflowExecID() string {

@@ -116,7 +116,9 @@ type AutomationFlow struct {
 	ID *string `json:"id,omitempty"`
 	// Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified.
 	MaxExecutions *MaxExecutions `json:"max_executions,omitempty"`
-	Schedules     any            `json:"schedules,omitempty"`
+	// If true, automation is displayed in read-only mode in the UI to discourage changes
+	Protected *bool `json:"protected,omitempty"`
+	Schedules any   `json:"schedules,omitempty"`
 	// Determines if the flow is a system generated flow
 	SystemFlow        *bool        `json:"system_flow,omitempty"`
 	TriggerConditions []any        `json:"trigger_conditions,omitempty"`
@@ -188,6 +190,13 @@ func (a *AutomationFlow) GetMaxExecutions() *MaxExecutions {
 	return a.MaxExecutions
 }
 
+func (a *AutomationFlow) GetProtected() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.Protected
+}
+
 func (a *AutomationFlow) GetSchedules() any {
 	if a == nil {
 		return nil
@@ -238,7 +247,9 @@ type AutomationFlowInput struct {
 	FlowName string `json:"flow_name"`
 	// Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified.
 	MaxExecutions *MaxExecutions `json:"max_executions,omitempty"`
-	Schedules     any            `json:"schedules,omitempty"`
+	// If true, automation is displayed in read-only mode in the UI to discourage changes
+	Protected *bool `json:"protected,omitempty"`
+	Schedules any   `json:"schedules,omitempty"`
 	// Determines if the flow is a system generated flow
 	SystemFlow        *bool        `json:"system_flow,omitempty"`
 	TriggerConditions []any        `json:"trigger_conditions,omitempty"`
@@ -301,6 +312,13 @@ func (a *AutomationFlowInput) GetMaxExecutions() *MaxExecutions {
 		return nil
 	}
 	return a.MaxExecutions
+}
+
+func (a *AutomationFlowInput) GetProtected() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.Protected
 }
 
 func (a *AutomationFlowInput) GetSchedules() any {

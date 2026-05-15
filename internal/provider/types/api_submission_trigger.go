@@ -7,7 +7,7 @@ import (
 )
 
 type APISubmissionTrigger struct {
-	Configuration Configuration `tfsdk:"configuration"`
-	ID            types.String  `tfsdk:"id"`
-	Type          types.String  `tfsdk:"type"`
+	Configuration *Configuration `tfsdk:"configuration"`
+	ID            types.String   `tfsdk:"id"`
+	Type          types.String   `tfsdk:"type"`
 }
