@@ -1354,7 +1354,6 @@ components:
                             example: submission
                         operations:
                             type: array
-                            minItems: 1
                             items:
                                 $ref: '#/components/schemas/EntityOperation'
                         include_activities:

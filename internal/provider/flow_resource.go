@@ -737,9 +737,6 @@ func (r *FlowResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 											Computed:    true,
 											Optional:    true,
 											ElementType: types.StringType,
-											Validators: []validator.List{
-												listvalidator.SizeAtLeast(1),
-											},
 										},
 										"schema": schema.StringAttribute{
 											Computed: true,
