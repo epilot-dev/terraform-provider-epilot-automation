@@ -114,6 +114,9 @@ type AutomationFlow struct {
 	FlowName string `json:"flow_name"`
 	// ID of the Automation Flow
 	ID *string `json:"id,omitempty"`
+	// Loop scope definitions. Each loop has an id and a source_path resolved against the trigger entity at execution time. Actions referencing a loop's id via their loop_id property run once per item in the resolved array. Loop members must be contiguous in the actions array.
+	//
+	Loops []AutomationLoop `json:"loops,omitempty"`
 	// Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified.
 	MaxExecutions *MaxExecutions `json:"max_executions,omitempty"`
 	// If true, automation is displayed in read-only mode in the UI to discourage changes
@@ -183,6 +186,13 @@ func (a *AutomationFlow) GetID() *string {
 	return a.ID
 }
 
+func (a *AutomationFlow) GetLoops() []AutomationLoop {
+	if a == nil {
+		return nil
+	}
+	return a.Loops
+}
+
 func (a *AutomationFlow) GetMaxExecutions() *MaxExecutions {
 	if a == nil {
 		return nil
@@ -245,6 +255,9 @@ type AutomationFlowInput struct {
 	EntitySchema *string `json:"entity_schema,omitempty"`
 	// A descriptive name for the Automation
 	FlowName string `json:"flow_name"`
+	// Loop scope definitions. Each loop has an id and a source_path resolved against the trigger entity at execution time. Actions referencing a loop's id via their loop_id property run once per item in the resolved array. Loop members must be contiguous in the actions array.
+	//
+	Loops []AutomationLoop `json:"loops,omitempty"`
 	// Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified.
 	MaxExecutions *MaxExecutions `json:"max_executions,omitempty"`
 	// If true, automation is displayed in read-only mode in the UI to discourage changes
@@ -305,6 +318,13 @@ func (a *AutomationFlowInput) GetFlowName() string {
 		return ""
 	}
 	return a.FlowName
+}
+
+func (a *AutomationFlowInput) GetLoops() []AutomationLoop {
+	if a == nil {
+		return nil
+	}
+	return a.Loops
 }
 
 func (a *AutomationFlowInput) GetMaxExecutions() *MaxExecutions {

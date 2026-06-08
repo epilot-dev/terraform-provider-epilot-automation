@@ -52,6 +52,14 @@ resource "epilot-automation_flow" "my_flow" {
   enabled       = true
   entity_schema = "submission"
   flow_name     = "Handle contact form"
+  loops = [
+    {
+      id          = "loop_contracts"
+      length      = 9
+      source_path = "submission.steps[0]['Contracts']"
+      source_type = "journey-multi-select"
+    }
+  ]
   manifest = [
     "123e4567-e89b-12d3-a456-426614174000"
   ]
@@ -67,7 +75,13 @@ resource "epilot-automation_flow" "my_flow" {
   ]
   triggers = [
     {
-      # ...
+      frontend_submit_trigger = {
+        configuration = {
+          source_id = "99"
+        }
+        id   = "12d4f45a-1883-4841-a94c-5928cb338a94"
+        type = "frontend_submission"
+      }
     }
   ]
   version = 2
@@ -89,6 +103,7 @@ resource "epilot-automation_flow" "my_flow" {
 - `disable_details` (Attributes) (see [below for nested schema](#nestedatt--disable_details))
 - `enabled` (Boolean) Whether the automation is enabled or not
 - `entity_schema` (String) The triggering entity schema
+- `loops` (Attributes List) Loop scope definitions. Each loop has an id and a source_path resolved against the trigger entity at execution time. Actions referencing a loop's id via their loop_id property run once per item in the resolved array. Loop members must be contiguous in the actions array. (see [below for nested schema](#nestedatt--loops))
 - `manifest` (List of String) Source blueprint/manifest ID used when automation is created via blueprints.
 - `max_executions` (Attributes) Customized execution hot flow rate limit. Takes precedence over the default hot flow rate limit if specified. (see [below for nested schema](#nestedatt--max_executions))
 - `protected` (Boolean) If true, automation is displayed in read-only mode in the UI to discourage changes
@@ -558,6 +573,17 @@ Optional:
 - `blame` (String) The 360 user email that disabled the flow
 - `disabled_at` (String) When the flow was disabled. Not Null
 - `disabled_by` (String) Who disabled the flow (system or user). Not Null; must be one of ["system", "user"]
+
+
+<a id="nestedatt--loops"></a>
+### Nested Schema for `loops`
+
+Optional:
+
+- `id` (String) Stable identifier referenced by AutomationActionConfig.loop_id. Not Null
+- `length` (Number) Maximum number of iterations. 0 / omitted = iterate the full resolved array.
+- `source_path` (String) Path resolved against the trigger entity to produce the array of iteration items. e.g. submission.steps[0]['Contracts']. Not Null
+- `source_type` (String) How source_path is interpreted. 'journey-multi-select' is the v1 source type (journey card block with multi-select). Future source types (e.g. 'previous-action-outputs', 'entity-relation') will be added here. Default: "journey-multi-select"; must be one of ["journey-multi-select", "previous-action-outputs", "entity-relation"]
 
 
 <a id="nestedatt--max_executions"></a>

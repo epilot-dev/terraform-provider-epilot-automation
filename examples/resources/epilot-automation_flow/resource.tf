@@ -37,6 +37,14 @@ resource "epilot-automation_flow" "my_flow" {
   enabled       = true
   entity_schema = "submission"
   flow_name     = "Handle contact form"
+  loops = [
+    {
+      id          = "loop_contracts"
+      length      = 9
+      source_path = "submission.steps[0]['Contracts']"
+      source_type = "journey-multi-select"
+    }
+  ]
   manifest = [
     "123e4567-e89b-12d3-a456-426614174000"
   ]
@@ -52,7 +60,13 @@ resource "epilot-automation_flow" "my_flow" {
   ]
   triggers = [
     {
-      # ...
+      frontend_submit_trigger = {
+        configuration = {
+          source_id = "99"
+        }
+        id   = "12d4f45a-1883-4841-a94c-5928cb338a94"
+        type = "frontend_submission"
+      }
     }
   ]
   version = 2

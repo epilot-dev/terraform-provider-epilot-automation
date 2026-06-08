@@ -7,7 +7,7 @@ import (
 )
 
 type EntityOperationTrigger struct {
-	Configuration EntityOperationTriggerConfiguration `tfsdk:"configuration"`
-	ID            types.String                        `tfsdk:"id"`
-	Type          types.String                        `tfsdk:"type"`
+	Configuration *EntityOperationTriggerConfiguration `tfsdk:"configuration"`
+	ID            types.String                         `tfsdk:"id"`
+	Type          types.String                         `tfsdk:"type"`
 }

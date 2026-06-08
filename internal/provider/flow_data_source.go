@@ -37,6 +37,7 @@ type FlowDataSourceModel struct {
 	EntitySchema      types.String              `tfsdk:"entity_schema"`
 	FlowName          types.String              `tfsdk:"flow_name"`
 	ID                types.String              `tfsdk:"id"`
+	Loops             []tfTypes.AutomationLoop  `tfsdk:"loops"`
 	Manifest          []types.String            `tfsdk:"manifest"`
 	MaxExecutions     *tfTypes.MaxExecutions    `tfsdk:"max_executions"`
 	Protected         types.Bool                `tfsdk:"protected"`
@@ -163,7 +164,32 @@ func (r *FlowDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 			},
 			"id": schema.StringAttribute{
 				Computed:    true,
+				Optional:    true,
 				Description: `ID of the Automation Flow`,
+			},
+			"loops": schema.ListNestedAttribute{
+				Computed: true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"id": schema.StringAttribute{
+							Computed:    true,
+							Description: `Stable identifier referenced by AutomationActionConfig.loop_id`,
+						},
+						"length": schema.Int64Attribute{
+							Computed:    true,
+							Description: `Maximum number of iterations. 0 / omitted = iterate the full resolved array.`,
+						},
+						"source_path": schema.StringAttribute{
+							Computed:    true,
+							Description: `Path resolved against the trigger entity to produce the array of iteration items. e.g. submission.steps[0]['Contracts'].`,
+						},
+						"source_type": schema.StringAttribute{
+							Computed:    true,
+							Description: `How source_path is interpreted. 'journey-multi-select' is the v1 source type (journey card block with multi-select). Future source types (e.g. 'previous-action-outputs', 'entity-relation') will be added here.`,
+						},
+					},
+				},
+				Description: `Loop scope definitions. Each loop has an id and a source_path resolved against the trigger entity at execution time. Actions referencing a loop's id via their loop_id property run once per item in the resolved array. Loop members must be contiguous in the actions array.`,
 			},
 			"manifest": schema.ListAttribute{
 				Computed:    true,

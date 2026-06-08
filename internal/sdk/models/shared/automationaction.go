@@ -51,10 +51,16 @@ type AutomationAction struct {
 	FlowActionID         *string          `json:"flow_action_id,omitempty"`
 	ID                   *string          `json:"id,omitempty"`
 	// Flag indicating whether the same action can be in bulk in a single execution. e.g; send-email / map-entity
-	IsBulkAction *bool          `json:"is_bulk_action,omitempty"`
-	Name         *string        `json:"name,omitempty"`
-	Outputs      map[string]any `json:"outputs,omitempty"`
-	Reason       *Reason        `json:"reason,omitempty"`
+	IsBulkAction *bool `json:"is_bulk_action,omitempty"`
+	// For looped actions, an archive of completed iterations. The action's own execution_status / outputs / error_output always reflect the current (latest) iteration. The previous iteration's state is pushed here before the action is reset for the next pass.
+	//
+	Iterations []AutomationActionIteration `json:"iterations,omitempty"`
+	// Id of a loop scope defined on the parent flow. When set, the action runs once per item resolved from the loop's source_path. All actions sharing the same loop_id must be contiguous in the actions array.
+	//
+	LoopID  *string        `json:"loop_id,omitempty"`
+	Name    *string        `json:"name,omitempty"`
+	Outputs map[string]any `json:"outputs,omitempty"`
+	Reason  *Reason        `json:"reason,omitempty"`
 	// different behaviors for retrying failed execution actions.
 	RetryStrategy *RetryStrategy `json:"retry_strategy,omitempty"`
 	// Schedule Id which indicates the schedule of the action
@@ -136,6 +142,20 @@ func (a *AutomationAction) GetIsBulkAction() *bool {
 		return nil
 	}
 	return a.IsBulkAction
+}
+
+func (a *AutomationAction) GetIterations() []AutomationActionIteration {
+	if a == nil {
+		return nil
+	}
+	return a.Iterations
+}
+
+func (a *AutomationAction) GetLoopID() *string {
+	if a == nil {
+		return nil
+	}
+	return a.LoopID
 }
 
 func (a *AutomationAction) GetName() *string {

@@ -24,6 +24,8 @@ func (r *FlowResourceModel) RefreshFromSharedAutomationFlow(ctx context.Context,
 			for _, v := range resp.Manifest {
 				r.Manifest = append(r.Manifest, types.StringValue(v))
 			}
+		} else {
+			r.Manifest = nil
 		}
 		r.Actions = make([]jsontypes.Normalized, 0, len(resp.Actions))
 		for _, actionsItem := range resp.Actions {
@@ -105,6 +107,22 @@ func (r *FlowResourceModel) RefreshFromSharedAutomationFlow(ctx context.Context,
 		r.EntitySchema = types.StringPointerValue(resp.EntitySchema)
 		r.FlowName = types.StringValue(resp.FlowName)
 		r.ID = types.StringPointerValue(resp.ID)
+		r.Loops = []tfTypes.AutomationLoop{}
+
+		for _, loopsItem := range resp.Loops {
+			var loops tfTypes.AutomationLoop
+
+			loops.ID = types.StringValue(loopsItem.ID)
+			loops.Length = types.Int64PointerValue(loopsItem.Length)
+			loops.SourcePath = types.StringValue(loopsItem.SourcePath)
+			if loopsItem.SourceType != nil {
+				loops.SourceType = types.StringValue(string(*loopsItem.SourceType))
+			} else {
+				loops.SourceType = types.StringNull()
+			}
+
+			r.Loops = append(r.Loops, loops)
+		}
 		if resp.MaxExecutions == nil {
 			r.MaxExecutions = nil
 		} else {
@@ -135,23 +153,26 @@ func (r *FlowResourceModel) RefreshFromSharedAutomationFlow(ctx context.Context,
 			var triggers tfTypes.AnyTrigger
 
 			if triggersItem.Any != nil {
-				anyResult, _ := json.Marshal(triggersItem.Any)
-				triggers.Any = jsontypes.NewNormalizedValue(string(anyResult))
+				anyVarResult, _ := json.Marshal(triggersItem.Any)
+				triggers.Any = jsontypes.NewNormalizedValue(string(anyVarResult))
 			}
 			if triggersItem.APISubmissionTrigger != nil {
 				triggers.APISubmissionTrigger = &tfTypes.APISubmissionTrigger{}
+				triggers.APISubmissionTrigger.Configuration = &tfTypes.Configuration{}
 				triggers.APISubmissionTrigger.Configuration.SourceID = types.StringPointerValue(triggersItem.APISubmissionTrigger.Configuration.SourceID)
 				triggers.APISubmissionTrigger.ID = types.StringPointerValue(triggersItem.APISubmissionTrigger.ID)
 				triggers.APISubmissionTrigger.Type = types.StringValue(string(triggersItem.APISubmissionTrigger.Type))
 			}
 			if triggersItem.EntityManualTrigger != nil {
 				triggers.EntityManualTrigger = &tfTypes.EntityManualTrigger{}
+				triggers.EntityManualTrigger.Configuration = &tfTypes.EntityManualTriggerConfiguration{}
 				triggers.EntityManualTrigger.Configuration.Schema = types.StringPointerValue(triggersItem.EntityManualTrigger.Configuration.Schema)
 				triggers.EntityManualTrigger.ID = types.StringPointerValue(triggersItem.EntityManualTrigger.ID)
 				triggers.EntityManualTrigger.Type = types.StringValue(string(triggersItem.EntityManualTrigger.Type))
 			}
 			if triggersItem.EntityOperationTrigger != nil {
 				triggers.EntityOperationTrigger = &tfTypes.EntityOperationTrigger{}
+				triggers.EntityOperationTrigger.Configuration = &tfTypes.EntityOperationTriggerConfiguration{}
 				if triggersItem.EntityOperationTrigger.Configuration.EcpConfig == nil {
 					triggers.EntityOperationTrigger.Configuration.EcpConfig = nil
 				} else {
@@ -263,18 +284,21 @@ func (r *FlowResourceModel) RefreshFromSharedAutomationFlow(ctx context.Context,
 			}
 			if triggersItem.FrontendSubmitTrigger != nil {
 				triggers.FrontendSubmitTrigger = &tfTypes.APISubmissionTrigger{}
+				triggers.FrontendSubmitTrigger.Configuration = &tfTypes.Configuration{}
 				triggers.FrontendSubmitTrigger.Configuration.SourceID = types.StringPointerValue(triggersItem.FrontendSubmitTrigger.Configuration.SourceID)
 				triggers.FrontendSubmitTrigger.ID = types.StringPointerValue(triggersItem.FrontendSubmitTrigger.ID)
 				triggers.FrontendSubmitTrigger.Type = types.StringValue(string(triggersItem.FrontendSubmitTrigger.Type))
 			}
 			if triggersItem.JourneySubmitTrigger != nil {
 				triggers.JourneySubmitTrigger = &tfTypes.JourneySubmitTrigger{}
+				triggers.JourneySubmitTrigger.Configuration = &tfTypes.JourneySubmitTriggerConfiguration{}
 				triggers.JourneySubmitTrigger.Configuration.SourceID = types.StringValue(triggersItem.JourneySubmitTrigger.Configuration.SourceID)
 				triggers.JourneySubmitTrigger.ID = types.StringPointerValue(triggersItem.JourneySubmitTrigger.ID)
 				triggers.JourneySubmitTrigger.Type = types.StringValue(string(triggersItem.JourneySubmitTrigger.Type))
 			}
 			if triggersItem.NewEmailThreadTrigger != nil {
 				triggers.NewEmailThreadTrigger = &tfTypes.NewEmailThreadTrigger{}
+				triggers.NewEmailThreadTrigger.Configuration = &tfTypes.NewEmailThreadTriggerConfiguration{}
 				triggers.NewEmailThreadTrigger.Configuration.Direction = types.StringValue(string(triggersItem.NewEmailThreadTrigger.Configuration.Direction))
 				triggers.NewEmailThreadTrigger.Configuration.SharedInboxIds = make([]types.String, 0, len(triggersItem.NewEmailThreadTrigger.Configuration.SharedInboxIds))
 				for _, v := range triggersItem.NewEmailThreadTrigger.Configuration.SharedInboxIds {
@@ -285,6 +309,7 @@ func (r *FlowResourceModel) RefreshFromSharedAutomationFlow(ctx context.Context,
 			}
 			if triggersItem.ReceivedEmailTrigger != nil {
 				triggers.ReceivedEmailTrigger = &tfTypes.ReceivedEmailTrigger{}
+				triggers.ReceivedEmailTrigger.Configuration = &tfTypes.ReceivedEmailTriggerConfiguration{}
 				if triggersItem.ReceivedEmailTrigger.Configuration.MessageType != nil {
 					triggers.ReceivedEmailTrigger.Configuration.MessageType = types.StringValue(string(*triggersItem.ReceivedEmailTrigger.Configuration.MessageType))
 				} else {
@@ -516,6 +541,33 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 	var flowName string
 	flowName = r.FlowName.ValueString()
 
+	loops := make([]shared.AutomationLoop, 0, len(r.Loops))
+	for loopsIndex := range r.Loops {
+		var id3 string
+		id3 = r.Loops[loopsIndex].ID.ValueString()
+
+		length := new(int64)
+		if !r.Loops[loopsIndex].Length.IsUnknown() && !r.Loops[loopsIndex].Length.IsNull() {
+			*length = r.Loops[loopsIndex].Length.ValueInt64()
+		} else {
+			length = nil
+		}
+		var sourcePath string
+		sourcePath = r.Loops[loopsIndex].SourcePath.ValueString()
+
+		sourceType := new(shared.SourceType)
+		if !r.Loops[loopsIndex].SourceType.IsUnknown() && !r.Loops[loopsIndex].SourceType.IsNull() {
+			*sourceType = shared.SourceType(r.Loops[loopsIndex].SourceType.ValueString())
+		} else {
+			sourceType = nil
+		}
+		loops = append(loops, shared.AutomationLoop{
+			ID:         id3,
+			Length:     length,
+			SourcePath: sourcePath,
+			SourceType: sourceType,
+		})
+	}
 	var maxExecutions *shared.MaxExecutions
 	if r.MaxExecutions != nil {
 		count := new(float64)
@@ -569,16 +621,16 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 			configuration := shared.FrontendSubmitTriggerConfiguration{
 				SourceID: sourceID,
 			}
-			id3 := new(string)
+			id4 := new(string)
 			if !r.Triggers[triggersItem].FrontendSubmitTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].FrontendSubmitTrigger.ID.IsNull() {
-				*id3 = r.Triggers[triggersItem].FrontendSubmitTrigger.ID.ValueString()
+				*id4 = r.Triggers[triggersItem].FrontendSubmitTrigger.ID.ValueString()
 			} else {
-				id3 = nil
+				id4 = nil
 			}
 			typeVar := shared.FrontendSubmitTriggerType(r.Triggers[triggersItem].FrontendSubmitTrigger.Type.ValueString())
 			frontendSubmitTrigger := shared.FrontendSubmitTrigger{
 				Configuration: configuration,
-				ID:            id3,
+				ID:            id4,
 				Type:          typeVar,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
@@ -592,16 +644,16 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 			configuration1 := shared.JourneySubmitTriggerConfiguration{
 				SourceID: sourceId1,
 			}
-			id4 := new(string)
+			id5 := new(string)
 			if !r.Triggers[triggersItem].JourneySubmitTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].JourneySubmitTrigger.ID.IsNull() {
-				*id4 = r.Triggers[triggersItem].JourneySubmitTrigger.ID.ValueString()
+				*id5 = r.Triggers[triggersItem].JourneySubmitTrigger.ID.ValueString()
 			} else {
-				id4 = nil
+				id5 = nil
 			}
 			typeVar1 := shared.JourneySubmitTriggerType(r.Triggers[triggersItem].JourneySubmitTrigger.Type.ValueString())
 			journeySubmitTrigger := shared.JourneySubmitTrigger{
 				Configuration: configuration1,
-				ID:            id4,
+				ID:            id5,
 				Type:          typeVar1,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
@@ -618,16 +670,16 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 			configuration2 := shared.Configuration{
 				SourceID: sourceId2,
 			}
-			id5 := new(string)
+			id6 := new(string)
 			if !r.Triggers[triggersItem].APISubmissionTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].APISubmissionTrigger.ID.IsNull() {
-				*id5 = r.Triggers[triggersItem].APISubmissionTrigger.ID.ValueString()
+				*id6 = r.Triggers[triggersItem].APISubmissionTrigger.ID.ValueString()
 			} else {
-				id5 = nil
+				id6 = nil
 			}
 			typeVar2 := shared.Type(r.Triggers[triggersItem].APISubmissionTrigger.Type.ValueString())
 			apiSubmissionTrigger := shared.APISubmissionTrigger{
 				Configuration: configuration2,
-				ID:            id5,
+				ID:            id6,
 				Type:          typeVar2,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
@@ -819,16 +871,16 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 				Operations:        operationsVar,
 				Schema:            schema1,
 			}
-			id6 := new(string)
+			id7 := new(string)
 			if !r.Triggers[triggersItem].EntityOperationTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].EntityOperationTrigger.ID.IsNull() {
-				*id6 = r.Triggers[triggersItem].EntityOperationTrigger.ID.ValueString()
+				*id7 = r.Triggers[triggersItem].EntityOperationTrigger.ID.ValueString()
 			} else {
-				id6 = nil
+				id7 = nil
 			}
 			typeVar4 := shared.EntityOperationTriggerType(r.Triggers[triggersItem].EntityOperationTrigger.Type.ValueString())
 			entityOperationTrigger := shared.EntityOperationTrigger{
 				Configuration: configuration3,
-				ID:            id6,
+				ID:            id7,
 				Type:          typeVar4,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
@@ -852,16 +904,16 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 			configuration4 := shared.EntityManualTriggerConfiguration{
 				Schema: schema2,
 			}
-			id7 := new(string)
+			id8 := new(string)
 			if !r.Triggers[triggersItem].EntityManualTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].EntityManualTrigger.ID.IsNull() {
-				*id7 = r.Triggers[triggersItem].EntityManualTrigger.ID.ValueString()
+				*id8 = r.Triggers[triggersItem].EntityManualTrigger.ID.ValueString()
 			} else {
-				id7 = nil
+				id8 = nil
 			}
 			typeVar5 := shared.EntityManualTriggerType(r.Triggers[triggersItem].EntityManualTrigger.Type.ValueString())
 			entityManualTrigger := shared.EntityManualTrigger{
 				Configuration: configuration4,
-				ID:            id7,
+				ID:            id8,
 				Type:          typeVar5,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
@@ -878,16 +930,16 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 			configuration5 := shared.ReceivedEmailTriggerConfiguration{
 				MessageType: messageType,
 			}
-			id8 := new(string)
+			id9 := new(string)
 			if !r.Triggers[triggersItem].ReceivedEmailTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].ReceivedEmailTrigger.ID.IsNull() {
-				*id8 = r.Triggers[triggersItem].ReceivedEmailTrigger.ID.ValueString()
+				*id9 = r.Triggers[triggersItem].ReceivedEmailTrigger.ID.ValueString()
 			} else {
-				id8 = nil
+				id9 = nil
 			}
 			typeVar6 := shared.ReceivedEmailTriggerType(r.Triggers[triggersItem].ReceivedEmailTrigger.Type.ValueString())
 			receivedEmailTrigger := shared.ReceivedEmailTrigger{
 				Configuration: configuration5,
-				ID:            id8,
+				ID:            id9,
 				Type:          typeVar6,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
@@ -904,16 +956,16 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 				Direction:      direction,
 				SharedInboxIds: sharedInboxIds,
 			}
-			id9 := new(string)
+			id10 := new(string)
 			if !r.Triggers[triggersItem].NewEmailThreadTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].NewEmailThreadTrigger.ID.IsNull() {
-				*id9 = r.Triggers[triggersItem].NewEmailThreadTrigger.ID.ValueString()
+				*id10 = r.Triggers[triggersItem].NewEmailThreadTrigger.ID.ValueString()
 			} else {
-				id9 = nil
+				id10 = nil
 			}
 			typeVar7 := shared.NewEmailThreadTriggerType(r.Triggers[triggersItem].NewEmailThreadTrigger.Type.ValueString())
 			newEmailThreadTrigger := shared.NewEmailThreadTrigger{
 				Configuration: configuration6,
-				ID:            id9,
+				ID:            id10,
 				Type:          typeVar7,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
@@ -933,16 +985,16 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 					JourneyID: journeyID,
 				}
 			}
-			id10 := new(string)
+			id11 := new(string)
 			if !r.Triggers[triggersItem].FlowsTrigger.ID.IsUnknown() && !r.Triggers[triggersItem].FlowsTrigger.ID.IsNull() {
-				*id10 = r.Triggers[triggersItem].FlowsTrigger.ID.ValueString()
+				*id11 = r.Triggers[triggersItem].FlowsTrigger.ID.ValueString()
 			} else {
-				id10 = nil
+				id11 = nil
 			}
 			typeVar8 := shared.FlowsTriggerType(r.Triggers[triggersItem].FlowsTrigger.Type.ValueString())
 			flowsTrigger := shared.FlowsTrigger{
 				Configuration: configuration7,
-				ID:            id10,
+				ID:            id11,
 				Type:          typeVar8,
 			}
 			triggers = append(triggers, shared.AnyTrigger{
@@ -964,6 +1016,7 @@ func (r *FlowResourceModel) ToSharedAutomationFlowInput(ctx context.Context) (*s
 		Enabled:           enabled,
 		EntitySchema:      entitySchema,
 		FlowName:          flowName,
+		Loops:             loops,
 		MaxExecutions:     maxExecutions,
 		Protected:         protected,
 		Schedules:         schedules,

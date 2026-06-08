@@ -86,9 +86,10 @@ Available configuration:
 <!-- Start Available Resources and Data Sources [operations] -->
 ## Available Resources and Data Sources
 
-### Resources
+### Managed Resources
 
 * [epilot-automation_flow](docs/resources/flow.md)
+
 ### Data Sources
 
 * [epilot-automation_flow](docs/data-sources/flow.md)

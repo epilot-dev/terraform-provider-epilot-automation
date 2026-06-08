@@ -50,6 +50,13 @@ actions:
   - target: $["components"]["schemas"]["EntityOperationTrigger"]["allOf"][1]["properties"]["configuration"]["properties"]["filter_config"]["properties"]["operation"]["properties"]
     update:
       diff: {}
+  # The legacy top-level `operations` list is optional and is omitted by triggers
+  # that express their operation/schema purely via `filter_config`. Upstream marks
+  # it `minItems: 1`, which makes Speakeasy emit `listvalidator.SizeAtLeast(1)` and
+  # breaks read/import/export of such flows (empty/absent list -> "got: 0").
+  # Drop the constraint so these flows round-trip.
+  - target: $["components"]["schemas"]["EntityOperationTrigger"]["allOf"][1]["properties"]["configuration"]["properties"]["operations"]["minItems"]
+    remove: true
   - target: $["components"]["schemas"]["OrCondition"]
     remove: true
   - target: $["components"]["schemas"]["OrConditionForDiff"]

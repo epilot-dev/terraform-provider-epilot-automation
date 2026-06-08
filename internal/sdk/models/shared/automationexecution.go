@@ -189,7 +189,10 @@ type AutomationExecution struct {
 	FlowID   string  `json:"flow_id"`
 	FlowName *string `json:"flow_name,omitempty"`
 	ID       string  `json:"id"`
-	OrgID    string  `json:"org_id"`
+	// Runtime iteration state, keyed by loop_id. Tracks the current_index and total for each active loop scope. Entries are removed once a loop exits.
+	//
+	LoopState map[string]AutomationLoopState `json:"loop_state,omitempty"`
+	OrgID     string                         `json:"org_id"`
 	// A unique token to resume a paused automation execution
 	ResumeToken *string          `json:"resume_token,omitempty"`
 	Schedules   []ActionSchedule `json:"schedules,omitempty"`
@@ -288,6 +291,13 @@ func (a *AutomationExecution) GetID() string {
 		return ""
 	}
 	return a.ID
+}
+
+func (a *AutomationExecution) GetLoopState() map[string]AutomationLoopState {
+	if a == nil {
+		return nil
+	}
+	return a.LoopState
 }
 
 func (a *AutomationExecution) GetOrgID() string {

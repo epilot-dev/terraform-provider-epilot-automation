@@ -7,7 +7,7 @@ import (
 )
 
 type ReceivedEmailTrigger struct {
-	Configuration ReceivedEmailTriggerConfiguration `tfsdk:"configuration"`
-	ID            types.String                      `tfsdk:"id"`
-	Type          types.String                      `tfsdk:"type"`
+	Configuration *ReceivedEmailTriggerConfiguration `tfsdk:"configuration"`
+	ID            types.String                       `tfsdk:"id"`
+	Type          types.String                       `tfsdk:"type"`
 }

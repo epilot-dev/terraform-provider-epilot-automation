@@ -653,6 +653,7 @@ func (s *Flows) DeleteFlow(ctx context.Context, request operations.DeleteFlowReq
 
 	switch {
 	case httpRes.StatusCode == 200:
+		utils.DrainBody(httpRes)
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:

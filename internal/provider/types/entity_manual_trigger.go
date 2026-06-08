@@ -7,7 +7,7 @@ import (
 )
 
 type EntityManualTrigger struct {
-	Configuration EntityManualTriggerConfiguration `tfsdk:"configuration"`
-	ID            types.String                     `tfsdk:"id"`
-	Type          types.String                     `tfsdk:"type"`
+	Configuration *EntityManualTriggerConfiguration `tfsdk:"configuration"`
+	ID            types.String                      `tfsdk:"id"`
+	Type          types.String                      `tfsdk:"type"`
 }

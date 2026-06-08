@@ -37,3 +37,6 @@ func (m *MappingAttributeV2) GetTarget() *string {
 	}
 	return m.Target
 }
+
+// #region class-body-mappingattributev2
+// #endregion class-body-mappingattributev2

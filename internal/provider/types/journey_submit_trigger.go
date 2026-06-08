@@ -7,7 +7,7 @@ import (
 )
 
 type JourneySubmitTrigger struct {
-	Configuration JourneySubmitTriggerConfiguration `tfsdk:"configuration"`
-	ID            types.String                      `tfsdk:"id"`
-	Type          types.String                      `tfsdk:"type"`
+	Configuration *JourneySubmitTriggerConfiguration `tfsdk:"configuration"`
+	ID            types.String                       `tfsdk:"id"`
+	Type          types.String                       `tfsdk:"type"`
 }
