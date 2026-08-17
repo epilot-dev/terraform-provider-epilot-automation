@@ -1,3 +1,6 @@
+> [!WARNING]
+> This provider is not anymore updated with the latest epilot API specs.
+
 <div align="center">
     <picture>
         <source srcset="https://user-images.githubusercontent.com/68016351/221740028-fbe0a2da-c781-4641-ac18-0bb1d19d49e3.svg" media="(prefers-color-scheme: dark)" width="500">
